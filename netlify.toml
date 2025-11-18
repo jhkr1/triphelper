@@ -1,0 +1,16 @@
+# Netlify 설정 파일 (선택사항)
+
+[build]
+  # 빌드 명령이 필요 없음 (정적 사이트)
+  publish = "."
+
+[[redirects]]
+  # 모든 경로를 index.html로 리다이렉트 (SPA 라우팅 대비)
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.environment]
+  # Node.js 버전 (필요시)
+  NODE_VERSION = "18"
+

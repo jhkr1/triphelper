@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TripHelper - AI Powered Travel Concierge | 여행 도우미</title>
+    <meta name="description" content="여행 준비를 위한 맞춤형 가이드: 필수 매너, 기념품, 현지 추천템, 필수 회화까지 한 곳에서 확인하세요. 13개 국가 정보 제공." />
+    <meta name="keywords" content="여행, 여행 가이드, 여행 준비, 여행 필수템, 여행 회화, 여행 매너, 기념품, 여행 도우미" />
+    <meta name="author" content="TripHelper" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#2563eb" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://triphelper.com/" />
+    <meta property="og:title" content="TripHelper - AI Powered Travel Concierge" />
+    <meta property="og:description" content="여행 준비를 위한 맞춤형 가이드: 필수 매너, 기념품, 현지 추천템, 필수 회화까지 한 곳에서 확인하세요." />
+    <meta property="og:image" content="https://triphelper.com/Gemini_Generated_Image_vosqf0vosqf0vosq-Photoroom.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://triphelper.com/" />
+    <meta property="twitter:title" content="TripHelper - AI Powered Travel Concierge" />
+    <meta property="twitter:description" content="여행 준비를 위한 맞춤형 가이드: 필수 매너, 기념품, 현지 추천템, 필수 회화까지 한 곳에서 확인하세요." />
+    <meta property="twitter:image" content="https://triphelper.com/Gemini_Generated_Image_vosqf0vosqf0vosq-Photoroom.png" />
+    
+    <link rel="canonical" href="https://triphelper.com/" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
+        rel="stylesheet"
+      />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <nav class="controls">
+      <button id="theme-toggle" class="control-button" type="button" aria-label="다크 모드 전환">
+        <span class="control-button__icon">🌙</span>
+        <span class="control-button__text">다크 모드</span>
+      </button>
+      <button id="language-toggle" class="control-button" type="button" aria-label="언어 전환">
+        <span class="control-button__icon">🌐</span>
+        <span class="control-button__text">한국어</span>
+      </button>
+    </nav>
+    <header class="hero">
+      <div class="hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-icon">✦</span>
+          <span class="hero__badge-text">AI Powered Travel Concierge</span>
+        </div>
+        <h1 class="sr-only">TripHelper</h1>
+        <img
+          class="hero__logo-image"
+          src="Gemini_Generated_Image_vosqf0vosqf0vosq-Photoroom.png"
+          alt="TripHelper 브랜드 로고"
+          width="420"
+          height="180"
+          decoding="async"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <p class="hero__tagline" data-i18n="hero.tagline">당신의 다음 여정을 위한 맞춤형 인사이트와 준비 리스트.</p>
+        <p class="hero__subcopy" data-i18n="hero.subcopy">목적지를 검색하면 필수 매너부터 회화까지 한 곳에서 확인할 수 있어요.</p>
+        <div class="search-box">
+          <label class="sr-only" for="search-input" data-i18n="search.label">여행지 검색</label>
+          <input
+            id="search-input"
+            type="search"
+            data-i18n-placeholder="search.placeholder"
+            placeholder="예: 한국, 일본, 프랑스"
+            autocomplete="off"
+          />
+          <button id="search-button" type="button" data-i18n="search.button">검색</button>
+        </div>
+        <p class="hero__hint" data-i18n="hero.hint">Tip: 목적지를 입력하면 맞춤 정보를 보여드려요.</p>
+      </div>
+    </header>
+
+    <main>
+      <!-- Google AdSense - 상단 배너 (선택사항) -->
+      <!-- 
+      <div class="ad-container ad-top" style="max-width: 728px; margin: 0 auto 2rem; text-align: center;">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+      -->
+      
+      <section class="results" aria-live="polite">
+        <div class="results__placeholder">
+          <h2 data-i18n="results.placeholder.title">궁금한 여행지를 검색해보세요</h2>
+          <p data-i18n="results.placeholder.description">예: "한국"을 입력하면 매너 & 팁, 기념품, 필수템 정보를 확인할 수 있어요.</p>
+        </div>
+      </section>
+      
+      <!-- Google AdSense - 결과 하단 (선택사항) -->
+      <!-- 
+      <div class="ad-container ad-bottom" style="max-width: 728px; margin: 2rem auto; text-align: center;">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+      -->
+    </main>
+
+    <footer class="footer">
+      <p data-i18n="footer.text">© 2025 TripHelper. 여행의 모든 순간을 함께합니다.</p>
+    </footer>
+
+    <template id="destination-template">
+      <article class="destination">
+        <header class="destination__header">
+          <h2 class="destination__name">
+            <span class="destination__flag" aria-hidden="true"></span>
+            <span class="destination__country"></span>
+          </h2>
+          <p class="destination__summary"></p>
+          <div class="destination__quick-info">
+            <div class="quick-info__item quick-info__currency">
+              <span class="quick-info__icon">💱</span>
+              <div class="quick-info__content">
+                <span class="quick-info__label" data-i18n="quickInfo.currency">통화</span>
+                <span class="quick-info__value currency-info"></span>
+              </div>
+            </div>
+          </div>
+          <div class="currency-rate-container">
+            <div class="currency-rate-header">
+              <div class="currency-rate">
+                <span class="currency-rate__label"></span>
+                <span class="currency-rate__value"></span>
+                <span class="currency-rate__unit"> KRW</span>
+              </div>
+              <div class="currency-rate-time">
+                <span class="currency-rate-time__label" data-i18n="quickInfo.rateTime">기준 시간:</span>
+                <span class="currency-rate-time__value"></span>
+              </div>
+            </div>
+            <div class="currency-calculator">
+              <div class="calculator-input-group">
+                <input type="number" class="calculator-input" placeholder="" min="0" step="0.01" />
+                <span class="calculator-currency-code"></span>
+                <span class="calculator-equals">=</span>
+                <span class="calculator-result"></span>
+                <span class="calculator-result-unit"></span>
+              </div>
+            </div>
+          </div>
+          <div class="currency-chart-container" style="display: none;">
+            <h4 class="currency-chart__title" data-i18n="quickInfo.exchangeRate">환율 추이</h4>
+            <canvas class="currency-chart"></canvas>
+          </div>
+        </header>
+        <div class="weather-section">
+          <div class="weather-section__header">
+            <h3 class="weather-section__title" data-i18n="quickInfo.weather">날씨</h3>
+            <div class="weather-time">
+              <span class="weather-time__label" data-i18n="quickInfo.localTime">현지 기준 시간:</span>
+              <span class="weather-time__value"></span>
+            </div>
+          </div>
+          <div class="weather-display"></div>
+        </div>
+        <div class="destination__info">
+          <section class="info-card">
+            <h3 data-i18n="sections.manners">필수 매너 &amp; 팁</h3>
+            <ul class="info-list info-list--manners"></ul>
+          </section>
+          <section class="info-card">
+            <h3 data-i18n="sections.souvenirs">꼭 사야 할 기념품</h3>
+            <ul class="info-list info-list--souvenirs"></ul>
+          </section>
+          <section class="info-card">
+            <h3 data-i18n="sections.market">현지 마트/약국 추천템</h3>
+            <ul class="info-list info-list--market"></ul>
+          </section>
+          <section class="info-card">
+            <h3 data-i18n="sections.essentials">여행 준비 필수템</h3>
+            <ul class="info-list info-list--essentials"></ul>
+          </section>
+          <section class="info-card info-card--phrases">
+            <h3 data-i18n="sections.phrases">필수 회화</h3>
+            <ul class="phrase-list"></ul>
+          </section>
+        </div>
+      </article>
+    </template>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "TripHelper",
+      "description": "여행 준비를 위한 맞춤형 가이드: 필수 매너, 기념품, 현지 추천템, 필수 회화까지 한 곳에서 확인하세요.",
+      "url": "https://triphelper.com/",
+      "applicationCategory": "TravelApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "1"
+      }
+    }
+    </script>
+    <script src="script.js" defer></script>
+  </body>
+</html>
+

@@ -148,6 +148,13 @@ const phraseSets = {
     { source: "Elnézést", pronunciation: "엘네제스트", pronunciationEn: "el-NAY-zaysht", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "Mennyibe kerül ez?", pronunciation: "멘니베 케뤌 에즈?", pronunciationEn: "MEN-nyi-beh KEH-rul ez?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
     { source: "Hol van a mosdó?", pronunciation: "홀 반 아 모스도?", pronunciationEn: "hol vahn ah MOSH-doh?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+  ],
+  dutch: [
+    { source: "Hallo", pronunciation: "할로", pronunciationEn: "HAH-lo", meaning: "안녕하세요.", meaningEn: "Hello." },
+    { source: "Dank u wel", pronunciation: "당크 우 벨", pronunciationEn: "dahnk oo VEL", meaning: "감사합니다.", meaningEn: "Thank you." },
+    { source: "Sorry", pronunciation: "소리", pronunciationEn: "SOR-ee", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
+    { source: "Hoeveel kost dit?", pronunciation: "후벨 코스트 딧?", pronunciationEn: "HOO-vel kost dit?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
+    { source: "Waar is het toilet?", pronunciation: "바르 이스 헤트 토일레트?", pronunciationEn: "vahr is het twa-LET?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
   ]
 };
 
@@ -3649,6 +3656,221 @@ const destinations = [
       }
     ],
     phrases: phraseSets.german
+  },
+  {
+    name: "네덜란드",
+    nameEn: "Netherlands",
+    keywords: ["네덜란드", "netherlands", "holland", "amsterdam", "암스테르담", "로테르담", "rotterdam"],
+    flag: "🇳🇱",
+    languageCode: "nl-NL",
+    summary: "운하와 튤립이 아름다운 네덜란드 여행을 위한 실용 가이드.",
+    summaryEn: "Practical guide for traveling to the Netherlands, beautiful with canals and tulips.",
+    currency: {
+      code: "EUR",
+      name: "유로",
+      nameEn: "Euro",
+      symbol: "€"
+    },
+    weather: {
+      cities: [
+        { name: "Amsterdam", nameKo: "암스테르담", link: "https://www.google.com/search?q=Amsterdam+weather" },
+        { name: "Rotterdam", nameKo: "로테르담", link: "https://www.google.com/search?q=Rotterdam+weather" },
+        { name: "The Hague", nameKo: "헤이그", link: "https://www.google.com/search?q=The+Hague+weather" }
+      ]
+    },
+    manners: [
+      {
+        title: "직설적인 대화 스타일",
+        description: "네덜란드인들은 매우 직접적이고 솔직한 대화를 선호합니다. 이는 무례함이 아니라 문화적 특성입니다. 정중하지만 직접적인 소통 방식을 이해하시기 바랍니다."
+      },
+      {
+        title: "팁 문화",
+        description: "네덜란드에서는 서비스 요금이 계산서에 포함되어 있어 팁이 필수는 아닙니다. 서비스에 만족했다면 소액의 팁(5~10%)을 남기는 것이 일반적입니다. 카페에서는 반올림 정도로 충분합니다."
+      },
+      {
+        title: "자전거 문화",
+        description: "네덜란드는 자전거 천국입니다. 자전거 도로를 존중하고, 자전거 경로를 침범하지 않도록 주의하세요. 자전거를 빌려 타는 경우 교통 규칙을 반드시 숙지하시기 바랍니다."
+      },
+      {
+        title: "공공장소 예의",
+        description: "공공장소에서 큰 소리로 통화하거나 소리지르는 것을 삼가세요. 조용한 대화를 선호하며, 특히 대중교통에서는 조용히 하는 것이 예의입니다."
+      },
+      {
+        title: "시간 엄수",
+        description: "네덜란드인들은 시간을 매우 중요하게 생각합니다. 약속 시간에 정확히 도착하는 것이 중요하며, 늦을 경우 미리 연락하는 것이 좋습니다."
+      },
+      {
+        title: "화장실 이용",
+        description: "네덜란드의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 지하철역의 화장실도 보통 유료입니다."
+      }
+    ],
+    souvenirs: [
+      {
+        title: "델프트 블루 도자기",
+        description: "네덜란드의 대표적인 도자기인 델프트 블루가 인기 기념품입니다. 전통적인 파란색 패턴의 도자기 제품들이 좋은 선물이 됩니다."
+      },
+      {
+        title: "튤립 구근",
+        description: "네덜란드의 상징인 튤립 구근이 인기입니다. 공항에서 구매할 수 있으며, 한국으로 반입 시 검역 규정을 확인하시기 바랍니다."
+      },
+      {
+        title: "치즈",
+        description: "고우다, 에담 등 네덜란드 치즈가 대표적인 기념품입니다. 다양한 종류와 맛을 만나볼 수 있습니다."
+      },
+      {
+        title: "클로그(나무신발)",
+        description: "전통적인 네덜란드 나무신발인 클로그가 인기입니다. 장식용이나 실용적인 제품 모두 구매할 수 있습니다."
+      },
+      {
+        title: "스트루프와플",
+        description: "네덜란드의 대표적인 과자인 스트루프와플이 좋은 선물이 됩니다. 다양한 맛과 포장 형태로 판매됩니다."
+      }
+    ],
+    market: [
+      {
+        title: "알버트 하인 마트",
+        description: "네덜란드의 대형 마트인 알버트 하인(Albert Heijn)에서 치즈, 유제품, 스트루프와플 등을 저렴하게 구매할 수 있습니다."
+      },
+      {
+        title: "약국 상비약",
+        description: "네덜란드 약국에서 구매 가능한 일반의약품들이 있습니다. 처방전 없이 구매 가능한 제품들을 찾을 수 있습니다."
+      },
+      {
+        title: "현지 베이커리",
+        description: "현지 베이커리에서 구매하는 전통 빵과 과자가 인기입니다. 네덜란드의 전통 빵 문화를 만나볼 수 있습니다."
+      },
+      {
+        title: "치즈 가게",
+        description: "전문 치즈 가게에서 다양한 네덜란드 치즈를 구매할 수 있습니다. 시식 후 구매할 수 있어 좋습니다."
+      },
+      {
+        title: "편의점 상품",
+        description: "편의점 커피, 에너지 음료, 여행 간식 등이 인기입니다. 네덜란드의 편의점은 다양한 상품을 판매합니다."
+      }
+    ],
+    essentials: [
+      {
+        title: "전기 어댑터",
+        description: "네덜란드는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+      },
+      {
+        title: "교통카드",
+        description: "OV-chipkaart를 구매하여 대중교통을 이용할 수 있습니다. 기차, 버스, 트램, 지하철 모두 사용 가능하며, 편의점이나 역에서 구매 및 충전할 수 있습니다."
+      },
+      {
+        title: "인터넷 연결",
+        description: "유럽 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. 네덜란드는 WiFi가 잘 발달되어 있어 많은 곳에서 무료 WiFi를 이용할 수 있습니다."
+      },
+      {
+        title: "자전거 대여",
+        description: "네덜란드 여행 시 자전거를 대여하는 것이 좋습니다. 많은 도시에서 자전거 대여 서비스를 제공하며, 현지인처럼 자전거로 이동할 수 있습니다."
+      },
+      {
+        title: "여행자 보험",
+        description: "의료비, 도난, 여행 지연 등을 보장하는 여행자 보험 가입을 권장합니다. 네덜란드는 의료비가 비싸므로 보험 가입이 중요합니다."
+      },
+      {
+        title: "여행하기 좋은 시기",
+        description: "네덜란드는 봄(4~5월)과 여름(6~8월)이 가장 여행하기 좋은 시기입니다. 봄에는 튤립 축제가 열리고, 여름에는 날씨가 따뜻하여 야외 활동을 즐기기 좋습니다. 가을(9~10월)과 겨울(12~2월)은 비가 많고 날씨가 흐리지만, 실내 관광지가 많아 여행하기 좋습니다."
+      }
+    ],
+    mannersEn: [
+      {
+        title: "Direct Communication Style",
+        description: "Dutch people prefer very direct and honest conversations. This is not rudeness but a cultural characteristic. Understand that they communicate politely but directly."
+      },
+      {
+        title: "Tipping Culture",
+        description: "In the Netherlands, service charges are included in the bill, so tipping is not mandatory. If you're satisfied with the service, leaving a small tip (5~10%) is common. At cafes, rounding up is sufficient."
+      },
+      {
+        title: "Bicycle Culture",
+        description: "The Netherlands is a cycling paradise. Respect bicycle lanes and be careful not to encroach on bicycle paths. If you rent a bicycle, make sure to understand traffic rules."
+      },
+      {
+        title: "Public Place Etiquette",
+        description: "Avoid making phone calls or shouting loudly in public places. They prefer quiet conversations, especially on public transportation."
+      },
+      {
+        title: "Punctuality",
+        description: "Dutch people value time very highly. It's important to arrive exactly on time for appointments, and it's good to contact in advance if you're going to be late."
+      },
+      {
+        title: "Restroom Usage",
+        description: "Public restrooms in the Netherlands are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. Subway station restrooms are usually paid as well."
+      }
+    ],
+    souvenirsEn: [
+      {
+        title: "Delft Blue Pottery",
+        description: "Delft Blue, the representative pottery of the Netherlands, is a popular souvenir. Traditional blue-patterned pottery products make great gifts."
+      },
+      {
+        title: "Tulip Bulbs",
+        description: "Tulip bulbs, a symbol of the Netherlands, are popular. You can purchase them at the airport, but check quarantine regulations when importing to Korea."
+      },
+      {
+        title: "Cheese",
+        description: "Dutch cheeses like Gouda and Edam are representative souvenirs. You can find various types and flavors."
+      },
+      {
+        title: "Clogs (Wooden Shoes)",
+        description: "Traditional Dutch wooden shoes called clogs are popular. You can purchase both decorative and practical products."
+      },
+      {
+        title: "Stroopwafels",
+        description: "Stroopwafels, a representative Dutch cookie, make great gifts. They're sold in various flavors and packaging."
+      }
+    ],
+    marketEn: [
+      {
+        title: "Albert Heijn Market",
+        description: "You can purchase cheese, dairy products, and stroopwafels at affordable prices at Albert Heijn, a large Dutch supermarket."
+      },
+      {
+        title: "Pharmacy Products",
+        description: "There are over-the-counter medicines available at Dutch pharmacies. You can find products available without a prescription."
+      },
+      {
+        title: "Local Bakeries",
+        description: "Traditional breads and sweets from local bakeries are popular. You can experience traditional Dutch bread culture."
+      },
+      {
+        title: "Cheese Shops",
+        description: "You can purchase various Dutch cheeses at specialty cheese shops. It's great because you can try before buying."
+      },
+      {
+        title: "Convenience Store Products",
+        description: "Convenience store coffee, energy drinks, and travel snacks are popular. Dutch convenience stores sell a variety of products."
+      }
+    ],
+    essentialsEn: [
+      {
+        title: "Electrical Adapter",
+        description: "The Netherlands uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+      },
+      {
+        title: "Transportation Card",
+        description: "You can purchase an OV-chipkaart to use public transportation. It works on trains, buses, trams, and subways, and can be purchased and recharged at convenience stores or stations."
+      },
+      {
+        title: "Internet Connection",
+        description: "You can pre-purchase a European eSIM or buy a local SIM at the airport. The Netherlands has well-developed WiFi, so you can use free WiFi in many places."
+      },
+      {
+        title: "Bicycle Rental",
+        description: "It's good to rent a bicycle when traveling in the Netherlands. Many cities offer bicycle rental services, allowing you to travel like locals."
+      },
+      {
+        title: "Travel Insurance",
+        description: "It's recommended to purchase travel insurance that covers medical, theft, and travel delay. Medical costs in the Netherlands are expensive, so insurance is important."
+      },
+      {
+        title: "Best Time to Visit",
+        description: "The Netherlands is best visited in spring (April-May) and summer (June-August). Spring features tulip festivals, and summer has warm weather perfect for outdoor activities. Autumn (September-October) and winter (December-February) are rainy and cloudy, but there are many indoor attractions making it good for travel."
+      }
+    ],
+    phrases: phraseSets.dutch
   }
 ];
 
@@ -3710,28 +3932,67 @@ function speakPhrase(text, languageCode) {
     speechSynthesis.cancel();
     
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.9;
-    utterance.pitch = 1;
+    // 자연스러운 여성 목소리를 위한 설정
+    utterance.rate = 0.95; // 약간 빠른 속도로 자연스럽게
+    utterance.pitch = 1.0; // 중간 톤
+    utterance.volume = 1.0;
     
-    // 사용 가능한 voice 중에서 해당 언어의 voice 찾기
+    // 자연스러운 여성 목소리 찾기 함수
+    const findFemaleVoice = (voices, langCode, langPrefix) => {
+      // 1순위: 정확한 언어 코드 + 여성 목소리
+      let voice = voices.find((v) => {
+        const isCorrectLang = v.lang === langCode || v.lang.startsWith(langPrefix + "-");
+        const isFemale = v.name.toLowerCase().includes("female") || 
+                        v.name.toLowerCase().includes("woman") ||
+                        v.name.toLowerCase().includes("samantha") ||
+                        v.name.toLowerCase().includes("karen") ||
+                        v.name.toLowerCase().includes("zira") ||
+                        v.name.toLowerCase().includes("yuna") ||
+                        v.name.toLowerCase().includes("sora") ||
+                        (v.gender && v.gender === "female");
+        return isCorrectLang && isFemale;
+      });
+      
+      // 2순위: 언어 prefix + 여성 목소리
+      if (!voice) {
+        voice = voices.find((v) => {
+          const isCorrectLang = v.lang.startsWith(langPrefix);
+          const isFemale = v.name.toLowerCase().includes("female") || 
+                          v.name.toLowerCase().includes("woman") ||
+                          v.name.toLowerCase().includes("samantha") ||
+                          v.name.toLowerCase().includes("karen") ||
+                          v.name.toLowerCase().includes("zira") ||
+                          v.name.toLowerCase().includes("yuna") ||
+                          v.name.toLowerCase().includes("sora") ||
+                          (v.gender && v.gender === "female");
+          return isCorrectLang && isFemale;
+        });
+      }
+      
+      // 3순위: 정확한 언어 코드 (여성 우선, 없으면 아무거나)
+      if (!voice) {
+        voice = voices.find(
+          (v) => v.lang === langCode || v.lang.startsWith(langPrefix + "-")
+        );
+      }
+      
+      // 4순위: 언어 prefix만 일치
+      if (!voice) {
+        voice = voices.find((v) => v.lang.startsWith(langPrefix));
+      }
+      
+      return voice;
+    };
+    
     const voices = speechSynthesis.getVoices();
     const langPrefix = languageCode.split("-")[0];
     
-    // 정확한 언어 코드 또는 언어 prefix로 voice 찾기
-    let preferredVoice = voices.find(
-      (voice) => voice.lang === languageCode || voice.lang.startsWith(langPrefix + "-")
-    );
-    
-    // 없으면 언어 prefix만으로 찾기
-    if (!preferredVoice) {
-      preferredVoice = voices.find((voice) => voice.lang.startsWith(langPrefix));
-    }
+    let preferredVoice = findFemaleVoice(voices, languageCode, langPrefix);
     
     if (preferredVoice) {
       utterance.voice = preferredVoice;
       utterance.lang = preferredVoice.lang;
     } else {
-      // fallback: 언어 prefix만 사용
       utterance.lang = langPrefix;
     }
     
@@ -3739,12 +4000,8 @@ function speakPhrase(text, languageCode) {
     if (voices.length === 0) {
       const trySpeak = () => {
         const updatedVoices = speechSynthesis.getVoices();
-        let updatedVoice = updatedVoices.find(
-          (voice) => voice.lang === languageCode || voice.lang.startsWith(langPrefix + "-")
-        );
-        if (!updatedVoice) {
-          updatedVoice = updatedVoices.find((voice) => voice.lang.startsWith(langPrefix));
-        }
+        const updatedVoice = findFemaleVoice(updatedVoices, languageCode, langPrefix);
+        
         if (updatedVoice) {
           utterance.voice = updatedVoice;
           utterance.lang = updatedVoice.lang;

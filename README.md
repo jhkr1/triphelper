@@ -1,10 +1,63 @@
-# TripHelper - AI Powered Travel Concierge
+<div align="center">
 
-여행 준비를 위한 맞춤형 가이드: 필수 매너, 기념품, 현지 추천템, 필수 회화까지 한 곳에서 확인하세요.
+# ✈️ TripHelper
 
-## 🚀 배포 방법
+### AI Powered Travel Concierge | 여행 도우미
 
-### 방법 1: Netlify (가장 간단)
+**당신의 다음 여정을 위한 맞춤형 인사이트와 준비 리스트**
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
+</div>
+
+---
+
+## 🌟 소개
+
+**TripHelper**는 여행 준비를 위한 올인원 가이드입니다. 목적지를 검색하면 필수 매너부터 회화까지 한 곳에서 확인할 수 있어요.
+
+### 주요 기능
+
+- 🌍 **16개 국가 정보 제공** - 한국, 일본, 프랑스, 스페인, 미국, 이탈리아, 터키, 멕시코, 영국, 독일, 그리스, 오스트리아, 중국, 캐나다, 헝가리, 스위스
+- 💱 **실시간 환율 정보** - 최신 환율 조회 및 환율 계산기
+- 📈 **환율 추이 차트** - 과거 환율 데이터를 시각화하여 제공
+- 🌤️ **실시간 날씨 정보** - 목적지의 현재 날씨와 상세 정보
+- 📝 **필수 매너 & 팁** - 현지 문화와 예절 가이드
+- 🛍️ **기념품 추천** - 꼭 사야 할 기념품 리스트
+- 🏪 **현지 마트/약국 추천템** - 실용적인 현지 상품 정보
+- 🎒 **여행 준비 필수템** - 전기 어댑터, 교통카드, 인터넷 등
+- 💬 **필수 회화** - 발음과 뜻이 포함된 실용 회화 표현
+- 🌙 **다크 모드** - 눈의 피로를 줄이는 다크 테마 지원
+- 🌐 **다국어 지원** - 한국어/영어 자유 전환
+- 📱 **반응형 디자인** - 모바일, 태블릿, 데스크톱 모든 기기 지원
+
+---
+
+## 🚀 빠른 시작
+
+### 로컬에서 실행하기
+
+1. 저장소 클론 또는 다운로드
+```bash
+git clone https://github.com/your-username/TripHelper.git
+cd TripHelper
+```
+
+2. 웹 서버 실행 (선택사항)
+   - Python 3: `python -m http.server 8000`
+   - Node.js: `npx serve`
+   - 또는 브라우저에서 `index.html` 직접 열기
+
+3. 브라우저에서 `http://localhost:8000` 접속
+
+### 배포하기
+
+이 프로젝트는 순수 정적 사이트이므로 다양한 플랫폼에 쉽게 배포할 수 있습니다.
+
+#### Netlify (추천)
 
 1. [Netlify](https://www.netlify.com/)에 가입
 2. "Add new site" → "Deploy manually" 클릭
@@ -16,71 +69,125 @@
 2. Netlify에서 "Import from Git" 선택
 3. 저장소 연결 후 자동 배포
 
-### 방법 2: Vercel
-
-1. [Vercel](https://vercel.com/)에 가입
-2. "Add New Project" 클릭
-3. GitHub 저장소 연결 또는 폴더 업로드
-4. 자동 배포 완료
-
-### 방법 3: GitHub Pages
+#### GitHub Pages
 
 1. GitHub에 저장소 생성
 2. Settings → Pages
 3. Source를 "main" 브랜치로 설정
 4. 저장 후 `https://[username].github.io/[repository-name]` 접속
 
-### 방법 4: Cloudflare Pages
+#### Cloudflare Pages
 
 1. [Cloudflare Pages](https://pages.cloudflare.com/) 접속
 2. "Create a project" 클릭
 3. Git 저장소 연결 또는 직접 업로드
 4. 배포 완료
 
+---
+
 ## 📁 프로젝트 구조
 
 ```
 TripHelper/
 ├── index.html          # 메인 HTML 파일
-├── script.js           # JavaScript 로직
+├── script.js           # JavaScript 로직 및 데이터
 ├── styles.css          # 스타일시트
 ├── Gemini_Generated_Image_vosqf0vosqf0vosq-Photoroom.png  # 로고 이미지
-└── README.md          # 이 파일
+├── README.md          # 이 파일
+├── ADSENSE_GUIDE.md   # Google AdSense 설정 가이드
+└── DEPLOY.md          # 배포 가이드
 ```
 
-## ✨ 기능
+---
 
-- 🌍 16개 국가 여행 정보 제공
-- 💱 실시간 환율 정보 및 계산기
-- 🌤️ 실시간 날씨 정보
-- 🌙 다크 모드 지원
-- 🌐 한국어/영어 다국어 지원
-- 📱 반응형 디자인
+## 🛠️ 기술 스택
 
-## 🔧 기술 스택
+- **Frontend**: 순수 HTML5, CSS3, JavaScript (Vanilla JS)
+- **API**:
+  - [Open-Meteo API](https://open-meteo.com/) - 날씨 정보
+  - [ExchangeRate-API](https://www.exchangerate-api.com/) - 환율 정보
+- **폰트**: Noto Sans KR, Plus Jakarta Sans, Manrope
+- **아이콘**: 이모지 기반
 
-- 순수 HTML/CSS/JavaScript
-- Open-Meteo API (날씨)
-- ExchangeRate-API (환율)
+---
 
-## 📝 배포 전 체크리스트
+## ✨ 사용 방법
 
-- [x] 코드 최적화 완료
-- [x] 보안 검토 완료 (XSS 방지)
-- [x] SEO 메타 태그 설정
-- [x] 반응형 디자인 확인
-- [ ] 도메인 설정 (선택사항)
-- [ ] Google Analytics 추가 (선택사항)
+1. **목적지 검색**: 검색창에 여행하고 싶은 국가를 입력하세요
+   - 예: "한국", "일본", "프랑스", "Korea", "Japan", "France"
 
-## 🌐 커스텀 도메인 설정
+2. **정보 확인**: 검색 결과에서 다음 정보를 확인할 수 있습니다:
+   - 💱 실시간 환율 및 환율 계산기
+   - 🌤️ 현재 날씨 정보
+   - 📝 필수 매너 & 팁
+   - 🛍️ 꼭 사야 할 기념품
+   - 🏪 현지 마트/약국 추천템
+   - 🎒 여행 준비 필수템
+   - 💬 필수 회화 (발음 포함)
 
-배포 후 도메인을 연결하려면:
-1. 도메인 구매 (예: Namecheap, GoDaddy)
-2. 배포 플랫폼에서 도메인 설정
-3. DNS 레코드 추가
-4. SSL 인증서 자동 발급 (대부분 플랫폼에서 자동)
+3. **다크 모드**: 우측 상단의 🌙 버튼으로 다크 모드 전환
+
+4. **언어 전환**: 우측 상단의 🌐 버튼으로 한국어/영어 전환
+
+---
+
+## 🌍 지원 국가 (16개)
+
+| 국가 | 국가 | 국가 | 국가 |
+|------|------|------|------|
+| 🇰🇷 한국 | 🇯🇵 일본 | 🇫🇷 프랑스 | 🇪🇸 스페인 |
+| 🇺🇸 미국 | 🇮🇹 이탈리아 | 🇹🇷 터키 | 🇲🇽 멕시코 |
+| 🇬🇧 영국 | 🇩🇪 독일 | 🇬🇷 그리스 | 🇦🇹 오스트리아 |
+| 🇨🇳 중국 | 🇨🇦 캐나다 | 🇭🇺 헝가리 | 🇨🇭 스위스 |
+
+---
+
+## 🎨 주요 특징
+
+### 실시간 데이터
+- 환율 정보는 실시간으로 업데이트됩니다
+- 날씨 정보는 Open-Meteo API를 통해 최신 데이터를 제공합니다
+
+### 사용자 경험
+- 깔끔하고 직관적인 인터페이스
+- 빠른 검색 및 로딩 속도
+- 모바일 친화적 디자인
+
+### 접근성
+- 키보드 네비게이션 지원
+- 스크린 리더 호환
+- 시맨틱 HTML 구조
+
+---
+
+## 📝 라이선스
+
+이 프로젝트는 MIT 라이선스를 따릅니다.
+
+---
+
+## 🤝 기여하기
+
+버그 리포트, 기능 제안, Pull Request를 환영합니다!
+
+1. 이 저장소를 Fork하세요
+2. 기능 브랜치를 생성하세요 (`git checkout -b feature/AmazingFeature`)
+3. 변경사항을 커밋하세요 (`git commit -m 'Add some AmazingFeature'`)
+4. 브랜치에 Push하세요 (`git push origin feature/AmazingFeature`)
+5. Pull Request를 열어주세요
+
+---
 
 ## 📧 문의
 
 문제가 발생하거나 질문이 있으시면 이슈를 등록해주세요.
 
+---
+
+<div align="center">
+
+**© 2025 TripHelper. 여행의 모든 순간을 함께합니다.** ✈️
+
+Made with ❤️ for travelers around the world
+
+</div>

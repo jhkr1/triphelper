@@ -862,7 +862,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "프랑스는 콘센트 타입 C/E (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "프랑스는 콘센트 타입 C/E (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "인터넷 연결",
@@ -964,7 +964,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "France uses Type C/E plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "France uses Type C/E plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Internet Connection",
@@ -1103,7 +1103,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "스페인은 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "스페인은 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통 예약",
@@ -1209,7 +1209,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Spain uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Spain uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Booking",
@@ -1581,7 +1581,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "이탈리아는 콘센트 타입 C/F/L (230V, 50Hz)를 사용합니다. L 타입 멀티어댑터를 추천하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "이탈리아는 콘센트 타입 C/F/L (230V, 50Hz)를 사용합니다. L 타입 멀티어댑터를 추천하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통 예약",
@@ -1687,7 +1687,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Italy uses Type C/F/L plugs (230V, 50Hz). A Type L multi-adapter is recommended. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Italy uses Type C/F/L plugs (230V, 50Hz). A Type L multi-adapter is recommended. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Booking",
@@ -1822,7 +1822,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "터키는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "터키는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -1924,7 +1924,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Turkey uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Turkey uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",
@@ -1985,7 +1985,7 @@ const destinations = [
     manners: [
       {
         title: "팁 문화",
-        description: "레스토랑에서는 10~15% 팁이 일반적이고, 카드 결제 시 팁 입력 가능 여부를 확인하시기 바랍니다. 서비스가 좋았으면 추가 팁을 주는 것이 예의입니다."
+        description: "멕시코에서는 레스토랑에서 10~15% 팁이 일반적이고, 카드 결제 시 팁 입력 가능 여부를 확인하시기 바랍니다. 서비스가 좋았으면 추가 팁을 주는 것이 예의입니다. 택시는 요금 반올림 정도로 충분하며, 호텔 벨보이에게는 가방당 20~50 페소, 하우스키핑에는 하루 20~50 페소 정도가 일반적입니다."
       },
       {
         title: "택시 및 투어 팁",
@@ -2055,7 +2055,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "멕시코는 콘센트 타입 A/B (127V, 60Hz)를 사용합니다. 미국과 동일한 플러그를 사용하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "멕시코는 콘센트 타입 A/B (127V, 60Hz)를 사용합니다. 미국과 동일한 플러그를 사용하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "입국 서류",
@@ -2083,7 +2083,7 @@ const destinations = [
     mannersEn: [
       {
         title: "Tipping Culture",
-        description: "10-15% tipping is common in restaurants; check if tip can be entered when paying by card. It's polite to leave additional tips if the service was good."
+        description: "In Mexico, 10-15% tipping is common in restaurants; check if tip can be entered when paying by card. It's polite to leave additional tips if the service was good. Rounding up for taxis is sufficient. For hotel bellboys, 20~50 pesos per bag and 20~50 pesos per day for housekeeping are typical."
       },
       {
         title: "Taxi and Tour Tips",
@@ -2153,7 +2153,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Mexico uses Type A/B plugs (127V, 60Hz). It uses the same plugs as the United States. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Mexico uses Type A/B plugs (127V, 60Hz). It uses the same plugs as the United States. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Entry Documents",
@@ -2288,7 +2288,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "영국은 콘센트 타입 G (230V, 50Hz)를 사용합니다. 영국 전용 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "영국은 콘센트 타입 G (230V, 50Hz)를 사용합니다. 영국 전용 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -2394,7 +2394,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "The UK uses Type G plugs (230V, 50Hz). You'll need a UK-specific plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "The UK uses Type G plugs (230V, 50Hz). You'll need a UK-specific plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",
@@ -2459,7 +2459,7 @@ const destinations = [
       },
       {
         title: "팁 문화",
-        description: "식당에서는 5~10% 팁을 현금으로 건네거나 카드 결제 시 추가하는 것이 일반적입니다. 서비스가 좋았으면 추가 팁을 주는 것이 예의입니다."
+        description: "독일에서는 식당에서 5~10% 팁을 현금으로 건네거나 카드 결제 시 추가하는 것이 일반적입니다. 서비스가 좋았으면 추가 팁을 주는 것이 예의입니다. 택시는 요금 반올림 정도로 충분하며, 호텔 벨보이에게는 가방당 1~2유로, 하우스키핑에는 하루 1~2유로 정도가 일반적입니다."
       },
       {
         title: "쓰레기 분리수거",
@@ -2525,7 +2525,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "독일은 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "독일은 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통 예약",
@@ -2565,7 +2565,7 @@ const destinations = [
       },
       {
         title: "Tipping Culture",
-        description: "Restaurant tips are 5-10%, given in cash or added to card payment. It's polite to leave additional tips if the service was good."
+        description: "In Germany, restaurant tips are 5-10%, given in cash or added to card payment. It's polite to leave additional tips if the service was good. Rounding up for taxis is sufficient. For hotel bellboys, 1~2 euros per bag and 1~2 euros per day for housekeeping are typical."
       },
       {
         title: "Waste Separation",
@@ -2631,7 +2631,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Germany uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Germany uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Booking",
@@ -2696,7 +2696,7 @@ const destinations = [
     manners: [
       {
         title: "팁 문화",
-        description: "레스토랑 팁은 5~10% 정도, 현금으로 남기는 것이 일반적입니다. 서비스가 좋았으면 추가 팁을 주는 것이 예의입니다."
+        description: "그리스에서는 레스토랑 팁은 5~10% 정도, 현금으로 남기는 것이 일반적입니다. 서비스가 좋았으면 추가 팁을 주는 것이 예의입니다. 택시는 요금 반올림 정도로 충분하며, 호텔 벨보이에게는 가방당 1유로, 하우스키핑에는 하루 1유로 정도가 일반적입니다."
       },
       {
         title: "교회/수도원 방문",
@@ -2766,7 +2766,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "그리스는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "그리스는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "페리 예약",
@@ -2802,7 +2802,7 @@ const destinations = [
     mannersEn: [
       {
         title: "Tipping Culture",
-        description: "Restaurant tips are typically 5-10%, usually left in cash. It's polite to leave additional tips if the service was good."
+        description: "In Greece, restaurant tips are typically 5-10%, usually left in cash. It's polite to leave additional tips if the service was good. Rounding up for taxis is sufficient. For hotel bellboys, 1 euro per bag and 1 euro per day for housekeeping are typical."
       },
       {
         title: "Church/Monastery Visits",
@@ -2872,7 +2872,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Greece uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Greece uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Ferry Booking",
@@ -2941,7 +2941,7 @@ const destinations = [
       },
       {
         title: "팁 문화",
-        description: "레스토랑 팁은 5~10% 정도, 카드 결제 시 금액을 말로 알려주는 것이 일반적입니다. 서비스가 좋았으면 추가 팁을 주는 것이 예의입니다."
+        description: "오스트리아에서는 레스토랑 팁은 5~10% 정도, 카드 결제 시 금액을 말로 알려주는 것이 일반적입니다. 서비스가 좋았으면 추가 팁을 주는 것이 예의입니다. 택시는 요금 반올림 정도로 충분하며, 호텔 벨보이에게는 가방당 1~2유로, 하우스키핑에는 하루 1~2유로 정도가 일반적입니다."
       },
       {
         title: "대중교통 이용",
@@ -3007,7 +3007,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "오스트리아는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "오스트리아는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통 예약",
@@ -3047,7 +3047,7 @@ const destinations = [
       },
       {
         title: "Tipping Culture",
-        description: "Restaurant tips are 5-10%; verbally state the amount when paying by card. It's polite to leave additional tips if the service was good."
+        description: "In Austria, restaurant tips are 5-10%; verbally state the amount when paying by card. It's polite to leave additional tips if the service was good. Rounding up for taxis is sufficient. For hotel bellboys, 1~2 euros per bag and 1~2 euros per day for housekeeping are typical."
       },
       {
         title: "Public Transportation",
@@ -3113,7 +3113,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Austria uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Austria uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Booking",
@@ -3248,7 +3248,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "중국은 콘센트 타입 A/C/I (220V, 50Hz)를 사용합니다. 멀티어댑터를 준비하는 것이 좋으며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "중국은 콘센트 타입 A/C/I (220V, 50Hz)를 사용합니다. 멀티어댑터를 준비하는 것이 좋으며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "결제 시스템",
@@ -3354,7 +3354,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "China uses Type A/C/I plugs (220V, 50Hz). It's good to prepare a multi-adapter. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "China uses Type A/C/I plugs (220V, 50Hz). It's good to prepare a multi-adapter. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Payment System",
@@ -3489,7 +3489,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "캐나다는 콘센트 타입 A/B (120V, 60Hz)를 사용합니다. 미국과 동일한 플러그를 사용하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "캐나다는 콘센트 타입 A/B (120V, 60Hz)를 사용합니다. 미국과 동일한 플러그를 사용하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "입국 서류",
@@ -3591,7 +3591,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Canada uses Type A/B plugs (120V, 60Hz). It uses the same plugs as the United States. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Canada uses Type A/B plugs (120V, 60Hz). It uses the same plugs as the United States. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Entry Documents",
@@ -3720,7 +3720,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "헝가리는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "헝가리는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통 예약",
@@ -3822,7 +3822,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Hungary uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Hungary uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Booking",
@@ -3953,7 +3953,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "스위스는 콘센트 타입 C/J (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, J형 플러그는 스위스 전용입니다. 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "스위스는 콘센트 타입 C/J (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, J형 플러그는 스위스 전용입니다. 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통 예약",
@@ -4055,7 +4055,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Switzerland uses Type C/J plugs (230V, 50Hz). You'll need a European-style plug. Type J plugs are specific to Switzerland. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Switzerland uses Type C/J plugs (230V, 50Hz). You'll need a European-style plug. Type J plugs are specific to Switzerland. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Booking",
@@ -4186,7 +4186,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "네덜란드는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "네덜란드는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -4288,7 +4288,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "The Netherlands uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "The Netherlands uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",
@@ -4419,7 +4419,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "포르투갈은 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "포르투갈은 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -4517,7 +4517,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Portugal uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Portugal uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",
@@ -4644,7 +4644,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "필리핀은 콘센트 타입 A/B/C (220V, 60Hz)를 사용합니다. 미국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "필리핀은 콘센트 타입 A/B/C (220V, 60Hz)를 사용합니다. 미국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -4746,7 +4746,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "The Philippines uses Type A/B/C plugs (220V, 60Hz). You'll need a US-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "The Philippines uses Type A/B/C plugs (220V, 60Hz). You'll need a US-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",
@@ -4807,7 +4807,7 @@ const destinations = [
     manners: [
       {
         title: "팁 문화",
-        description: "베트남에서는 팁 문화가 일반적이지 않지만, 서비스에 만족했다면 소액의 팁을 남기는 것이 좋습니다. 레스토랑에서는 5~10% 정도, 택시에서는 반올림 정도로 충분합니다."
+        description: "베트남에서는 팁 문화가 일반적이지 않지만, 서비스에 만족했다면 소액의 팁을 남기는 것이 좋습니다. 레스토랑에서는 5~10% 정도, 택시에서는 반올림 정도로 충분합니다. 호텔 벨보이에게는 가방당 20,000~50,000동 정도의 팁을 주는 것이 좋습니다."
       },
       {
         title: "인사 예절",
@@ -4877,7 +4877,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "베트남은 콘센트 타입 A/C (220V, 50Hz)를 사용합니다. 미국식 또는 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "베트남은 콘센트 타입 A/C (220V, 50Hz)를 사용합니다. 미국식 또는 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -4909,7 +4909,7 @@ const destinations = [
     mannersEn: [
       {
         title: "Tipping Culture",
-        description: "Tipping is not common in Vietnam, but it's good to leave a small tip if you're satisfied with the service. About 5~10% at restaurants and rounding up for taxis is sufficient."
+        description: "Tipping is not common in Vietnam, but it's good to leave a small tip if you're satisfied with the service. About 5~10% at restaurants and rounding up for taxis is sufficient. For hotel bellboys, 20,000~50,000 dong per bag is good."
       },
       {
         title: "Greeting Etiquette",
@@ -4979,7 +4979,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Vietnam uses Type A/C plugs (220V, 50Hz). You'll need a US-style or European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Vietnam uses Type A/C plugs (220V, 50Hz). You'll need a US-style or European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",
@@ -5040,7 +5040,7 @@ const destinations = [
     manners: [
       {
         title: "팁 문화",
-        description: "호주에서는 팁 문화가 일반적이지 않습니다. 레스토랑에서 서비스에 만족했다면 10% 정도의 팁을 남길 수 있지만, 필수는 아닙니다. 택시에서는 반올림 정도로 충분합니다."
+        description: "호주에서는 팁 문화가 일반적이지 않습니다. 레스토랑에서 서비스에 만족했다면 10% 정도의 팁을 남길 수 있지만, 필수는 아닙니다. 택시에서는 반올림 정도로 충분합니다. 호텔 벨보이에게는 가방당 AU$1~2 정도의 팁을 주는 경우가 있습니다."
       },
       {
         title: "인사 예절",
@@ -5110,7 +5110,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "호주는 콘센트 타입 I (240V, 50Hz)를 사용합니다. 3핀 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "호주는 콘센트 타입 I (240V, 50Hz)를 사용합니다. 3핀 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -5136,7 +5136,7 @@ const destinations = [
     mannersEn: [
       {
         title: "Tipping Culture",
-        description: "Tipping is not common in Australia. You can leave about 10% tip at restaurants if you're satisfied with the service, but it's not mandatory. Rounding up for taxis is sufficient."
+        description: "Tipping is not common in Australia. You can leave about 10% tip at restaurants if you're satisfied with the service, but it's not mandatory. Rounding up for taxis is sufficient. For hotel bellboys, AU$1~2 per bag is sometimes given."
       },
       {
         title: "Greeting Etiquette",
@@ -5206,7 +5206,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Australia uses Type I plugs (240V, 50Hz). You'll need a 3-pin plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Australia uses Type I plugs (240V, 50Hz). You'll need a 3-pin plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",
@@ -5267,7 +5267,7 @@ const destinations = [
     manners: [
       {
         title: "팁 문화",
-        description: "태국에서는 팁 문화가 일반적입니다. 레스토랑에서는 10% 정도, 택시에서는 반올림 정도로 충분합니다. 마사지나 스파에서는 50~100바트 정도의 팁을 주는 것이 좋습니다."
+        description: "태국에서는 팁 문화가 일반적입니다. 레스토랑에서는 10% 정도, 택시에서는 반올림 정도로 충분합니다. 마사지나 스파에서는 50~100바트 정도의 팁을 주는 것이 좋습니다. 호텔 벨보이에게는 가방당 20~50바트 정도의 팁을 주는 것이 좋습니다."
       },
       {
         title: "인사 예절",
@@ -5337,7 +5337,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "태국은 콘센트 타입 A/C (220V, 50Hz)를 사용합니다. 미국식 또는 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "태국은 콘센트 타입 A/C (220V, 50Hz)를 사용합니다. 미국식 또는 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -5363,7 +5363,7 @@ const destinations = [
     mannersEn: [
       {
         title: "Tipping Culture",
-        description: "Tipping is common in Thailand. About 10% at restaurants and rounding up for taxis is sufficient. For massages or spas, it's good to tip about 50~100 baht."
+        description: "Tipping is common in Thailand. About 10% at restaurants and rounding up for taxis is sufficient. For massages or spas, it's good to tip about 50~100 baht. For hotel bellboys, 20~50 baht per bag is good."
       },
       {
         title: "Greeting Etiquette",
@@ -5433,7 +5433,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Thailand uses Type A/C plugs (220V, 50Hz). You'll need a US-style or European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Thailand uses Type A/C plugs (220V, 50Hz). You'll need a US-style or European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",
@@ -5564,7 +5564,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "대만은 콘센트 타입 A (110V, 60Hz)를 사용합니다. 미국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "대만은 콘센트 타입 A (110V, 60Hz)를 사용합니다. 미국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -5660,7 +5660,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Taiwan uses Type A plugs (110V, 60Hz). You'll need a US-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Taiwan uses Type A plugs (110V, 60Hz). You'll need a US-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",
@@ -5721,7 +5721,7 @@ const destinations = [
     manners: [
       {
         title: "팁 문화",
-        description: "홍콩에서는 팁 문화가 일반적입니다. 레스토랑에서는 10% 정도의 팁을 남기는 것이 일반적이며, 택시에서는 반올림 정도로 충분합니다."
+        description: "홍콩에서는 팁 문화가 일반적입니다. 레스토랑에서는 10% 정도의 팁을 남기는 것이 일반적이며, 택시에서는 반올림 정도로 충분합니다. 호텔 벨보이에게는 가방당 HK$10~20 정도의 팁을 주는 것이 좋습니다."
       },
       {
         title: "인사 예절",
@@ -5787,7 +5787,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "홍콩은 콘센트 타입 G (220V, 50Hz)를 사용합니다. 영국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "홍콩은 콘센트 타입 G (220V, 50Hz)를 사용합니다. 영국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -5819,7 +5819,7 @@ const destinations = [
     mannersEn: [
       {
         title: "Tipping Culture",
-        description: "Tipping is common in Hong Kong. It's common to leave about 10% tip at restaurants, and rounding up for taxis is sufficient."
+        description: "Tipping is common in Hong Kong. It's common to leave about 10% tip at restaurants, and rounding up for taxis is sufficient. For hotel bellboys, HK$10~20 per bag is good."
       },
       {
         title: "Greeting Etiquette",
@@ -5889,7 +5889,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Hong Kong uses Type G plugs (220V, 50Hz). You'll need a UK-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Hong Kong uses Type G plugs (220V, 50Hz). You'll need a UK-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",
@@ -5952,7 +5952,7 @@ const destinations = [
       },
       {
         title: "팁 문화",
-        description: "싱가포르에서는 팁 문화가 일반적이지 않습니다. 대부분의 레스토랑과 호텔에는 서비스 요금이 포함되어 있습니다. 택시에서는 반올림 정도로 충분합니다."
+        description: "싱가포르에서는 팁 문화가 일반적이지 않습니다. 대부분의 레스토랑과 호텔에는 서비스 요금이 포함되어 있습니다. 택시에서는 반올림 정도로 충분합니다. 고급 호텔에서는 벨보이에게 소액의 팁을 주는 경우가 있습니다."
       },
       {
         title: "교통 예의",
@@ -5990,7 +5990,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "싱가포르는 콘센트 타입 G (230V, 50Hz)를 사용합니다. 영국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "싱가포르는 콘센트 타입 G (230V, 50Hz)를 사용합니다. 영국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "인터넷 연결",
@@ -6044,11 +6044,11 @@ const destinations = [
     manners: [
       {
         title: "종교적 예의",
-        description: "말레이시아는 이슬람 국가이므로 모스크 방문 시 적절한 복장을 하고, 라마단 기간에는 공공장소에서 식사나 음주를 삼가야 합니다. 특히 여성은 머리와 어깨를 가리는 스카프를 준비하는 것이 좋습니다."
+        description: "말레이시아는 이슬람을 국교로 가진 다종교 국가입니다. 모스크 방문 시 적절한 복장을 하고, 라마단 기간에는 공공장소에서 식사나 음주를 하는 것을 문화적 배려 차원에서 피하는 것이 좋습니다. 특히 여성은 모스크 방문 시 머리와 어깨를 가리는 스카프를 준비하는 것이 좋습니다."
       },
       {
         title: "팁 문화",
-        description: "말레이시아에서는 팁 문화가 일반적이지 않지만, 서비스가 좋았으면 소액의 팁을 남기는 것이 좋습니다. 레스토랑에서는 5~10% 정도, 택시에서는 반올림 정도로 충분합니다."
+        description: "말레이시아에서는 팁 문화가 일반적이지 않지만, 서비스가 좋았으면 소액의 팁을 남기는 것이 좋습니다. 레스토랑에서는 5~10% 정도, 택시에서는 반올림 정도로 충분합니다. 호텔 벨보이에게는 가방당 5~10 링깃 정도의 팁을 주는 것이 좋습니다."
       },
       {
         title: "인사 예절",
@@ -6114,7 +6114,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "말레이시아는 콘센트 타입 G (230V, 50Hz)를 사용합니다. 영국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "말레이시아는 콘센트 타입 G (230V, 50Hz)를 사용합니다. 영국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -6146,11 +6146,11 @@ const destinations = [
     mannersEn: [
       {
         title: "Religious Etiquette",
-        description: "Malaysia is an Islamic country, so dress appropriately when visiting mosques, and avoid eating or drinking in public places during Ramadan. Women should especially prepare a scarf to cover their head and shoulders."
+        description: "Malaysia is a multi-religious country with Islam as the state religion. Dress appropriately when visiting mosques, and it's good to avoid eating or drinking in public places during Ramadan as a cultural consideration. Women should especially prepare a scarf to cover their head and shoulders when visiting mosques."
       },
       {
         title: "Tipping Culture",
-        description: "Tipping is not common in Malaysia, but it's good to leave a small tip if the service was good. About 5~10% at restaurants and rounding up for taxis is sufficient."
+        description: "Tipping is not common in Malaysia, but it's good to leave a small tip if the service was good. About 5~10% at restaurants and rounding up for taxis is sufficient. For hotel bellboys, 5~10 ringgit per bag is good."
       },
       {
         title: "Greeting Etiquette",
@@ -6216,7 +6216,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Malaysia uses Type G plugs (230V, 50Hz). UK-style plugs are needed. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Malaysia uses Type G plugs (230V, 50Hz). UK-style plugs are needed. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",
@@ -6276,7 +6276,7 @@ const destinations = [
     manners: [
       {
         title: "종교적 예의",
-        description: "인도네시아는 이슬람 국가이므로 모스크 방문 시 적절한 복장을 하고, 라마단 기간에는 공공장소에서 식사를 삼가야 합니다. 특히 발리와 같은 힌두교 지역에서는 다른 예의가 적용될 수 있으므로 지역별 문화를 확인하는 것이 좋습니다."
+        description: "인도네시아는 다수의 무슬림이 거주하는 다종교 국가입니다. 모스크 방문 시 적절한 복장을 하고, 라마단 기간에는 공공장소에서 식사를 하는 것을 문화적 배려 차원에서 피하는 것이 좋습니다. 특히 발리와 같은 힌두교 지역에서는 다른 예의가 적용될 수 있으므로 지역별 문화를 확인하는 것이 좋습니다."
       },
       {
         title: "팁 문화",
@@ -6346,7 +6346,7 @@ const destinations = [
     essentials: [
       {
         title: "전기 어댑터",
-        description: "인도네시아는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+        description: "인도네시아는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         title: "교통카드",
@@ -6378,7 +6378,7 @@ const destinations = [
     mannersEn: [
       {
         title: "Religious Etiquette",
-        description: "Indonesia is an Islamic country, so dress appropriately when visiting mosques, and avoid eating in public places during Ramadan. In Hindu regions like Bali, different etiquette may apply, so it's good to check regional cultures."
+        description: "Indonesia is a multi-religious country with a large Muslim population. Dress appropriately when visiting mosques, and it's good to avoid eating in public places during Ramadan as a cultural consideration. In Hindu regions like Bali, different etiquette may apply, so it's good to check regional cultures."
       },
       {
         title: "Tipping Culture",
@@ -6448,7 +6448,7 @@ const destinations = [
     essentialsEn: [
       {
         title: "Electrical Adapter",
-        description: "Indonesia uses Type C/F plugs (230V, 50Hz). European-style plugs are needed. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+        description: "Indonesia uses Type C/F plugs (230V, 50Hz). European-style plugs are needed. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         title: "Transportation Card",

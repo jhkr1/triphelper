@@ -11,10 +11,13 @@ const translations = {
     "results.noResult": "'{query}'에 대한 정보를 찾지 못했어요.",
     "results.noResultTip": "목적지를 다시 확인하거나, TripHelper에 추가하고 싶은 나라를 알려주세요!",
     "results.available": "현재 {destinations} 정보를 제공 중이에요.",
+    "results.emptyInput": "입력된 내용이 없습니다",
     "sections.manners": "필수 매너 & 팁",
     "sections.souvenirs": "꼭 사야 할 기념품",
     "sections.market": "현지 마트/약국 추천템",
     "sections.essentials": "여행 준비 필수템",
+    "sections.visa": "비자 정보",
+    "sections.products": "추천 여행용품",
     "sections.phrases": "필수 회화",
     "footer.text": "© 2025 TripHelper. 여행의 모든 순간을 함께합니다.",
     "controls.darkMode": "다크 모드",
@@ -32,7 +35,8 @@ const translations = {
     "quickInfo.humidity": "습도",
     "quickInfo.windSpeed": "풍속",
     "quickInfo.rateTime": "기준 시간:",
-    "quickInfo.localTime": "현지 기준 시간:"
+    "quickInfo.localTime": "현지 기준 시간:",
+    "affiliate.disclosure": "이 게시물은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다."
   },
   en: {
     "hero.tagline": "Customized insights and preparation lists for your next journey.",
@@ -46,10 +50,13 @@ const translations = {
     "results.noResult": "Couldn't find information for '{query}'.",
     "results.noResultTip": "Please check the destination again, or let us know which country you'd like to add to TripHelper!",
     "results.available": "Currently providing information for {destinations}.",
+    "results.emptyInput": "No input provided",
     "sections.manners": "Essential Manners & Tips",
     "sections.souvenirs": "Must-Buy Souvenirs",
     "sections.market": "Local Market/Pharmacy Recommendations",
     "sections.essentials": "Travel Essentials",
+    "sections.visa": "Visa Information",
+    "sections.products": "Recommended Travel Products",
     "sections.phrases": "Essential Phrases",
     "footer.text": "© 2025 TripHelper. With you for every moment of your journey.",
     "controls.darkMode": "Dark Mode",
@@ -67,7 +74,8 @@ const translations = {
     "quickInfo.humidity": "Humidity",
     "quickInfo.windSpeed": "Wind Speed",
     "quickInfo.rateTime": "As of:",
-    "quickInfo.localTime": "Local time:"
+    "quickInfo.localTime": "Local time:",
+    "affiliate.disclosure": "This post contains affiliate links. We may receive a commission for purchases made through these links."
   }
 };
 
@@ -77,86 +85,215 @@ const phraseSets = {
     { source: "감사합니다", pronunciation: "감사합니다", pronunciationEn: "gam-sa-ham-ni-da", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "죄송합니다", pronunciation: "죄송합니다", pronunciationEn: "joe-song-ham-ni-da", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "이거 얼마예요?", pronunciation: "이거 얼마예요?", pronunciationEn: "ee-geo eol-ma-ye-yo?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "화장실이 어디예요?", pronunciation: "화장실이 어디예요?", pronunciationEn: "hwa-jang-sil-ee eo-di-ye-yo?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "화장실이 어디예요?", pronunciation: "화장실이 어디예요?", pronunciationEn: "hwa-jang-sil-ee eo-di-ye-yo?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "이것 좀 보여주세요", pronunciation: "이것 좀 보여주세요", pronunciationEn: "ee-geot jom bo-yeo-ju-se-yo", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "체크인 하려고 합니다", pronunciation: "체크인 하려고 합니다", pronunciationEn: "che-keu-in ha-ryeo-go ham-ni-da", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "체크아웃은 몇 시인가요?", pronunciation: "체크아웃은 몇 시인가요?", pronunciationEn: "che-keu-a-ut-eun myeot si-in-ga-yo?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ],
   japanese: [
     { source: "こんにちは", pronunciation: "곤니치와", pronunciationEn: "kon-ni-chi-wa", meaning: "안녕하세요.", meaningEn: "Hello." },
     { source: "ありがとうございます", pronunciation: "아리가또 고자이마스", pronunciationEn: "a-ri-ga-to go-za-i-ma-su", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "すみません", pronunciation: "스미마센", pronunciationEn: "su-mi-ma-sen", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "これはいくらですか?", pronunciation: "코레와 이쿠라 데스카?", pronunciationEn: "ko-re-wa i-ku-ra des-ka?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "トイレはどこですか?", pronunciation: "토이레와 도코 데스카?", pronunciationEn: "to-i-re-wa do-ko des-ka?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "トイレはどこですか?", pronunciation: "토이레와 도코 데스카?", pronunciationEn: "to-i-re-wa do-ko des-ka?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "これをみせてください", pronunciation: "코레오 미세테 쿠다사이", pronunciationEn: "ko-re-o mi-se-te ku-da-sa-i", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "チェックインをお願いします", pronunciation: "체크인오 오네가이시마스", pronunciationEn: "chek-ku-in o o-ne-ga-i-shi-ma-su", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "チェックアウトは何時ですか?", pronunciation: "체크아우토와 난지데스카?", pronunciationEn: "chek-ku-au-to wa nan-ji des-ka?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ],
   french: [
     { source: "Bonjour", pronunciation: "봉주르", pronunciationEn: "bon-ZHOOR", meaning: "안녕하세요.", meaningEn: "Hello." },
     { source: "Merci", pronunciation: "메르시", pronunciationEn: "mer-SEE", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "Désolé", pronunciation: "데졸레", pronunciationEn: "day-zo-LAY", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "C'est combien ?", pronunciation: "쎄 꽁비엉?", pronunciationEn: "say kom-BYAN?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "Où sont les toilettes ?", pronunciation: "우 송 레 뚜알레?", pronunciationEn: "oo song lay twa-LET?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "Où sont les toilettes ?", pronunciation: "우 송 레 뚜알레?", pronunciationEn: "oo song lay twa-LET?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "Je peux voir ça ?", pronunciation: "주 푸 브와 사?", pronunciationEn: "zhuh puh vwahr sah?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "Je voudrais faire l'enregistrement", pronunciation: "주 부드레 페르 랑레지스트르망", pronunciationEn: "zhuh voo-DRAY fair lahn-reh-zhis-truh-MAHN", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "À quelle heure est le check-out ?", pronunciation: "아 켈 뢰르 에 르 체크아웃?", pronunciationEn: "ah kel uhr ay luh chek-owt?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ],
   spanish: [
     { source: "Hola", pronunciation: "올라", pronunciationEn: "OH-la", meaning: "안녕하세요.", meaningEn: "Hello." },
     { source: "Gracias", pronunciation: "그라시아스", pronunciationEn: "GRAH-syahs", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "Lo siento", pronunciation: "로 시엔토", pronunciationEn: "lo SYEN-to", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "¿Cuánto cuesta esto?", pronunciation: "콴또 쿠에스타 에스토?", pronunciationEn: "KWAN-to KWES-ta ES-to?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "¿Dónde está el baño?", pronunciation: "돈데 에스타 엘 바뇨?", pronunciationEn: "DON-day es-TAH el BAH-nyo?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "¿Dónde está el baño?", pronunciation: "돈데 에스타 엘 바뇨?", pronunciationEn: "DON-day es-TAH el BAH-nyo?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "¿Puedo ver esto?", pronunciation: "푸에도 베르 에스토?", pronunciationEn: "PWEH-do ver ES-to?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "Quisiera hacer el check-in", pronunciation: "키시에라 아세르 엘 체크인", pronunciationEn: "kee-SYEH-rah ah-SER el chek-in", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "¿A qué hora es el check-out?", pronunciation: "아 케 오라 에스 엘 체크아웃?", pronunciationEn: "ah keh OH-rah es el chek-owt?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ],
   english: [
     { source: "Hello", pronunciation: "헬로우", pronunciationEn: "heh-LOH", meaning: "안녕하세요.", meaningEn: "Hello." },
     { source: "Thank you", pronunciation: "땡큐", pronunciationEn: "THANK yoo", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "I'm sorry", pronunciation: "암 쏘리", pronunciationEn: "eye'm SOR-ee", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "How much is this?", pronunciation: "하우 머치 이즈 디스?", pronunciationEn: "how MUCH iz THIS?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "Where is the restroom?", pronunciation: "웨어 이즈 더 레스트룸?", pronunciationEn: "where iz the REST-room?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "Where is the restroom?", pronunciation: "웨어 이즈 더 레스트룸?", pronunciationEn: "where iz the REST-room?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "Can I see this?", pronunciation: "캔 아이 시 디스?", pronunciationEn: "kan eye see THIS?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "I'd like to check in", pronunciation: "아이드 라이크 투 체크 인", pronunciationEn: "eyed like too chek in", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "What time is checkout?", pronunciation: "왓 타임 이즈 체크아웃?", pronunciationEn: "wot time iz CHEK-owt?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ],
   italian: [
     { source: "Buongiorno", pronunciation: "본조르노", pronunciationEn: "bwon-JOR-no", meaning: "안녕하세요.", meaningEn: "Hello." },
     { source: "Grazie", pronunciation: "그라찌에", pronunciationEn: "GRAH-tsyeh", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "Mi dispiace", pronunciation: "미 디스피아체", pronunciationEn: "mee dee-SPYAH-cheh", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "Quanto costa questo?", pronunciation: "콴또 코스타 쿠에스토?", pronunciationEn: "KWAN-to KOS-ta KWES-to?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "Dov'è il bagno?", pronunciation: "도베 일 바뇨?", pronunciationEn: "do-VAY eel BAH-nyo?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "Dov'è il bagno?", pronunciation: "도베 일 바뇨?", pronunciationEn: "do-VAY eel BAH-nyo?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "Posso vedere questo?", pronunciation: "포소 베데레 쿠에스토?", pronunciationEn: "POS-so veh-DEH-reh KWES-to?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "Vorrei fare il check-in", pronunciation: "보레이 파레 일 체크인", pronunciationEn: "vor-RAY FAH-reh eel chek-in", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "A che ora è il check-out?", pronunciation: "아 케 오라 에 일 체크아웃?", pronunciationEn: "ah keh OH-rah eh eel chek-owt?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ],
   turkish: [
     { source: "Merhaba", pronunciation: "메르하바", pronunciationEn: "mer-HA-ba", meaning: "안녕하세요.", meaningEn: "Hello." },
     { source: "Teşekkür ederim", pronunciation: "테셰쾨르 에데림", pronunciationEn: "teh-shek-KUR eh-deh-rim", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "Özür dilerim", pronunciation: "오쥬르 딜레림", pronunciationEn: "oh-ZUR dee-leh-rim", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "Bu ne kadar?", pronunciation: "부 네 카다르?", pronunciationEn: "boo neh ka-DAR?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "Tuvalet nerede?", pronunciation: "투발렛 네레데?", pronunciationEn: "too-va-LET neh-reh-DEH?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "Tuvalet nerede?", pronunciation: "투발렛 네레데?", pronunciationEn: "too-va-LET neh-reh-DEH?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "Bunu görebilir miyim?", pronunciation: "부누 괴레빌리르 미임?", pronunciationEn: "boo-noo guh-reh-bee-LEER mee-YEEM?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "Giriş yapmak istiyorum", pronunciation: "기리시 얍막 이스티요룸", pronunciationEn: "gee-REESH yap-MAK is-tee-YO-room", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "Çıkış saati kaç?", pronunciation: "치키시 사아티 카치?", pronunciationEn: "chuh-KUHSH sah-AH-tee kach?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ],
   german: [
     { source: "Hallo", pronunciation: "할로", pronunciationEn: "HAH-lo", meaning: "안녕하세요.", meaningEn: "Hello." },
     { source: "Danke schön", pronunciation: "당크 쇤", pronunciationEn: "DAHN-keh shurn", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "Es tut mir leid", pronunciation: "에스 투트 미어 라잇", pronunciationEn: "es toot meer lite", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "Wie viel kostet das?", pronunciation: "비 필 코스트 다스?", pronunciationEn: "vee feel KOS-tet dahs?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "Wo ist die Toilette?", pronunciation: "보 이스트 디 토일레테?", pronunciationEn: "vo ist dee to-ee-LET-teh?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "Wo ist die Toilette?", pronunciation: "보 이스트 디 토일레테?", pronunciationEn: "vo ist dee to-ee-LET-teh?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "Kann ich das sehen?", pronunciation: "칸 이히 다스 제엔?", pronunciationEn: "kan eekh dahs ZAY-en?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "Ich möchte einchecken", pronunciation: "이히 뫼흐테 아인체켄", pronunciationEn: "eekh MURKH-teh AYN-chek-en", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "Wann ist der Check-out?", pronunciation: "반 이스트 데르 체크아웃?", pronunciationEn: "van ist der chek-owt?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ],
   greek: [
     { source: "Γεια σας", pronunciation: "야 사스", pronunciationEn: "YAH sahs", meaning: "안녕하세요.", meaningEn: "Hello." },
     { source: "Ευχαριστώ", pronunciation: "에프하리스또", pronunciationEn: "ef-ha-ree-STO", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "Συγγνώμη", pronunciation: "시그놈미", pronunciationEn: "see-GHNO-mee", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "Πόσο κοστίζει αυτό?", pronunciation: "뽀소 코스티지 아프토?", pronunciationEn: "PO-so kos-TEE-zee af-TO?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "Πού είναι η τουαλέτα;", pronunciation: "푸 이네 이 투알레타?", pronunciationEn: "poo EE-neh ee too-ah-LEH-ta?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "Πού είναι η τουαλέτα;", pronunciation: "푸 이네 이 투알레타?", pronunciationEn: "poo EE-neh ee too-ah-LEH-ta?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "Μπορώ να το δω αυτό?", pronunciation: "보로 나 토 도 아프토?", pronunciationEn: "bo-RO na to doh af-TO?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "Θα ήθελα να κάνω check-in", pronunciation: "타 이텔라 나 카노 체크인", pronunciationEn: "tha EE-the-la na KA-no chek-in", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "Τι ώρα είναι το check-out?", pronunciation: "티 오라 이네 토 체크아웃?", pronunciationEn: "tee O-ra EE-neh to chek-owt?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ],
   chinese: [
     { source: "你好", pronunciation: "니하오", pronunciationEn: "nee-HOW", meaning: "안녕하세요.", meaningEn: "Hello." },
     { source: "谢谢", pronunciation: "시에시에", pronunciationEn: "shyeh-shyeh", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "对不起", pronunciation: "뚜이부치", pronunciationEn: "dway-boo-chee", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "这个多少钱?", pronunciation: "쩌거 뚜어샤오 치엔?", pronunciationEn: "zhuh-geh dwoh shao chee-en?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "洗手间在哪里?", pronunciation: "시쇼우지엔 짜이 날리?", pronunciationEn: "shee-show jee-en dzai nah-lee?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "洗手间在哪里?", pronunciation: "시쇼우지엔 짜이 날리?", pronunciationEn: "shee-show jee-en dzai nah-lee?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "可以看看这个吗?", pronunciation: "커이 칸칸 쩌거 마?", pronunciationEn: "keh-yee kan-kan zhuh-geh mah?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "我要办理入住", pronunciation: "워 야오 반리 루주", pronunciationEn: "woh yow ban-lee roo-joo", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "退房时间是几点?", pronunciation: "뚜이팡 스지엔 스 지디엔?", pronunciationEn: "tway-fang shi-jee-en shi jee-dee-en?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ],
   hungarian: [
     { source: "Jó napot", pronunciation: "요 나포트", pronunciationEn: "yo NAH-pot", meaning: "안녕하세요.", meaningEn: "Hello." },
     { source: "Köszönöm", pronunciation: "커쇠넴", pronunciationEn: "KUR-sur-nurm", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "Elnézést", pronunciation: "엘네제스트", pronunciationEn: "el-NAY-zaysht", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "Mennyibe kerül ez?", pronunciation: "멘니베 케뤌 에즈?", pronunciationEn: "MEN-nyi-beh KEH-rul ez?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "Hol van a mosdó?", pronunciation: "홀 반 아 모스도?", pronunciationEn: "hol vahn ah MOSH-doh?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "Hol van a mosdó?", pronunciation: "홀 반 아 모스도?", pronunciationEn: "hol vahn ah MOSH-doh?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "Megnézhetem ezt?", pronunciation: "메그네즈헤템 에스트?", pronunciationEn: "meg-NAYZ-heh-tem ezt?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "Szeretnék bejelentkezni", pronunciation: "세레트네크 베옐렌트케즈니", pronunciationEn: "seh-ret-NAYK beh-yel-ent-kez-nee", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "Mikor a kijelentkezés?", pronunciation: "미코르 아 키옐렌트케제스?", pronunciationEn: "MEE-kor ah kee-yel-ent-ke-ZAYSH?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ],
   dutch: [
     { source: "Hallo", pronunciation: "할로", pronunciationEn: "HAH-lo", meaning: "안녕하세요.", meaningEn: "Hello." },
     { source: "Dank u wel", pronunciation: "당크 우 벨", pronunciationEn: "dahnk oo VEL", meaning: "감사합니다.", meaningEn: "Thank you." },
     { source: "Sorry", pronunciation: "소리", pronunciationEn: "SOR-ee", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
     { source: "Hoeveel kost dit?", pronunciation: "후벨 코스트 딧?", pronunciationEn: "HOO-vel kost dit?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
-    { source: "Waar is het toilet?", pronunciation: "바르 이스 헤트 토일레트?", pronunciationEn: "vahr is het twa-LET?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" }
+    { source: "Waar is het toilet?", pronunciation: "바르 이스 헤트 토일레트?", pronunciationEn: "vahr is het twa-LET?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "Kan ik dit zien?", pronunciation: "칸 이크 딧 진?", pronunciationEn: "kan ik dit zeen?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "Ik wil inchecken", pronunciation: "이크 빌 인체켄", pronunciationEn: "ik vil IN-chek-en", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "Hoe laat is de check-out?", pronunciation: "후 라트 이스 더 체크아웃?", pronunciationEn: "hoo laht is duh chek-owt?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
+  ],
+  portuguese: [
+    { source: "Olá", pronunciation: "올라", pronunciationEn: "oh-LAH", meaning: "안녕하세요.", meaningEn: "Hello." },
+    { source: "Obrigado", pronunciation: "오브리가두", pronunciationEn: "oh-bree-GAH-doo", meaning: "감사합니다.", meaningEn: "Thank you." },
+    { source: "Desculpe", pronunciation: "데스쿨페", pronunciationEn: "desh-KOOL-peh", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
+    { source: "Quanto custa isso?", pronunciation: "콴뚜 쿠스타 이소?", pronunciationEn: "KWAN-too KOOS-ta EE-so?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
+    { source: "Onde fica o banheiro?", pronunciation: "온데 피카 우 반예이루?", pronunciationEn: "ON-deh FEE-ka oo ban-YAY-roo?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "Posso ver isso?", pronunciation: "포소 베르 이소?", pronunciationEn: "POS-so ver EE-so?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "Gostaria de fazer check-in", pronunciation: "고스타리아 데 파제르 체크인", pronunciationEn: "gos-ta-REE-ah deh fah-ZER chek-in", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "Que horas é o check-out?", pronunciation: "케 오라스 에 우 체크아웃?", pronunciationEn: "keh OH-ras eh oo chek-owt?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
+  ],
+  filipino: [
+    { source: "Kumusta", pronunciation: "쿠무스타", pronunciationEn: "koo-moos-TAH", meaning: "안녕하세요.", meaningEn: "Hello." },
+    { source: "Salamat", pronunciation: "살라맛", pronunciationEn: "sah-LAH-mat", meaning: "감사합니다.", meaningEn: "Thank you." },
+    { source: "Paumanhin", pronunciation: "파우만힌", pronunciationEn: "pah-oo-MAHN-heen", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
+    { source: "Magkano ito?", pronunciation: "막카노 이토?", pronunciationEn: "mahg-KAH-no EE-to?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
+    { source: "Nasaan ang banyo?", pronunciation: "나사안 앙 반요?", pronunciationEn: "nah-SAH-an ahng BAHN-yo?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "Pwede ko ba makita ito?", pronunciation: "푸에데 코 바 마키타 이토?", pronunciationEn: "PWEH-deh ko bah mah-KEE-ta EE-to?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "Gusto ko mag-check in", pronunciation: "구스토 코 막 체크 인", pronunciationEn: "GOOS-to ko mahg chek in", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "Anong oras ang check-out?", pronunciation: "아농 오라스 앙 체크아웃?", pronunciationEn: "ah-NONG O-ras ahng chek-owt?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
+  ],
+  vietnamese: [
+    { source: "Xin chào", pronunciation: "신 짜오", pronunciationEn: "seen chow", meaning: "안녕하세요.", meaningEn: "Hello." },
+    { source: "Cảm ơn", pronunciation: "깜 언", pronunciationEn: "kahm uhn", meaning: "감사합니다.", meaningEn: "Thank you." },
+    { source: "Xin lỗi", pronunciation: "신 로이", pronunciationEn: "seen loy", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
+    { source: "Cái này giá bao nhiêu?", pronunciation: "까이 너이 자 바오 니우?", pronunciationEn: "kai nai zah bow nyew?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
+    { source: "Nhà vệ sinh ở đâu?", pronunciation: "냐 베 신 어 다우?", pronunciationEn: "nyah veh seen uh dow?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "Tôi có thể xem cái này không?", pronunciation: "또이 코 테 셈 까이 너이 콩?", pronunciationEn: "toy ko teh sem kai nai khong?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "Tôi muốn làm thủ tục nhận phòng", pronunciation: "또이 무온 람 투 투크 냔 폭", pronunciationEn: "toy moo-on lam too tuhk nyan fong", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "Giờ trả phòng là mấy giờ?", pronunciation: "저 트라 폭 라 머이 저?", pronunciationEn: "zoh trah fong lah mai zoh?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
+  ],
+  thai: [
+    { source: "สวัสดี", pronunciation: "사왓디", pronunciationEn: "sah-wat-dee", meaning: "안녕하세요.", meaningEn: "Hello." },
+    { source: "ขอบคุณ", pronunciation: "콥 쿤", pronunciationEn: "kop koon", meaning: "감사합니다.", meaningEn: "Thank you." },
+    { source: "ขอโทษ", pronunciation: "코 토트", pronunciationEn: "koh toht", meaning: "죄송합니다.", meaningEn: "I'm sorry." },
+    { source: "อันนี้เท่าไหร่?", pronunciation: "안 니 타오라이?", pronunciationEn: "ahn nee tao-rai?", meaning: "이거 얼마예요?", meaningEn: "How much is this?" },
+    { source: "ห้องน้ำอยู่ที่ไหน?", pronunciation: "홍 남 유 티나이?", pronunciationEn: "hong nam yoo tee-nai?", meaning: "화장실이 어디예요?", meaningEn: "Where is the restroom?" },
+    { source: "ให้ดูอันนี้ได้ไหม?", pronunciation: "하이 두 안 니 다이마이?", pronunciationEn: "hai doo ahn nee dai-mai?", meaning: "이것 좀 보여주세요.", meaningEn: "Can I see this?" },
+    { source: "ต้องการเช็คอิน", pronunciation: "동간 쳌 인", pronunciationEn: "dong-gan chek in", meaning: "체크인 하려고 합니다.", meaningEn: "I'd like to check in." },
+    { source: "เช็คเอาท์กี่โมง?", pronunciation: "쳌 아웃 기 몽?", pronunciationEn: "chek owt gee mong?", meaning: "체크아웃은 몇 시인가요?", meaningEn: "What time is checkout?" }
   ]
 };
+
+// 공통 제품 목록 (모든 국가에 자동으로 추가됨)
+const commonProducts = [
+  {
+    title: "여행용 멀티 어댑터",
+    titleEn: "Travel Multi-Adapter",
+    link: "https://link.coupang.com/a/c5RkU5",
+    iframe: '<iframe src="https://coupa.ng/ckJpyD" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+  },
+  {
+    title: "여행용 압축팩",
+    titleEn: "Travel Compression Pack",
+    link: "https://link.coupang.com/a/c5RQHv",
+    iframe: '<iframe src="https://coupa.ng/ckJqwt" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+  },
+  {
+    title: "포켓 티슈",
+    titleEn: "Pocket Tissues",
+    link: "https://link.coupang.com/a/c5RZQb",
+    iframe: '<iframe src="https://coupa.ng/ckJqNe" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+  },
+  {
+    title: "여행용 세트",
+    titleEn: "Travel Set",
+    link: "https://link.coupang.com/a/c5R5Nl",
+    iframe: '<iframe src="https://coupa.ng/ckJq29" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+  },
+  {
+    title: "휴족시간",
+    titleEn: "Foot Rest",
+    link: "https://link.coupang.com/a/c5R6G8",
+    iframe: '<iframe src="https://coupa.ng/ckJq5P" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+  },
+  {
+    title: "여행용 목베개",
+    titleEn: "Travel Neck Pillow",
+    link: "https://link.coupang.com/a/c5SdEY",
+    iframe: '<iframe src="https://coupa.ng/ckJrqd" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+  },
+  {
+    title: "온열안대",
+    titleEn: "Heating Eye Mask",
+    link: "https://link.coupang.com/a/c5SJtE",
+    iframe: '<iframe src="https://coupa.ng/ckJshq" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+  },
+  {
+    title: "캐리어 일회용 바퀴커버",
+    titleEn: "Disposable Luggage Wheel Cover",
+    link: "https://link.coupang.com/a/c5SMx5",
+    iframe: '<iframe src="https://coupa.ng/ckJskJ" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+  }
+  // 여기에 추가 제품을 계속 추가할 수 있습니다
+];
 
 // HTML 이스케이프 함수 (XSS 방지)
 function escapeHtml(text) {
@@ -259,10 +396,6 @@ const destinations = [
       }
     ],
     essentials: [
-      {
-        title: "전기 어댑터",
-        description: "한국은 콘센트 타입 F (220V, 60Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
-      },
       {
         title: "인터넷 연결",
         description: "LTE/5G 무제한 eSIM을 사전 구매하거나, 공항에서 포켓와이파이를 대여할 수 있습니다. 주요 통신사는 KT, SKT, LG U+이며, 공항에서 바로 구매 가능합니다. 온라인으로 미리 예약하면 더 저렴하게 이용할 수 있습니다."
@@ -380,6 +513,18 @@ const destinations = [
         description: "South Korea is best visited in spring (April-May) and autumn (September-October). Spring features cherry blossoms, and autumn offers beautiful fall foliage. Summer (June-August) has monsoon season and heat, while winter (December-February) is cold but great for skiing."
       }
     ],
+    visa: [
+      {
+        title: "비자 불필요",
+        description: "한국인은 한국 입국 시 비자가 필요하지 않습니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter South Korea visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months."
+      }
+    ],
     phrases: phraseSets.korean
   },
   {
@@ -481,6 +626,12 @@ const destinations = [
       {
         title: "인터넷 및 교통패스",
         description: "eSIM을 사전 구매하거나, JR 패스 모바일 발권을 준비하는 것이 좋습니다. JR 패스는 외국인 전용으로 온라인에서 미리 구매할 수 있습니다."
+      },
+      {
+        title: "일본 eSIM",
+        titleEn: "Japan eSIM",
+        link: "https://link.coupang.com/a/c5SfTd",
+        iframe: '<iframe src="https://coupa.ng/ckJrwJ" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "교통카드",
@@ -595,6 +746,26 @@ const destinations = [
         description: "Japan is best visited in spring (March-May) and autumn (September-November). Spring features full cherry blossoms, and autumn offers beautiful fall foliage. Summer (June-August) has rainy season and heat, while winter (December-February) is great for skiing."
       }
     ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      },
+      {
+        title: "입국 시 필요 서류",
+        description: "유효한 여권, 왕복 항공권, 숙박 예약 확인서를 준비하시기 바랍니다. 입국 심사 시 여행 목적과 체류 기간을 물어볼 수 있습니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter Japan visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+      },
+      {
+        title: "Required Documents",
+        description: "Prepare a valid passport, round-trip ticket, and accommodation confirmation. Immigration may ask about your travel purpose and length of stay."
+      }
+    ],
     phrases: phraseSets.japanese
   },
   {
@@ -696,6 +867,12 @@ const destinations = [
       {
         title: "인터넷 연결",
         description: "eSIM을 사전 구매하거나, 현지 통신사 선불 유심(Orange, SFR)을 사전 구매하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
+      },
+      {
+        title: "유럽 eSIM",
+        titleEn: "Europe eSIM",
+        link: "https://link.coupang.com/a/c5Smk3",
+        iframe: '<iframe src="https://coupa.ng/ckJrKH" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "교통카드",
@@ -810,6 +987,26 @@ const destinations = [
         description: "France is best visited in spring (April-June) and autumn (September-October). The weather is mild and there are fewer tourists. Summer (July-August) is peak season with many tourists and higher prices, but the weather is great for outdoor activities. Winter (December-February) is cold but great for Christmas markets and skiing."
       }
     ],
+    visa: [
+      {
+        title: "무비자 입국 (Schengen)",
+        description: "한국인은 Schengen 지역(프랑스 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      },
+      {
+        title: "입국 시 필요 서류",
+        description: "유효한 여권, 왕복 항공권, 숙박 예약 확인서, 여행자 보험 증서를 준비하시기 바랍니다. 입국 심사 시 여행 목적과 체류 기간을 물어볼 수 있습니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry (Schengen)",
+        description: "US citizens can enter France (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months, and you must have a return ticket."
+      },
+      {
+        title: "Required Documents",
+        description: "Prepare a valid passport, round-trip ticket, accommodation confirmation, and travel insurance certificate. Immigration may ask about your travel purpose and length of stay."
+      }
+    ],
     phrases: phraseSets.french
   },
   {
@@ -919,6 +1116,12 @@ const destinations = [
       {
         title: "인터넷 연결",
         description: "Orange/Movistar eSIM 또는 Holafly 유럽 무제한 데이터를 사전 구매하는 것이 좋습니다. 유럽 여러 국가를 여행할 계획이라면 Holafly가 유리합니다."
+      },
+      {
+        title: "유럽 eSIM",
+        titleEn: "Europe eSIM",
+        link: "https://link.coupang.com/a/c5Smk3",
+        iframe: '<iframe src="https://coupa.ng/ckJrKH" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "관광지 예약",
@@ -1033,6 +1236,18 @@ const destinations = [
         description: "Spain is best visited in spring (April-June) and autumn (September-October). The weather is mild and there are fewer tourists. Summer (July-August) is very hot but great for beach regions, while winter (December-February) is mild in southern regions, making it good for travel."
       }
     ],
+    visa: [
+      {
+        title: "무비자 입국 (Schengen)",
+        description: "한국인은 Schengen 지역(스페인 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry (Schengen)",
+        description: "US citizens can enter Spain (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+      }
+    ],
     phrases: phraseSets.spanish
   },
   {
@@ -1144,6 +1359,12 @@ const destinations = [
         description: "현지 SIM/eSIM 또는 T-Mobile, AT&T를 공항에서 구입할 수 있습니다. 온라인으로 미리 구매하면 더 저렴합니다."
       },
       {
+        title: "미국/캐나다/멕시코 eSIM",
+        titleEn: "USA/Canada/Mexico eSIM",
+        link: "https://link.coupang.com/a/c5Skau",
+        iframe: '<iframe src="https://coupa.ng/ckJrHa" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+      },
+      {
         title: "여행자 보험",
         description: "의료비가 비싸므로 높은 보장액으로 가입하는 것을 권장합니다. 미국의 의료비는 매우 비싸므로 보험 가입이 필수입니다."
       },
@@ -1246,6 +1467,22 @@ const destinations = [
       {
         title: "Best Time to Visit",
         description: "The United States varies by region, but generally spring (April-June) and autumn (September-October) are the best times to visit. The East Coast (New York, Chicago) has mild spring and autumn, while California is mild year-round. Summer (June-August) is hot nationwide but great for outdoor activities, while winter (December-February) is cold in northern regions but great for skiing."
+      }
+    ],
+    visa: [
+      {
+        title: "ESTA 신청 필요",
+        description: "한국인은 미국 입국 시 ESTA(전자여행허가) 신청이 필요합니다. 관광 목적으로 90일간 체류 가능하며, 온라인으로 신청할 수 있습니다. 승인까지 72시간 이내 소요되며, 유효기간은 2년입니다."
+      },
+      {
+        title: "ESTA 신청 방법",
+        description: "미국 국토안보부 공식 웹사이트(esta.cbp.dhs.gov)에서 신청할 수 있습니다. 수수료는 약 $21이며, 승인 여부는 이메일로 통보됩니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "No Visa Required",
+        description: "US citizens do not need a visa to enter the United States."
       }
     ],
     phrases: phraseSets.english
@@ -1357,6 +1594,12 @@ const destinations = [
       {
         title: "인터넷 연결",
         description: "TIM, Vodafone 이탈리아 유심/eSIM을 사전 구매하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
+      },
+      {
+        title: "유럽 eSIM",
+        titleEn: "Europe eSIM",
+        link: "https://link.coupang.com/a/c5Smk3",
+        iframe: '<iframe src="https://coupa.ng/ckJrKH" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "도시세 준비",
@@ -1471,6 +1714,18 @@ const destinations = [
         description: "Italy is best visited in spring (April-June) and autumn (September-October). The weather is mild and there are fewer tourists. Summer (July-August) is very hot and crowded but great for beach regions, while winter (December-February) is cold but great for Christmas and skiing."
       }
     ],
+    visa: [
+      {
+        title: "무비자 입국 (Schengen)",
+        description: "한국인은 Schengen 지역(이탈리아 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry (Schengen)",
+        description: "US citizens can enter Italy (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+      }
+    ],
     phrases: phraseSets.italian
   },
   {
@@ -1576,6 +1831,12 @@ const destinations = [
       {
         title: "인터넷 연결",
         description: "Turkcell, Vodafone eSIM/유심을 사전 등록하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
+      },
+      {
+        title: "터키 eSIM",
+        titleEn: "Turkey eSIM",
+        link: "https://link.coupang.com/a/c5SyVT",
+        iframe: '<iframe src="https://coupa.ng/ckJr2R" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "투어 예약",
@@ -1686,6 +1947,18 @@ const destinations = [
         description: "Turkey is best visited in spring (April-June) and autumn (September-October). The weather is mild and there are fewer tourists. Summer (July-August) is very hot but great for beaches and the Turkish Riviera, while winter (December-February) is cold but suitable for city tours like Istanbul."
       }
     ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter Turkey visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+      }
+    ],
     phrases: phraseSets.turkish
   },
   {
@@ -1793,6 +2066,12 @@ const destinations = [
         description: "Telcel, AT&T 멕시코용 eSIM/유심을 사전 준비하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
       },
       {
+        title: "미국/캐나다/멕시코 eSIM",
+        titleEn: "USA/Canada/Mexico eSIM",
+        link: "https://link.coupang.com/a/c5Skau",
+        iframe: '<iframe src="https://coupa.ng/ckJrHa" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+      },
+      {
         title: "교통카드",
         description: "멕시코시티에서는 Metro 카드나 일회용 티켓을 구매할 수 있습니다. 지하철과 버스에서 사용 가능하며, 지하철 요금이 저렴하여 관광객에게 인기가 있습니다. 일부 노선은 혼잡할 수 있으니 주의가 필요합니다."
       },
@@ -1895,6 +2174,18 @@ const destinations = [
       {
         title: "Best Time to Visit",
         description: "Mexico is best visited during the dry season (November-April). This period has less rain and pleasant weather. The rainy season (May-October) has more rain and high humidity, but resort areas are good for travel year-round. December-February is the most pleasant time during the dry season."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 180일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter Mexico visa-free for up to 180 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
       }
     ],
     phrases: phraseSets.spanish
@@ -2006,6 +2297,12 @@ const destinations = [
       {
         title: "인터넷 연결",
         description: "EE, Vodafone, Three eSIM 또는 유심을 준비하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
+      },
+      {
+        title: "유럽 eSIM",
+        titleEn: "Europe eSIM",
+        link: "https://link.coupang.com/a/c5Smk3",
+        iframe: '<iframe src="https://coupa.ng/ckJrKH" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "날씨 대비",
@@ -2120,6 +2417,18 @@ const destinations = [
         description: "The UK is best visited in spring (April-June) and summer (July-August). Spring has mild weather and flowers, while summer is the warmest with the most sunshine. Autumn (September-October) is also relatively mild but often rainy. Winter (December-February) is cold and rainy but great for Christmas markets."
       }
     ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 6개월간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter the UK visa-free for up to 6 months for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+      }
+    ],
     phrases: phraseSets.english
   },
   {
@@ -2229,6 +2538,12 @@ const destinations = [
       {
         title: "인터넷 연결",
         description: "유럽 eSIM 또는 Telekom, Vodafone 유심을 준비하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
+      },
+      {
+        title: "유럽 eSIM",
+        titleEn: "Europe eSIM",
+        link: "https://link.coupang.com/a/c5Smk3",
+        iframe: '<iframe src="https://coupa.ng/ckJrKH" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "일요일 휴무",
@@ -2343,6 +2658,18 @@ const destinations = [
         description: "Germany is best visited in spring (April-June) and autumn (September-October). The weather is mild and there are fewer tourists. Summer (July-August) is warm but crowded with tourists, while winter (December-February) is cold but great for Christmas markets and skiing."
       }
     ],
+    visa: [
+      {
+        title: "무비자 입국 (Schengen)",
+        description: "한국인은 Schengen 지역(독일 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry (Schengen)",
+        description: "US citizens can enter Germany (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+      }
+    ],
     phrases: phraseSets.german
   },
   {
@@ -2384,8 +2711,8 @@ const destinations = [
         description: "대중교통 탑승권은 사전에 구매해 개찰기에 찍어야 합니다. 찍지 않으면 무임승차로 간주되어 벌금이 부과될 수 있습니다."
       },
       {
-        title: "사진 촬영",
-        description: "사진 촬영 전 현지인에게 양해를 구하는 것이 예의입니다. 특히 사람들의 사진을 찍을 때는 반드시 허락을 받으세요."
+        title: "사진 촬영 규칙",
+        description: "교회나 수도원 내부는 플래시 촬영이 금지되어 있으며, 일부 장소는 사진 촬영이 완전히 금지됩니다. 안내 표지판을 확인하시기 바랍니다. 사람들의 사진을 찍을 때는 반드시 허락을 받으세요."
       },
       {
         title: "화장실 이용",
@@ -2452,6 +2779,12 @@ const destinations = [
       {
         title: "인터넷 연결",
         description: "Cosmote, Vodafone eSIM/유심을 준비하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
+      },
+      {
+        title: "유럽 eSIM",
+        titleEn: "Europe eSIM",
+        link: "https://link.coupang.com/a/c5Smk3",
+        iframe: '<iframe src="https://coupa.ng/ckJrKH" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "섬 여행 준비",
@@ -2566,6 +2899,18 @@ const destinations = [
         description: "Greece is best visited in spring (April-June) and autumn (September-October). The weather is mild and there are fewer tourists. Summer (July-August) is very hot but optimal for beaches and island travel, while winter (December-February) is rainy but suitable for city tours like Athens."
       }
     ],
+    visa: [
+      {
+        title: "무비자 입국 (Schengen)",
+        description: "한국인은 Schengen 지역(그리스 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry (Schengen)",
+        description: "US citizens can enter Greece (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+      }
+    ],
     phrases: phraseSets.greek
   },
   {
@@ -2675,6 +3020,12 @@ const destinations = [
       {
         title: "인터넷 연결",
         description: "A1, Magenta eSIM/유심을 준비하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
+      },
+      {
+        title: "유럽 eSIM",
+        titleEn: "Europe eSIM",
+        link: "https://link.coupang.com/a/c5Smk3",
+        iframe: '<iframe src="https://coupa.ng/ckJrKH" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "알프스 여행 준비",
@@ -2789,6 +3140,18 @@ const destinations = [
         description: "Austria is best visited in spring (April-June) and autumn (September-October). The weather is mild and there are fewer tourists. Summer (July-August) is warm with many music festivals, while winter (December-February) is cold but great for Alpine skiing and Christmas markets."
       }
     ],
+    visa: [
+      {
+        title: "무비자 입국 (Schengen)",
+        description: "한국인은 Schengen 지역(오스트리아 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry (Schengen)",
+        description: "US citizens can enter Austria (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+      }
+    ],
     phrases: phraseSets.german
   },
   {
@@ -2898,6 +3261,12 @@ const destinations = [
       {
         title: "인터넷 연결",
         description: "eSIM은 제한되니 공항에서 China Unicom, China Mobile 유심을 구입하는 것이 좋습니다. 온라인으로 미리 구매할 수도 있습니다."
+      },
+      {
+        title: "중국/홍콩 eSIM",
+        titleEn: "China/Hong Kong eSIM",
+        link: "https://link.coupang.com/a/c5SqEI",
+        iframe: '<iframe src="https://coupa.ng/ckJrSV" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "고속철 예약",
@@ -3012,6 +3381,18 @@ const destinations = [
         description: "China is best visited in spring (April-May) and autumn (September-October). The weather is mild and there are fewer tourists. Summer (June-August) is very hot and humid, while winter (December-February) is cold in northern regions but relatively mild in southern regions."
       }
     ],
+    visa: [
+      {
+        title: "비자 필요",
+        description: "한국인은 중국 입국 시 비자 신청이 필요합니다. 관광 비자는 보통 30일 단수 입국 비자이며, 중국 대사관이나 영사관에서 신청할 수 있습니다. 신청 시 여권, 사진, 항공권 예약 확인서, 숙박 예약 확인서가 필요합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa Required",
+        description: "US citizens need to apply for a visa to enter China. Tourist visas are typically single-entry visas valid for 30 days. You can apply at the Chinese embassy or consulate. Required documents include passport, photos, flight reservation, and accommodation confirmation."
+      }
+    ],
     phrases: phraseSets.chinese
   },
   {
@@ -3117,6 +3498,12 @@ const destinations = [
       {
         title: "인터넷 연결",
         description: "Rogers, Bell, Telus eSIM/유심을 사전 준비하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
+      },
+      {
+        title: "미국/캐나다/멕시코 eSIM",
+        titleEn: "USA/Canada/Mexico eSIM",
+        link: "https://link.coupang.com/a/c5Skau",
+        iframe: '<iframe src="https://coupa.ng/ckJrHa" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "교통카드",
@@ -3225,6 +3612,18 @@ const destinations = [
       {
         title: "Best Time to Visit",
         description: "Canada is best visited in summer (June-August) and autumn (September-October). Summer has warm weather and is optimal for outdoor activities, while autumn features beautiful fall foliage. Spring (April-May) is when snow melts and flowers bloom, while winter (December-February) is very cold but great for skiing."
+      }
+    ],
+    visa: [
+      {
+        title: "eTA 신청 필요",
+        description: "한국인은 캐나다 입국 시 eTA(전자여행허가) 신청이 필요합니다. 관광 목적으로 6개월간 체류 가능하며, 온라인으로 신청할 수 있습니다. 수수료는 약 CA$7이며, 승인까지 보통 몇 분에서 몇 시간 소요됩니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "No Visa Required",
+        description: "US citizens do not need a visa to enter Canada. You can stay for up to 6 months for tourism purposes."
       }
     ],
     phrases: phraseSets.english
@@ -3336,6 +3735,12 @@ const destinations = [
         description: "유럽 eSIM 또는 Telekom, Vodafone 헝가리 유심을 준비하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
       },
       {
+        title: "유럽 eSIM",
+        titleEn: "Europe eSIM",
+        link: "https://link.coupang.com/a/c5Smk3",
+        iframe: '<iframe src="https://coupa.ng/ckJrKH" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+      },
+      {
         title: "여행자 보험",
         description: "의료, 도난, 여행 지연 커버를 확인하는 여행자 보험 가입을 권장합니다. 헝가리는 의료비가 비싸므로 보험 가입이 필수입니다."
       },
@@ -3438,6 +3843,18 @@ const destinations = [
       {
         title: "Best Time to Visit",
         description: "Hungary is best visited in spring (April-June) and autumn (September-October). The weather is mild and there are fewer tourists. Summer (July-August) is hot but great for Danube River cruises, while winter (December-February) is cold but great for Christmas markets."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국 (Schengen)",
+        description: "한국인은 Schengen 지역(헝가리 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry (Schengen)",
+        description: "US citizens can enter Hungary (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
       }
     ],
     phrases: phraseSets.hungarian
@@ -3551,6 +3968,12 @@ const destinations = [
         description: "유럽 eSIM 또는 Swisscom, Sunrise eSIM/유심을 준비하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
       },
       {
+        title: "유럽 eSIM",
+        titleEn: "Europe eSIM",
+        link: "https://link.coupang.com/a/c5Smk3",
+        iframe: '<iframe src="https://coupa.ng/ckJrKH" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+      },
+      {
         title: "여행자 보험",
         description: "의료, 도난, 여행 지연 커버를 확인하는 여행자 보험 가입을 권장합니다. 스위스는 의료비가 매우 비싸므로 보험 가입이 필수입니다."
       },
@@ -3653,6 +4076,18 @@ const destinations = [
       {
         title: "Best Time to Visit",
         description: "Switzerland is best visited in summer (June-August) and winter (December-February). Summer has warm weather and is optimal for hiking, lake swimming, and other outdoor activities, while winter features world-famous Alpine ski resorts. Spring (April-June) and autumn (September-October) are also mild with beautiful fall foliage, making them great for travel."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국 (Schengen)",
+        description: "한국인은 Schengen 지역(스위스 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry (Schengen)",
+        description: "US citizens can enter Switzerland (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
       }
     ],
     phrases: phraseSets.german
@@ -3760,6 +4195,12 @@ const destinations = [
       {
         title: "인터넷 연결",
         description: "유럽 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. 네덜란드는 WiFi가 잘 발달되어 있어 많은 곳에서 무료 WiFi를 이용할 수 있습니다."
+      },
+      {
+        title: "유럽 eSIM",
+        titleEn: "Europe eSIM",
+        link: "https://link.coupang.com/a/c5Smk3",
+        iframe: '<iframe src="https://coupa.ng/ckJrKH" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
       },
       {
         title: "자전거 대여",
@@ -3870,11 +4311,2187 @@ const destinations = [
         description: "The Netherlands is best visited in spring (April-May) and summer (June-August). Spring features tulip festivals, and summer has warm weather perfect for outdoor activities. Autumn (September-October) and winter (December-February) are rainy and cloudy, but there are many indoor attractions making it good for travel."
       }
     ],
+    visa: [
+      {
+        title: "무비자 입국 (Schengen)",
+        description: "한국인은 Schengen 지역(네덜란드 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry (Schengen)",
+        description: "US citizens can enter the Netherlands (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+      }
+    ],
     phrases: phraseSets.dutch
+  },
+  {
+    name: "포르투갈",
+    nameEn: "Portugal",
+    keywords: ["포르투갈", "포르투칼", "portugal", "리스본", "lisbon", "포르토", "porto"],
+    flag: "🇵🇹",
+    languageCode: "pt-PT",
+    summary: "태양과 해안이 아름다운 포르투갈 여행을 위한 가이드.",
+    summaryEn: "Guide for traveling to Portugal, beautiful with sun and coastline.",
+    currency: {
+      code: "EUR",
+      name: "유로",
+      nameEn: "Euro",
+      symbol: "€"
+    },
+    weather: {
+      cities: [
+        { name: "Lisbon", nameKo: "리스본", link: "https://www.google.com/search?q=Lisbon+weather" },
+        { name: "Porto", nameKo: "포르투", link: "https://www.google.com/search?q=Porto+weather" },
+        { name: "Faro", nameKo: "파루", link: "https://www.google.com/search?q=Faro+weather" }
+      ]
+    },
+    manners: [
+      {
+        title: "팁 문화",
+        description: "포르투갈에서는 서비스 요금이 계산서에 포함되어 있어 팁이 필수는 아닙니다. 서비스에 만족했다면 소액의 팁(5~10%)을 남기는 것이 일반적입니다. 카페에서는 반올림 정도로 충분합니다."
+      },
+      {
+        title: "식사 시간",
+        description: "포르투갈의 식사 시간은 한국보다 늦습니다. 점심은 보통 오후 1시~2시, 저녁은 오후 8시~9시에 시작합니다. 레스토랑은 보통 오후 7시 30분 이후에 열립니다."
+      },
+      {
+        title: "인사 예절",
+        description: "포르투갈인들은 따뜻하고 친근한 인사를 선호합니다. 만날 때와 헤어질 때 악수나 포옹을 하는 것이 일반적이며, 가까운 사이에서는 볼에 키스(beso)를 하는 경우도 있습니다."
+      },
+      {
+        title: "공공장소 예의",
+        description: "공공장소에서 큰 소리로 통화하거나 소리지르는 것을 삼가세요. 조용한 대화를 선호하며, 특히 교회나 박물관에서는 조용히 하는 것이 예의입니다."
+      },
+      {
+        title: "대중교통 이용",
+        description: "포르투갈의 대중교통은 깨끗하고 안전합니다. 리스본과 포르토에서는 교통카드를 구매하여 지하철, 버스, 트램을 이용할 수 있습니다. 티켓은 반드시 검증해야 합니다."
+      },
+      {
+        title: "화장실 이용",
+        description: "포르투갈의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 지하철역의 화장실도 보통 유료입니다."
+      }
+    ],
+    souvenirs: [
+      {
+        title: "포르투갈 와인",
+        description: "포르토 와인, 빈호 베르데 등 포르투갈의 대표적인 와인이 인기 기념품입니다. 다양한 가격대와 품질의 와인을 만나볼 수 있습니다."
+      },
+      {
+        title: "아줄레주 타일",
+        description: "포르투갈의 전통 타일인 아줄레주가 인기입니다. 작은 타일 제품이나 타일 패턴이 들어간 소품들이 좋은 선물이 됩니다."
+      },
+      {
+        title: "코르크 제품",
+        description: "포르투갈은 세계 최대 코르크 생산국입니다. 코르크 지갑, 가방, 신발 등 다양한 코르크 제품이 인기입니다."
+      },
+      {
+        title: "파스텔 드 나타",
+        description: "포르투갈의 대표적인 과자인 파스텔 드 나타(에그 타르트)가 좋은 선물이 됩니다. 공항에서도 구매할 수 있습니다."
+      },
+      {
+        title: "올리브 오일",
+        description: "고품질 포르투갈 올리브 오일이 인기입니다. 다양한 브랜드와 가격대가 있으며, 현지 마트에서 구매할 수 있습니다."
+      }
+    ],
+    market: [
+      {
+        title: "마트 추천템",
+        description: "Pingo Doce, Continente 등 대형 마트에서 올리브 오일, 와인, 치즈, 통조림 등을 저렴하게 구매할 수 있습니다."
+      },
+      {
+        title: "약국 상비약",
+        description: "포르투갈 약국에서 구매 가능한 일반의약품들이 있습니다. 처방전 없이 구매 가능한 제품들을 찾을 수 있습니다."
+      },
+      {
+        title: "현지 베이커리",
+        description: "현지 베이커리에서 구매하는 전통 빵과 과자가 인기입니다. 포르투갈의 전통 빵 문화를 만나볼 수 있습니다."
+      },
+      {
+        title: "시장 상품",
+        description: "지역 시장에서 구매하는 신선한 과일, 채소, 생선 등이 좋습니다. 포르투갈의 다양한 식재료를 구매할 수 있습니다."
+      },
+      {
+        title: "편의점 상품",
+        description: "편의점 커피, 에너지 음료, 여행 간식 등이 인기입니다. 포르투갈의 편의점은 다양한 상품을 판매합니다."
+      }
+    ],
+    essentials: [
+      {
+        title: "전기 어댑터",
+        description: "포르투갈은 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+      },
+      {
+        title: "교통카드",
+        description: "리스본에서는 Lisboa Card, 포르토에서는 Andante 카드를 구매하여 대중교통을 이용할 수 있습니다. 기차, 버스, 지하철, 트램 모두 사용 가능하며, 편의점이나 역에서 구매 및 충전할 수 있습니다."
+      },
+      {
+        title: "인터넷 연결",
+        description: "유럽 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. 포르투갈은 WiFi가 잘 발달되어 있어 많은 곳에서 무료 WiFi를 이용할 수 있습니다."
+      },
+      {
+        title: "유럽 eSIM",
+        titleEn: "Europe eSIM",
+        link: "https://link.coupang.com/a/c5Smk3",
+        iframe: '<iframe src="https://coupa.ng/ckJrKH" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+      },
+      {
+        title: "여행자 보험",
+        description: "의료비, 도난, 여행 지연 등을 보장하는 여행자 보험 가입을 권장합니다. 포르투갈은 의료비가 합리적이지만 보험 가입이 안전합니다."
+      },
+      {
+        title: "여행하기 좋은 시기",
+        description: "포르투갈은 봄(4~6월)과 가을(9~10월)이 가장 여행하기 좋은 시기입니다. 날씨가 온화하고 관광객이 적어 편안하게 여행할 수 있습니다. 여름(7~8월)은 덥지만 해변을 즐기기 좋고, 겨울(12~2월)은 온화하지만 비가 많을 수 있습니다."
+      }
+    ],
+    mannersEn: [
+      {
+        title: "Tipping Culture",
+        description: "In Portugal, service charges are included in the bill, so tipping is not mandatory. If you're satisfied with the service, leaving a small tip (5~10%) is common. At cafes, rounding up is sufficient."
+      },
+      {
+        title: "Meal Times",
+        description: "Portuguese meal times are later than in Korea. Lunch is usually around 1-2 PM, and dinner starts around 8-9 PM. Restaurants usually open after 7:30 PM."
+      },
+      {
+        title: "Greeting Etiquette",
+        description: "Portuguese people prefer warm and friendly greetings. Handshakes or hugs when meeting and parting are common, and close friends may kiss on the cheek (beso)."
+      },
+      {
+        title: "Public Place Etiquette",
+        description: "Avoid making phone calls or shouting loudly in public places. They prefer quiet conversations, especially in churches and museums."
+      },
+      {
+        title: "Public Transportation",
+        description: "Public transportation in Portugal is clean and safe. In Lisbon and Porto, you can purchase transportation cards to use subways, buses, and trams. Tickets must be validated."
+      },
+      {
+        title: "Restroom Usage",
+        description: "Public restrooms in Portugal are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. Subway station restrooms are usually paid as well."
+      }
+    ],
+    souvenirsEn: [
+      {
+        title: "Portuguese Wine",
+        description: "Port wine, Vinho Verde, and other representative Portuguese wines are popular souvenirs. You can find various price ranges and qualities."
+      },
+      {
+        title: "Azulejo Tiles",
+        description: "Azulejo, traditional Portuguese tiles, are popular. Small tile products or items with tile patterns make great gifts."
+      },
+      {
+        title: "Cork Products",
+        description: "Portugal is the world's largest cork producer. Cork wallets, bags, shoes, and various cork products are popular."
+      },
+      {
+        title: "Pastel de Nata",
+        description: "Pastel de Nata (egg tart), a representative Portuguese pastry, makes a great gift. You can also purchase them at the airport."
+      },
+      {
+        title: "Olive Oil",
+        description: "High-quality Portuguese olive oil is popular. There are various brands and price ranges available at local markets."
+      }
+    ],
+    marketEn: [
+      {
+        title: "Market Recommendations",
+        description: "You can purchase olive oil, wine, cheese, and canned goods at affordable prices at large supermarkets like Pingo Doce and Continente."
+      },
+      {
+        title: "Pharmacy Products",
+        description: "There are over-the-counter medicines available at Portuguese pharmacies. You can find products available without a prescription."
+      },
+      {
+        title: "Local Bakeries",
+        description: "Traditional breads and sweets from local bakeries are popular. You can experience traditional Portuguese bread culture."
+      },
+      {
+        title: "Market Products",
+        description: "Fresh fruits, vegetables, and fish purchased at local markets are good. You can purchase various Portuguese ingredients."
+      },
+      {
+        title: "Convenience Store Products",
+        description: "Convenience store coffee, energy drinks, and travel snacks are popular. Portuguese convenience stores sell a variety of products."
+      }
+    ],
+    essentialsEn: [
+      {
+        title: "Electrical Adapter",
+        description: "Portugal uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+      },
+      {
+        title: "Transportation Card",
+        description: "In Lisbon, you can purchase a Lisboa Card, and in Porto, an Andante card to use public transportation. They work on trains, buses, subways, and trams, and can be purchased and recharged at convenience stores or stations."
+      },
+      {
+        title: "Internet Connection",
+        description: "You can pre-purchase a European eSIM or buy a local SIM at the airport. Portugal has well-developed WiFi, so you can use free WiFi in many places."
+      },
+      {
+        title: "Travel Insurance",
+        description: "It's recommended to purchase travel insurance that covers medical, theft, and travel delay. Medical costs in Portugal are reasonable, but insurance is still safe to have."
+      },
+      {
+        title: "Best Time to Visit",
+        description: "Portugal is best visited in spring (April-June) and autumn (September-October). The weather is mild and there are fewer tourists, making it comfortable for travel. Summer (July-August) is hot but great for beaches, while winter (December-February) is mild but can be rainy."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국 (Schengen)",
+        description: "한국인은 Schengen 지역(포르투갈 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry (Schengen)",
+        description: "US citizens can enter Portugal (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+      }
+    ],
+    phrases: phraseSets.portuguese
+  },
+  {
+    name: "필리핀",
+    nameEn: "Philippines",
+    keywords: ["필리핀", "philippines", "마닐라", "manila", "세부", "cebu", "보라카이", "boracay"],
+    flag: "🇵🇭",
+    languageCode: "fil-PH",
+    summary: "열대 해안과 따뜻한 사람들이 있는 필리핀 여행 가이드.",
+    summaryEn: "Guide for traveling to the Philippines, with tropical coasts and warm people.",
+    currency: {
+      code: "PHP",
+      name: "필리핀 페소",
+      nameEn: "Philippine Peso",
+      symbol: "₱"
+    },
+    weather: {
+      cities: [
+        { name: "Manila", nameKo: "마닐라", link: "https://www.google.com/search?q=Manila+weather" },
+        { name: "Cebu", nameKo: "세부", link: "https://www.google.com/search?q=Cebu+weather" },
+        { name: "Boracay", nameKo: "보라카이", link: "https://www.google.com/search?q=Boracay+weather" }
+      ]
+    },
+    manners: [
+      {
+        title: "팁 문화",
+        description: "필리핀에서는 팁 문화가 일반적입니다. 레스토랑에서는 10% 정도의 팁을 남기는 것이 관례이며, 택시에서는 반올림 정도로 충분합니다. 호텔 벨보이에게는 가방당 20~50 페소 정도가 일반적입니다."
+      },
+      {
+        title: "인사 예절",
+        description: "필리핀인들은 매우 친근하고 따뜻한 인사를 선호합니다. 'Mano po'라고 하며 어른의 손을 이마에 대는 전통적인 인사법이 있으며, 일반적으로 미소와 함께 인사하는 것이 좋습니다."
+      },
+      {
+        title: "시간 개념",
+        description: "필리핀은 '필리핀 타임'이라는 유연한 시간 개념이 있습니다. 약속 시간에 정확히 도착하는 것보다 약간 여유를 두는 것이 일반적이지만, 공식적인 약속은 시간을 지키는 것이 좋습니다."
+      },
+      {
+        title: "공공장소 예의",
+        description: "공공장소에서 큰 소리로 통화하는 것은 일반적이지만, 교회나 박물관 등 조용한 장소에서는 조용히 하는 것이 예의입니다."
+      },
+      {
+        title: "사진 촬영",
+        description: "필리핀인들은 사진 촬영에 매우 친절하지만, 촬영 전 허락을 구하는 것이 좋습니다. 특히 어린이 사진을 찍을 때는 부모의 허락을 받는 것이 중요합니다."
+      },
+      {
+        title: "화장실 이용",
+        description: "필리핀의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 휴지는 휴지통에 버리는 것이 일반적입니다."
+      }
+    ],
+    souvenirs: [
+      {
+        title: "진주 제품",
+        description: "필리핀은 세계적인 진주 생산국입니다. 진주 목걸이, 귀걸이, 반지 등 다양한 진주 제품이 인기입니다."
+      },
+      {
+        title: "바나나 칩",
+        description: "필리핀의 대표적인 과자인 바나나 칩이 좋은 선물이 됩니다. 다양한 맛과 포장 형태로 판매됩니다."
+      },
+      {
+        title: "망고 제품",
+        description: "망고 드라이드, 망고 쥬스, 망고 캔디 등 필리핀 망고 제품이 인기입니다. 필리핀 망고는 세계적으로 유명합니다."
+      },
+      {
+        title: "코코넛 제품",
+        description: "코코넛 오일, 코코넛 비누, 코코넛 캔디 등 다양한 코코넛 제품이 좋은 선물이 됩니다."
+      },
+      {
+        title: "핸드메이드 제품",
+        description: "필리핀의 전통 수공예품인 바구니, 매트, 천 제품 등이 인기입니다. 지역별로 특색 있는 제품을 만나볼 수 있습니다."
+      }
+    ],
+    market: [
+      {
+        title: "마트 추천템",
+        description: "SM Supermarket, Robinsons 등 대형 마트에서 망고 제품, 바나나 칩, 코코넛 제품 등을 저렴하게 구매할 수 있습니다."
+      },
+      {
+        title: "약국 상비약",
+        description: "필리핀 약국에서 구매 가능한 일반의약품들이 있습니다. 처방전 없이 구매 가능한 제품들을 찾을 수 있습니다."
+      },
+      {
+        title: "현지 과일",
+        description: "시장에서 구매하는 신선한 망고, 파파야, 코코넛 등 열대 과일이 인기입니다. 필리핀의 다양한 과일을 만나볼 수 있습니다."
+      },
+      {
+        title: "편의점 상품",
+        description: "7-Eleven, Ministop 등 편의점에서 간단한 식품과 음료를 구매할 수 있습니다. 24시간 운영되는 편의점이 많습니다."
+      },
+      {
+        title: "시장 상품",
+        description: "지역 시장에서 구매하는 신선한 해산물, 과일, 채소 등이 좋습니다. 필리핀의 다양한 식재료를 구매할 수 있습니다."
+      }
+    ],
+    essentials: [
+      {
+        title: "전기 어댑터",
+        description: "필리핀은 콘센트 타입 A/B/C (220V, 60Hz)를 사용합니다. 미국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+      },
+      {
+        title: "교통카드",
+        description: "마닐라에서는 Beep 카드를 구매하여 지하철, 버스, 지하철을 이용할 수 있습니다. 편의점이나 역에서 구매 및 충전할 수 있습니다."
+      },
+      {
+        title: "인터넷 연결",
+        description: "필리핀 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. Globe, Smart 등 주요 통신사가 있으며, 공항에서 바로 구매 가능합니다."
+      },
+      {
+        title: "필리핀 eSIM",
+        titleEn: "Philippines eSIM",
+        link: "https://link.coupang.com/a/c5SjcD",
+        iframe: '<iframe src="https://coupa.ng/ckJrEU" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+      },
+      {
+        title: "현금 준비",
+        description: "필리핀은 아직도 현금 중심 사회이므로 소액 현금이 필요합니다. 편의점 ATM 위치를 확인하거나, 공항에서 환전하는 것이 좋습니다."
+      },
+      {
+        title: "여행자 보험",
+        description: "의료비, 도난, 여행 지연 등을 보장하는 여행자 보험 가입을 권장합니다. 필리핀은 의료비가 합리적이지만 보험 가입이 안전합니다."
+      },
+      {
+        title: "여행하기 좋은 시기",
+        description: "필리핀은 건기(11월~4월)가 가장 여행하기 좋은 시기입니다. 날씨가 맑고 습도가 낮아 편안하게 여행할 수 있습니다. 우기(5월~10월)는 비가 많지만 호텔 가격이 저렴합니다."
+      }
+    ],
+    mannersEn: [
+      {
+        title: "Tipping Culture",
+        description: "Tipping is common in the Philippines. It's customary to leave about 10% tip at restaurants, and rounding up is sufficient for taxis. Hotel bellboys typically receive 20~50 pesos per bag."
+      },
+      {
+        title: "Greeting Etiquette",
+        description: "Filipinos prefer very friendly and warm greetings. There's a traditional greeting called 'Mano po' where you place an elder's hand on your forehead, and generally greeting with a smile is good."
+      },
+      {
+        title: "Time Concept",
+        description: "The Philippines has a flexible time concept called 'Filipino Time'. It's common to have some flexibility rather than arriving exactly on time, but it's good to be punctual for official appointments."
+      },
+      {
+        title: "Public Place Etiquette",
+        description: "Making phone calls loudly in public places is common, but it's polite to be quiet in places like churches and museums."
+      },
+      {
+        title: "Photography",
+        description: "Filipinos are very friendly about photography, but it's good to ask for permission before taking photos. Especially when taking photos of children, getting parental permission is important."
+      },
+      {
+        title: "Restroom Usage",
+        description: "Public restrooms in the Philippines are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. It's common to dispose of toilet paper in trash bins."
+      }
+    ],
+    souvenirsEn: [
+      {
+        title: "Pearl Products",
+        description: "The Philippines is a world-renowned pearl producer. Various pearl products like necklaces, earrings, and rings are popular."
+      },
+      {
+        title: "Banana Chips",
+        description: "Banana chips, a representative Filipino snack, make great gifts. They're sold in various flavors and packaging."
+      },
+      {
+        title: "Mango Products",
+        description: "Mango dried, mango juice, mango candy, and other Philippine mango products are popular. Philippine mangoes are world-famous."
+      },
+      {
+        title: "Coconut Products",
+        description: "Various coconut products like coconut oil, coconut soap, and coconut candy make great gifts."
+      },
+      {
+        title: "Handmade Products",
+        description: "Traditional Filipino handicrafts like baskets, mats, and fabric products are popular. You can find regionally unique products."
+      }
+    ],
+    marketEn: [
+      {
+        title: "Market Recommendations",
+        description: "You can purchase mango products, banana chips, and coconut products at affordable prices at large supermarkets like SM Supermarket and Robinsons."
+      },
+      {
+        title: "Pharmacy Products",
+        description: "There are over-the-counter medicines available at Philippine pharmacies. You can find products available without a prescription."
+      },
+      {
+        title: "Local Fruits",
+        description: "Fresh tropical fruits like mangoes, papayas, and coconuts purchased at markets are popular. You can experience various Philippine fruits."
+      },
+      {
+        title: "Convenience Store Products",
+        description: "You can purchase simple food and drinks at convenience stores like 7-Eleven and Ministop. Many convenience stores are open 24 hours."
+      },
+      {
+        title: "Market Products",
+        description: "Fresh seafood, fruits, and vegetables purchased at local markets are good. You can purchase various Philippine ingredients."
+      }
+    ],
+    essentialsEn: [
+      {
+        title: "Electrical Adapter",
+        description: "The Philippines uses Type A/B/C plugs (220V, 60Hz). You'll need a US-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+      },
+      {
+        title: "Transportation Card",
+        description: "In Manila, you can purchase a Beep card to use subways, buses, and trains. They can be purchased and recharged at convenience stores or stations."
+      },
+      {
+        title: "Internet Connection",
+        description: "You can pre-purchase a Philippine eSIM or buy a local SIM at the airport. Major carriers include Globe and Smart, and you can purchase directly at the airport."
+      },
+      {
+        title: "Cash Preparation",
+        description: "The Philippines is still a cash-based society, so small cash is needed. Check convenience store ATM locations or exchange at the airport."
+      },
+      {
+        title: "Travel Insurance",
+        description: "It's recommended to purchase travel insurance that covers medical, theft, and travel delay. Medical costs in the Philippines are reasonable, but insurance is still safe to have."
+      },
+      {
+        title: "Best Time to Visit",
+        description: "The Philippines is best visited during the dry season (November-April). The weather is clear and humidity is low, making it comfortable for travel. The rainy season (May-October) has more rain but hotel prices are lower."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 30일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다. 30일 이상 체류하려면 비자 연장이 필요합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter the Philippines visa-free for up to 30 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket. Visa extension is required for stays longer than 30 days."
+      }
+    ],
+    phrases: phraseSets.filipino
+  },
+  {
+    name: "베트남",
+    nameEn: "Vietnam",
+    keywords: ["베트남", "vietnam", "하노이", "hanoi", "호치민", "ho chi minh", "다낭", "da nang"],
+    flag: "🇻🇳",
+    languageCode: "vi-VN",
+    summary: "풍부한 역사와 맛있는 음식이 있는 베트남 여행 가이드.",
+    summaryEn: "Guide for traveling to Vietnam, with rich history and delicious food.",
+    currency: {
+      code: "VND",
+      name: "베트남 동",
+      nameEn: "Vietnamese Dong",
+      symbol: "₫"
+    },
+    weather: {
+      cities: [
+        { name: "Hanoi", nameKo: "하노이", link: "https://www.google.com/search?q=Hanoi+weather" },
+        { name: "Ho Chi Minh City", nameKo: "호치민", link: "https://www.google.com/search?q=Ho+Chi+Minh+City+weather" },
+        { name: "Da Nang", nameKo: "다낭", link: "https://www.google.com/search?q=Da+Nang+weather" }
+      ]
+    },
+    manners: [
+      {
+        title: "팁 문화",
+        description: "베트남에서는 팁 문화가 일반적이지 않지만, 서비스에 만족했다면 소액의 팁을 남기는 것이 좋습니다. 레스토랑에서는 5~10% 정도, 택시에서는 반올림 정도로 충분합니다."
+      },
+      {
+        title: "인사 예절",
+        description: "베트남인들은 전통적으로 두 손을 모아 인사하는 'Chào'를 사용합니다. 어른께는 존경을 표하며 인사하는 것이 중요하며, 일반적으로 미소와 함께 인사하는 것이 좋습니다."
+      },
+      {
+        title: "신발 착용",
+        description: "베트남에서는 집이나 사원에 들어갈 때 신발을 벗는 것이 일반적입니다. 신발을 벗는 곳에 신발을 정리해서 두는 것이 예의입니다."
+      },
+      {
+        title: "공공장소 예의",
+        description: "공공장소에서 큰 소리로 통화하는 것은 일반적이지만, 사원이나 박물관 등 조용한 장소에서는 조용히 하는 것이 예의입니다."
+      },
+      {
+        title: "사진 촬영",
+        description: "베트남인들은 사진 촬영에 친절하지만, 촬영 전 허락을 구하는 것이 좋습니다. 특히 사원이나 전통 건물을 촬영할 때는 주의가 필요합니다."
+      },
+      {
+        title: "화장실 이용",
+        description: "베트남의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 휴지는 휴지통에 버리는 것이 일반적입니다."
+      }
+    ],
+    souvenirs: [
+      {
+        title: "아오자이",
+        description: "베트남의 전통 의상인 아오자이가 인기 기념품입니다. 다양한 색상과 디자인의 아오자이를 만나볼 수 있습니다."
+      },
+      {
+        title: "커피",
+        description: "베트남 커피는 세계적으로 유명합니다. 로부스타 원두, 커피 필터, 커피 캡슐 등 다양한 커피 제품이 인기입니다."
+      },
+      {
+        title: "라크 제품",
+        description: "베트남의 전통 공예인 라크(칠기) 제품이 좋은 선물이 됩니다. 접시, 그릇, 장식품 등 다양한 라크 제품을 구매할 수 있습니다."
+      },
+      {
+        title: "비단 제품",
+        description: "베트남 비단 스카프, 드레스, 가방 등이 인기입니다. 하노이와 호치민에서 다양한 비단 제품을 만나볼 수 있습니다."
+      },
+      {
+        title: "향료",
+        description: "베트남의 전통 향료가 좋은 선물이 됩니다. 다양한 향의 향료와 향초를 구매할 수 있습니다."
+      }
+    ],
+    market: [
+      {
+        title: "마트 추천템",
+        description: "VinMart, Co.opmart 등 대형 마트에서 커피, 향료, 라크 제품 등을 저렴하게 구매할 수 있습니다."
+      },
+      {
+        title: "약국 상비약",
+        description: "베트남 약국에서 구매 가능한 일반의약품들이 있습니다. 처방전 없이 구매 가능한 제품들을 찾을 수 있습니다."
+      },
+      {
+        title: "현지 과일",
+        description: "시장에서 구매하는 신선한 열대 과일이 인기입니다. 용과, 람부탄, 망고스틴 등 베트남의 다양한 과일을 만나볼 수 있습니다."
+      },
+      {
+        title: "편의점 상품",
+        description: "Circle K, GS25 등 편의점에서 간단한 식품과 음료를 구매할 수 있습니다. 24시간 운영되는 편의점이 많습니다."
+      },
+      {
+        title: "시장 상품",
+        description: "지역 시장에서 구매하는 신선한 해산물, 과일, 채소 등이 좋습니다. 베트남의 다양한 식재료를 구매할 수 있습니다."
+      }
+    ],
+    essentials: [
+      {
+        title: "전기 어댑터",
+        description: "베트남은 콘센트 타입 A/C (220V, 50Hz)를 사용합니다. 미국식 또는 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+      },
+      {
+        title: "교통카드",
+        description: "호치민에서는 버스 카드를 구매하여 대중교통을 이용할 수 있습니다. 편의점이나 역에서 구매 및 충전할 수 있습니다."
+      },
+      {
+        title: "인터넷 연결",
+        description: "베트남 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. Viettel, Vinaphone 등 주요 통신사가 있으며, 공항에서 바로 구매 가능합니다."
+      },
+      {
+        title: "베트남 eSIM",
+        titleEn: "Vietnam eSIM",
+        link: "https://link.coupang.com/a/c5Sgws",
+        iframe: '<iframe src="https://coupa.ng/ckJrye" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+      },
+      {
+        title: "현금 준비",
+        description: "베트남은 아직도 현금 중심 사회이므로 소액 현금이 필요합니다. 편의점 ATM 위치를 확인하거나, 공항에서 환전하는 것이 좋습니다."
+      },
+      {
+        title: "여행자 보험",
+        description: "의료비, 도난, 여행 지연 등을 보장하는 여행자 보험 가입을 권장합니다. 베트남은 의료비가 합리적이지만 보험 가입이 안전합니다."
+      },
+      {
+        title: "여행하기 좋은 시기",
+        description: "베트남은 건기(11월~4월)가 가장 여행하기 좋은 시기입니다. 날씨가 맑고 습도가 낮아 편안하게 여행할 수 있습니다. 우기(5월~10월)는 비가 많지만 호텔 가격이 저렴합니다."
+      }
+    ],
+    mannersEn: [
+      {
+        title: "Tipping Culture",
+        description: "Tipping is not common in Vietnam, but it's good to leave a small tip if you're satisfied with the service. About 5~10% at restaurants and rounding up for taxis is sufficient."
+      },
+      {
+        title: "Greeting Etiquette",
+        description: "Vietnamese people traditionally use 'Chào' with both hands together. It's important to show respect when greeting elders, and generally greeting with a smile is good."
+      },
+      {
+        title: "Shoe Etiquette",
+        description: "In Vietnam, it's common to remove shoes when entering homes or temples. It's polite to organize shoes neatly in the designated area."
+      },
+      {
+        title: "Public Place Etiquette",
+        description: "Making phone calls loudly in public places is common, but it's polite to be quiet in places like temples and museums."
+      },
+      {
+        title: "Photography",
+        description: "Vietnamese people are friendly about photography, but it's good to ask for permission before taking photos. Be careful especially when photographing temples or traditional buildings."
+      },
+      {
+        title: "Restroom Usage",
+        description: "Public restrooms in Vietnam are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. It's common to dispose of toilet paper in trash bins."
+      }
+    ],
+    souvenirsEn: [
+      {
+        title: "Ao Dai",
+        description: "Ao Dai, the traditional Vietnamese dress, is a popular souvenir. You can find various colors and designs."
+      },
+      {
+        title: "Coffee",
+        description: "Vietnamese coffee is world-famous. Various coffee products like Robusta beans, coffee filters, and coffee capsules are popular."
+      },
+      {
+        title: "Lacquer Products",
+        description: "Lacquer (lacquerware) products, traditional Vietnamese crafts, make great gifts. You can purchase various lacquer products like plates, bowls, and decorations."
+      },
+      {
+        title: "Silk Products",
+        description: "Vietnamese silk scarves, dresses, and bags are popular. You can find various silk products in Hanoi and Ho Chi Minh City."
+      },
+      {
+        title: "Incense",
+        description: "Traditional Vietnamese incense makes a great gift. You can purchase various scents of incense and incense sticks."
+      }
+    ],
+    marketEn: [
+      {
+        title: "Market Recommendations",
+        description: "You can purchase coffee, incense, and lacquer products at affordable prices at large supermarkets like VinMart and Co.opmart."
+      },
+      {
+        title: "Pharmacy Products",
+        description: "There are over-the-counter medicines available at Vietnamese pharmacies. You can find products available without a prescription."
+      },
+      {
+        title: "Local Fruits",
+        description: "Fresh tropical fruits purchased at markets are popular. You can experience various Vietnamese fruits like dragon fruit, rambutan, and mangosteen."
+      },
+      {
+        title: "Convenience Store Products",
+        description: "You can purchase simple food and drinks at convenience stores like Circle K and GS25. Many convenience stores are open 24 hours."
+      },
+      {
+        title: "Market Products",
+        description: "Fresh seafood, fruits, and vegetables purchased at local markets are good. You can purchase various Vietnamese ingredients."
+      }
+    ],
+    essentialsEn: [
+      {
+        title: "Electrical Adapter",
+        description: "Vietnam uses Type A/C plugs (220V, 50Hz). You'll need a US-style or European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+      },
+      {
+        title: "Transportation Card",
+        description: "In Ho Chi Minh City, you can purchase a bus card to use public transportation. They can be purchased and recharged at convenience stores or stations."
+      },
+      {
+        title: "Internet Connection",
+        description: "You can pre-purchase a Vietnamese eSIM or buy a local SIM at the airport. Major carriers include Viettel and Vinaphone, and you can purchase directly at the airport."
+      },
+      {
+        title: "Cash Preparation",
+        description: "Vietnam is still a cash-based society, so small cash is needed. Check convenience store ATM locations or exchange at the airport."
+      },
+      {
+        title: "Travel Insurance",
+        description: "It's recommended to purchase travel insurance that covers medical, theft, and travel delay. Medical costs in Vietnam are reasonable, but insurance is still safe to have."
+      },
+      {
+        title: "Best Time to Visit",
+        description: "Vietnam is best visited during the dry season (November-April). The weather is clear and humidity is low, making it comfortable for travel. The rainy season (May-October) has more rain but hotel prices are lower."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 15일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다. 15일 이상 체류하려면 비자 신청이 필요합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa Required",
+        description: "US citizens need to apply for a visa to enter Vietnam. Tourist visas are typically valid for 30 days. You can apply for an e-visa online or at the Vietnamese embassy/consulate. Required documents include passport, photos, and application form."
+      }
+    ],
+    phrases: phraseSets.vietnamese
+  },
+  {
+    name: "호주",
+    nameEn: "Australia",
+    keywords: ["호주", "오스트레일리아", "australia", "시드니", "sydney", "멜버른", "melbourne", "브리즈번", "brisbane"],
+    flag: "🇦🇺",
+    languageCode: "en-AU",
+    summary: "다양한 자연 경관과 현대적인 도시를 갖춘 호주 여행 가이드.",
+    summaryEn: "Guide for traveling to Australia, with diverse natural landscapes and modern cities.",
+    currency: {
+      code: "AUD",
+      name: "호주 달러",
+      nameEn: "Australian Dollar",
+      symbol: "A$"
+    },
+    weather: {
+      cities: [
+        { name: "Sydney", nameKo: "시드니", link: "https://www.google.com/search?q=Sydney+weather" },
+        { name: "Melbourne", nameKo: "멜버른", link: "https://www.google.com/search?q=Melbourne+weather" },
+        { name: "Brisbane", nameKo: "브리즈번", link: "https://www.google.com/search?q=Brisbane+weather" }
+      ]
+    },
+    manners: [
+      {
+        title: "팁 문화",
+        description: "호주에서는 팁 문화가 일반적이지 않습니다. 레스토랑에서 서비스에 만족했다면 10% 정도의 팁을 남길 수 있지만, 필수는 아닙니다. 택시에서는 반올림 정도로 충분합니다."
+      },
+      {
+        title: "인사 예절",
+        description: "호주인들은 캐주얼하고 친근한 인사를 선호합니다. 'G'day' (안녕)나 'How are you?' 같은 캐주얼한 인사가 일반적이며, 악수나 포옹도 자연스럽게 받아들입니다."
+      },
+      {
+        title: "공공장소 예의",
+        description: "호주에서는 공공장소에서 큰 소리로 통화하는 것을 피하는 것이 좋습니다. 대중교통에서는 조용히 하는 것이 예의이며, 특히 아침 출퇴근 시간대에는 더욱 조용히 해야 합니다."
+      },
+      {
+        title: "환경 보호",
+        description: "호주는 환경 보호에 매우 민감합니다. 쓰레기를 함부로 버리지 말고, 해변과 공원에서는 특히 깨끗하게 유지하는 것이 중요합니다. 일회용 플라스틱 사용을 최소화하는 것이 좋습니다."
+      },
+      {
+        title: "야생동물",
+        description: "호주에는 독특한 야생동물이 많습니다. 동물에게 먹이를 주지 말고, 안전 거리를 유지하는 것이 중요합니다. 특히 캥거루나 코알라 같은 동물을 만날 때는 주의가 필요합니다."
+      },
+      {
+        title: "화장실 이용",
+        description: "호주의 공중화장실은 대부분 무료이며 깨끗합니다. 쇼핑몰, 공원, 해변 등에서 쉽게 찾을 수 있습니다. 휴지는 변기에 버리는 것이 일반적입니다."
+      }
+    ],
+    souvenirs: [
+      {
+        title: "울 제품",
+        description: "호주산 양모(울) 제품이 인기입니다. 울 스웨터, 담요, 부츠 등 다양한 울 제품을 구매할 수 있습니다. 특히 메리노 울 제품이 고품질로 유명합니다."
+      },
+      {
+        title: "오팔",
+        description: "호주는 세계 최대의 오팔 생산국입니다. 오팔 보석, 장신구 등이 좋은 기념품이 됩니다. 정품 인증서와 함께 구매하는 것이 좋습니다."
+      },
+      {
+        title: "티트리 오일",
+        description: "호주 원산지의 티트리 오일이 인기입니다. 항균 효과가 뛰어나며, 다양한 스킨케어 제품으로 구매할 수 있습니다."
+      },
+      {
+        title: "베지마이트",
+        description: "호주의 대표적인 식품인 베지마이트가 좋은 선물이 됩니다. 토스트에 발라 먹는 발효 식품으로, 호주인들이 즐겨 먹는 전통 음식입니다."
+      },
+      {
+        title: "와인",
+        description: "호주는 세계적인 와인 생산국입니다. 바롱가, 헌터 밸리, 마가렛 리버 등 주요 와인 산지의 와인이 인기입니다."
+      }
+    ],
+    market: [
+      {
+        title: "대형마트 추천템",
+        description: "Woolworths, Coles 등 대형마트에서 베지마이트, 티모탐 쿠키, 호주산 꿀, 와인 등을 구매할 수 있습니다. PB 제품도 가성비가 좋습니다."
+      },
+      {
+        title: "약국 상비약",
+        description: "Chemist Warehouse, Priceline 등 약국에서 일반의약품을 구매할 수 있습니다. 처방전 없이 구매 가능한 제품들이 많습니다."
+      },
+      {
+        title: "편의점 상품",
+        description: "7-Eleven, BP Connect 등 편의점에서 간단한 식품과 음료를 구매할 수 있습니다. 24시간 운영되는 편의점이 많습니다."
+      },
+      {
+        title: "면세점 상품",
+        description: "공항 면세점에서 호주산 와인, 울 제품, 오팔 등을 구매할 수 있습니다. 면세 혜택을 받을 수 있어 가격이 저렴합니다."
+      },
+      {
+        title: "시장 상품",
+        description: "퀸즈 빅토리아 마켓(멜버른), 파디스 마켓(시드니) 등 지역 시장에서 신선한 과일, 채소, 해산물 등을 구매할 수 있습니다."
+      }
+    ],
+    essentials: [
+      {
+        title: "전기 어댑터",
+        description: "호주는 콘센트 타입 I (240V, 50Hz)를 사용합니다. 3핀 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+      },
+      {
+        title: "교통카드",
+        description: "시드니에서는 Opal 카드, 멜버른에서는 Myki 카드를 구매하여 대중교통을 이용할 수 있습니다. 편의점이나 역에서 구매 및 충전할 수 있습니다."
+      },
+      {
+        title: "인터넷 연결",
+        description: "호주 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. Telstra, Optus, Vodafone 등 주요 통신사가 있으며, 공항에서 바로 구매 가능합니다."
+      },
+      {
+        title: "현금 준비",
+        description: "호주는 카드 결제가 일반적이지만, 소액 현금이 필요할 수 있습니다. 편의점 ATM 위치를 확인하거나, 공항에서 환전하는 것이 좋습니다."
+      },
+      {
+        title: "여행자 보험",
+        description: "의료비, 도난, 여행 지연 등을 보장하는 여행자 보험 가입을 권장합니다. 호주는 의료비가 비싸므로 보험 가입이 필수입니다."
+      },
+      {
+        title: "여행하기 좋은 시기",
+        description: "호주는 계절이 반대이므로, 한국의 겨울(호주의 여름, 12월~2월)이 가장 여행하기 좋은 시기입니다. 날씨가 따뜻하고 해변을 즐기기에 좋습니다. 가을(3월~5월)과 봄(9월~11월)도 날씨가 좋아 여행하기 적합합니다."
+      }
+    ],
+    mannersEn: [
+      {
+        title: "Tipping Culture",
+        description: "Tipping is not common in Australia. You can leave about 10% tip at restaurants if you're satisfied with the service, but it's not mandatory. Rounding up for taxis is sufficient."
+      },
+      {
+        title: "Greeting Etiquette",
+        description: "Australians prefer casual and friendly greetings. Casual greetings like 'G'day' or 'How are you?' are common, and handshakes or hugs are naturally accepted."
+      },
+      {
+        title: "Public Place Etiquette",
+        description: "In Australia, it's good to avoid making loud phone calls in public places. It's polite to be quiet on public transportation, especially during morning rush hours."
+      },
+      {
+        title: "Environmental Protection",
+        description: "Australia is very sensitive to environmental protection. Don't litter, and it's important to keep beaches and parks especially clean. It's good to minimize the use of single-use plastics."
+      },
+      {
+        title: "Wildlife",
+        description: "Australia has many unique wild animals. Don't feed animals and it's important to maintain a safe distance. Be careful especially when encountering animals like kangaroos or koalas."
+      },
+      {
+        title: "Restroom Usage",
+        description: "Public restrooms in Australia are mostly free and clean. You can easily find them at shopping malls, parks, and beaches. It's common to flush toilet paper down the toilet."
+      }
+    ],
+    souvenirsEn: [
+      {
+        title: "Wool Products",
+        description: "Australian wool products are popular. You can purchase various wool products like sweaters, blankets, and boots. Merino wool products are especially famous for their high quality."
+      },
+      {
+        title: "Opal",
+        description: "Australia is the world's largest producer of opals. Opal jewelry and accessories make great souvenirs. It's good to purchase with an authenticity certificate."
+      },
+      {
+        title: "Tea Tree Oil",
+        description: "Tea tree oil from Australia is popular. It has excellent antibacterial effects and can be purchased as various skincare products."
+      },
+      {
+        title: "Vegemite",
+        description: "Vegemite, a representative Australian food, makes a great gift. It's a fermented food spread on toast, a traditional food that Australians enjoy."
+      },
+      {
+        title: "Wine",
+        description: "Australia is a world-class wine producer. Wines from major wine regions like Barossa, Hunter Valley, and Margaret River are popular."
+      }
+    ],
+    marketEn: [
+      {
+        title: "Supermarket Recommendations",
+        description: "You can purchase Vegemite, Tim Tam cookies, Australian honey, and wine at large supermarkets like Woolworths and Coles. Private label products also offer good value."
+      },
+      {
+        title: "Pharmacy Products",
+        description: "You can purchase over-the-counter medicines at pharmacies like Chemist Warehouse and Priceline. Many products are available without a prescription."
+      },
+      {
+        title: "Convenience Store Products",
+        description: "You can purchase simple food and drinks at convenience stores like 7-Eleven and BP Connect. Many convenience stores are open 24 hours."
+      },
+      {
+        title: "Duty-Free Products",
+        description: "You can purchase Australian wine, wool products, and opals at airport duty-free shops. You can receive duty-free benefits, making prices cheaper."
+      },
+      {
+        title: "Market Products",
+        description: "You can purchase fresh fruits, vegetables, and seafood at local markets like Queen Victoria Market (Melbourne) and Paddy's Market (Sydney)."
+      }
+    ],
+    essentialsEn: [
+      {
+        title: "Electrical Adapter",
+        description: "Australia uses Type I plugs (240V, 50Hz). You'll need a 3-pin plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+      },
+      {
+        title: "Transportation Card",
+        description: "In Sydney, you can purchase an Opal card, and in Melbourne, a Myki card to use public transportation. They can be purchased and recharged at convenience stores or stations."
+      },
+      {
+        title: "Internet Connection",
+        description: "You can pre-purchase an Australian eSIM or buy a local SIM at the airport. Major carriers include Telstra, Optus, and Vodafone, and you can purchase directly at the airport."
+      },
+      {
+        title: "Cash Preparation",
+        description: "Australia commonly uses card payments, but you may need small cash. Check convenience store ATM locations or exchange at the airport."
+      },
+      {
+        title: "Travel Insurance",
+        description: "It's recommended to purchase travel insurance that covers medical, theft, and travel delay. Medical costs in Australia are expensive, so insurance is essential."
+      },
+      {
+        title: "Best Time to Visit",
+        description: "Since Australia's seasons are opposite, Korea's winter (Australia's summer, December-February) is the best time to visit. The weather is warm and great for enjoying beaches. Autumn (March-May) and spring (September-November) also have good weather for travel."
+      }
+    ],
+    visa: [
+      {
+        title: "eVisitor 신청 필요",
+        description: "한국인은 호주 입국 시 eVisitor(전자여행허가) 신청이 필요합니다. 관광 목적으로 3개월간 체류 가능하며, 온라인으로 무료 신청할 수 있습니다. 승인까지 보통 즉시 또는 몇 시간 내 소요됩니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "ETA Required",
+        description: "US citizens need to apply for an ETA (Electronic Travel Authority) to enter Australia. You can stay for up to 3 months for tourism purposes. The ETA can be applied for online and is usually approved within minutes."
+      }
+    ],
+    phrases: phraseSets.english
+  },
+  {
+    name: "태국",
+    nameEn: "Thailand",
+    keywords: ["태국", "thailand", "방콕", "bangkok", "치앙마이", "chiang mai", "푸켓", "phuket"],
+    flag: "🇹🇭",
+    languageCode: "th-TH",
+    summary: "풍부한 문화와 맛있는 음식이 있는 태국 여행 가이드.",
+    summaryEn: "Guide for traveling to Thailand, with rich culture and delicious food.",
+    currency: {
+      code: "THB",
+      name: "태국 바트",
+      nameEn: "Thai Baht",
+      symbol: "฿"
+    },
+    weather: {
+      cities: [
+        { name: "Bangkok", nameKo: "방콕", link: "https://www.google.com/search?q=Bangkok+weather" },
+        { name: "Chiang Mai", nameKo: "치앙마이", link: "https://www.google.com/search?q=Chiang+Mai+weather" },
+        { name: "Phuket", nameKo: "푸켓", link: "https://www.google.com/search?q=Phuket+weather" }
+      ]
+    },
+    manners: [
+      {
+        title: "팁 문화",
+        description: "태국에서는 팁 문화가 일반적입니다. 레스토랑에서는 10% 정도, 택시에서는 반올림 정도로 충분합니다. 마사지나 스파에서는 50~100바트 정도의 팁을 주는 것이 좋습니다."
+      },
+      {
+        title: "인사 예절",
+        description: "태국인들은 전통적으로 '와이' (합장 인사)를 사용합니다. 어른께는 존경을 표하며 인사하는 것이 중요하며, 일반적으로 미소와 함께 인사하는 것이 좋습니다."
+      },
+      {
+        title: "신발 착용",
+        description: "태국에서는 사원이나 집에 들어갈 때 신발을 벗는 것이 일반적입니다. 신발을 벗는 곳에 신발을 정리해서 두는 것이 예의입니다."
+      },
+      {
+        title: "왕실 존경",
+        description: "태국인들은 왕실을 매우 존경합니다. 왕실 관련 사진이나 초상화를 함부로 다루지 말고, 왕실에 대한 비판적인 발언을 피하는 것이 좋습니다."
+      },
+      {
+        title: "사진 촬영",
+        description: "태국인들은 사진 촬영에 친절하지만, 촬영 전 허락을 구하는 것이 좋습니다. 특히 사원이나 전통 건물을 촬영할 때는 주의가 필요합니다."
+      },
+      {
+        title: "화장실 이용",
+        description: "태국의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 휴지는 휴지통에 버리는 것이 일반적입니다."
+      }
+    ],
+    souvenirs: [
+      {
+        title: "태국 실크",
+        description: "태국 실크 제품이 인기입니다. 실크 스카프, 드레스, 가방 등 다양한 실크 제품을 구매할 수 있습니다."
+      },
+      {
+        title: "태국 향료",
+        description: "태국의 전통 향료가 좋은 선물이 됩니다. 다양한 향의 향료와 향초를 구매할 수 있습니다."
+      },
+      {
+        title: "태국 커피",
+        description: "태국 커피 원두와 인스턴트 커피가 인기입니다. 특히 치앙마이 지역의 커피가 유명합니다."
+      },
+      {
+        title: "태국 과자",
+        description: "태국 전통 과자와 쿠키가 좋은 선물이 됩니다. 코코넛 과자, 참깨 과자 등 다양한 과자를 구매할 수 있습니다."
+      },
+      {
+        title: "태국 마사지 오일",
+        description: "태국 전통 마사지 오일이 인기입니다. 다양한 향의 마사지 오일을 구매할 수 있습니다."
+      }
+    ],
+    market: [
+      {
+        title: "마트 추천템",
+        description: "7-Eleven, Big C, Tesco Lotus 등 대형 마트에서 태국 과자, 커피, 향료 등을 저렴하게 구매할 수 있습니다."
+      },
+      {
+        title: "약국 상비약",
+        description: "태국 약국에서 구매 가능한 일반의약품들이 있습니다. 처방전 없이 구매 가능한 제품들을 찾을 수 있습니다."
+      },
+      {
+        title: "편의점 상품",
+        description: "7-Eleven 등 편의점에서 간단한 식품과 음료를 구매할 수 있습니다. 24시간 운영되는 편의점이 많습니다."
+      },
+      {
+        title: "시장 상품",
+        description: "지역 시장에서 구매하는 신선한 과일, 채소, 해산물 등이 좋습니다. 태국의 다양한 식재료를 구매할 수 있습니다."
+      },
+      {
+        title: "면세점 상품",
+        description: "공항 면세점에서 태국산 향료, 커피, 실크 제품 등을 구매할 수 있습니다. 면세 혜택을 받을 수 있어 가격이 저렴합니다."
+      }
+    ],
+    essentials: [
+      {
+        title: "전기 어댑터",
+        description: "태국은 콘센트 타입 A/C (220V, 50Hz)를 사용합니다. 미국식 또는 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+      },
+      {
+        title: "교통카드",
+        description: "방콕에서는 BTS 스카이트레인 카드나 MRT 카드를 구매하여 대중교통을 이용할 수 있습니다. 편의점이나 역에서 구매 및 충전할 수 있습니다."
+      },
+      {
+        title: "인터넷 연결",
+        description: "태국 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. AIS, True, dtac 등 주요 통신사가 있으며, 공항에서 바로 구매 가능합니다."
+      },
+      {
+        title: "현금 준비",
+        description: "태국은 아직도 현금 중심 사회이므로 소액 현금이 필요합니다. 편의점 ATM 위치를 확인하거나, 공항에서 환전하는 것이 좋습니다."
+      },
+      {
+        title: "여행자 보험",
+        description: "의료비, 도난, 여행 지연 등을 보장하는 여행자 보험 가입을 권장합니다. 태국은 의료비가 합리적이지만 보험 가입이 안전합니다."
+      },
+      {
+        title: "여행하기 좋은 시기",
+        description: "태국은 건기(11월~4월)가 가장 여행하기 좋은 시기입니다. 날씨가 맑고 습도가 낮아 편안하게 여행할 수 있습니다. 우기(5월~10월)는 비가 많지만 호텔 가격이 저렴합니다."
+      }
+    ],
+    mannersEn: [
+      {
+        title: "Tipping Culture",
+        description: "Tipping is common in Thailand. About 10% at restaurants and rounding up for taxis is sufficient. For massages or spas, it's good to tip about 50~100 baht."
+      },
+      {
+        title: "Greeting Etiquette",
+        description: "Thai people traditionally use 'Wai' (prayer-like greeting). It's important to show respect when greeting elders, and generally greeting with a smile is good."
+      },
+      {
+        title: "Shoe Etiquette",
+        description: "In Thailand, it's common to remove shoes when entering temples or homes. It's polite to organize shoes neatly in the designated area."
+      },
+      {
+        title: "Royal Respect",
+        description: "Thai people greatly respect the royal family. Don't handle royal photos or portraits carelessly, and avoid critical comments about the royal family."
+      },
+      {
+        title: "Photography",
+        description: "Thai people are friendly about photography, but it's good to ask for permission before taking photos. Be careful especially when photographing temples or traditional buildings."
+      },
+      {
+        title: "Restroom Usage",
+        description: "Public restrooms in Thailand are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. It's common to dispose of toilet paper in trash bins."
+      }
+    ],
+    souvenirsEn: [
+      {
+        title: "Thai Silk",
+        description: "Thai silk products are popular. You can purchase various silk products like scarves, dresses, and bags."
+      },
+      {
+        title: "Thai Spices",
+        description: "Traditional Thai spices make great gifts. You can purchase various scents of spices and incense."
+      },
+      {
+        title: "Thai Coffee",
+        description: "Thai coffee beans and instant coffee are popular. Coffee from the Chiang Mai region is especially famous."
+      },
+      {
+        title: "Thai Snacks",
+        description: "Traditional Thai snacks and cookies make great gifts. You can purchase various snacks like coconut snacks and sesame snacks."
+      },
+      {
+        title: "Thai Massage Oil",
+        description: "Traditional Thai massage oils are popular. You can purchase various scents of massage oils."
+      }
+    ],
+    marketEn: [
+      {
+        title: "Market Recommendations",
+        description: "You can purchase Thai snacks, coffee, and spices at affordable prices at large supermarkets like 7-Eleven, Big C, and Tesco Lotus."
+      },
+      {
+        title: "Pharmacy Products",
+        description: "There are over-the-counter medicines available at Thai pharmacies. You can find products available without a prescription."
+      },
+      {
+        title: "Convenience Store Products",
+        description: "You can purchase simple food and drinks at convenience stores like 7-Eleven. Many convenience stores are open 24 hours."
+      },
+      {
+        title: "Market Products",
+        description: "Fresh fruits, vegetables, and seafood purchased at local markets are good. You can purchase various Thai ingredients."
+      },
+      {
+        title: "Duty-Free Products",
+        description: "You can purchase Thai spices, coffee, and silk products at airport duty-free shops. You can receive duty-free benefits, making prices cheaper."
+      }
+    ],
+    essentialsEn: [
+      {
+        title: "Electrical Adapter",
+        description: "Thailand uses Type A/C plugs (220V, 50Hz). You'll need a US-style or European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+      },
+      {
+        title: "Transportation Card",
+        description: "In Bangkok, you can purchase a BTS Skytrain card or MRT card to use public transportation. They can be purchased and recharged at convenience stores or stations."
+      },
+      {
+        title: "Internet Connection",
+        description: "You can pre-purchase a Thai eSIM or buy a local SIM at the airport. Major carriers include AIS, True, and dtac, and you can purchase directly at the airport."
+      },
+      {
+        title: "Cash Preparation",
+        description: "Thailand is still a cash-based society, so small cash is needed. Check convenience store ATM locations or exchange at the airport."
+      },
+      {
+        title: "Travel Insurance",
+        description: "It's recommended to purchase travel insurance that covers medical, theft, and travel delay. Medical costs in Thailand are reasonable, but insurance is still safe to have."
+      },
+      {
+        title: "Best Time to Visit",
+        description: "Thailand is best visited during the dry season (November-April). The weather is clear and humidity is low, making it comfortable for travel. The rainy season (May-October) has more rain but hotel prices are lower."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter Thailand visa-free for up to 30 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket. For longer stays, a visa extension or tourist visa is required."
+      }
+    ],
+    phrases: phraseSets.thai
+  },
+  {
+    name: "대만",
+    nameEn: "Taiwan",
+    keywords: ["대만", "taiwan", "타이완", "타이베이", "taipei", "가오슝", "kaohsiung"],
+    flag: "🇹🇼",
+    languageCode: "zh-TW",
+    summary: "풍부한 역사와 맛있는 음식이 있는 대만 여행 가이드.",
+    summaryEn: "Guide for traveling to Taiwan, with rich history and delicious food.",
+    currency: {
+      code: "TWD",
+      name: "신대만 달러",
+      nameEn: "New Taiwan Dollar",
+      symbol: "NT$"
+    },
+    weather: {
+      cities: [
+        { name: "Taipei", nameKo: "타이베이", link: "https://www.google.com/search?q=Taipei+weather" },
+        { name: "Kaohsiung", nameKo: "가오슝", link: "https://www.google.com/search?q=Kaohsiung+weather" },
+        { name: "Taichung", nameKo: "타이중", link: "https://www.google.com/search?q=Taichung+weather" }
+      ]
+    },
+    manners: [
+      {
+        title: "팁 문화",
+        description: "대만에서는 팁 문화가 일반적이지 않습니다. 레스토랑에서 서비스에 만족했다면 소액의 팁을 남길 수 있지만, 필수는 아닙니다."
+      },
+      {
+        title: "인사 예절",
+        description: "대만인들은 전통적으로 두 손을 모아 인사하는 것을 선호합니다. 어른께는 존경을 표하며 인사하는 것이 중요합니다."
+      },
+      {
+        title: "신발 착용",
+        description: "대만에서는 사원이나 집에 들어갈 때 신발을 벗는 것이 일반적입니다. 신발을 벗는 곳에 신발을 정리해서 두는 것이 예의입니다."
+      },
+      {
+        title: "공공장소 예의",
+        description: "공공장소에서 큰 소리로 통화하는 것은 일반적이지만, 사원이나 박물관 등 조용한 장소에서는 조용히 하는 것이 예의입니다."
+      },
+      {
+        title: "사진 촬영",
+        description: "대만인들은 사진 촬영에 친절하지만, 촬영 전 허락을 구하는 것이 좋습니다. 특히 사원이나 전통 건물을 촬영할 때는 주의가 필요합니다."
+      },
+      {
+        title: "화장실 이용",
+        description: "대만의 공중화장실은 대부분 무료이며 깨끗합니다. 쇼핑몰, 공원, 지하철역 등에서 쉽게 찾을 수 있습니다. 휴지는 변기에 버리는 것이 일반적입니다."
+      }
+    ],
+    souvenirs: [
+      {
+        title: "대만 차",
+        description: "대만의 전통 차가 인기입니다. 동정산 우롱차, 알리산 차 등 다양한 차를 구매할 수 있습니다."
+      },
+      {
+        title: "대만 과자",
+        description: "대만 전통 과자와 쿠키가 좋은 선물이 됩니다. 파인애플 케이크, 태양병 등 다양한 과자를 구매할 수 있습니다."
+      },
+      {
+        title: "대만 향료",
+        description: "대만의 전통 향료가 좋은 선물이 됩니다. 다양한 향의 향료와 향초를 구매할 수 있습니다."
+      },
+      {
+        title: "대만 공예품",
+        description: "대만의 전통 공예품이 인기입니다. 도자기, 목공예품 등 다양한 공예품을 구매할 수 있습니다."
+      },
+      {
+        title: "대만 화장품",
+        description: "대만 화장품 브랜드의 제품이 인기입니다. 마이 스키니, 메디힐 등 다양한 브랜드를 만나볼 수 있습니다."
+      }
+    ],
+    market: [
+      {
+        title: "마트 추천템",
+        description: "7-Eleven, FamilyMart, PX Mart 등 대형 마트에서 대만 과자, 차, 향료 등을 저렴하게 구매할 수 있습니다."
+      },
+      {
+        title: "약국 상비약",
+        description: "대만 약국에서 구매 가능한 일반의약품들이 있습니다. 처방전 없이 구매 가능한 제품들을 찾을 수 있습니다."
+      },
+      {
+        title: "편의점 상품",
+        description: "7-Eleven, FamilyMart 등 편의점에서 간단한 식품과 음료를 구매할 수 있습니다. 24시간 운영되는 편의점이 많습니다."
+      },
+      {
+        title: "시장 상품",
+        description: "지역 시장에서 구매하는 신선한 과일, 채소, 해산물 등이 좋습니다. 대만의 다양한 식재료를 구매할 수 있습니다."
+      },
+      {
+        title: "면세점 상품",
+        description: "공항 면세점에서 대만산 차, 과자, 향료 등을 구매할 수 있습니다. 면세 혜택을 받을 수 있어 가격이 저렴합니다."
+      }
+    ],
+    essentials: [
+      {
+        title: "전기 어댑터",
+        description: "대만은 콘센트 타입 A (110V, 60Hz)를 사용합니다. 미국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+      },
+      {
+        title: "교통카드",
+        description: "타이베이에서는 EasyCard를 구매하여 대중교통을 이용할 수 있습니다. 편의점이나 역에서 구매 및 충전할 수 있습니다."
+      },
+      {
+        title: "인터넷 연결",
+        description: "대만 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. Chunghwa Telecom, Taiwan Mobile 등 주요 통신사가 있으며, 공항에서 바로 구매 가능합니다."
+      },
+      {
+        title: "현금 준비",
+        description: "대만은 카드 결제가 일반적이지만, 소액 현금이 필요할 수 있습니다. 편의점 ATM 위치를 확인하거나, 공항에서 환전하는 것이 좋습니다."
+      },
+      {
+        title: "여행자 보험",
+        description: "의료비, 도난, 여행 지연 등을 보장하는 여행자 보험 가입을 권장합니다. 대만은 의료비가 합리적이지만 보험 가입이 안전합니다."
+      },
+      {
+        title: "여행하기 좋은 시기",
+        description: "대만은 봄(3월~5월)과 가을(9월~11월)이 가장 여행하기 좋은 시기입니다. 날씨가 좋고 습도가 낮아 편안하게 여행할 수 있습니다. 여름(6월~8월)은 더우지만 해변을 즐기기에 좋습니다."
+      }
+    ],
+    mannersEn: [
+      {
+        title: "Tipping Culture",
+        description: "Tipping is not common in Taiwan. You can leave a small tip at restaurants if you're satisfied with the service, but it's not mandatory."
+      },
+      {
+        title: "Greeting Etiquette",
+        description: "Taiwanese people traditionally prefer greeting with both hands together. It's important to show respect when greeting elders."
+      },
+      {
+        title: "Shoe Etiquette",
+        description: "In Taiwan, it's common to remove shoes when entering temples or homes. It's polite to organize shoes neatly in the designated area."
+      },
+      {
+        title: "Public Place Etiquette",
+        description: "Making phone calls loudly in public places is common, but it's polite to be quiet in places like temples and museums."
+      },
+      {
+        title: "Photography",
+        description: "Taiwanese people are friendly about photography, but it's good to ask for permission before taking photos. Be careful especially when photographing temples or traditional buildings."
+      },
+      {
+        title: "Restroom Usage",
+        description: "Public restrooms in Taiwan are mostly free and clean. You can easily find them at shopping malls, parks, and subway stations. It's common to flush toilet paper down the toilet."
+      }
+    ],
+    souvenirsEn: [
+      {
+        title: "Taiwanese Tea",
+        description: "Traditional Taiwanese tea is popular. You can purchase various teas like Dong Ding Oolong tea and Alishan tea."
+      },
+      {
+        title: "Taiwanese Snacks",
+        description: "Traditional Taiwanese snacks and cookies make great gifts. You can purchase various snacks like pineapple cakes and sun cakes."
+      },
+      {
+        title: "Taiwanese Spices",
+        description: "Traditional Taiwanese spices make great gifts. You can purchase various scents of spices and incense."
+      },
+      {
+        title: "Taiwanese Crafts",
+        description: "Traditional Taiwanese crafts are popular. You can purchase various crafts like ceramics and woodwork."
+      },
+      {
+        title: "Taiwanese Cosmetics",
+        description: "Products from Taiwanese cosmetic brands are popular. You can find various brands like My Scheming and Mediheal."
+      }
+    ],
+    marketEn: [
+      {
+        title: "Market Recommendations",
+        description: "You can purchase Taiwanese snacks, tea, and spices at affordable prices at large supermarkets like 7-Eleven, FamilyMart, and PX Mart."
+      },
+      {
+        title: "Pharmacy Products",
+        description: "There are over-the-counter medicines available at Taiwanese pharmacies. You can find products available without a prescription."
+      },
+      {
+        title: "Convenience Store Products",
+        description: "You can purchase simple food and drinks at convenience stores like 7-Eleven and FamilyMart. Many convenience stores are open 24 hours."
+      },
+      {
+        title: "Market Products",
+        description: "Fresh fruits, vegetables, and seafood purchased at local markets are good. You can purchase various Taiwanese ingredients."
+      },
+      {
+        title: "Duty-Free Products",
+        description: "You can purchase Taiwanese tea, snacks, and spices at airport duty-free shops. You can receive duty-free benefits, making prices cheaper."
+      }
+    ],
+    essentialsEn: [
+      {
+        title: "Electrical Adapter",
+        description: "Taiwan uses Type A plugs (110V, 60Hz). You'll need a US-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+      },
+      {
+        title: "Transportation Card",
+        description: "In Taipei, you can purchase an EasyCard to use public transportation. They can be purchased and recharged at convenience stores or stations."
+      },
+      {
+        title: "Internet Connection",
+        description: "You can pre-purchase a Taiwanese eSIM or buy a local SIM at the airport. Major carriers include Chunghwa Telecom and Taiwan Mobile, and you can purchase directly at the airport."
+      },
+      {
+        title: "Cash Preparation",
+        description: "Taiwan commonly uses card payments, but you may need small cash. Check convenience store ATM locations or exchange at the airport."
+      },
+      {
+        title: "Travel Insurance",
+        description: "It's recommended to purchase travel insurance that covers medical, theft, and travel delay. Medical costs in Taiwan are reasonable, but insurance is still safe to have."
+      },
+      {
+        title: "Best Time to Visit",
+        description: "Taiwan is best visited in spring (March-May) and autumn (September-November). The weather is good and humidity is low, making it comfortable for travel. Summer (June-August) is hot but great for enjoying beaches."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter Taiwan visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+      }
+    ],
+    phrases: phraseSets.chinese
+  },
+  {
+    name: "홍콩",
+    nameEn: "Hong Kong",
+    keywords: ["홍콩", "hong kong", "홍콩 특별행정구", "hongkong"],
+    flag: "🇭🇰",
+    languageCode: "zh-HK",
+    summary: "현대적인 도시와 다양한 문화가 공존하는 홍콩 여행 가이드.",
+    summaryEn: "Guide for traveling to Hong Kong, where modern city and diverse culture coexist.",
+    currency: {
+      code: "HKD",
+      name: "홍콩 달러",
+      nameEn: "Hong Kong Dollar",
+      symbol: "HK$"
+    },
+    weather: {
+      cities: [
+        { name: "Hong Kong", nameKo: "홍콩", link: "https://www.google.com/search?q=Hong+Kong+weather" },
+        { name: "Kowloon", nameKo: "가우룽", link: "https://www.google.com/search?q=Kowloon+weather" },
+        { name: "Lantau Island", nameKo: "란타우 섬", link: "https://www.google.com/search?q=Lantau+Island+weather" }
+      ]
+    },
+    manners: [
+      {
+        title: "팁 문화",
+        description: "홍콩에서는 팁 문화가 일반적입니다. 레스토랑에서는 10% 정도의 팁을 남기는 것이 일반적이며, 택시에서는 반올림 정도로 충분합니다."
+      },
+      {
+        title: "인사 예절",
+        description: "홍콩인들은 전통적으로 두 손을 모아 인사하는 것을 선호합니다. 어른께는 존경을 표하며 인사하는 것이 중요합니다."
+      },
+      {
+        title: "대중교통 예의",
+        description: "홍콩의 지하철과 버스에서는 통화나 큰 소리를 자제하는 것이 좋습니다. 노약자석은 반드시 비워두시고, 출퇴근 시간대에는 가방을 앞으로 메는 것이 안전합니다. 공공장소에서는 조용히 하는 것이 예의입니다."
+      },
+      {
+        title: "사진 촬영",
+        description: "홍콩인들은 사진 촬영에 친절하지만, 촬영 전 허락을 구하는 것이 좋습니다. 특히 사원이나 전통 건물을 촬영할 때는 주의가 필요합니다."
+      },
+      {
+        title: "화장실 이용",
+        description: "홍콩의 공중화장실은 대부분 무료이며 깨끗합니다. 쇼핑몰, 공원, 지하철역 등에서 쉽게 찾을 수 있습니다. 휴지는 변기에 버리는 것이 일반적입니다."
+      }
+    ],
+    souvenirs: [
+      {
+        title: "홍콩 차",
+        description: "홍콩의 전통 차가 인기입니다. 홍차, 우롱차 등 다양한 차를 구매할 수 있습니다."
+      },
+      {
+        title: "홍콩 과자",
+        description: "홍콩 전통 과자와 쿠키가 좋은 선물이 됩니다. 달걀 와플, 아몬드 쿠키 등 다양한 과자를 구매할 수 있습니다."
+      },
+      {
+        title: "홍콩 향료",
+        description: "홍콩의 전통 향료가 좋은 선물이 됩니다. 다양한 향의 향료와 향초를 구매할 수 있습니다."
+      },
+      {
+        title: "홍콩 공예품",
+        description: "홍콩의 전통 공예품이 인기입니다. 도자기, 목공예품 등 다양한 공예품을 구매할 수 있습니다."
+      },
+      {
+        title: "면세점 상품",
+        description: "홍콩 공항 면세점에서 명품 화장품, 향수, 시계 등을 구매할 수 있습니다. 면세 혜택을 받을 수 있어 가격이 저렴합니다."
+      }
+    ],
+    market: [
+      {
+        title: "마트 추천템",
+        description: "7-Eleven, Circle K, Wellcome 등 대형 마트에서 홍콩 과자, 차, 향료 등을 저렴하게 구매할 수 있습니다."
+      },
+      {
+        title: "약국 상비약",
+        description: "홍콩 약국에서 구매 가능한 일반의약품들이 있습니다. 처방전 없이 구매 가능한 제품들을 찾을 수 있습니다."
+      },
+      {
+        title: "편의점 상품",
+        description: "7-Eleven, Circle K 등 편의점에서 간단한 식품과 음료를 구매할 수 있습니다. 24시간 운영되는 편의점이 많습니다."
+      },
+      {
+        title: "시장 상품",
+        description: "지역 시장에서 구매하는 신선한 과일, 채소, 해산물 등이 좋습니다. 홍콩의 다양한 식재료를 구매할 수 있습니다."
+      },
+      {
+        title: "면세점 상품",
+        description: "홍콩 공항 면세점에서 명품 화장품, 향수, 시계 등을 구매할 수 있습니다. 면세 혜택을 받을 수 있어 가격이 저렴합니다."
+      }
+    ],
+    essentials: [
+      {
+        title: "전기 어댑터",
+        description: "홍콩은 콘센트 타입 G (220V, 50Hz)를 사용합니다. 영국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+      },
+      {
+        title: "교통카드",
+        description: "홍콩에서는 Octopus 카드를 구매하여 대중교통을 이용할 수 있습니다. 편의점이나 역에서 구매 및 충전할 수 있습니다."
+      },
+      {
+        title: "인터넷 연결",
+        description: "홍콩 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. CSL, 3 Hong Kong 등 주요 통신사가 있으며, 공항에서 바로 구매 가능합니다."
+      },
+      {
+        title: "중국/홍콩 eSIM",
+        titleEn: "China/Hong Kong eSIM",
+        link: "https://link.coupang.com/a/c5SqEI",
+        iframe: '<iframe src="https://coupa.ng/ckJrSV" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+      },
+      {
+        title: "현금 준비",
+        description: "홍콩은 카드 결제가 일반적이지만, 소액 현금이 필요할 수 있습니다. 편의점 ATM 위치를 확인하거나, 공항에서 환전하는 것이 좋습니다."
+      },
+      {
+        title: "여행자 보험",
+        description: "의료비, 도난, 여행 지연 등을 보장하는 여행자 보험 가입을 권장합니다. 홍콩은 의료비가 비싸므로 보험 가입이 필수입니다."
+      },
+      {
+        title: "여행하기 좋은 시기",
+        description: "홍콩은 가을(10월~12월)과 봄(3월~5월)이 가장 여행하기 좋은 시기입니다. 날씨가 좋고 습도가 낮아 편안하게 여행할 수 있습니다. 여름(6월~9월)은 더우고 습하지만 쇼핑을 즐기기에 좋습니다."
+      }
+    ],
+    mannersEn: [
+      {
+        title: "Tipping Culture",
+        description: "Tipping is common in Hong Kong. It's common to leave about 10% tip at restaurants, and rounding up for taxis is sufficient."
+      },
+      {
+        title: "Greeting Etiquette",
+        description: "Hong Kong people traditionally prefer greeting with both hands together. It's important to show respect when greeting elders."
+      },
+      {
+        title: "Public Place Etiquette",
+        description: "In Hong Kong, it's good to avoid making loud phone calls in public places. It's polite to be quiet on public transportation, especially during morning rush hours."
+      },
+      {
+        title: "Public Transportation Etiquette",
+        description: "On Hong Kong's subway and buses, it's good to avoid phone calls or loud sounds. Priority seats must be kept empty, and during rush hours, it's safer to carry bags in front."
+      },
+      {
+        title: "Photography",
+        description: "Hong Kong people are friendly about photography, but it's good to ask for permission before taking photos. Be careful especially when photographing temples or traditional buildings."
+      },
+      {
+        title: "Restroom Usage",
+        description: "Public restrooms in Hong Kong are mostly free and clean. You can easily find them at shopping malls, parks, and subway stations. It's common to flush toilet paper down the toilet."
+      }
+    ],
+    souvenirsEn: [
+      {
+        title: "Hong Kong Tea",
+        description: "Traditional Hong Kong tea is popular. You can purchase various teas like black tea and oolong tea."
+      },
+      {
+        title: "Hong Kong Snacks",
+        description: "Traditional Hong Kong snacks and cookies make great gifts. You can purchase various snacks like egg waffles and almond cookies."
+      },
+      {
+        title: "Hong Kong Spices",
+        description: "Traditional Hong Kong spices make great gifts. You can purchase various scents of spices and incense."
+      },
+      {
+        title: "Hong Kong Crafts",
+        description: "Traditional Hong Kong crafts are popular. You can purchase various crafts like ceramics and woodwork."
+      },
+      {
+        title: "Duty-Free Products",
+        description: "You can purchase luxury cosmetics, perfumes, and watches at Hong Kong airport duty-free shops. You can receive duty-free benefits, making prices cheaper."
+      }
+    ],
+    marketEn: [
+      {
+        title: "Market Recommendations",
+        description: "You can purchase Hong Kong snacks, tea, and spices at affordable prices at large supermarkets like 7-Eleven, Circle K, and Wellcome."
+      },
+      {
+        title: "Pharmacy Products",
+        description: "There are over-the-counter medicines available at Hong Kong pharmacies. You can find products available without a prescription."
+      },
+      {
+        title: "Convenience Store Products",
+        description: "You can purchase simple food and drinks at convenience stores like 7-Eleven and Circle K. Many convenience stores are open 24 hours."
+      },
+      {
+        title: "Market Products",
+        description: "Fresh fruits, vegetables, and seafood purchased at local markets are good. You can purchase various Hong Kong ingredients."
+      },
+      {
+        title: "Duty-Free Products",
+        description: "You can purchase luxury cosmetics, perfumes, and watches at Hong Kong airport duty-free shops. You can receive duty-free benefits, making prices cheaper."
+      }
+    ],
+    essentialsEn: [
+      {
+        title: "Electrical Adapter",
+        description: "Hong Kong uses Type G plugs (220V, 50Hz). You'll need a UK-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+      },
+      {
+        title: "Transportation Card",
+        description: "In Hong Kong, you can purchase an Octopus card to use public transportation. They can be purchased and recharged at convenience stores or stations."
+      },
+      {
+        title: "Internet Connection",
+        description: "You can pre-purchase a Hong Kong eSIM or buy a local SIM at the airport. Major carriers include CSL and 3 Hong Kong, and you can purchase directly at the airport."
+      },
+      {
+        title: "Cash Preparation",
+        description: "Hong Kong commonly uses card payments, but you may need small cash. Check convenience store ATM locations or exchange at the airport."
+      },
+      {
+        title: "Travel Insurance",
+        description: "It's recommended to purchase travel insurance that covers medical, theft, and travel delay. Medical costs in Hong Kong are expensive, so insurance is essential."
+      },
+      {
+        title: "Best Time to Visit",
+        description: "Hong Kong is best visited in autumn (October-December) and spring (March-May). The weather is good and humidity is low, making it comfortable for travel. Summer (June-September) is hot and humid but great for shopping."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter Hong Kong visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+      }
+    ],
+    phrases: phraseSets.chinese
+  },
+  {
+    name: "싱가포르",
+    nameEn: "Singapore",
+    keywords: ["싱가포르", "singapore", "싱가폴"],
+    flag: "🇸🇬",
+    languageCode: "en-SG",
+    summary: "현대적 도시와 다양한 문화가 공존하는 싱가포르 여행 가이드.",
+    summaryEn: "Guide for traveling to Singapore, where modern city and diverse culture coexist.",
+    currency: {
+      code: "SGD",
+      name: "싱가포르 달러",
+      nameEn: "Singapore Dollar",
+      symbol: "S$"
+    },
+    weather: {
+      cities: [
+        { name: "Singapore", nameKo: "싱가포르", link: "https://www.google.com/search?q=Singapore+weather" }
+      ]
+    },
+    manners: [
+      {
+        title: "공공장소 예의",
+        description: "싱가포르는 깨끗한 도시로 유명하며, 공공장소에서 쓰레기를 버리거나 금연 구역에서 흡연하면 높은 벌금이 부과됩니다. 지하철과 버스에서는 음식 섭취가 금지되어 있습니다."
+      },
+      {
+        title: "팁 문화",
+        description: "싱가포르에서는 팁 문화가 일반적이지 않습니다. 대부분의 레스토랑과 호텔에는 서비스 요금이 포함되어 있습니다. 택시에서는 반올림 정도로 충분합니다."
+      },
+      {
+        title: "교통 예의",
+        description: "지하철과 버스에서는 노약자석을 비워두고, 출입구를 막지 않도록 주의해야 합니다. 에스컬레이터에서는 왼쪽은 서고 오른쪽은 걷는 것이 관례입니다."
+      },
+      {
+        title: "종교적 예의",
+        description: "싱가포르는 다양한 종교가 공존하는 국가입니다. 사원이나 교회 방문 시 적절한 복장을 하고, 사진 촬영 전 허락을 구하는 것이 좋습니다."
+      },
+      {
+        title: "화장실 이용",
+        description: "싱가포르의 공중화장실은 대부분 무료이며 매우 깨끗합니다. 쇼핑몰, 지하철역, 공원 등에서 쉽게 찾을 수 있습니다. 휴지는 변기에 버리는 것이 일반적입니다."
+      }
+    ],
+    souvenirs: [
+      {
+        title: "싱가포르 슬리퍼",
+        description: "싱가포르의 대표적인 기념품인 싱가포르 슬리퍼가 인기입니다. 다양한 디자인과 색상으로 구매할 수 있습니다."
+      },
+      {
+        title: "싱가포르 향료",
+        description: "싱가포르 향료, 카야 잼 등이 인기 기념품입니다. 싱가포르의 대표적인 식품을 만나볼 수 있습니다."
+      },
+      {
+        title: "전자제품",
+        description: "싱가포르는 전자제품 쇼핑의 천국입니다. 특히 카메라, 스마트폰, 노트북 등이 저렴하게 구매할 수 있습니다."
+      }
+    ],
+    market: [
+      {
+        title: "편의점 추천템",
+        description: "7-Eleven, Cheers 등 편의점에서 싱가포르 간식, 음료 등을 구매할 수 있습니다. 24시간 운영되며 전국 어디서나 쉽게 찾을 수 있습니다."
+      }
+    ],
+    essentials: [
+      {
+        title: "전기 어댑터",
+        description: "싱가포르는 콘센트 타입 G (230V, 50Hz)를 사용합니다. 영국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+      },
+      {
+        title: "인터넷 연결",
+        description: "싱가포르 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. 주요 통신사는 Singtel, StarHub, M1이며, 공항에서 바로 구매 가능합니다."
+      },
+      {
+        title: "싱가포르 eSIM",
+        titleEn: "Singapore eSIM",
+        link: "https://link.coupang.com/a/c5TdRz",
+        iframe: '<iframe src="https://coupa.ng/ckJs3u" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+      },
+      {
+        title: "교통카드",
+        description: "EZ-Link 카드나 NETS FlashPay 카드를 구매하여 대중교통을 이용할 수 있습니다. 지하철, 버스, 택시 등에서 사용 가능하며, 편의점에서 충전할 수 있습니다."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter Singapore visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+      }
+    ],
+    phrases: phraseSets.english
+  },
+  {
+    name: "말레이시아",
+    nameEn: "Malaysia",
+    keywords: ["말레이시아", "malaysia", "쿠알라룸푸르", "kuala lumpur", "펜앙", "penang"],
+    flag: "🇲🇾",
+    languageCode: "en-MY",
+    summary: "다채로운 문화와 맛있는 음식이 있는 말레이시아 여행 가이드.",
+    summaryEn: "Guide for traveling to Malaysia, with diverse culture and delicious food.",
+    currency: {
+      code: "MYR",
+      name: "말레이시아 링깃",
+      nameEn: "Malaysian Ringgit",
+      symbol: "RM"
+    },
+    weather: {
+      cities: [
+        { name: "Kuala Lumpur", nameKo: "쿠알라룸푸르", link: "https://www.google.com/search?q=Kuala+Lumpur+weather" },
+        { name: "Penang", nameKo: "펜앙", link: "https://www.google.com/search?q=Penang+weather" }
+      ]
+    },
+    manners: [
+      {
+        title: "종교적 예의",
+        description: "말레이시아는 이슬람 국가이므로 모스크 방문 시 적절한 복장을 하고, 라마단 기간에는 공공장소에서 식사나 음주를 삼가야 합니다. 특히 여성은 머리와 어깨를 가리는 스카프를 준비하는 것이 좋습니다."
+      },
+      {
+        title: "팁 문화",
+        description: "말레이시아에서는 팁 문화가 일반적이지 않지만, 서비스가 좋았으면 소액의 팁을 남기는 것이 좋습니다. 레스토랑에서는 5~10% 정도, 택시에서는 반올림 정도로 충분합니다."
+      },
+      {
+        title: "인사 예절",
+        description: "말레이시아인들은 전통적으로 '살람' (Salam) 인사를 사용합니다. 악수를 할 때는 오른손을 사용하며, 어른께는 존경을 표하며 인사하는 것이 중요합니다."
+      },
+      {
+        title: "신발 착용",
+        description: "말레이시아에서는 모스크나 집에 들어갈 때 신발을 벗는 것이 일반적입니다. 신발을 벗는 곳에 신발을 정리해서 두는 것이 예의입니다."
+      },
+      {
+        title: "사진 촬영",
+        description: "말레이시아인들은 사진 촬영에 친절하지만, 촬영 전 허락을 구하는 것이 좋습니다. 특히 모스크나 전통 건물을 촬영할 때는 주의가 필요합니다."
+      },
+      {
+        title: "화장실 이용",
+        description: "말레이시아의 공중화장실은 대부분 무료이며, 쇼핑몰, 지하철역, 공원 등에서 쉽게 찾을 수 있습니다. 일부 화장실은 좌변기 대신 양변기 형태를 사용하므로 주의가 필요합니다."
+      }
+    ],
+    souvenirs: [
+      {
+        title: "말레이시아 향료",
+        description: "말레이시아 향료, 코코넛 오일, 팜 오일 등이 인기 기념품입니다. 특히 페낭의 향료와 코코넛 제품이 유명합니다."
+      },
+      {
+        title: "바틱 (Batik)",
+        description: "말레이시아의 전통 직물인 바틱이 인기입니다. 바틱 원단, 의류, 액세서리 등 다양한 바틱 제품을 구매할 수 있습니다."
+      },
+      {
+        title: "말레이시아 커피",
+        description: "말레이시아 전통 커피인 '커피 오' (Kopi O)와 화이트 커피가 인기입니다. 특히 페낭과 말라카 지역의 커피가 유명합니다."
+      },
+      {
+        title: "말레이시아 과자",
+        description: "말레이시아 전통 과자와 쿠키가 좋은 선물이 됩니다. 코코넛 과자, 팜 설탕 과자 등 다양한 과자를 구매할 수 있습니다."
+      },
+      {
+        title: "말레이시아 향신료",
+        description: "말레이시아 전통 향신료 세트가 인기입니다. 커리 파우더, 렘파 향신료 등 다양한 향신료를 구매할 수 있습니다."
+      }
+    ],
+    market: [
+      {
+        title: "마트 추천템",
+        description: "7-Eleven, Tesco, Giant 등 대형 마트에서 말레이시아 과자, 커피, 향료 등을 저렴하게 구매할 수 있습니다."
+      },
+      {
+        title: "약국 상비약",
+        description: "말레이시아 약국에서 구매 가능한 일반의약품들이 있습니다. 처방전 없이 구매 가능한 제품들을 찾을 수 있습니다."
+      },
+      {
+        title: "편의점 상품",
+        description: "7-Eleven 등 편의점에서 간단한 식품과 음료를 구매할 수 있습니다. 24시간 운영되는 편의점이 많습니다."
+      },
+      {
+        title: "시장 상품",
+        description: "지역 시장에서 구매하는 신선한 과일, 채소, 해산물 등이 좋습니다. 말레이시아의 다양한 식재료를 구매할 수 있습니다."
+      },
+      {
+        title: "면세점 상품",
+        description: "공항 면세점에서 말레이시아산 향료, 커피, 바틱 제품 등을 구매할 수 있습니다. 면세 혜택을 받을 수 있어 가격이 저렴합니다."
+      }
+    ],
+    essentials: [
+      {
+        title: "전기 어댑터",
+        description: "말레이시아는 콘센트 타입 G (230V, 50Hz)를 사용합니다. 영국식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+      },
+      {
+        title: "교통카드",
+        description: "쿠알라룸푸르에서는 Touch 'n Go 카드를 구매하여 대중교통을 이용할 수 있습니다. 편의점이나 역에서 구매 및 충전할 수 있습니다."
+      },
+      {
+        title: "인터넷 연결",
+        description: "말레이시아 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. Celcom, Maxis, Digi 등 주요 통신사가 있으며, 공항에서 바로 구매 가능합니다."
+      },
+      {
+        title: "말레이시아 eSIM",
+        titleEn: "Malaysia eSIM",
+        link: "https://link.coupang.com/a/c5TeYh",
+        iframe: '<iframe src="https://coupa.ng/ckJs5k" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+      },
+      {
+        title: "현금 준비",
+        description: "말레이시아는 아직도 현금 중심 사회이므로 소액 현금이 필요합니다. 편의점 ATM 위치를 확인하거나, 공항에서 환전하는 것이 좋습니다."
+      },
+      {
+        title: "여행자 보험",
+        description: "의료비, 도난, 여행 지연 등을 보장하는 여행자 보험 가입을 권장합니다. 말레이시아는 의료비가 합리적이지만 보험 가입이 안전합니다."
+      },
+      {
+        title: "여행하기 좋은 시기",
+        description: "말레이시아는 건기(12월~3월)가 가장 여행하기 좋은 시기입니다. 날씨가 맑고 습도가 낮아 편안하게 여행할 수 있습니다. 우기(4월~11월)는 비가 많지만 호텔 가격이 저렴합니다."
+      }
+    ],
+    mannersEn: [
+      {
+        title: "Religious Etiquette",
+        description: "Malaysia is an Islamic country, so dress appropriately when visiting mosques, and avoid eating or drinking in public places during Ramadan. Women should especially prepare a scarf to cover their head and shoulders."
+      },
+      {
+        title: "Tipping Culture",
+        description: "Tipping is not common in Malaysia, but it's good to leave a small tip if the service was good. About 5~10% at restaurants and rounding up for taxis is sufficient."
+      },
+      {
+        title: "Greeting Etiquette",
+        description: "Malaysians traditionally use 'Salam' greeting. When shaking hands, use your right hand, and it's important to show respect when greeting elders."
+      },
+      {
+        title: "Shoe Etiquette",
+        description: "In Malaysia, it's common to remove shoes when entering mosques or homes. It's polite to organize shoes neatly in the designated area."
+      },
+      {
+        title: "Photography",
+        description: "Malaysians are friendly about photography, but it's good to ask for permission before taking photos. Be careful especially when photographing mosques or traditional buildings."
+      },
+      {
+        title: "Restroom Usage",
+        description: "Public restrooms in Malaysia are mostly free and can be easily found at shopping malls, subway stations, and parks. Some restrooms use squat toilets instead of sitting toilets, so be careful."
+      }
+    ],
+    souvenirsEn: [
+      {
+        title: "Malaysian Spices",
+        description: "Malaysian spices, coconut oil, and palm oil are popular souvenirs. Especially spices and coconut products from Penang are famous."
+      },
+      {
+        title: "Batik",
+        description: "Batik, Malaysia's traditional fabric, is popular. You can purchase various batik products like fabric, clothing, and accessories."
+      },
+      {
+        title: "Malaysian Coffee",
+        description: "Traditional Malaysian coffee like 'Kopi O' and white coffee are popular. Especially coffee from Penang and Malacca regions are famous."
+      },
+      {
+        title: "Malaysian Snacks",
+        description: "Traditional Malaysian snacks and cookies make great gifts. You can purchase various snacks like coconut snacks and palm sugar snacks."
+      },
+      {
+        title: "Malaysian Spice Sets",
+        description: "Traditional Malaysian spice sets are popular. You can purchase various spices like curry powder and lemongrass spices."
+      }
+    ],
+    marketEn: [
+      {
+        title: "Market Recommendations",
+        description: "You can purchase Malaysian snacks, coffee, and spices at affordable prices at large markets like 7-Eleven, Tesco, and Giant."
+      },
+      {
+        title: "Pharmacy Items",
+        description: "There are over-the-counter medicines available at Malaysian pharmacies. You can find products available without a prescription."
+      },
+      {
+        title: "Convenience Store Products",
+        description: "You can purchase simple food and drinks at convenience stores like 7-Eleven. There are many 24-hour convenience stores."
+      },
+      {
+        title: "Market Products",
+        description: "Fresh fruits, vegetables, and seafood purchased at local markets are good. You can purchase various Malaysian ingredients."
+      },
+      {
+        title: "Duty-Free Items",
+        description: "You can purchase Malaysian spices, coffee, and batik products at airport duty-free shops. You can get tax-free benefits, making prices affordable."
+      }
+    ],
+    essentialsEn: [
+      {
+        title: "Electrical Adapter",
+        description: "Malaysia uses Type G plugs (230V, 50Hz). UK-style plugs are needed. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+      },
+      {
+        title: "Transportation Card",
+        description: "In Kuala Lumpur, you can purchase a Touch 'n Go card to use public transportation. You can purchase and recharge at convenience stores or stations."
+      },
+      {
+        title: "Internet Connection",
+        description: "You can pre-purchase a Malaysian eSIM or buy a local SIM at the airport. Major carriers include Celcom, Maxis, and Digi, and you can purchase directly at the airport."
+      },
+      {
+        title: "Cash Preparation",
+        description: "Malaysia is still a cash-based society, so small cash is needed. Check ATM locations at convenience stores or exchange at the airport."
+      },
+      {
+        title: "Travel Insurance",
+        description: "It's recommended to purchase travel insurance that covers medical, theft, and travel delay. Medical costs in Malaysia are reasonable, but insurance is still safe to have."
+      },
+      {
+        title: "Best Time to Visit",
+        description: "Malaysia is best visited during the dry season (December-March). The weather is clear and humidity is low, making it comfortable for travel. The rainy season (April-November) has more rain but hotel prices are lower."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter Malaysia visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+      }
+    ],
+    phrases: phraseSets.english
+  },
+  {
+    name: "인도네시아",
+    nameEn: "Indonesia",
+    keywords: ["인도네시아", "indonesia", "발리", "bali", "자카르타", "jakarta"],
+    flag: "🇮🇩",
+    languageCode: "id-ID",
+    summary: "열대 해안과 문화 유산이 있는 인도네시아 여행 가이드.",
+    summaryEn: "Guide for traveling to Indonesia, with tropical coasts and cultural heritage.",
+    currency: {
+      code: "IDR",
+      name: "인도네시아 루피아",
+      nameEn: "Indonesian Rupiah",
+      symbol: "Rp"
+    },
+    weather: {
+      cities: [
+        { name: "Jakarta", nameKo: "자카르타", link: "https://www.google.com/search?q=Jakarta+weather" },
+        { name: "Bali", nameKo: "발리", link: "https://www.google.com/search?q=Bali+weather" }
+      ]
+    },
+    manners: [
+      {
+        title: "종교적 예의",
+        description: "인도네시아는 이슬람 국가이므로 모스크 방문 시 적절한 복장을 하고, 라마단 기간에는 공공장소에서 식사를 삼가야 합니다. 특히 발리와 같은 힌두교 지역에서는 다른 예의가 적용될 수 있으므로 지역별 문화를 확인하는 것이 좋습니다."
+      },
+      {
+        title: "팁 문화",
+        description: "인도네시아에서는 팁 문화가 일반적입니다. 레스토랑에서는 5~10% 정도, 택시에서는 반올림 정도로 충분합니다. 호텔 벨보이에게는 5,000~10,000루피아 정도의 팁을 주는 것이 좋습니다."
+      },
+      {
+        title: "인사 예절",
+        description: "인도네시아인들은 전통적으로 '살람' (Salam) 인사를 사용합니다. 악수를 할 때는 오른손을 사용하며, 어른께는 존경을 표하며 인사하는 것이 중요합니다."
+      },
+      {
+        title: "신발 착용",
+        description: "인도네시아에서는 모스크나 사원, 집에 들어갈 때 신발을 벗는 것이 일반적입니다. 신발을 벗는 곳에 신발을 정리해서 두는 것이 예의입니다."
+      },
+      {
+        title: "사진 촬영",
+        description: "인도네시아인들은 사진 촬영에 친절하지만, 촬영 전 허락을 구하는 것이 좋습니다. 특히 사원이나 전통 건물을 촬영할 때는 주의가 필요합니다."
+      },
+      {
+        title: "화장실 이용",
+        description: "인도네시아의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 일부 화장실은 좌변기 대신 양변기 형태를 사용하므로 주의가 필요합니다."
+      }
+    ],
+    souvenirs: [
+      {
+        title: "발리 공예품",
+        description: "발리의 전통 공예품이 인기 기념품입니다. 목각품, 은세공품, 바틱 등 다양한 공예품을 구매할 수 있습니다."
+      },
+      {
+        title: "인도네시아 커피",
+        description: "인도네시아 전통 커피인 '코피 루왁' (Kopi Luwak)과 수마트라 커피가 인기입니다. 특히 발리와 수마트라 지역의 커피가 유명합니다."
+      },
+      {
+        title: "바틱 (Batik)",
+        description: "인도네시아의 전통 직물인 바틱이 인기입니다. 바틱 원단, 의류, 액세서리 등 다양한 바틱 제품을 구매할 수 있습니다."
+      },
+      {
+        title: "인도네시아 향신료",
+        description: "인도네시아 전통 향신료 세트가 인기입니다. 커리 파우더, 생강, 계피 등 다양한 향신료를 구매할 수 있습니다."
+      },
+      {
+        title: "인도네시아 과자",
+        description: "인도네시아 전통 과자와 쿠키가 좋은 선물이 됩니다. 코코넛 과자, 팜 설탕 과자 등 다양한 과자를 구매할 수 있습니다."
+      }
+    ],
+    market: [
+      {
+        title: "마트 추천템",
+        description: "Indomaret, Alfamart 등 대형 마트에서 인도네시아 과자, 커피, 향신료 등을 저렴하게 구매할 수 있습니다."
+      },
+      {
+        title: "약국 상비약",
+        description: "인도네시아 약국에서 구매 가능한 일반의약품들이 있습니다. 처방전 없이 구매 가능한 제품들을 찾을 수 있습니다."
+      },
+      {
+        title: "편의점 상품",
+        description: "Indomaret, Alfamart 등 편의점에서 간단한 식품과 음료를 구매할 수 있습니다. 24시간 운영되는 편의점이 많습니다."
+      },
+      {
+        title: "시장 상품",
+        description: "지역 시장에서 구매하는 신선한 과일, 채소, 해산물 등이 좋습니다. 인도네시아의 다양한 식재료를 구매할 수 있습니다."
+      },
+      {
+        title: "면세점 상품",
+        description: "공항 면세점에서 인도네시아산 향신료, 커피, 바틱 제품 등을 구매할 수 있습니다. 면세 혜택을 받을 수 있어 가격이 저렴합니다."
+      }
+    ],
+    essentials: [
+      {
+        title: "전기 어댑터",
+        description: "인도네시아는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다."
+      },
+      {
+        title: "교통카드",
+        description: "자카르타에서는 Flazz 카드나 Brizzi 카드를 구매하여 대중교통을 이용할 수 있습니다. 편의점이나 역에서 구매 및 충전할 수 있습니다."
+      },
+      {
+        title: "인터넷 연결",
+        description: "인도네시아 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. Telkomsel, Indosat, XL Axiata 등 주요 통신사가 있으며, 공항에서 바로 구매 가능합니다."
+      },
+      {
+        title: "인도네시아 eSIM",
+        titleEn: "Indonesia eSIM",
+        link: "https://link.coupang.com/a/c5Tf4z",
+        iframe: '<iframe src="https://coupa.ng/ckJs7n" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>'
+      },
+      {
+        title: "현금 준비",
+        description: "인도네시아는 아직도 현금 중심 사회이므로 소액 현금이 필요합니다. 편의점 ATM 위치를 확인하거나, 공항에서 환전하는 것이 좋습니다."
+      },
+      {
+        title: "여행자 보험",
+        description: "의료비, 도난, 여행 지연 등을 보장하는 여행자 보험 가입을 권장합니다. 인도네시아는 의료비가 합리적이지만 보험 가입이 안전합니다."
+      },
+      {
+        title: "여행하기 좋은 시기",
+        description: "인도네시아는 건기(5월~9월)가 가장 여행하기 좋은 시기입니다. 날씨가 맑고 습도가 낮아 편안하게 여행할 수 있습니다. 우기(10월~4월)는 비가 많지만 호텔 가격이 저렴합니다."
+      }
+    ],
+    mannersEn: [
+      {
+        title: "Religious Etiquette",
+        description: "Indonesia is an Islamic country, so dress appropriately when visiting mosques, and avoid eating in public places during Ramadan. In Hindu regions like Bali, different etiquette may apply, so it's good to check regional cultures."
+      },
+      {
+        title: "Tipping Culture",
+        description: "Tipping is common in Indonesia. About 5~10% at restaurants and rounding up for taxis is sufficient. For hotel bellboys, it's good to tip about 5,000~10,000 rupiah."
+      },
+      {
+        title: "Greeting Etiquette",
+        description: "Indonesians traditionally use 'Salam' greeting. When shaking hands, use your right hand, and it's important to show respect when greeting elders."
+      },
+      {
+        title: "Shoe Etiquette",
+        description: "In Indonesia, it's common to remove shoes when entering mosques, temples, or homes. It's polite to organize shoes neatly in the designated area."
+      },
+      {
+        title: "Photography",
+        description: "Indonesians are friendly about photography, but it's good to ask for permission before taking photos. Be careful especially when photographing temples or traditional buildings."
+      },
+      {
+        title: "Restroom Usage",
+        description: "Public restrooms in Indonesia are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. Some restrooms use squat toilets instead of sitting toilets, so be careful."
+      }
+    ],
+    souvenirsEn: [
+      {
+        title: "Bali Crafts",
+        description: "Traditional Balinese crafts are popular souvenirs. You can purchase various crafts like wood carvings, silverware, and batik."
+      },
+      {
+        title: "Indonesian Coffee",
+        description: "Traditional Indonesian coffee like 'Kopi Luwak' and Sumatra coffee are popular. Especially coffee from Bali and Sumatra regions are famous."
+      },
+      {
+        title: "Batik",
+        description: "Batik, Indonesia's traditional fabric, is popular. You can purchase various batik products like fabric, clothing, and accessories."
+      },
+      {
+        title: "Indonesian Spice Sets",
+        description: "Traditional Indonesian spice sets are popular. You can purchase various spices like curry powder, ginger, and cinnamon."
+      },
+      {
+        title: "Indonesian Snacks",
+        description: "Traditional Indonesian snacks and cookies make great gifts. You can purchase various snacks like coconut snacks and palm sugar snacks."
+      }
+    ],
+    marketEn: [
+      {
+        title: "Market Recommendations",
+        description: "You can purchase Indonesian snacks, coffee, and spices at affordable prices at large markets like Indomaret and Alfamart."
+      },
+      {
+        title: "Pharmacy Items",
+        description: "There are over-the-counter medicines available at Indonesian pharmacies. You can find products available without a prescription."
+      },
+      {
+        title: "Convenience Store Products",
+        description: "You can purchase simple food and drinks at convenience stores like Indomaret and Alfamart. There are many 24-hour convenience stores."
+      },
+      {
+        title: "Market Products",
+        description: "Fresh fruits, vegetables, and seafood purchased at local markets are good. You can purchase various Indonesian ingredients."
+      },
+      {
+        title: "Duty-Free Items",
+        description: "You can purchase Indonesian spices, coffee, and batik products at airport duty-free shops. You can get tax-free benefits, making prices affordable."
+      }
+    ],
+    essentialsEn: [
+      {
+        title: "Electrical Adapter",
+        description: "Indonesia uses Type C/F plugs (230V, 50Hz). European-style plugs are needed. Most modern electronics support 110V~240V, so a voltage converter may not be necessary."
+      },
+      {
+        title: "Transportation Card",
+        description: "In Jakarta, you can purchase a Flazz card or Brizzi card to use public transportation. You can purchase and recharge at convenience stores or stations."
+      },
+      {
+        title: "Internet Connection",
+        description: "You can pre-purchase an Indonesian eSIM or buy a local SIM at the airport. Major carriers include Telkomsel, Indosat, and XL Axiata, and you can purchase directly at the airport."
+      },
+      {
+        title: "Cash Preparation",
+        description: "Indonesia is still a cash-based society, so small cash is needed. Check ATM locations at convenience stores or exchange at the airport."
+      },
+      {
+        title: "Travel Insurance",
+        description: "It's recommended to purchase travel insurance that covers medical, theft, and travel delay. Medical costs in Indonesia are reasonable, but insurance is still safe to have."
+      },
+      {
+        title: "Best Time to Visit",
+        description: "Indonesia is best visited during the dry season (May-September). The weather is clear and humidity is low, making it comfortable for travel. The rainy season (October-April) has more rain but hotel prices are lower."
+      }
+    ],
+    visa: [
+      {
+        title: "무비자 입국",
+        description: "한국인은 관광 목적으로 30일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      }
+    ],
+    visaEn: [
+      {
+        title: "Visa-Free Entry",
+        description: "US citizens can enter Indonesia visa-free for up to 30 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+      }
+    ],
+    phrases: phraseSets.english
   }
 ];
 
-const availableDestinationNames = destinations.map((destination) => destination.name).join(", ");
+function getAvailableDestinationNames() {
+  return destinations.map((destination) => 
+    currentLanguage === "en" ? destination.nameEn : destination.name
+  ).join(", ");
+}
 
 // 다국어 및 다크 모드 관리
 let currentLanguage = localStorage.getItem("language") || "ko";
@@ -3897,9 +6514,25 @@ const normalize = (text) => text.trim().toLowerCase();
 
 function findDestination(query) {
   const normalized = normalize(query);
-  return destinations.find((destination) =>
+  // 정확히 일치하는 경우
+  let destination = destinations.find((destination) =>
     destination.keywords.some((keyword) => normalize(keyword) === normalized)
   );
+  
+  // 정확히 일치하지 않으면 부분 일치로 검색
+  if (!destination) {
+    destination = destinations.find((destination) =>
+      destination.keywords.some((keyword) => 
+        normalize(keyword).includes(normalized) || normalized.includes(normalize(keyword))
+      ) ||
+      normalize(destination.name).includes(normalized) ||
+      normalize(destination.nameEn).includes(normalized) ||
+      normalized.includes(normalize(destination.name)) ||
+      normalized.includes(normalize(destination.nameEn))
+    );
+  }
+  
+  return destination;
 }
 
 function buildList(list, items) {
@@ -3908,6 +6541,37 @@ function buildList(list, items) {
     const li = document.createElement("li");
     // 객체 형태인 경우 (title, description 포함)
     if (typeof item === "object" && item !== null) {
+      // 제품 섹션인 경우 제품 카드 형태로 표시
+      if (list.classList.contains("info-list--products") && (item.link || item.iframe || item.image)) {
+        const productCard = document.createElement("div");
+        productCard.className = "product-card";
+        
+        // 제품명을 먼저 추가 (이미지 위로)
+        const title = document.createElement("strong");
+        title.textContent = item.title || "";
+        title.className = "product-title";
+        productCard.appendChild(title);
+        
+        // 제품 이미지/iframe 영역
+        if (item.iframe) {
+          const iframeWrapper = document.createElement("div");
+          iframeWrapper.className = "product-iframe-wrapper";
+          iframeWrapper.innerHTML = item.iframe;
+          productCard.appendChild(iframeWrapper);
+        } else if (item.image) {
+          const imageWrapper = document.createElement("div");
+          imageWrapper.className = "product-image-wrapper";
+          const img = document.createElement("img");
+          img.src = item.image;
+          img.alt = item.title || "";
+          img.loading = "lazy";
+          imageWrapper.appendChild(img);
+          productCard.appendChild(imageWrapper);
+        }
+        
+        li.appendChild(productCard);
+      } else {
+        // 기존 형태 (다른 섹션)
       const title = document.createElement("strong");
       title.textContent = item.title || "";
       title.className = "list-item-title";
@@ -3918,6 +6582,21 @@ function buildList(list, items) {
         desc.textContent = ` - ${item.description}`;
         desc.className = "list-item-description";
         li.appendChild(desc);
+        }
+        
+        // 쿠팡 파트너스 링크 추가
+        if (item.link) {
+          const linkWrapper = document.createElement("div");
+          linkWrapper.className = "product-link-wrapper";
+          const link = document.createElement("a");
+          link.href = item.link;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer sponsored";
+          link.className = "product-link";
+          link.textContent = currentLanguage === "en" ? "View Product" : "제품 보기";
+          linkWrapper.appendChild(link);
+          li.appendChild(linkWrapper);
+        }
       }
     } else {
       // 문자열 형태인 경우 (기존 호환성 유지)
@@ -3932,95 +6611,145 @@ function speakPhrase(text, languageCode) {
     speechSynthesis.cancel();
     
     const utterance = new SpeechSynthesisUtterance(text);
-    // 자연스러운 여성 목소리를 위한 설정
-    utterance.rate = 0.95; // 약간 빠른 속도로 자연스럽게
-    utterance.pitch = 1.0; // 중간 톤
+    // 자연스러운 여성 목소리를 위한 기본 설정
+    utterance.rate = 0.95; // 자연스러운 속도
+    utterance.pitch = 1.05; // 약간 높은 톤 (자연스러운 여성 목소리)
     utterance.volume = 1.0;
     
-    // 자연스러운 여성 목소리 찾기 함수
+    // 여성 목소리 판별 함수 (정확도 향상)
+    const isFemaleVoice = (voiceName, voiceGender) => {
+      if (voiceGender === "female") return true;
+      
+      const name = voiceName.toLowerCase();
+      
+      // iOS/macOS 여성 목소리 (확실한 여성 목소리만)
+      const iosMacFemale = name.includes("samantha") || name.includes("karen") || 
+                           name.includes("victoria") || name.includes("tessa") ||
+                           name.includes("veena") || name.includes("fiona") ||
+                           name.includes("susan") || name.includes("monica");
+      
+      // Android/Google 여성 목소리
+      const androidFemale = name.includes("female") || name.includes("woman") ||
+                           (name.includes("google") && (
+                             name.includes("female") || 
+                             name.includes("ko-kr-x-kof") || 
+                             name.includes("ja-jp-x-jaf") ||
+                             name.includes("zh-cn-x-cnm-local")
+                           ));
+      
+      // Windows 여성 목소리
+      const windowsFemale = name.includes("zira") || name.includes("hazel") ||
+                           name.includes("eva") || name.includes("aria");
+      
+      // 아시아 언어 여성 목소리
+      const asianFemale = name.includes("yuna") || name.includes("sora") ||
+                         name.includes("yuki") || name.includes("mei") ||
+                         name.includes("xiaoxiao") || name.includes("xiaoyi") ||
+                         name.includes("hiromi") || name.includes("kyoko");
+      
+      // 유럽 언어 여성 목소리
+      const europeanFemale = name.includes("maria") || name.includes("anna") ||
+                            name.includes("lisa") || name.includes("emma") ||
+                            name.includes("sophie") || name.includes("luna") ||
+                            name.includes("helena") || name.includes("carmen");
+      
+      return iosMacFemale || androidFemale || windowsFemale || asianFemale || europeanFemale;
+    };
+    
+    // 자연스러운 여성 목소리 찾기 함수 (우선순위 개선)
     const findFemaleVoice = (voices, langCode, langPrefix) => {
-      // 1순위: 정확한 언어 코드 + 여성 목소리
+      if (!voices || voices.length === 0) return null;
+      
+      // 1순위: 정확한 언어 코드 + 확실한 여성 목소리
       let voice = voices.find((v) => {
         const isCorrectLang = v.lang === langCode || v.lang.startsWith(langPrefix + "-");
-        const isFemale = v.name.toLowerCase().includes("female") || 
-                        v.name.toLowerCase().includes("woman") ||
-                        v.name.toLowerCase().includes("samantha") ||
-                        v.name.toLowerCase().includes("karen") ||
-                        v.name.toLowerCase().includes("zira") ||
-                        v.name.toLowerCase().includes("yuna") ||
-                        v.name.toLowerCase().includes("sora") ||
-                        (v.gender && v.gender === "female");
-        return isCorrectLang && isFemale;
+        return isCorrectLang && isFemaleVoice(v.name, v.gender);
       });
       
-      // 2순위: 언어 prefix + 여성 목소리
+      // 2순위: 언어 prefix + 확실한 여성 목소리
       if (!voice) {
         voice = voices.find((v) => {
           const isCorrectLang = v.lang.startsWith(langPrefix);
-          const isFemale = v.name.toLowerCase().includes("female") || 
-                          v.name.toLowerCase().includes("woman") ||
-                          v.name.toLowerCase().includes("samantha") ||
-                          v.name.toLowerCase().includes("karen") ||
-                          v.name.toLowerCase().includes("zira") ||
-                          v.name.toLowerCase().includes("yuna") ||
-                          v.name.toLowerCase().includes("sora") ||
-                          (v.gender && v.gender === "female");
-          return isCorrectLang && isFemale;
+          return isCorrectLang && isFemaleVoice(v.name, v.gender);
         });
       }
       
-      // 3순위: 정확한 언어 코드 (여성 우선, 없으면 아무거나)
+      // 3순위: 정확한 언어 코드 (일반 목소리, 여성 우선)
       if (!voice) {
-        voice = voices.find(
+        const candidates = voices.filter(
           (v) => v.lang === langCode || v.lang.startsWith(langPrefix + "-")
         );
+        // 여성 목소리 우선 선택
+        voice = candidates.find((v) => isFemaleVoice(v.name, v.gender)) || candidates[0];
       }
       
-      // 4순위: 언어 prefix만 일치
+      // 4순위: 언어 prefix만 일치 (여성 우선)
       if (!voice) {
-        voice = voices.find((v) => v.lang.startsWith(langPrefix));
+        const candidates = voices.filter((v) => v.lang.startsWith(langPrefix));
+        voice = candidates.find((v) => isFemaleVoice(v.name, v.gender)) || candidates[0];
+      }
+      
+      // 5순위: 모든 여성 목소리 중에서 찾기 (언어 무관)
+      if (!voice) {
+        voice = voices.find((v) => isFemaleVoice(v.name, v.gender));
       }
       
       return voice;
     };
     
-    const voices = speechSynthesis.getVoices();
-    const langPrefix = languageCode.split("-")[0];
-    
-    let preferredVoice = findFemaleVoice(voices, languageCode, langPrefix);
+    // Voice 로드 및 선택
+    const getVoicesAndSpeak = () => {
+      const voices = speechSynthesis.getVoices();
+      const langPrefix = languageCode.split("-")[0];
+      
+      let preferredVoice = findFemaleVoice(voices, languageCode, langPrefix);
     
     if (preferredVoice) {
       utterance.voice = preferredVoice;
       utterance.lang = preferredVoice.lang;
-    } else {
-      utterance.lang = langPrefix;
-    }
-    
-    // voice가 로드되지 않았을 경우를 대비해 재시도
-    if (voices.length === 0) {
-      const trySpeak = () => {
-        const updatedVoices = speechSynthesis.getVoices();
-        const updatedVoice = findFemaleVoice(updatedVoices, languageCode, langPrefix);
         
-        if (updatedVoice) {
-          utterance.voice = updatedVoice;
-          utterance.lang = updatedVoice.lang;
+        // 여성 목소리가 확실한 경우 자연스러운 pitch 유지
+        if (isFemaleVoice(preferredVoice.name, preferredVoice.gender)) {
+          utterance.pitch = 1.0; // 여성 목소리 자체가 이미 여성스러우므로 pitch 조정 최소화
+    } else {
+          utterance.pitch = 1.1; // 여성 목소리가 아닐 때만 약간 높임
+        }
         } else {
           utterance.lang = langPrefix;
+        utterance.pitch = 1.1; // 여성 목소리를 찾지 못했을 때 약간 높임
         }
+      
         speechSynthesis.speak(utterance);
       };
       
-      speechSynthesis.onvoiceschanged = trySpeak;
-      // 일정 시간 후에도 voice가 없으면 그냥 재생 시도
-      setTimeout(() => {
-        if (speechSynthesis.getVoices().length === 0) {
-          utterance.lang = langPrefix;
-          speechSynthesis.speak(utterance);
-        }
-      }, 500);
+    // Voice가 이미 로드되어 있는지 확인
+    const voices = speechSynthesis.getVoices();
+    
+    if (voices.length > 0) {
+      getVoicesAndSpeak();
     } else {
-      speechSynthesis.speak(utterance);
+      // Voice가 아직 로드되지 않았을 경우 대기
+      let voiceLoaded = false;
+      
+      const trySpeak = () => {
+        if (!voiceLoaded) {
+          voiceLoaded = true;
+          getVoicesAndSpeak();
+        }
+      };
+      
+      // onvoiceschanged 이벤트 리스너 등록
+      if (speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = trySpeak;
+      }
+      
+      // 타임아웃 설정 (최대 1초 대기)
+      setTimeout(() => {
+        if (!voiceLoaded) {
+          voiceLoaded = true;
+          getVoicesAndSpeak();
+        }
+      }, 1000);
     }
   }
 }
@@ -5043,12 +7772,60 @@ function renderDestination(destination) {
   const manners = currentLanguage === "en" && destination.mannersEn ? destination.mannersEn : destination.manners;
   const souvenirs = currentLanguage === "en" && destination.souvenirsEn ? destination.souvenirsEn : destination.souvenirs;
   const market = currentLanguage === "en" && destination.marketEn ? destination.marketEn : destination.market;
-  const essentials = currentLanguage === "en" && destination.essentialsEn ? destination.essentialsEn : destination.essentials;
+  const visa = currentLanguage === "en" && destination.visaEn ? destination.visaEn : destination.visa;
+  const allEssentials = currentLanguage === "en" && destination.essentialsEn ? destination.essentialsEn : destination.essentials;
+  
+  // essentials를 일반 정보와 제품으로 분리
+  const essentials = allEssentials.filter(item => !item.link && !item.iframe && !item.image);
+  
+  // 목적지별 제품 추출 (essentialsEn이 있어도 essentials의 제품은 포함)
+  const destinationProductsFromEssentials = destination.essentials.filter(item => item.link || item.iframe || item.image);
+  const destinationProductsFromEssentialsEn = currentLanguage === "en" && destination.essentialsEn 
+    ? destination.essentialsEn.filter(item => item.link || item.iframe || item.image)
+    : [];
+  
+  // 언어에 맞게 제품 제목 변환
+  const destinationProducts = [...destinationProductsFromEssentials, ...destinationProductsFromEssentialsEn].map(product => ({
+    ...product,
+    title: currentLanguage === "en" && product.titleEn ? product.titleEn : product.title
+  }));
+  
+  // 공통 제품 목록을 언어에 맞게 변환하여 병합
+  const localizedCommonProducts = commonProducts.map(product => ({
+    ...product,
+    title: currentLanguage === "en" && product.titleEn ? product.titleEn : product.title
+  }));
+  
+  // 목적지별 제품과 공통 제품을 병합
+  const products = [...localizedCommonProducts, ...destinationProducts];
 
   buildList(clone.querySelector(".info-list--manners"), manners);
   buildList(clone.querySelector(".info-list--souvenirs"), souvenirs);
   buildList(clone.querySelector(".info-list--market"), market);
   buildList(clone.querySelector(".info-list--essentials"), essentials);
+  buildList(clone.querySelector(".info-list--visa"), visa || []);
+  buildList(clone.querySelector(".info-list--products"), products);
+  
+  // 비자 정보가 없으면 비자 섹션 숨기기
+  const visaList = clone.querySelector(".info-list--visa");
+  if (visaList) {
+    const visaSection = visaList.closest(".info-card");
+    if (visaSection) {
+      if (!visa || visa.length === 0) {
+        visaSection.style.display = "none";
+      } else {
+        visaSection.style.display = "";
+      }
+    }
+  }
+  
+  // 제품이 없으면 제품 섹션 숨기기
+  const productsSection = clone.querySelector(".info-card--products");
+  if (products.length === 0 && productsSection) {
+    productsSection.style.display = "none";
+  } else if (productsSection) {
+    productsSection.style.display = "";
+  }
   buildPhraseList(clone.querySelector(".phrase-list"), destination.phrases, destination.languageCode || "en-US");
 
   // 섹션 제목 번역
@@ -5095,10 +7872,29 @@ function renderDestination(destination) {
   }
 }
 
+function renderInitialPlaceholder() {
+  const placeholderTitle = translate("results.placeholder.title");
+  const placeholderDescription = translate("results.placeholder.description");
+  
+  resultsContainer.innerHTML = `
+    <div class="results__placeholder">
+      <h2>${escapeHtml(placeholderTitle)}</h2>
+      <p>${escapeHtml(placeholderDescription)}</p>
+    </div>
+  `;
+}
+
 function renderNoResult(query) {
-  const noResultText = translate("results.noResult", { query });
+  // query가 번역 키인 경우 (빈 입력 등)
+  let noResultText;
+  if (query === translate("results.emptyInput")) {
+    noResultText = translate("results.emptyInput");
+  } else {
+    noResultText = translate("results.noResult", { query });
+  }
+  
   const noResultTip = translate("results.noResultTip");
-  const availableText = translate("results.available", { destinations: availableDestinationNames });
+  const availableText = translate("results.available", { destinations: getAvailableDestinationNames() });
   
   resultsContainer.innerHTML = `
     <div class="results__placeholder">
@@ -5112,7 +7908,7 @@ function renderNoResult(query) {
 function handleSearch() {
   const query = searchInput.value;
   if (!query.trim()) {
-    renderNoResult("입력된 내용이 없습니다");
+    renderNoResult(translate("results.emptyInput"));
     return;
   }
 
@@ -5201,6 +7997,19 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   
   searchInput.focus({ preventScroll: true });
+  
+  // 로고 이미지 클릭 시 초기 화면으로 돌아가기
+  const logoImage = document.querySelector(".hero__logo-image");
+  if (logoImage) {
+    logoImage.style.cursor = "pointer";
+    logoImage.addEventListener("click", () => {
+      searchInput.value = "";
+      renderInitialPlaceholder();
+      searchInput.focus({ preventScroll: true });
+      // 스크롤을 맨 위로 이동
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
   
   // SpeechSynthesis voice 미리 로드
   if ("speechSynthesis" in window) {

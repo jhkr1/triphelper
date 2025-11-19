@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TripHelper - AI Powered Travel Concierge | 여행 도우미</title>
-    <meta name="description" content="여행 준비를 위한 맞춤형 가이드: 필수 매너, 기념품, 현지 추천템, 필수 회화까지 한 곳에서 확인하세요. 17개 국가 정보 제공." />
-    <meta name="keywords" content="여행, 여행 가이드, 여행 준비, 여행 필수템, 여행 회화, 여행 매너, 기념품, 여행 도우미" />
+    <meta name="description" content="TripHelper - 27개 국가 여행 정보 제공. 필수 매너, 기념품 추천, 현지 마트 추천템, 여행 필수템, 비자 정보, 필수 회화까지 한 곳에서 확인하세요. 한국어/영어 지원." />
+    <meta name="keywords" content="여행 가이드, 여행 준비, 여행 필수템, 여행 회화, 여행 매너, 기념품 추천, 여행 도우미, 해외 여행, 여행 정보, 여행 팁, 여행 필수품, 여행 준비물, 여행 체크리스트, 여행 준비 가이드, 해외 여행 가이드" />
     <meta name="author" content="TripHelper" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
     <meta name="theme-color" content="#2563eb" />
     <meta name="google-adsense-account" content="ca-pub-7884227538941923" />
     <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains" />
@@ -15,18 +17,28 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://triphelper.kr/" />
-    <meta property="og:title" content="TripHelper - AI Powered Travel Concierge" />
-    <meta property="og:description" content="여행 준비를 위한 맞춤형 가이드: 필수 매너, 기념품, 현지 추천템, 필수 회화까지 한 곳에서 확인하세요." />
+    <meta property="og:title" content="TripHelper - AI Powered Travel Concierge | 27개 국가 여행 가이드" />
+    <meta property="og:description" content="27개 국가 여행 정보 제공. 필수 매너, 기념품 추천, 현지 마트 추천템, 여행 필수템, 비자 정보, 필수 회화까지 한 곳에서 확인하세요." />
     <meta property="og:image" content="https://triphelper.kr/triphelper_image.png" />
+    <meta property="og:image:width" content="420" />
+    <meta property="og:image:height" content="180" />
+    <meta property="og:image:alt" content="TripHelper - 여행 준비를 위한 맞춤형 가이드" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:site_name" content="TripHelper" />
     
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://triphelper.kr/" />
-    <meta property="twitter:title" content="TripHelper - AI Powered Travel Concierge" />
-    <meta property="twitter:description" content="여행 준비를 위한 맞춤형 가이드: 필수 매너, 기념품, 현지 추천템, 필수 회화까지 한 곳에서 확인하세요." />
-    <meta property="twitter:image" content="https://triphelper.kr/triphelper_image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://triphelper.kr/" />
+    <meta name="twitter:title" content="TripHelper - AI Powered Travel Concierge | 27개 국가 여행 가이드" />
+    <meta name="twitter:description" content="27개 국가 여행 정보 제공. 필수 매너, 기념품 추천, 현지 마트 추천템, 여행 필수템, 비자 정보, 필수 회화까지 한 곳에서 확인하세요." />
+    <meta name="twitter:image" content="https://triphelper.kr/triphelper_image.png" />
+    <meta name="twitter:image:alt" content="TripHelper - 여행 준비를 위한 맞춤형 가이드" />
     
     <link rel="canonical" href="https://triphelper.kr/" />
+    <link rel="alternate" hreflang="ko" href="https://triphelper.kr/" />
+    <link rel="alternate" hreflang="en" href="https://triphelper.kr/" />
+    <link rel="alternate" hreflang="x-default" href="https://triphelper.kr/" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -215,9 +227,18 @@
             <h3 data-i18n="sections.essentials">여행 준비 필수템</h3>
             <ul class="info-list info-list--essentials"></ul>
           </section>
+          <section class="info-card">
+            <h3 data-i18n="sections.visa">비자 정보</h3>
+            <ul class="info-list info-list--visa"></ul>
+          </section>
           <section class="info-card info-card--phrases">
             <h3 data-i18n="sections.phrases">필수 회화</h3>
             <ul class="phrase-list"></ul>
+          </section>
+          <section class="info-card info-card--products">
+            <h3 data-i18n="sections.products">추천 여행용품</h3>
+            <p class="affiliate-disclosure" data-i18n="affiliate.disclosure">이 게시물은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+            <ul class="info-list info-list--products"></ul>
           </section>
         </div>
       </article>
@@ -228,10 +249,12 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "TripHelper",
-      "description": "여행 준비를 위한 맞춤형 가이드: 필수 매너, 기념품, 현지 추천템, 필수 회화까지 한 곳에서 확인하세요.",
-      "url": "https://triphelper.com/",
+      "alternateName": "여행 도우미",
+      "description": "27개 국가 여행 정보 제공. 필수 매너, 기념품 추천, 현지 마트 추천템, 여행 필수템, 비자 정보, 필수 회화까지 한 곳에서 확인하세요.",
+      "url": "https://triphelper.kr/",
       "applicationCategory": "TravelApplication",
       "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -241,7 +264,51 @@
         "@type": "AggregateRating",
         "ratingValue": "5",
         "ratingCount": "1"
+      },
+      "featureList": [
+        "27개 국가 여행 정보",
+        "필수 매너 & 팁",
+        "기념품 추천",
+        "현지 마트/약국 추천템",
+        "여행 필수템",
+        "비자 정보",
+        "필수 회화",
+        "환율 계산기",
+        "날씨 정보",
+        "한국어/영어 지원"
+      ],
+      "inLanguage": ["ko", "en"],
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Travelers"
       }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "TripHelper",
+      "url": "https://triphelper.kr/",
+      "logo": "https://triphelper.kr/triphelper_image.png",
+      "sameAs": []
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "TripHelper",
+      "url": "https://triphelper.kr/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://triphelper.kr/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      },
+      "inLanguage": ["ko", "en"]
     }
     </script>
     <script src="script.js" defer></script>

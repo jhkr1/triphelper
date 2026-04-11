@@ -30,6 +30,9 @@ BUSINESS_MODEL.md
 
 # 개인 개발 참고 문서 (로컬 전용)
 HARNESS_ENGINEERING.md
+ADSENSE_GUIDE.md
+FREE_API_FEATURES.md
+ads.txt
 
 # 테스트 커버리지 리포트
 coverage/

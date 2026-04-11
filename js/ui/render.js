@@ -40,16 +40,6 @@ window.TripHelperUI = (() => {
             card.appendChild(imageWrapper);
           }
 
-          if (item.link) {
-            const link = document.createElement("a");
-            link.href = item.link;
-            link.className = "product-link";
-            link.target = "_blank";
-            link.rel = "noopener noreferrer sponsored";
-            link.textContent = language === "en" ? "View Product" : "제품 보기";
-            card.appendChild(link);
-          }
-
           li.appendChild(card);
         } else {
           const title = document.createElement("strong");

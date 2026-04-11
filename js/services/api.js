@@ -35,6 +35,7 @@ window.TripHelperApi = (() => {
     PHP: 0.018,
     VND: 0.000039,
     THB: 0.027,
+    HUF: 0.0028,
   };
 
   async function fetchJson(url) {

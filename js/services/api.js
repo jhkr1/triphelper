@@ -132,38 +132,50 @@ window.TripHelperApi = (() => {
       };
     }
 
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setDate(endDate.getDate() - 6);
+    const fromLower = from.toLowerCase();
+    const toLower = to.toLowerCase();
+    const baseUrl = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api";
 
-    const start = startDate.toISOString().slice(0, 10);
-    const end = endDate.toISOString().slice(0, 10);
+    // 최근 7일 날짜 배열 생성 (오래된 날짜 → 최신 순)
+    const dates = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - (6 - i));
+      return d.toISOString().slice(0, 10);
+    });
 
     try {
-      const [latest, history] = await Promise.all([
-        fetchJson(`https://api.frankfurter.app/latest?from=${from}&to=${to}`),
-        fetchJson(`https://api.frankfurter.app/${start}..${end}?from=${from}&to=${to}`),
-      ]);
+      // 최신 + 과거 6일치 병렬 요청 (마지막 인덱스는 "latest" 태그 사용)
+      const results = await Promise.all(
+        dates.map((date, i) => {
+          const tag = i === 6 ? "latest" : date;
+          return fetchJson(`${baseUrl}@${tag}/v1/currencies/${fromLower}.json`).catch(() => null);
+        })
+      );
 
-      const latestRate = latest.rates?.[to];
-      const historyPoints = Object.entries(history.rates || {})
-        .map(([date, rates]) => ({
-          date,
-          rate: rates?.[to],
-        }))
-        .filter((point) => typeof point.rate === "number");
+      const latestResult = results[6];
+      const latestRate = latestResult?.[fromLower]?.[toLower];
+
+      if (latestRate == null) {
+        throw new Error(`환율 데이터 없음: ${from} → ${to}`);
+      }
+
+      const history = dates.map((date, i) => {
+        const rate = results[i]?.[fromLower]?.[toLower] ?? latestRate;
+        return { date, rate };
+      });
 
       return {
         from,
         to,
         rate: latestRate,
-        history: historyPoints.length ? historyPoints : buildFlatHistory(latestRate || 1),
-        updatedAt: latest.date || new Date().toISOString(),
+        history,
+        updatedAt: latestResult?.date || new Date().toISOString(),
       };
     } catch (error) {
+      // fallback: 하드코딩된 대략 환율 사용 (baseFallback / targetFallback = 1단위 환산)
       const baseFallback = fallbackRates[from];
       const targetFallback = fallbackRates[to];
-      const rate = baseFallback && targetFallback ? targetFallback / baseFallback : 1;
+      const rate = baseFallback && targetFallback ? baseFallback / targetFallback : 1;
 
       return {
         from,

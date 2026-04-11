@@ -29,16 +29,15 @@ window.TripHelperCharts = (() => {
     const max = Math.max(...history.map((item) => item.rate));
     const range = max - min || 1;
 
-    history.forEach((_, index) => {
-      const y = paddingTop + (graphHeight / 4) * index;
-      if (index <= 4) {
-        ctx.strokeStyle = borderColor;
-        ctx.beginPath();
-        ctx.moveTo(paddingX, y);
-        ctx.lineTo(width - paddingX, y);
-        ctx.stroke();
-      }
-    });
+    for (let i = 0; i <= 4; i++) {
+      const y = paddingTop + (graphHeight / 4) * i;
+      ctx.strokeStyle = borderColor;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(paddingX, y);
+      ctx.lineTo(width - paddingX, y);
+      ctx.stroke();
+    }
 
     const points = history.map((item, index) => {
       const x = paddingX + (graphWidth / Math.max(history.length - 1, 1)) * index;
@@ -46,6 +45,18 @@ window.TripHelperCharts = (() => {
       return { ...item, x, y };
     });
 
+    // fill 영역 (선보다 먼저, 별도 경로)
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, height - paddingBottom);
+    points.forEach((point) => {
+      ctx.lineTo(point.x, point.y);
+    });
+    ctx.lineTo(points[points.length - 1].x, height - paddingBottom);
+    ctx.closePath();
+    ctx.fillStyle = fillColor;
+    ctx.fill();
+
+    // 선 (별도 경로)
     ctx.beginPath();
     points.forEach((point, index) => {
       if (index === 0) {
@@ -54,16 +65,9 @@ window.TripHelperCharts = (() => {
         ctx.lineTo(point.x, point.y);
       }
     });
-
     ctx.lineWidth = 3;
     ctx.strokeStyle = lineColor;
     ctx.stroke();
-
-    ctx.lineTo(points[points.length - 1].x, height - paddingBottom);
-    ctx.lineTo(points[0].x, height - paddingBottom);
-    ctx.closePath();
-    ctx.fillStyle = fillColor;
-    ctx.fill();
 
     ctx.fillStyle = lineColor;
     points.forEach((point) => {

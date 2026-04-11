@@ -238,12 +238,22 @@ window.TripHelperUI = (() => {
     const code = root.querySelector(".calculator-currency-code");
     const result = root.querySelector(".calculator-result");
     const unit = root.querySelector(".calculator-result-unit");
+    const calculatorEl = root.querySelector(".currency-calculator");
 
-    if (!input || !code || !result || !unit || !exchange?.rate) return;
+    if (!input || !code || !result || !unit) return;
 
+    // 동일 통화이거나 환율 정보가 없으면 계산기 숨김
+    if (!exchange?.rate || exchange.from === exchange.to) {
+      if (calculatorEl) calculatorEl.style.display = "none";
+      return;
+    }
+
+    if (calculatorEl) calculatorEl.style.display = "";
     code.textContent = exchange.from;
     unit.textContent = ` ${exchange.to}`;
     input.value = "";
+
+    const fractionDigits = exchange.rate >= 1 ? 2 : 4;
 
     const update = () => {
       const numericValue = Number(input.value);
@@ -253,7 +263,8 @@ window.TripHelperUI = (() => {
       }
 
       result.textContent = (numericValue * exchange.rate).toLocaleString(language === "en" ? "en-US" : "ko-KR", {
-        maximumFractionDigits: 2,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: fractionDigits,
       });
     };
 
@@ -270,24 +281,31 @@ window.TripHelperUI = (() => {
     const canvas = root.querySelector(".currency-chart");
     const chartContainer = root.querySelector(".currency-chart-container");
 
+    if (!value) return;
+
     if (!exchange?.rate) {
       value.textContent = translate("quickInfo.unavailable");
       return;
     }
 
-    label.textContent = `1 ${exchange.from} =`;
-    unit.textContent = ` ${exchange.to}`;
+    if (label) label.textContent = `1 ${exchange.from} =`;
+    if (unit) unit.textContent = ` ${exchange.to}`;
     value.textContent = exchange.rate.toLocaleString(language === "en" ? "en-US" : "ko-KR", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 4,
     });
-    time.textContent = formatLocalTimestamp(exchange.updatedAt, language);
+    if (time) time.textContent = formatLocalTimestamp(exchange.updatedAt, language);
 
     setupCalculator(root, exchange, language);
+
+    // 동일 통화(예: KRW→KRW)이거나 history가 없으면 차트 숨김
     if (chartContainer) {
-      chartContainer.style.display = "block";
+      const shouldShowChart = exchange.from !== exchange.to && exchange.history?.length > 1;
+      chartContainer.style.display = shouldShowChart ? "block" : "none";
+      if (shouldShowChart) {
+        window.TripHelperCharts.renderExchangeChart(canvas, exchange.history, language, exchange.from, exchange.to);
+      }
     }
-    window.TripHelperCharts.renderExchangeChart(canvas, exchange.history, language, exchange.from, exchange.to);
   }
 
   function renderDestinationShell({ destination, template, language, translate, commonProducts }) {

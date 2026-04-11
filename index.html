@@ -210,6 +210,24 @@
           </div>
           <div class="weather-display"></div>
         </div>
+        <div class="destination__insights">
+          <section class="insight-card">
+            <h3 data-i18n="sections.facts">국가 한눈에 보기</h3>
+            <ul class="facts-list info-list"></ul>
+          </section>
+          <section class="insight-card insight-card--forecast">
+            <h3 data-i18n="sections.forecast">5일 예보</h3>
+            <div class="forecast-list"></div>
+          </section>
+          <section class="insight-card insight-card--air">
+            <h3 data-i18n="sections.airQuality">공기질</h3>
+            <div class="air-quality-panel">
+              <div class="air-quality-badge">로딩 중...</div>
+              <p class="air-quality-summary"></p>
+              <ul class="air-quality-metrics"></ul>
+            </div>
+          </section>
+        </div>
         <div class="destination__info">
           <section class="info-card">
             <h3 data-i18n="sections.manners">필수 매너 &amp; 팁</h3>
@@ -311,7 +329,14 @@
       "inLanguage": ["ko", "en"]
     }
     </script>
-    <script src="script.js" defer></script>
+    <script src="js/data/translations.js" defer></script>
+    <script src="js/data/phrases.js" defer></script>
+    <script src="js/data/products.js" defer></script>
+    <script src="js/data/destinations.js" defer></script>
+    <script src="js/core/utils.js" defer></script>
+    <script src="js/services/api.js" defer></script>
+    <script src="js/ui/chart.js" defer></script>
+    <script src="js/ui/render.js" defer></script>
+    <script src="js/app.js" defer></script>
   </body>
 </html>
-

@@ -46,16 +46,18 @@ git clone https://github.com/your-username/TripHelper.git
 cd TripHelper
 ```
 
-2. 웹 서버 실행 (선택사항)
+2. 웹 서버 실행
    - Python 3: `python -m http.server 8000`
-   - Node.js: `npx serve`
+   - Node.js: `npm start`
    - 또는 브라우저에서 `index.html` 직접 열기
 
-3. 브라우저에서 `http://localhost:8000` 접속
+3. 브라우저에서 실행한 서버 주소로 접속
+   - Python 3: `http://localhost:8000`
+   - Node.js: `http://localhost:3000`
 
 ### 배포하기
 
-이 프로젝트는 순수 정적 사이트이므로 다양한 플랫폼에 쉽게 배포할 수 있습니다.
+이 프로젝트는 정적 프론트엔드 중심 사이트라서 다양한 플랫폼에 쉽게 배포할 수 있습니다.
 
 #### Netlify (추천)
 
@@ -90,12 +92,18 @@ cd TripHelper
 ```
 TripHelper/
 ├── index.html          # 메인 HTML 파일
-├── script.js           # JavaScript 로직 및 데이터
 ├── styles.css          # 스타일시트
+├── server.js           # 정적 파일 서빙용 Express 서버
+├── js/
+│   ├── app.js          # 앱 진입점
+│   ├── core/           # 공통 유틸리티
+│   ├── data/           # 번역/회화/국가 데이터
+│   ├── services/       # 무료 API 연동
+│   └── ui/             # 렌더링 및 차트
 ├── triphelper_image.png  # 로고 이미지
 ├── README.md          # 이 파일
 ├── ADSENSE_GUIDE.md   # Google AdSense 설정 가이드
-└── DEPLOY.md          # 배포 가이드
+└── FREE_API_FEATURES.md # 추가 기능 아이디어 메모
 ```
 
 ---
@@ -106,6 +114,7 @@ TripHelper/
 - **API**:
   - [Open-Meteo API](https://open-meteo.com/) - 날씨 정보
   - [ExchangeRate-API](https://www.exchangerate-api.com/) - 환율 정보
+- **Server**: Express (정적 파일 서빙)
 - **폰트**: Noto Sans KR, Plus Jakarta Sans, Manrope
 - **아이콘**: 이모지 기반
 
@@ -118,8 +127,11 @@ TripHelper/
 
 2. **정보 확인**: 검색 결과에서 다음 정보를 확인할 수 있습니다:
    - 💱 실시간 환율 및 환율 계산기
-   - 🌤️ 현재 날씨 정보
-   - 📝 필수 매너 & 팁
+- 🌤️ 현재 날씨 정보
+- 🌫️ 공기질 정보
+- 📅 5일 예보
+- 🧭 국가 기본 정보(수도, 인구, 지역, 언어, 운전 방향)
+- 📝 필수 매너 & 팁
    - 🛍️ 꼭 사야 할 기념품
    - 🏪 현지 마트/약국 추천템
    - 🎒 여행 준비 필수템
@@ -183,7 +195,7 @@ TripHelper/
 
 ## 📧 문의
 
-문제가 발생하거나 질문이 있으시면 이슈를 등록해주세요.
+문제가 발생하거나 질문이 있으면 이슈를 등록해주세요.
 
 ---
 

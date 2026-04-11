@@ -23,3 +23,25 @@ build/
 node_modules/
 
 BUSINESS_MODEL.md
+
+# ──────────────────────────────────────────────
+# Test Harness Engineering
+# ──────────────────────────────────────────────
+
+# 개인 개발 참고 문서 (로컬 전용)
+HARNESS_ENGINEERING.md
+
+# 테스트 커버리지 리포트
+coverage/
+.nyc_output/
+
+# Playwright E2E 결과물
+playwright-report/
+playwright/.cache/
+test-results/
+
+# Vitest 캐시
+.vitest-cache/
+
+# 테스트 스냅샷 (선택적으로 커밋할 경우 제거)
+**/__snapshots__/

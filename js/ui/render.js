@@ -253,8 +253,6 @@ window.TripHelperUI = (() => {
     unit.textContent = ` ${exchange.to}`;
     input.value = "";
 
-    const fractionDigits = exchange.rate >= 1 ? 2 : 4;
-
     const update = () => {
       const numericValue = Number(input.value);
       if (!input.value || Number.isNaN(numericValue)) {
@@ -262,9 +260,12 @@ window.TripHelperUI = (() => {
         return;
       }
 
-      result.textContent = (numericValue * exchange.rate).toLocaleString(language === "en" ? "en-US" : "ko-KR", {
+      const converted = numericValue * exchange.rate;
+      // 결과가 1 이상이면 정수, 미만이면 소수점 4자리
+      const digits = converted >= 1 ? 0 : 4;
+      result.textContent = converted.toLocaleString(language === "en" ? "en-US" : "ko-KR", {
         minimumFractionDigits: 0,
-        maximumFractionDigits: fractionDigits,
+        maximumFractionDigits: digits,
       });
     };
 
@@ -290,9 +291,10 @@ window.TripHelperUI = (() => {
 
     if (label) label.textContent = `1 ${exchange.from} =`;
     if (unit) unit.textContent = ` ${exchange.to}`;
+    // rate >= 1 이면 정수 표시 (예: 1,741), 미만이면 소수점 4자리까지
     value.textContent = exchange.rate.toLocaleString(language === "en" ? "en-US" : "ko-KR", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 4,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: exchange.rate >= 1 ? 0 : 4,
     });
     if (time) time.textContent = formatLocalTimestamp(exchange.updatedAt, language);
 

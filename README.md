@@ -2,88 +2,128 @@
 
 # ✈️ TripHelper
 
-### AI Powered Travel Concierge | 여행 도우미
+### 해외여행 정보 통합 플랫폼 | Travel Information Hub
 
-**당신의 다음 여정을 위한 맞춤형 인사이트와 준비 리스트**
+**목적지 하나만 검색하면, 여행에 필요한 모든 정보를 한 곳에서**
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Live](https://img.shields.io/badge/Live-triphelper.kr-2563eb?logo=google-chrome&logoColor=white)](https://triphelper.kr)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![JavaScript](https://img.shields.io/badge/Vanilla_JS-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 </div>
 
 ---
 
-## 🌟 소개
+## 🧭 프로젝트 배경 및 문제 정의
 
-**TripHelper**는 여행 준비를 위한 올인원 가이드입니다. 목적지를 검색하면 필수 매너부터 회화까지 한 곳에서 확인할 수 있어요.
+해외여행을 다녀온 뒤, **정보의 파편화** 문제를 직접 경험했습니다.
 
-### 주요 기능
+> 여행 준비를 위해 환율은 네이버, 날씨는 기상 앱, 현지 매너는 블로그, 회화는 번역기, 비자 정보는 외교부 사이트…
+> 평균적으로 **5~7개의 서비스**를 오가며 정보를 수집해야 했고, 이 과정에서 정보의 신뢰도와 최신성도 보장되지 않았습니다.
 
-- 🌍 **27개 국가 정보 제공** - 한국, 일본, 프랑스, 스페인, 미국, 이탈리아, 터키, 멕시코, 영국, 독일, 그리스, 오스트리아, 중국, 캐나다, 헝가리, 스위스, 네덜란드, 포르투갈, 필리핀, 베트남, 호주, 태국, 대만, 홍콩, 싱가포르, 말레이시아, 인도네시아
-- 💱 **실시간 환율 정보** - 최신 환율 조회 및 환율 계산기
-- 📈 **환율 추이 차트** - 과거 환율 데이터를 시각화하여 제공
-- 🌤️ **실시간 날씨 정보** - 목적지의 현재 날씨와 상세 정보
-- 📝 **필수 매너 & 팁** - 현지 문화와 예절 가이드
-- 🛍️ **기념품 추천** - 꼭 사야 할 기념품 리스트
-- 🏪 **현지 마트/약국 추천템** - 실용적인 현지 상품 정보
-- 🎒 **여행 준비 필수템** - 전기 어댑터, 교통카드, 인터넷 등
-- 💬 **필수 회화** - 발음과 뜻이 포함된 실용 회화 표현
-- 🌙 **다크 모드** - 눈의 피로를 줄이는 다크 테마 지원
-- 🌐 **다국어 지원** - 한국어/영어 자유 전환
-- 📱 **반응형 디자인** - 모바일, 태블릿, 데스크톱 모든 기기 지원
+**TripHelper**는 이 문제를 해결하기 위해 시작했습니다.  
+여행 준비에 필요한 핵심 정보(환율·날씨·매너·회화·비자 등)를 **단일 검색창** 하나로 접근할 수 있도록 설계했습니다.
 
 ---
 
-## 🚀 빠른 시작
+## 📊 수치로 보는 프로젝트
 
-### 로컬에서 실행하기
+| 지표 | 수치 |
+|------|------|
+| **지원 국가** | 27개국 (아시아 10, 유럽 12, 아메리카 3, 오세아니아 2) |
+| **카테고리 수** | 국가당 최대 9개 정보 카테고리 |
+| **정보 항목 수** | 국가당 평균 40+ 개 정보 항목 |
+| **지원 언어** | 한국어 / 영어 (전체 UI + 콘텐츠 완전 이중화) |
+| **연동 외부 API** | 3개 (환율, 날씨+대기질, 국가 프로필) |
+| **환율 추이 데이터** | 과거 7일치 일별 데이터 병렬 수집 |
+| **날씨 예보** | 5일치 일별 예보 + 실시간 기온/습도/풍속 |
+| **회화 표현 수** | 국가당 평균 8~10개 (발음 + TTS 재생 지원) |
+| **JS 모듈 수** | 8개 모듈로 관심사 분리 (data / core / services / ui) |
+| **빌드 도구 의존성** | 0개 (순수 Vanilla JS, 빌드 없이 즉시 배포 가능) |
 
-1. 저장소 클론 또는 다운로드
-```bash
-git clone https://github.com/your-username/TripHelper.git
-cd TripHelper
+---
+
+## ✨ 주요 기능
+
+### 💱 실시간 환율 + 계산기 + 추이 차트
+- `@fawazahmed0/currency-api` (170개 통화 지원, 무료)를 사용해 실시간 환율 조회
+- KRW를 지원하지 않는 Frankfurter(ECB) 대신 별도 API를 선택하는 **의도적 기술 결정**
+- 과거 7일치 환율 데이터를 **병렬 요청(Promise.all)** 으로 수집 → Canvas API로 직접 시각화
+- 금액 입력 시 실시간 환산 (정수 단위로 표시, UX 최적화)
+
+### 🌤️ 실시간 날씨 + 대기질 + 5일 예보
+- Open-Meteo API (무료, 무제한) 사용
+- Geocoding API → 도시 좌표 자동 조회 → 날씨/대기질 병렬 요청
+- PM2.5 · UV 지수 · AQI 정보 제공
+
+### 🌍 27개국 여행 정보 큐레이션
+- 필수 매너 & 팁 / 기념품 추천 / 마트·약국 추천템 / 여행 필수템 / 비자 정보
+- 쿠팡 파트너스 제휴 상품 카드 (iframe + 링크 지원)
+
+### 💬 필수 회화 + TTS 발음 재생
+- Web Speech API를 활용한 브라우저 내장 TTS 음성 재생
+- 국가별 언어 코드(`ja-JP`, `fr-FR` 등)로 정확한 발음 재생
+
+### 🌐 완전한 한/영 이중화
+- UI 텍스트 전체 + 콘텐츠(매너, 기념품, 회화 등) 모두 한국어/영어 별도 작성
+- 언어 전환 시 현재 목적지 유지하며 즉시 리렌더링
+
+---
+
+## 🛠️ 기술 스택 및 아키텍처
+
+### 사용 기술
+
+| 영역 | 기술 |
+|------|------|
+| **Frontend** | HTML5, CSS3, Vanilla JavaScript (ES2020+) |
+| **차트** | Canvas API (라이브러리 없이 직접 구현) |
+| **TTS** | Web Speech API |
+| **환율 API** | @fawazahmed0/currency-api (jsdelivr CDN, 무료) |
+| **날씨 API** | Open-Meteo (무료, API 키 불필요) |
+| **대기질 API** | Open-Meteo Air Quality (무료) |
+| **국가 정보 API** | RestCountries v3 (무료) |
+| **서버** | Express.js (정적 파일 서빙) |
+| **폰트** | Noto Sans KR, Plus Jakarta Sans, Manrope (Google Fonts) |
+
+### 모듈 구조
+
+```
+js/
+├── app.js                # 앱 진입점, 이벤트 바인딩, 상태 관리
+├── core/
+│   └── utils.js          # 공통 유틸 (날짜 포맷, 이스케이프, 날씨 코드 매핑 등)
+├── data/
+│   ├── destinations.js   # 27개국 여행 정보 데이터
+│   ├── phrases.js        # 국가별 필수 회화 데이터
+│   ├── products.js       # 공통 추천 상품 데이터
+│   └── translations.js   # 한/영 UI 번역 텍스트
+├── services/
+│   └── api.js            # 외부 API 호출 + 캐싱 (Map 기반 in-memory cache)
+└── ui/
+    ├── render.js         # DOM 렌더링 함수 모음
+    └── chart.js          # Canvas 기반 환율 추이 차트 렌더러
 ```
 
-2. 웹 서버 실행
-   - Python 3: `python -m http.server 8000`
-   - Node.js: `npm start`
-   - 또는 브라우저에서 `index.html` 직접 열기
+### 주요 기술적 의사결정
 
-3. 브라우저에서 실행한 서버 주소로 접속
-   - Python 3: `http://localhost:8000`
-   - Node.js: `http://localhost:3000`
+**① 프레임워크 미사용 (Vanilla JS)**  
+React·Vue 등 프레임워크 없이 순수 JavaScript만 사용.  
+→ 번들러·빌드 도구 없이 정적 파일 그대로 배포 가능, CDN/Netlify에서 즉시 운영.  
+→ 외부 의존성 0개 → 보안 취약점과 버전 충돌 리스크 없음.
 
-### 배포하기
+**② API 선택 (KRW 지원 여부) **  
+초기 Frankfurter(ECB 기반) 사용 시 KRW가 지원 통화 목록에 없어 전체 환율 기능이 fallback으로 빠지는 문제 발생.  
+→ 170개 통화를 지원하는 `@fawazahmed0/currency-api`로 교체. 운영 안정성 확보.
 
-이 프로젝트는 정적 프론트엔드 중심 사이트라서 다양한 플랫폼에 쉽게 배포할 수 있습니다.
+**③ 병렬 API 요청 (Promise.all)**  
+환율(7일치) + 날씨 + 대기질을 순차 요청 시 최대 ~3,000ms의 지연 발생.  
+→ `Promise.all`로 병렬화하여 체감 로딩 시간 단축.
 
-#### Netlify (추천)
-
-1. [Netlify](https://www.netlify.com/)에 가입
-2. "Add new site" → "Deploy manually" 클릭
-3. 프로젝트 폴더를 드래그 앤 드롭
-4. 배포 완료! 자동으로 URL 생성
-
-**또는 Git 연동:**
-1. GitHub에 프로젝트 업로드
-2. Netlify에서 "Import from Git" 선택
-3. 저장소 연결 후 자동 배포
-
-#### GitHub Pages
-
-1. GitHub에 저장소 생성
-2. Settings → Pages
-3. Source를 "main" 브랜치로 설정
-4. 저장 후 `https://[username].github.io/[repository-name]` 접속
-
-#### Cloudflare Pages
-
-1. [Cloudflare Pages](https://pages.cloudflare.com/) 접속
-2. "Create a project" 클릭
-3. Git 저장소 연결 또는 직접 업로드
-4. 배포 완료
+**④ In-memory 응답 캐싱**  
+동일 URL 재요청 시 API 호출 없이 캐시에서 즉시 반환 (Map 기반).  
+→ 언어 전환·테마 전환 시 불필요한 API 재호출 방지.
 
 ---
 
@@ -91,62 +131,40 @@ cd TripHelper
 
 ```
 TripHelper/
-├── index.html          # 메인 HTML 파일
-├── styles.css          # 스타일시트
-├── server.js           # 정적 파일 서빙용 Express 서버
-├── js/
-│   ├── app.js          # 앱 진입점
-│   ├── core/           # 공통 유틸리티
-│   ├── data/           # 번역/회화/국가 데이터
-│   ├── services/       # 무료 API 연동
-│   └── ui/             # 렌더링 및 차트
-├── triphelper_image.png  # 로고 이미지
-├── README.md          # 이 파일
-├── ADSENSE_GUIDE.md   # Google AdSense 설정 가이드
-└── FREE_API_FEATURES.md # 추가 기능 아이디어 메모
+├── index.html              # 메인 HTML (Template 태그 기반 동적 렌더링)
+├── styles.css              # 전체 스타일 (다크 모드, 반응형 포함)
+├── server.js               # Express 정적 서버
+├── js/                     # JavaScript 모듈 (위 참고)
+├── triphelper_image.png    # 로고 이미지
+├── ads.txt                 # Google AdSense 인증
+└── _redirects              # Netlify SPA 리디렉션 설정
 ```
 
 ---
 
-## 🛠️ 기술 스택
+## 🚀 로컬 실행
 
-- **Frontend**: 순수 HTML5, CSS3, JavaScript (Vanilla JS)
-- **API**:
-  - [Open-Meteo API](https://open-meteo.com/) - 날씨 정보
-  - [ExchangeRate-API](https://www.exchangerate-api.com/) - 환율 정보
-- **Server**: Express (정적 파일 서빙)
-- **폰트**: Noto Sans KR, Plus Jakarta Sans, Manrope
-- **아이콘**: 이모지 기반
+```bash
+git clone https://github.com/jhkr1/triphelper.git
+cd triphelper
 
----
+# Node.js 서버로 실행
+npm start
+# → http://localhost:3000
 
-## ✨ 사용 방법
+# 또는 Python으로 실행
+python -m http.server 8000
+# → http://localhost:8000
+```
 
-1. **목적지 검색**: 검색창에 여행하고 싶은 국가를 입력하세요
-   - 예: "한국", "일본", "프랑스", "Korea", "Japan", "France"
-
-2. **정보 확인**: 검색 결과에서 다음 정보를 확인할 수 있습니다:
-   - 💱 실시간 환율 및 환율 계산기
-- 🌤️ 현재 날씨 정보
-- 🌫️ 공기질 정보
-- 📅 5일 예보
-- 🧭 국가 기본 정보(수도, 인구, 지역, 언어, 운전 방향)
-- 📝 필수 매너 & 팁
-   - 🛍️ 꼭 사야 할 기념품
-   - 🏪 현지 마트/약국 추천템
-   - 🎒 여행 준비 필수템
-   - 💬 필수 회화 (발음 포함)
-
-3. **다크 모드**: 우측 상단의 🌙 버튼으로 다크 모드 전환
-
-4. **언어 전환**: 우측 상단의 🌐 버튼으로 한국어/영어 전환
+> `index.html`을 브라우저로 직접 열어도 동작합니다. (빌드 과정 없음)
 
 ---
 
 ## 🌍 지원 국가 (27개)
 
-| 국가 | 국가 | 국가 | 국가 |
-|------|------|------|------|
+| | | | |
+|---|---|---|---|
 | 🇰🇷 한국 | 🇯🇵 일본 | 🇫🇷 프랑스 | 🇪🇸 스페인 |
 | 🇺🇸 미국 | 🇮🇹 이탈리아 | 🇹🇷 터키 | 🇲🇽 멕시코 |
 | 🇬🇧 영국 | 🇩🇪 독일 | 🇬🇷 그리스 | 🇦🇹 오스트리아 |
@@ -157,52 +175,15 @@ TripHelper/
 
 ---
 
-## 🎨 주요 특징
-
-### 실시간 데이터
-- 환율 정보는 실시간으로 업데이트됩니다
-- 날씨 정보는 Open-Meteo API를 통해 최신 데이터를 제공합니다
-
-### 사용자 경험
-- 깔끔하고 직관적인 인터페이스
-- 빠른 검색 및 로딩 속도
-- 모바일 친화적 디자인
-
-### 접근성
-- 키보드 네비게이션 지원
-- 스크린 리더 호환
-- 시맨틱 HTML 구조
-
----
-
 ## 📝 라이선스
 
-이 프로젝트는 MIT 라이선스를 따릅니다.
-
----
-
-## 🤝 기여하기
-
-버그 리포트, 기능 제안, Pull Request를 환영합니다!
-
-1. 이 저장소를 Fork하세요
-2. 기능 브랜치를 생성하세요 (`git checkout -b feature/AmazingFeature`)
-3. 변경사항을 커밋하세요 (`git commit -m 'Add some AmazingFeature'`)
-4. 브랜치에 Push하세요 (`git push origin feature/AmazingFeature`)
-5. Pull Request를 열어주세요
-
----
-
-## 📧 문의
-
-문제가 발생하거나 질문이 있으면 이슈를 등록해주세요.
+MIT License
 
 ---
 
 <div align="center">
 
-**© 2025 TripHelper. 여행의 모든 순간을 함께합니다.** ✈️
-
-Made with ❤️ for travelers around the world
+**© 2025 TripHelper.**  
+해외여행 정보의 파편화 문제를 해결하기 위해 시작한 프로젝트입니다. ✈️
 
 </div>

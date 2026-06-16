@@ -161,11 +161,14 @@ window.TripHelperUI = (() => {
       return;
     }
 
+    const capital = language === "en" ? profile.capital : (profile.capitalKo || profile.capital);
+    const region = language === "en" ? profile.region : (profile.regionKo || profile.region);
+    const languages = language === "en" ? profile.languages : (profile.languagesKo || profile.languages);
     const items = [
-      { label: translate("quickInfo.capital"), value: profile.capital || "-" },
+      { label: translate("quickInfo.capital"), value: capital || "-" },
       { label: translate("quickInfo.population"), value: profile.population ? formatCompactNumber(profile.population, language) : "-" },
-      { label: translate("quickInfo.region"), value: profile.region || "-" },
-      { label: translate("quickInfo.languages"), value: profile.languages?.join(", ") || "-" },
+      { label: translate("quickInfo.region"), value: region || "-" },
+      { label: translate("quickInfo.languages"), value: languages?.join(", ") || "-" },
       {
         label: translate("quickInfo.drivingSide"),
         value: profile.drivingSide ? (language === "en" ? profile.drivingSide : profile.drivingSide === "left" ? "좌측통행" : "우측통행") : "-",

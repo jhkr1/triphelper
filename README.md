@@ -1,6 +1,8 @@
 <div align="center">
 
-# ✈️ TripHelper
+<img src="./triphelper_image.png" alt="TripHelper Logo" width="200" />
+
+# TripHelper
 
 ### 해외여행 정보 통합 플랫폼 | Travel Information Hub
 
@@ -15,7 +17,28 @@
 
 ---
 
-## 🧭 프로젝트 배경 및 문제 정의
+## 프로젝트 배경 및 문제 정의
+
+### 스크린샷
+
+<details>
+<summary>메인 페이지</summary>
+<img src="./images/triphelper_mainpage.png" alt="메인 페이지 스크린샷" width="800">
+</details>
+<details>
+<summary>정보 페이지 1</summary>
+<img src="./images/triphelper_fullpage (2).png" alt="정보 페이지 스크린샷 1" width="800">
+</details>
+<details>
+<summary>정보 페이지 2</summary>
+<img src="./images/triphelper_fullpage (1).png" alt="정보 페이지 스크린샷 2" width="800">
+</details>
+<details>
+<summary>정보 페이지 3</summary>
+<img src="./images/triphelper_fullpage (3).png" alt="정보 페이지 스크린샷 3" width="800">
+</details>
+
+<br/>
 
 해외여행을 다녀온 뒤, **정보의 파편화** 문제를 직접 경험했습니다.
 
@@ -27,7 +50,7 @@
 
 ---
 
-## 📊 수치로 보는 프로젝트
+## 수치로 보는 프로젝트
 
 | 지표 | 수치 |
 |------|------|
@@ -44,34 +67,34 @@
 
 ---
 
-## ✨ 주요 기능
+## 주요 기능
 
-### 💱 실시간 환율 + 계산기 + 추이 차트
+### 실시간 환율 + 계산기 + 추이 차트
 - `@fawazahmed0/currency-api` (170개 통화 지원, 무료)를 사용해 실시간 환율 조회
 - KRW를 지원하지 않는 Frankfurter(ECB) 대신 별도 API를 선택하는 **의도적 기술 결정**
 - 과거 7일치 환율 데이터를 **병렬 요청(Promise.all)** 으로 수집 → Canvas API로 직접 시각화
 - 금액 입력 시 실시간 환산 (정수 단위로 표시, UX 최적화)
 
-### 🌤️ 실시간 날씨 + 대기질 + 5일 예보
+### 실시간 날씨 + 대기질 + 5일 예보
 - Open-Meteo API (무료, 무제한) 사용
 - Geocoding API → 도시 좌표 자동 조회 → 날씨/대기질 병렬 요청
 - PM2.5 · UV 지수 · AQI 정보 제공
 
-### 🌍 27개국 여행 정보 큐레이션
+### 27개국 여행 정보 큐레이션
 - 필수 매너 & 팁 / 기념품 추천 / 마트·약국 추천템 / 여행 필수템 / 비자 정보
 - 쿠팡 파트너스 제휴 상품 카드 (iframe + 링크 지원)
 
-### 💬 필수 회화 + TTS 발음 재생
+### 필수 회화 + TTS 발음 재생
 - Web Speech API를 활용한 브라우저 내장 TTS 음성 재생
 - 국가별 언어 코드(`ja-JP`, `fr-FR` 등)로 정확한 발음 재생
 
-### 🌐 완전한 한/영 이중화
+### 완전한 한/영 이중화
 - UI 텍스트 전체 + 콘텐츠(매너, 기념품, 회화 등) 모두 한국어/영어 별도 작성
 - 언어 전환 시 현재 목적지 유지하며 즉시 리렌더링
 
 ---
 
-## 🛠️ 기술 스택 및 아키텍처
+## 기술 스택 및 아키텍처
 
 ### 사용 기술
 
@@ -113,7 +136,7 @@ React·Vue 등 프레임워크 없이 순수 JavaScript만 사용.
 → 번들러·빌드 도구 없이 정적 파일 그대로 배포 가능, CDN/Netlify에서 즉시 운영.  
 → 외부 의존성 0개 → 보안 취약점과 버전 충돌 리스크 없음.
 
-**② API 선택 (KRW 지원 여부) **  
+**② API 선택 (KRW 지원 여부)**  
 초기 Frankfurter(ECB 기반) 사용 시 KRW가 지원 통화 목록에 없어 전체 환율 기능이 fallback으로 빠지는 문제 발생.  
 → 170개 통화를 지원하는 `@fawazahmed0/currency-api`로 교체. 운영 안정성 확보.
 
@@ -127,7 +150,7 @@ React·Vue 등 프레임워크 없이 순수 JavaScript만 사용.
 
 ---
 
-## 📁 프로젝트 구조
+## 프로젝트 구조
 
 ```
 TripHelper/
@@ -142,7 +165,7 @@ TripHelper/
 
 ---
 
-## 🚀 로컬 실행
+## 로컬 실행
 
 ```bash
 git clone https://github.com/jhkr1/triphelper.git
@@ -161,7 +184,7 @@ python -m http.server 8000
 
 ---
 
-## 🌍 지원 국가 (27개)
+## 지원 국가 (27개)
 
 | | | | |
 |---|---|---|---|
@@ -175,7 +198,7 @@ python -m http.server 8000
 
 ---
 
-## 📝 라이선스
+## 라이선스
 
 MIT License
 
@@ -184,6 +207,6 @@ MIT License
 <div align="center">
 
 **© 2025 TripHelper.**  
-해외여행 정보의 파편화 문제를 해결하기 위해 시작한 프로젝트입니다. ✈️
+해외여행 정보의 파편화 문제를 해결하기 위해 시작한 프로젝트입니다.
 
 </div>

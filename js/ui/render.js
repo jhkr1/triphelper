@@ -1,66 +1,13 @@
 window.TripHelperUI = (() => {
   const {
     escapeHtml,
+    flagImg,
     formatCompactNumber,
     formatDate,
     formatLocalTimestamp,
     getAirQualityMeta,
     getWeatherIcon,
   } = window.TripHelperUtils;
-
-  function renderObjectList(list, items, language) {
-    list.innerHTML = "";
-
-    items.forEach((item) => {
-      const li = document.createElement("li");
-
-      if (typeof item === "object" && item !== null) {
-        if (list.classList.contains("info-list--products") && (item.link || item.iframe || item.image)) {
-          const card = document.createElement("div");
-          card.className = "product-card";
-
-          const title = document.createElement("strong");
-          title.className = "product-title";
-          title.textContent = item.title || "";
-          card.appendChild(title);
-
-          if (item.iframe) {
-            const iframeWrapper = document.createElement("div");
-            iframeWrapper.className = "product-iframe-wrapper";
-            iframeWrapper.innerHTML = item.iframe;
-            card.appendChild(iframeWrapper);
-          } else if (item.image) {
-            const imageWrapper = document.createElement("div");
-            imageWrapper.className = "product-image-wrapper";
-            const img = document.createElement("img");
-            img.src = item.image;
-            img.alt = item.title || "";
-            img.loading = "lazy";
-            imageWrapper.appendChild(img);
-            card.appendChild(imageWrapper);
-          }
-
-          li.appendChild(card);
-        } else {
-          const title = document.createElement("strong");
-          title.className = "list-item-title";
-          title.textContent = item.title || "";
-          li.appendChild(title);
-
-          if (item.description) {
-            const description = document.createElement("span");
-            description.className = "list-item-description";
-            description.textContent = ` - ${item.description}`;
-            li.appendChild(description);
-          }
-        }
-      } else {
-        li.textContent = item;
-      }
-
-      list.appendChild(li);
-    });
-  }
 
   function speakPhrase(text, languageCode) {
     if (!("speechSynthesis" in window)) return;
@@ -80,31 +27,6 @@ window.TripHelperUI = (() => {
 
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
-  }
-
-  function renderPhraseList(list, phrases, language, languageCode) {
-    list.innerHTML = "";
-
-    phrases.forEach((phrase) => {
-      const li = document.createElement("li");
-      const pronunciation = language === "en" && phrase.pronunciationEn ? phrase.pronunciationEn : phrase.pronunciation;
-      const meaning = language === "en" && phrase.meaningEn ? phrase.meaningEn : phrase.meaning;
-
-      li.innerHTML = `
-        <span class="phrase-list__source">${escapeHtml(phrase.source)}</span>
-        <span class="phrase-list__pronunciation">(${escapeHtml(pronunciation)})</span>
-        <span class="phrase-list__meaning">- ${escapeHtml(meaning)}</span>
-      `;
-
-      const button = document.createElement("button");
-      button.className = "phrase-list__speaker";
-      button.type = "button";
-      button.textContent = "🔊";
-      button.setAttribute("aria-label", language === "en" ? "Listen to pronunciation" : "발음 듣기");
-      button.addEventListener("click", () => speakPhrase(phrase.source, languageCode));
-      li.appendChild(button);
-      list.appendChild(li);
-    });
   }
 
   function createWeatherCardShell(cityName, loadingText) {
@@ -296,83 +218,162 @@ window.TripHelperUI = (() => {
     // 동일 통화(예: KRW→KRW)이거나 history가 없으면 차트 숨김
     if (chartContainer) {
       const shouldShowChart = exchange.from !== exchange.to && exchange.history?.length > 1;
-      chartContainer.style.display = shouldShowChart ? "block" : "none";
+      chartContainer.hidden = !shouldShowChart;
       if (shouldShowChart) {
         window.TripHelperCharts.renderExchangeChart(canvas, exchange.history, language, exchange.from, exchange.to);
       }
     }
   }
 
-  function renderDestinationShell({ destination, template, language, translate, commonProducts }) {
-    const fragment = template.content.cloneNode(true);
-    const root = fragment.querySelector(".destination");
+  const itemTitle = (x) => (typeof x === "object" && x !== null ? x.title : x) || "";
+  const itemDesc = (x) => (typeof x === "object" && x !== null ? x.description : "") || "";
+  const pick = (destination, key, language) => (language === "en" && destination[`${key}En`] ? destination[`${key}En`] : destination[key]) || [];
+  const isProduct = (item) => item && typeof item === "object" && (item.link || item.iframe || item.image);
 
-    root.querySelector(".destination__flag").textContent = destination.flag || "";
-    root.querySelector(".destination__country").textContent = language === "en" ? destination.nameEn : destination.name;
-    root.querySelector(".destination__summary").textContent = language === "en" && destination.summaryEn ? destination.summaryEn : destination.summary;
+  function itemsHtml(arr) {
+    return `<ol class="items">${arr.map((x) => `<li><b>${escapeHtml(itemTitle(x))}</b>${itemDesc(x) ? `<p>${escapeHtml(itemDesc(x))}</p>` : ""}</li>`).join("")}</ol>`;
+  }
 
-    const currencyInfo = root.querySelector(".currency-info");
-    if (destination.currency && currencyInfo) {
-      const currencyName = language === "en" && destination.currency.nameEn ? destination.currency.nameEn : destination.currency.name;
-      currencyInfo.textContent = `${destination.currency.symbol} ${destination.currency.code} (${currencyName})`;
-    }
+  function productsHtml(products) {
+    return `<ul class="products">${products.map((item) => {
+      let media = "";
+      if (item.iframe) media = `<div class="product-iframe-wrapper">${item.iframe}</div>`;
+      else if (item.image) media = `<div class="product-image-wrapper"><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy"></div>`;
+      return `<li><div class="product-card"><strong class="product-title">${escapeHtml(item.title)}</strong>${media}</div></li>`;
+    }).join("")}</ul>`;
+  }
 
-    const manners = language === "en" && destination.mannersEn ? destination.mannersEn : destination.manners;
-    const souvenirs = language === "en" && destination.souvenirsEn ? destination.souvenirsEn : destination.souvenirs;
-    const market = language === "en" && destination.marketEn ? destination.marketEn : destination.market;
-    const visa = language === "en" && destination.visaEn ? destination.visaEn : destination.visa;
-    const allEssentials = language === "en" && destination.essentialsEn ? destination.essentialsEn : destination.essentials;
-    const essentials = allEssentials.filter((item) => !item.link && !item.iframe && !item.image);
-    const destinationProducts = (language === "en" && destination.essentialsEn ? destination.essentialsEn : destination.essentials)
-      .filter((item) => item.link || item.iframe || item.image)
-      .map((item) => ({ ...item, title: language === "en" && item.titleEn ? item.titleEn : item.title }));
-    const localizedCommonProducts = commonProducts.map((item) => ({
-      ...item,
-      title: language === "en" && item.titleEn ? item.titleEn : item.title,
-    }));
-
-    renderObjectList(root.querySelector(".info-list--manners"), manners, language);
-    renderObjectList(root.querySelector(".info-list--souvenirs"), souvenirs, language);
-    renderObjectList(root.querySelector(".info-list--market"), market, language);
-    renderObjectList(root.querySelector(".info-list--essentials"), essentials, language);
-    renderObjectList(root.querySelector(".info-list--visa"), visa || [], language);
-    renderObjectList(root.querySelector(".info-list--products"), [...localizedCommonProducts, ...destinationProducts], language);
-    renderPhraseList(root.querySelector(".phrase-list"), destination.phrases, language, destination.languageCode);
-
-    const visaSection = root.querySelector(".info-list--visa")?.closest(".info-card");
-    if (visaSection && (!visa || !visa.length)) {
-      visaSection.style.display = "none";
-    }
-
-    const weatherDisplay = root.querySelector(".weather-display");
-    weatherDisplay.innerHTML = "";
-    (destination.weather?.cities || []).forEach((city) => {
-      const card = document.createElement("div");
-      card.className = "weather-city-card";
-      card.dataset.cityName = city.name;
-      const cityLabel = language === "en" ? city.name : (city.nameKo || city.name);
-      card.innerHTML = createWeatherCardShell(cityLabel, translate("quickInfo.loading"));
-      weatherDisplay.appendChild(card);
+  function observeChapters(root) {
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reveal = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) { entry.target.classList.add("in"); reveal.unobserve(entry.target); }
+    }), { threshold: 0.12 });
+    root.querySelectorAll(".reveal").forEach((el) => {
+      // 이미 화면 안에 있는 요소는 즉시 표시
+      if (reduce || el.getBoundingClientRect().top < innerHeight) el.classList.add("in"); else reveal.observe(el);
     });
 
-    root.querySelectorAll("[data-i18n]").forEach((element) => {
-      const key = element.getAttribute("data-i18n");
-      element.textContent = translate(key);
-    });
+    const links = root.querySelectorAll(".toc a");
+    const spy = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) links.forEach((a) => a.classList.toggle("on", a.dataset.k === entry.target.id.slice(3)));
+    }), { rootMargin: "-30% 0px -60% 0px" });
+    root.querySelectorAll(".chap").forEach((el) => spy.observe(el));
+  }
 
-    return {
-      fragment,
-      root,
-    };
+  function languageName(code, language) {
+    try { return new Intl.DisplayNames([language], { type: "language" }).of(code); } catch { return code || "-"; }
+  }
+
+  // 결과 화면(에디토리얼) 전체를 container에 그린다. 실시간 데이터 자리는 비워두고 app.js가 채운다.
+  function renderDestination({ container, destination, index, total, language, translate, commonProducts, onBack }) {
+    const en = language === "en";
+    const currency = destination.currency || {};
+    const manners = pick(destination, "manners", language);
+    const visa = pick(destination, "visa", language);
+    const allEssentials = pick(destination, "essentials", language);
+    const essentials = allEssentials.filter((item) => !isProduct(item));
+    const products = [
+      ...commonProducts.map((item) => ({ ...item, title: en && item.titleEn ? item.titleEn : item.title })),
+      ...allEssentials.filter(isProduct).map((item) => ({ ...item, title: en && item.titleEn ? item.titleEn : item.title })),
+    ];
+    const cities = destination.weather?.cities || [];
+    const showExchange = currency.code && currency.code !== "KRW";
+
+    const chapters = [];
+    if (showExchange) {
+      chapters.push({ key: "exchange", label: translate("sections.exchange"), body: `
+        <div class="rate">
+          <div class="currency-rate">
+            <span class="currency-rate__label"></span><span class="currency-rate__value">${escapeHtml(translate("quickInfo.loading"))}</span><span class="currency-rate__unit"> KRW</span>
+          </div>
+          <div class="currency-rate-time"><span>${escapeHtml(translate("quickInfo.rateTime"))}</span> <span class="currency-rate-time__value"></span></div>
+        </div>
+        <div class="currency-calculator">
+          <div class="calculator-input-group">
+            <input type="number" class="calculator-input" placeholder="${escapeHtml(translate("quickInfo.calculatorPlaceholder"))}" aria-label="${escapeHtml(translate("quickInfo.calculatorPlaceholder"))}" min="0" step="0.01" />
+            <span class="calculator-currency-code"></span>
+            <span class="calculator-equals">=</span>
+            <span class="calculator-result"></span>
+            <span class="calculator-result-unit"></span>
+          </div>
+        </div>
+        <div class="currency-chart-container" hidden>
+          <h4 class="currency-chart__title">${escapeHtml(translate("quickInfo.exchangeRate"))}</h4>
+          <canvas class="currency-chart"></canvas>
+        </div>` });
+    }
+    if (cities.length) {
+      chapters.push({ key: "weather", label: translate("sections.weather"), body: `
+        <p class="weather-time"><span>${escapeHtml(translate("quickInfo.localTime"))}</span> <span class="weather-time__value"></span></p>
+        <div class="weather-display">${cities.map((city) => `
+          <div class="weather-city-card" data-city-name="${escapeHtml(city.name)}">${createWeatherCardShell(en ? city.name : (city.nameKo || city.name), translate("quickInfo.loading"))}</div>`).join("")}
+        </div>
+        <h4 class="sub">${escapeHtml(translate("sections.forecast"))}</h4>
+        <div class="forecast-list"></div>
+        <h4 class="sub">${escapeHtml(translate("sections.airQuality"))}</h4>
+        <div class="air-quality-panel">
+          <div class="air-quality-badge"></div>
+          <p class="air-quality-summary"></p>
+          <ul class="air-quality-metrics"></ul>
+        </div>` });
+    }
+    chapters.push({ key: "facts", label: translate("sections.facts"), body: `<ul class="facts-list"></ul>` });
+
+    if (manners.length) {
+      const [first, ...rest] = manners;
+      chapters.push({ key: "manners", label: translate("sections.manners"), body:
+        `<blockquote class="pull"><small>${escapeHtml(translate("ui.insight").toUpperCase())}</small><b>${escapeHtml(itemTitle(first))}</b><p>${escapeHtml(itemDesc(first))}</p></blockquote>${rest.length ? itemsHtml(rest) : ""}` });
+    }
+    [["souvenirs", pick(destination, "souvenirs", language)], ["market", pick(destination, "market", language)], ["essentials", essentials], ["visa", visa]]
+      .forEach(([key, arr]) => { if (arr.length) chapters.push({ key, label: translate(`sections.${key}`), body: itemsHtml(arr) }); });
+
+    const phrases = destination.phrases || [];
+    if (phrases.length) {
+      chapters.push({ key: "phrases", label: translate("sections.phrases"), body: `<div class="phr">${phrases.map((p, i) => `
+        <div><b>${escapeHtml(p.source)}</b><i>${escapeHtml(en && p.pronunciationEn ? p.pronunciationEn : p.pronunciation)}</i><span>${escapeHtml(en && p.meaningEn ? p.meaningEn : p.meaning)}</span>
+          <button class="speak" type="button" data-i="${i}" aria-label="${escapeHtml(translate("ui.listen"))}">🔊</button></div>`).join("")}</div>` });
+    }
+    // TODO: 쿠팡 파트너스 상품이 표시되지 않아 임시로 숨김. 복구하려면 아래 주석을 해제하세요.
+    // if (products.length) {
+    //   chapters.push({ key: "products", label: translate("sections.products"), body:
+    //     `<p class="affiliate-disclosure">${escapeHtml(translate("affiliate.disclosure"))}</p>${productsHtml(products)}` });
+    // }
+
+    const pad = (n) => String(n).padStart(2, "0");
+    container.hidden = false;
+    container.innerHTML = `
+      <article class="ed destination">
+        <p class="kicker reveal">NO. ${pad(index)} / ${total} · DESTINATION</p>
+        <h2 class="ed__title reveal"><span aria-hidden="true">${flagImg(destination)}</span>${escapeHtml(en ? destination.nameEn : destination.name)}</h2>
+        <p class="ed__lede reveal">${escapeHtml(en && destination.summaryEn ? destination.summaryEn : destination.summary)}</p>
+        <dl class="meta reveal">
+          <div><dt>${escapeHtml(translate("quickInfo.currency"))}</dt><dd>${escapeHtml(en && currency.nameEn ? currency.nameEn : currency.name)} · ${escapeHtml(currency.code)} ${escapeHtml(currency.symbol || "")}</dd></div>
+          <div><dt>${escapeHtml(translate("quickInfo.languages"))}</dt><dd>${escapeHtml(languageName(destination.languageCode, language))}</dd></div>
+          ${visa.length ? `<div><dt>${escapeHtml(translate("ui.visa"))}</dt><dd>${escapeHtml(itemTitle(visa[0]))}</dd></div>` : ""}
+        </dl>
+        <div class="ed__body">
+          <nav class="toc" aria-label="chapters"><ol>${chapters.map((c, i) => `<li><a href="#ch-${c.key}" data-k="${c.key}"><b>${pad(i + 1)}</b>${escapeHtml(c.label)}</a></li>`).join("")}</ol></nav>
+          <div class="chapters">
+            ${chapters.map((c, i) => `<section class="chap reveal" id="ch-${c.key}"><div class="chap__head"><span class="chap__no">${pad(i + 1)}</span><h3>${escapeHtml(c.label)}</h3></div>${c.body}</section>`).join("")}
+            <button class="back" type="button">${escapeHtml(translate("ui.back"))}</button>
+          </div>
+        </div>
+      </article>`;
+
+    container.querySelector(".back").addEventListener("click", onBack);
+    container.querySelectorAll(".speak").forEach((button) => {
+      button.addEventListener("click", () => speakPhrase(phrases[Number(button.dataset.i)].source, destination.languageCode));
+    });
+    observeChapters(container);
+    return container.querySelector(".destination");
   }
 
   return {
     renderAirQuality,
     renderCountryFacts,
-    renderDestinationShell,
+    renderDestination,
     renderExchange,
     renderForecast,
-    renderObjectList,
     renderWeatherCard,
   };
 })();

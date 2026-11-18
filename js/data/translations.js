@@ -2,6 +2,17 @@ window.TripHelperData = window.TripHelperData || {};
 
 const translations = {
   ko: {
+    "hero.title": "어디로 떠나시나요?",
+    "hero.sub": "지구본을 돌려 핀을 누르거나, 목적지를 검색하세요.",
+    "globe.hint": "드래그로 회전 · 핀을 눌러 선택",
+    "globe.label": "여행지를 선택할 수 있는 지구본",
+    "chips.label": "인기 여행지",
+    "sections.exchange": "환율 & 계산기",
+    "sections.weather": "날씨 · 예보 · 공기질",
+    "ui.insight": "꼭 알아둘 팁",
+    "ui.back": "↑ 지구본으로 돌아가기",
+    "ui.listen": "발음 듣기",
+    "ui.visa": "비자",
     "hero.tagline": "당신의 다음 여정을 위한 맞춤형 인사이트와 준비 리스트.",
     "hero.subcopy": "목적지를 검색하면 필수 매너부터 회화까지 한 곳에서 확인할 수 있어요.",
     "search.label": "여행지 검색",
@@ -54,6 +65,17 @@ const translations = {
     "affiliate.disclosure": "이 게시물은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다."
   },
   en: {
+    "hero.title": "Where to next?",
+    "hero.sub": "Spin the globe and tap a pin, or search for a destination.",
+    "globe.hint": "Drag to rotate · tap a pin",
+    "globe.label": "Globe for choosing a destination",
+    "chips.label": "Popular destinations",
+    "sections.exchange": "Exchange Rate & Calculator",
+    "sections.weather": "Weather, Forecast & Air",
+    "ui.insight": "Know before you go",
+    "ui.back": "↑ Back to the globe",
+    "ui.listen": "Listen to pronunciation",
+    "ui.visa": "Visa",
     "hero.tagline": "Customized insights and preparation lists for your next journey.",
     "hero.subcopy": "Search for your destination to find everything from essential manners to useful phrases in one place.",
     "search.label": "Search destination",

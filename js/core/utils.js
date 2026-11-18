@@ -115,7 +115,16 @@ window.TripHelperUtils = (() => {
     };
   }
 
+  // Windows에서는 국기 이모지가 글자로 보이므로, 이모지에서 국가 코드를 뽑아 이미지로 표시
+  function flagImg(destination) {
+    const flag = destination?.flag || "";
+    if (!flag) return "";
+    const code = [...flag].map((c) => String.fromCharCode(c.codePointAt(0) - 0x1f1e6 + 97)).join("");
+    return `<img class="fl" src="https://flagcdn.com/h40/${code}.png" alt="" onerror="this.replaceWith(document.createTextNode('${flag}'))">`;
+  }
+
   return {
+    flagImg,
     buildDailyForecast,
     escapeHtml,
     formatCompactNumber,

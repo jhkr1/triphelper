@@ -80,7 +80,7 @@ export function HomeStage({ list }: { list: DestinationSummary[] }) {
         </div>
       </div>
       <figure className="globe-wrap">
-        <Globe list={list} activeSlug={activeSlug} labelOf={labelOf} onSelect={select} ariaLabel={t("globe.label")} />
+        <Globe list={list} activeSlug={activeSlug} labelOf={labelOf} onSelect={select} ariaLabel={t("globe.label")} zoomInLabel={t("globe.zoomIn")} zoomOutLabel={t("globe.zoomOut")} />
         <figcaption>{t("globe.hint")}</figcaption>
       </figure>
     </section>

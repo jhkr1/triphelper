@@ -28,6 +28,8 @@ const PATHS = {
   transit: <><rect width="16" height="16" x="4" y="3" rx="2" /><path d="M4 11h16" /><path d="M12 3v8" /><path d="m8 19-2 3" /><path d="m18 22-2-3" /><path d="M8 15h.01" /><path d="M16 15h.01" /></>,
   arrowUp: <><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></>,
   search: <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></>,
+  plus: <path d="M5 12h14M12 5v14" />,
+  minus: <path d="M5 12h14" />,
 } as const;
 
 export type IconName = keyof typeof PATHS;

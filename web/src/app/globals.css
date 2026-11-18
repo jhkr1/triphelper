@@ -64,7 +64,12 @@ h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-sp
 
 /* 지구본 */
 .globe-wrap{margin:0;position:relative;z-index:1;display:grid;justify-items:center}
-#globe{width:100%;max-width:720px;height:auto;touch-action:none;cursor:grab;filter:drop-shadow(0 24px 40px #2563eb33)}
+.globe-box{position:relative;width:100%;max-width:720px}
+#globe{display:block;width:100%;height:auto;touch-action:none;cursor:grab;filter:drop-shadow(0 24px 40px #2563eb33)}
+.globe-zoom{position:absolute;right:2%;bottom:6%;display:grid;gap:8px}
+.globe-zoom button{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--card);color:var(--ink);font-size:1.15rem;box-shadow:var(--shadow-sm);transition:.2s}
+.globe-zoom button:hover:not([disabled]){border-color:var(--blue);color:var(--blue)}
+.globe-zoom button[disabled]{opacity:.4;cursor:default}
 #globe:active{cursor:grabbing}
 .globe-wrap figcaption{margin-top:6px;color:var(--mute);font-size:.82rem;letter-spacing:.04em}
 .ocean-stop--1{stop-color:var(--ocean1)}.ocean-stop--2{stop-color:var(--ocean2)}.ocean-stop--3{stop-color:var(--ocean3)}
@@ -207,7 +212,7 @@ h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-sp
 @media (max-width:900px){
   .stage{grid-template-columns:minmax(0,1fr);padding-top:84px;min-height:0}
   .stage__copy{min-width:0;max-width:none}
-  #globe{max-width:440px}
+  .globe-box{max-width:440px}
   .ed__body{grid-template-columns:minmax(0,1fr)} /* 1fr이면 가로 목차(nowrap) 폭만큼 열이 늘어나 화면 밖으로 넘친다 */
   .toc{min-width:0;top:var(--header-h);z-index:4;max-height:none;overflow:visible;margin:0 -16px;padding:0 16px;background:var(--soft)} /* 모바일: 가로 목차가 상단 바 아래에 고정 */
   .chap{scroll-margin-top:calc(var(--header-h) + 64px)}

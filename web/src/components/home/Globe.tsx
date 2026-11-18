@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 // selection.transition()/interrupt()는 이 모듈이 불러와질 때 덧붙는다. 번들러가 빼지 않도록 명시적으로 불러온다.
 import "d3-transition";
@@ -9,6 +9,7 @@ import type { FeatureCollection, Geometry } from "geojson";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import type { DestinationSummary } from "@/lib/destinations";
 import { toLngLatTuple } from "@/lib/geo";
+import { Icon } from "@/components/ui/Icon";
 
 interface GlobeProps {
   list: DestinationSummary[];
@@ -16,23 +17,30 @@ interface GlobeProps {
   labelOf: (d: DestinationSummary) => string;
   onSelect: (d: DestinationSummary) => void;
   ariaLabel: string;
+  zoomInLabel: string;
+  zoomOutLabel: string;
 }
 
 const W = 800;
 const R = 372;
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 5;
 
 /**
  * D3 직교 투영 지구본. 드래그로 회전, 핀 클릭/Enter로 선택.
  * D3가 SVG를 직접 다루므로 React는 <svg> 자리만 만들고, 그리기는 effect 안에서 한다.
  */
-export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel }: GlobeProps) {
+export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLabel, zoomOutLabel }: GlobeProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   // 최신 props를 effect 안의 D3 콜백에서 읽기 위한 ref
   const latest = useRef({ activeSlug, labelOf, onSelect });
   useLayoutEffect(() => {
     latest.current = { activeSlug, labelOf, onSelect };
   });
-  const api = useRef<{ draw: () => void; rotateTo: (d: DestinationSummary) => void } | null>(null);
+  const api = useRef<{ draw: () => void; rotateTo: (d: DestinationSummary) => void; zoomBy: (factor: number) => void } | null>(null);
+  // 버튼 활성/비활성용 현재 배율 (제스처가 끝날 때만 갱신해서 매 프레임 렌더링을 피한다)
+  const [zoomK, setZoomK] = useState(MIN_ZOOM);
+  const onZoomEnd = useRef(setZoomK);
 
   useEffect(() => {
     const el = svgRef.current;
@@ -106,15 +114,33 @@ export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel }: GlobeP
       svg.transition().duration(1300).ease(d3.easeCubicInOut).tween("rotate", () => (k) => { proj.rotate(i(k)); draw(); });
     }
 
-    svg.call(
-      d3.drag<SVGSVGElement, unknown>()
-        .on("start", () => { interacted = true; svg.interrupt(); })
-        .on("drag", (e) => {
+    // 한 손가락(마우스) 드래그 = 회전, 두 손가락 핀치(트랙패드는 Ctrl+휠) = 확대.
+    // d3.zoom이 둘 다 처리하고, 확대 배율은 투영 크기(scale)에 반영한다.
+    let last = d3.zoomIdentity;
+    const zoom = d3.zoom<SVGSVGElement, unknown>()
+      .scaleExtent([MIN_ZOOM, MAX_ZOOM])
+      // 일반 휠은 페이지 스크롤에 양보하고, Ctrl+휠(트랙패드 핀치)만 확대로 쓴다
+      .filter((e: MouseEvent | WheelEvent | TouchEvent) => (e.type === "wheel" ? (e as WheelEvent).ctrlKey : !(e as MouseEvent).button))
+      .on("start", () => { interacted = true; svg.interrupt(); })
+      .on("zoom", (e: d3.D3ZoomEvent<SVGSVGElement, unknown>) => {
+        const t = e.transform;
+        if (t.k === last.k) {
+          // 배율이 그대로면 이동 = 회전. 확대할수록 덜 돌아가게 해서 손가락을 따라오는 느낌을 유지한다
+          const s = 0.35 / t.k;
           const r = proj.rotate();
-          proj.rotate([r[0] + e.dx * 0.35, Math.max(-65, Math.min(65, r[1] - e.dy * 0.35))]);
-          draw();
-        }),
-    );
+          proj.rotate([r[0] + (t.x - last.x) * s, Math.max(-65, Math.min(65, r[1] - (t.y - last.y) * s))]);
+        }
+        last = t;
+        proj.scale(R * t.k);
+        draw();
+      })
+      .on("end", (e: d3.D3ZoomEvent<SVGSVGElement, unknown>) => onZoomEnd.current(e.transform.k));
+    svg.call(zoom).on("dblclick.zoom", null);
+
+    function zoomBy(factor: number) {
+      interacted = true;
+      zoom.scaleBy(svg.transition("zoom-btn").duration(reduceMotion ? 0 : 250), factor);
+    }
 
     // 사용자가 만지기 전까지 천천히 자동 회전
     const timer = reduceMotion ? null : d3.timer(() => {
@@ -134,12 +160,13 @@ export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel }: GlobeP
     }).catch(() => { /* 지도 경계 없이도 핀과 검색은 동작 */ });
 
     draw();
-    api.current = { draw, rotateTo };
+    api.current = { draw, rotateTo, zoomBy };
     return () => {
       cancelled = true;
       timer?.stop();
       svg.interrupt();
-      svg.on(".drag", null);
+      svg.interrupt("zoom-btn");
+      svg.on(".zoom", null);
       api.current = null;
     };
   }, [list]);
@@ -154,5 +181,17 @@ export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel }: GlobeP
     else api.current?.draw();
   }, [activeSlug, list]);
 
-  return <svg id="globe" ref={svgRef} viewBox={`0 0 ${W} ${W}`} role="img" aria-label={ariaLabel} />;
+  return (
+    <div className="globe-box">
+      <svg id="globe" ref={svgRef} viewBox={`0 0 ${W} ${W}`} role="img" aria-label={ariaLabel} />
+      <div className="globe-zoom">
+        <button type="button" aria-label={zoomInLabel} disabled={zoomK >= MAX_ZOOM - 0.01} onClick={() => api.current?.zoomBy(1.6)}>
+          <Icon name="plus" />
+        </button>
+        <button type="button" aria-label={zoomOutLabel} disabled={zoomK <= MIN_ZOOM + 0.01} onClick={() => api.current?.zoomBy(1 / 1.6)}>
+          <Icon name="minus" />
+        </button>
+      </div>
+    </div>
+  );
 }

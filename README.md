@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="./triphelper_image.png" alt="TripHelper Logo" width="200" />
+<img src="./web/public/triphelper_image.png" alt="TripHelper Logo" width="200" />
 
 # TripHelper
 
 ### 해외여행 정보 통합 플랫폼 | Travel Information Hub
 
-**목적지 하나만 검색하면, 여행에 필요한 모든 정보를 한 곳에서**
+**목적지 하나만 고르면, 여행 준비에 필요한 정보와 내 일정까지 한 곳에서**
 
 [![Live](https://img.shields.io/badge/Live-triphelper.kr-2563eb?logo=google-chrome&logoColor=white)](https://triphelper.kr)
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/Vanilla_JS-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Next.js](https://img.shields.io/badge/Next.js_16-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React_19-61DAFB?logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
 </div>
 
@@ -22,20 +22,12 @@
 ### 스크린샷
 
 <details>
-<summary>메인 페이지</summary>
-<img src="./images/triphelper_mainpage.png" alt="메인 페이지 스크린샷" width="800">
+<summary>메인 페이지 (지구본)</summary>
+<img src="./docs/screenshots/home.png" alt="메인 페이지 스크린샷" width="800">
 </details>
 <details>
-<summary>정보 페이지 1</summary>
-<img src="./images/triphelper_fullpage (2).png" alt="정보 페이지 스크린샷 1" width="800">
-</details>
-<details>
-<summary>정보 페이지 2</summary>
-<img src="./images/triphelper_fullpage (1).png" alt="정보 페이지 스크린샷 2" width="800">
-</details>
-<details>
-<summary>정보 페이지 3</summary>
-<img src="./images/triphelper_fullpage (3).png" alt="정보 페이지 스크린샷 3" width="800">
+<summary>나라 정보 페이지 (주요 관광지)</summary>
+<img src="./docs/screenshots/destination.png" alt="나라 정보 페이지 스크린샷" width="800">
 </details>
 
 <br/>
@@ -45,8 +37,9 @@
 > 여행 준비를 위해 환율은 네이버, 날씨는 기상 앱, 현지 매너는 블로그, 회화는 번역기, 비자 정보는 외교부 사이트…
 > 평균적으로 **5~7개의 서비스**를 오가며 정보를 수집해야 했고, 이 과정에서 정보의 신뢰도와 최신성도 보장되지 않았습니다.
 
-**TripHelper**는 이 문제를 해결하기 위해 시작했습니다.  
-여행 준비에 필요한 핵심 정보(환율·날씨·매너·회화·비자 등)를 **단일 검색창** 하나로 접근할 수 있도록 설계했습니다.
+**TripHelper**는 이 문제를 해결하기 위해 시작했습니다.
+여행 준비에 필요한 핵심 정보(환율·날씨·매너·회화·비자 등)를 한 페이지에 모으고,
+그 정보를 바탕으로 **날짜별 일정을 지도 위에서 짜는 플래너**까지 연결했습니다.
 
 ---
 
@@ -55,42 +48,43 @@
 | 지표 | 수치 |
 |------|------|
 | **지원 국가** | 27개국 (아시아 10, 유럽 12, 아메리카 3, 오세아니아 2) |
-| **카테고리 수** | 국가당 최대 9개 정보 카테고리 |
-| **정보 항목 수** | 국가당 평균 40+ 개 정보 항목 |
-| **지원 언어** | 한국어 / 영어 (전체 UI + 콘텐츠 완전 이중화) |
-| **연동 외부 API** | 3개 (환율, 날씨+대기질, 국가 프로필) |
-| **환율 추이 데이터** | 과거 7일치 일별 데이터 병렬 수집 |
-| **날씨 예보** | 5일치 일별 예보 + 실시간 기온/습도/풍속 |
-| **회화 표현 수** | 국가당 평균 8~10개 (발음 + TTS 재생 지원) |
-| **JS 모듈 수** | 8개 모듈로 관심사 분리 (data / core / services / ui) |
-| **빌드 도구 의존성** | 0개 (순수 Vanilla JS, 빌드 없이 즉시 배포 가능) |
+| **나라 페이지** | 국가당 최대 10개 섹션 · 빌드 시 27개 페이지를 정적 HTML로 생성 |
+| **주요 관광지** | 216곳 (국가당 8곳, 사진·좌표·한국어 설명 포함) |
+| **회화 표현** | 16개 언어 · 128개 표현 (발음 + 음성 재생) |
+| **지원 언어** | 한국어 / 영어 (홈·나라 페이지. 플래너는 한국어) |
+| **환율 추이** | 최근 7일 일별 데이터 병렬 수집 |
+| **날씨** | 실시간 + 5일 예보(나라 페이지) / 최대 16일 예보(플래너 날짜별) |
+| **연동 외부 서비스** | 모두 무료·API 키 불필요 (환율, 날씨·공기질, 위키백과·위키데이터, OpenStreetMap 검색, 벡터 지도) |
+| **서버·DB** | 없음 — 정적 사이트로 배포, 일정은 브라우저에 저장 |
 
 ---
 
 ## 주요 기능
 
-### 실시간 환율 + 계산기 + 추이 차트
-- `@fawazahmed0/currency-api` (170개 통화 지원, 무료)를 사용해 실시간 환율 조회
-- KRW를 지원하지 않는 Frankfurter(ECB) 대신 별도 API를 선택하는 **의도적 기술 결정**
-- 과거 7일치 환율 데이터를 **병렬 요청(Promise.all)** 으로 수집 → Canvas API로 직접 시각화
-- 금액 입력 시 실시간 환산 (정수 단위로 표시, UX 최적화)
+### 지구본으로 여행지 고르기
+- D3 직교 투영 지구본: 드래그로 회전, 핀을 누르면 그 나라로 회전한 뒤 나라 페이지로 이동
+- 검색창(한/영 키워드), 인기 여행지 칩
 
-### 실시간 날씨 + 대기질 + 5일 예보
-- Open-Meteo API (무료, 무제한) 사용
-- Geocoding API → 도시 좌표 자동 조회 → 날씨/대기질 병렬 요청
-- PM2.5 · UV 지수 · AQI 정보 제공
+### 나라 정보 페이지 (`/destinations/japan/` 등)
+- **주요 관광지**: 사진 카드 + "일정에 담기" 버튼으로 내 여행에 바로 추가
+- **실시간 환율 + 계산기 + 7일 추이 차트** (Canvas로 직접 구현)
+- **날씨 · 5일 예보 · 공기질** (PM2.5 · UV · AQI)
+- 국가 한눈에 보기, 필수 매너 & 팁, 기념품, 마트·약국 추천템, 여행 준비 필수템, 비자 정보
+- **필수 회화 + 음성 재생** (Web Speech API, 나라별 언어 코드로 발음)
+- 스크롤을 따라오는 목차, 현재 읽는 섹션 표시
 
-### 27개국 여행 정보 큐레이션
-- 필수 매너 & 팁 / 기념품 추천 / 마트·약국 추천템 / 여행 필수템 / 비자 정보
-- 쿠팡 파트너스 제휴 상품 카드 (iframe + 링크 지원)
+### 내 여행 플래너 (`/trip/`)
+- **여행 설정**: 나라 · 도시(자유 입력, 실제 도시인지 확인) · 날짜, 날짜 추가/삭제
+- **일정표 + 지도**: 일차별 색 번호 마커와 경로, 지명 한국어 표시, 마우스 휠 확대
+- **장소 추가**: 이름만 입력하면 위치를 자동으로 찾아 지도에 표시 (후보가 여럿이면 선택, 못 찾으면 지도에서 직접 지정)
+- **장소 사이 이동**: 가까우면 도보 시간, 멀면 거리 + 대중교통 길찾기(한국은 카카오맵, 해외는 구글 지도로 연결)
+- **근처 추천**: 담은 장소 반경 1km의 유명한 곳을 사진과 도보 거리로 추천
+- **날짜별 날씨 예보 · 환율**, 관광지 사진
+- **가방별 체크리스트**: 나라별 필수템으로 기본 목록, 비 예보가 있으면 우산 등 제안
+- **링크 공유**: 일정 전체를 주소 안에 담아 서버 없이 공유
 
-### 필수 회화 + TTS 발음 재생
-- Web Speech API를 활용한 브라우저 내장 TTS 음성 재생
-- 국가별 언어 코드(`ja-JP`, `fr-FR` 등)로 정확한 발음 재생
-
-### 완전한 한/영 이중화
-- UI 텍스트 전체 + 콘텐츠(매너, 기념품, 회화 등) 모두 한국어/영어 별도 작성
-- 언어 전환 시 현재 목적지 유지하며 즉시 리렌더링
+### 공통
+- 라이트/다크 모드(깜빡임 없이 적용), 한/영 전환, 반응형, 선 아이콘(이모지 미사용)
 
 ---
 
@@ -100,87 +94,112 @@
 
 | 영역 | 기술 |
 |------|------|
-| **Frontend** | HTML5, CSS3, Vanilla JavaScript (ES2020+) |
+| **프레임워크** | Next.js 16 (App Router, 정적 출력 `output: "export"`) |
+| **UI** | React 19, TypeScript 5, 전역 CSS(디자인 토큰 + 다크 모드) |
+| **지구본** | D3 (geoOrthographic) + world-atlas |
+| **지도** | MapLibre GL JS + OpenFreeMap 벡터 타일 |
 | **차트** | Canvas API (라이브러리 없이 직접 구현) |
-| **TTS** | Web Speech API |
-| **환율 API** | @fawazahmed0/currency-api (jsdelivr CDN, 무료) |
-| **날씨 API** | Open-Meteo (무료, API 키 불필요) |
-| **대기질 API** | Open-Meteo Air Quality (무료) |
-| **국가 정보 API** | RestCountries v3 (무료) |
-| **서버** | Express.js (정적 파일 서빙) |
-| **폰트** | Noto Sans KR, Plus Jakarta Sans, Manrope (Google Fonts) |
-
-### 모듈 구조
-
-```
-js/
-├── app.js                # 앱 진입점, 이벤트 바인딩, 상태 관리
-├── core/
-│   └── utils.js          # 공통 유틸 (날짜 포맷, 이스케이프, 날씨 코드 매핑 등)
-├── data/
-│   ├── destinations.js   # 27개국 여행 정보 데이터
-│   ├── phrases.js        # 국가별 필수 회화 데이터
-│   ├── products.js       # 공통 추천 상품 데이터
-│   └── translations.js   # 한/영 UI 번역 텍스트
-├── services/
-│   └── api.js            # 외부 API 호출 + 캐싱 (Map 기반 in-memory cache)
-└── ui/
-    ├── render.js         # DOM 렌더링 함수 모음
-    └── chart.js          # Canvas 기반 환율 추이 차트 렌더러
-```
+| **음성** | Web Speech API |
+| **환율** | @fawazahmed0/currency-api (jsdelivr CDN) |
+| **날씨·공기질** | Open-Meteo (Forecast · Air Quality · Geocoding) |
+| **장소·도시 검색** | OpenStreetMap Nominatim, 위키백과 |
+| **관광지·사진** | 위키백과 · 위키데이터 · 위키미디어 공용 |
+| **폰트** | Pretendard |
+| **개발 환경** | Docker (`node:26-alpine`) |
 
 ### 주요 기술적 의사결정
 
-**① 프레임워크 미사용 (Vanilla JS)**  
-React·Vue 등 프레임워크 없이 순수 JavaScript만 사용.  
-→ 번들러·빌드 도구 없이 정적 파일 그대로 배포 가능, CDN/Netlify에서 즉시 운영.  
-→ 외부 의존성 0개 → 보안 취약점과 버전 충돌 리스크 없음.
+**① Vanilla JS → Next.js + React + TypeScript 전환**
+처음에는 빌드 도구 없는 순수 JS로 시작했지만, 플래너(일정·지도·체크리스트·근처 추천·설정이 서로 연결)를 추가하면서 화면 전체를 다시 그리는 구조의 한계가 드러났습니다.
+→ 상태를 컴포넌트 단위로 나누기 위해 React로 전환하고, 나라 정보 페이지의 검색 노출을 지키기 위해 Next.js의 정적 생성을 선택했습니다.
 
-**② API 선택 (KRW 지원 여부)**  
-초기 Frankfurter(ECB 기반) 사용 시 KRW가 지원 통화 목록에 없어 전체 환율 기능이 fallback으로 빠지는 문제 발생.  
-→ 170개 통화를 지원하는 `@fawazahmed0/currency-api`로 교체. 운영 안정성 확보.
+**② 서버 없는 정적 출력**
+환율·날씨 등 실시간 데이터는 모두 브라우저에서 공개 API로 받으므로 서버가 필요 없습니다.
+→ `output: "export"`로 33개 페이지를 HTML로 미리 만들어 정적 호스팅에 배포합니다. (정적 출력과 함께 쓸 수 없는 Cache Components는 끔)
 
-**③ 병렬 API 요청 (Promise.all)**  
-환율(7일치) + 날씨 + 대기질을 순차 요청 시 최대 ~3,000ms의 지연 발생.  
-→ `Promise.all`로 병렬화하여 체감 로딩 시간 단축.
+**③ 좌표 순서 실수를 타입으로 차단**
+데이터는 `[위도, 경도]`, 지도 라이브러리(D3·MapLibre)는 `[경도, 위도]`를 써서 순서 실수가 생기기 쉬웠습니다.
+→ 좌표를 `{ lat, lng }` 객체로 통일하고, 지도용 변환은 `toLngLatTuple()` 하나로만 하도록 했습니다.
 
-**④ In-memory 응답 캐싱**  
-동일 URL 재요청 시 API 호출 없이 캐시에서 즉시 반환 (Map 기반).  
-→ 언어 전환·테마 전환 시 불필요한 API 재호출 방지.
+**④ DB 없이 일정 저장·공유**
+일정은 브라우저(localStorage)에 자동 저장하고 `useSyncExternalStore`로 React와 연결했습니다. 공유는 일정 전체를 압축해 주소(`#t=…`)에 담아 서버 없이 처리합니다.
+
+**⑤ 비용 0원 지도·검색**
+구글 지도 API(유료) 대신 MapLibre + OpenFreeMap(무료 벡터 지도)을 쓰고, 지명 레이어를 `name:ko → name` 순으로 바꿔 한국어 지명을 보여 줍니다.
+대중교통 시간처럼 무료로 정확히 계산할 수 없는 정보는 카카오맵·구글 지도 길찾기 링크로 넘깁니다.
+
+**⑥ 관광지 데이터는 "목록은 사람이, 사진·좌표는 자동으로"**
+위키백과 위치 검색으로 자동 수집하면 행정구역·사건 문서가 섞였습니다.
+→ 대표 관광지 목록은 직접 정하고, 사진·좌표·한국어 이름·설명만 스크립트(`web/scripts/build-attractions.mjs`)로 가져오도록 했습니다.
+
+**⑦ 환율 API 선택 (KRW 지원 여부)**
+초기 Frankfurter(ECB 기반)는 KRW를 지원하지 않아 170개 통화를 지원하는 `@fawazahmed0/currency-api`로 교체했습니다. 네이버(하나은행 고시)와 비교해 평균 0.5% 차이로, 참고용 기준 환율임을 화면에 표시합니다.
+
+**⑧ 병렬 요청 + 응답 캐싱**
+환율(7일치)·날씨·공기질을 `Promise.all`로 병렬 요청하고, 같은 주소의 재요청은 메모리 캐시에서 바로 돌려줍니다. 관광지 사진과 근처 추천 결과는 브라우저에 저장해 다시 요청하지 않습니다.
 
 ---
 
 ## 프로젝트 구조
 
 ```
-TripHelper/
-├── index.html              # 메인 HTML (Template 태그 기반 동적 렌더링)
-├── styles.css              # 전체 스타일 (다크 모드, 반응형 포함)
-├── server.js               # Express 정적 서버
-├── js/                     # JavaScript 모듈 (위 참고)
-├── triphelper_image.png    # 로고 이미지
-├── ads.txt                 # Google AdSense 인증
-└── _redirects              # Netlify SPA 리디렉션 설정
+triphelper/
+├── README.md
+├── docs/screenshots/            # README 스크린샷
+└── web/                         # Next.js 앱
+    ├── public/                  # 로고, robots.txt, ads.txt, _redirects
+    ├── scripts/
+    │   └── build-attractions.mjs   # 주요 관광지 데이터 생성 (위키백과)
+    └── src/
+        ├── app/                 # 라우트 (App Router)
+        │   ├── page.tsx               # 홈 (지구본)
+        │   ├── destinations/[slug]/   # 나라 페이지 27개 (정적 생성)
+        │   ├── trip/                  # 내 여행 플래너
+        │   ├── layout.tsx             # 메타데이터, 테마, 폰트, 애드센스
+        │   └── sitemap.ts             # sitemap.xml 자동 생성
+        ├── components/
+        │   ├── home/            # Globe, HomeStage
+        │   ├── destination/     # 환율·날씨·관광지·회화 섹션
+        │   ├── trip/            # 플래너 (지도, 일정표, 체크리스트, 설정)
+        │   ├── layout/          # 상단 바, 푸터
+        │   ├── providers/       # 언어·테마 (useSyncExternalStore)
+        │   └── ui/              # 선 아이콘
+        ├── data/                # 27개국 정보, 회화, 관광지 (TypeScript 데이터)
+        ├── i18n/                # 한/영 문구
+        ├── lib/                 # 환율·날씨·장소 검색·일정 모델·저장소
+        └── types/               # 데이터 타입
 ```
 
 ---
 
 ## 로컬 실행
 
+Node.js 20.9 이상이 필요합니다.
+
 ```bash
 git clone https://github.com/jhkr1/triphelper.git
-cd triphelper
-
-# Node.js 서버로 실행
-npm start
-# → http://localhost:3000
-
-# 또는 Python으로 실행
-python -m http.server 8000
-# → http://localhost:8000
+cd triphelper/web
+npm install
+npm run dev        # → http://localhost:3000
 ```
 
-> `index.html`을 브라우저로 직접 열어도 동작합니다. (빌드 과정 없음)
+Docker로 실행하는 경우 (Node.js 설치 없이):
+
+```bash
+docker run -it --rm -p 3000:3000 -v "$PWD/web:/app" -w /app node:26-alpine \
+  sh -c "npm install && npm run dev -- -H 0.0.0.0"
+```
+
+> Windows 폴더를 Docker에 연결하면 파일 변경이 자동 감지되지 않을 수 있습니다. 코드를 고친 뒤 개발 서버를 다시 시작하세요.
+
+### 빌드 · 배포
+
+```bash
+cd web
+npm run build      # → web/out/ 에 정적 사이트 생성
+```
+
+Netlify 설정: Base directory `web`, Build command `npm run build`, Publish directory `out`
 
 ---
 
@@ -188,13 +207,22 @@ python -m http.server 8000
 
 | | | | |
 |---|---|---|---|
-| 🇰🇷 한국 | 🇯🇵 일본 | 🇫🇷 프랑스 | 🇪🇸 스페인 |
-| 🇺🇸 미국 | 🇮🇹 이탈리아 | 🇹🇷 터키 | 🇲🇽 멕시코 |
-| 🇬🇧 영국 | 🇩🇪 독일 | 🇬🇷 그리스 | 🇦🇹 오스트리아 |
-| 🇨🇳 중국 | 🇨🇦 캐나다 | 🇭🇺 헝가리 | 🇨🇭 스위스 |
-| 🇳🇱 네덜란드 | 🇵🇹 포르투갈 | 🇵🇭 필리핀 | 🇻🇳 베트남 |
-| 🇦🇺 호주 | 🇹🇭 태국 | 🇹🇼 대만 | 🇭🇰 홍콩 |
-| 🇸🇬 싱가포르 | 🇲🇾 말레이시아 | 🇮🇩 인도네시아 | |
+| 한국 | 일본 | 프랑스 | 스페인 |
+| 미국 | 이탈리아 | 터키 | 멕시코 |
+| 영국 | 독일 | 그리스 | 오스트리아 |
+| 중국 | 캐나다 | 헝가리 | 스위스 |
+| 네덜란드 | 포르투갈 | 필리핀 | 베트남 |
+| 호주 | 태국 | 대만 | 홍콩 |
+| 싱가포르 | 말레이시아 | 인도네시아 | |
+
+---
+
+## 데이터 출처
+
+- 관광지 사진·설명: [위키백과](https://ko.wikipedia.org) · [위키미디어 공용](https://commons.wikimedia.org) (각 이미지의 라이선스는 위키미디어 공용 문서 참고)
+- 지도: © [OpenStreetMap](https://www.openstreetmap.org/copyright) 기여자, [OpenFreeMap](https://openfreemap.org), [OpenMapTiles](https://openmaptiles.org)
+- 날씨·공기질: [Open-Meteo](https://open-meteo.com)
+- 환율: [fawazahmed0/exchange-api](https://github.com/fawazahmed0/exchange-api)
 
 ---
 
@@ -206,7 +234,7 @@ MIT License
 
 <div align="center">
 
-**© 2025 TripHelper.**  
+**© 2025 TripHelper.**
 해외여행 정보의 파편화 문제를 해결하기 위해 시작한 프로젝트입니다.
 
 </div>

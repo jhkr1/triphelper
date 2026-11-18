@@ -48,3 +48,5 @@ test-results/
 
 # 테스트 스냅샷 (선택적으로 커밋할 경우 제거)
 **/__snapshots__/
+# 새 사이트(web/)의 애드센스 인증 파일은 배포에 필요하므로 추적
+!web/public/ads.txt

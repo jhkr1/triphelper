@@ -1,6 +1,5 @@
 <div align="center">
 
-<img src="./web/public/triphelper_image.png" alt="TripHelper Logo" width="200" />
 
 # TripHelper
 
@@ -28,6 +27,10 @@
 <details>
 <summary>나라 정보 페이지 (주요 관광지)</summary>
 <img src="./docs/screenshots/destination.png" alt="나라 정보 페이지 스크린샷" width="800">
+</details>
+<details>
+<summary>내 여행 플래너 (지도 동선 · 장소 간 이동)</summary>
+<img src="./docs/screenshots/trip.png" alt="내 여행 플래너 스크린샷" width="800">
 </details>
 
 <br/>

@@ -1,0 +1,11 @@
+# Netlify 빌드 설정 — Netlify 화면(UI)의 빌드 설정보다 이 파일이 우선한다.
+# Next.js 앱은 web/ 폴더에 있고, 정적 사이트로 빌드되어 web/out/ 에 만들어진다.
+[build]
+  base = "web"
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  # Next.js 16은 Node.js 20.9 이상 필요
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"

@@ -145,6 +145,7 @@
 ```
 triphelper/
 ├── README.md
+├── netlify.toml                 # Netlify 빌드 설정 (web/ 빌드 → web/out 배포)
 ├── docs/screenshots/            # README 스크린샷
 └── web/                         # Next.js 앱
     ├── public/                  # 로고, robots.txt, ads.txt, _redirects
@@ -199,7 +200,7 @@ cd web
 npm run build      # → web/out/ 에 정적 사이트 생성
 ```
 
-Netlify 설정: Base directory `web`, Build command `npm run build`, Publish directory `out`
+Netlify 배포 설정은 저장소 루트의 [`netlify.toml`](./netlify.toml)에 있습니다 (Base `web`, Build `npm run build`, Publish `out`). 이 파일이 Netlify 화면 설정보다 우선합니다.
 
 ---
 

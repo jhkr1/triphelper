@@ -3,7 +3,8 @@
 import { Fragment, useEffect, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { dayColor } from "@/components/trip/TripMap";
-import { dayLabel, newId, sortByTime, addDays } from "@/lib/trip-model";
+import { dayLabel, newId, sortByTime, addDays, addHours, nextSlot } from "@/lib/trip-model";
+import { TimePicker } from "@/components/trip/TimePicker";
 import { fetchNearby, getPhoto, isConfident, searchPlace, type NearbyPlace, type Photo, type PlaceCandidate } from "@/lib/places";
 import { directionsUrl, distanceMeters, formatDistance, walkingMinutes, WALKABLE_METERS } from "@/lib/geo";
 import { weatherIcon, type DailyForecast } from "@/lib/weather";
@@ -135,7 +136,9 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
   const inTrip = new Set(trip.days.flatMap((d) => d.places.flatMap((p) => [p.name, p.wiki].filter((x): x is string => Boolean(x)))));
 
   // 장소 추가
-  const [time, setTime] = useState("12:00");
+  // 직접 고르기 전에는 그날 마지막 일정 1시간 뒤를 제안한다
+  const [timeOverride, setTimeOverride] = useState<string | null>(null);
+  const time = timeOverride ?? nextSlot(places);
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [choices, setChoices] = useState<{ query: string; time: string; list: PlaceCandidate[] } | null>(null);
@@ -143,6 +146,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
   const addPlace = (p: Omit<Place, "id">) => {
     updatePlaces((list) => sortByTime([...list, { id: newId(), ...p }]));
     setChoices(null);
+    setTimeOverride(null); // 다음 추가 시간은 다시 자동 제안
   };
   const fromCandidate = (c: PlaceCandidate, t: string, n: string): Omit<Place, "id"> =>
     ({ time: t, name: n, category: c.category, location: c.location, ...(c.wiki ? { wiki: c.wiki } : {}) });
@@ -167,8 +171,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
   }
 
   function takeNearby(from: Place, x: NearbyPlace) {
-    const [h, m] = from.time.split(":").map(Number);
-    const t = `${String(Math.min(h + 1, 23)).padStart(2, "0")}:${String(m).padStart(2, "0")}`; // 기준 장소 1시간 뒤로 제안
+    const t = addHours(from.time, 1); // 기준 장소 1시간 뒤로 제안
     addPlace({
       time: t, name: x.name, category: "명소", memo: `${from.name}에서 도보 약 ${walkingMinutes(x.meters)}분`,
       location: x.location, ...(x.wiki ? { wiki: x.wiki } : { image: x.image }),
@@ -186,7 +189,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
     <div className="card">
       <div className="days" role="tablist" aria-label="날짜">
         {trip.days.map((_, i) => (
-          <button key={i} className="day" role="tab" aria-selected={i === day} onClick={() => onDayChange(i)}>
+          <button key={i} className="day" role="tab" aria-selected={i === day} onClick={() => { setTimeOverride(null); onDayChange(i); }}>
             <b>Day {i + 1}</b><span>{dayLabel(trip.start, i)}</span>
           </button>
         ))}
@@ -220,7 +223,14 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
               <div className="stop__body">
                 <PlacePhoto place={p} />
                 <div className="stop__txt">
-                  <div className="stop__time">{p.time}</div>
+                  <div className="stop__time">
+                    <TimePicker
+                      variant="inline"
+                      value={p.time}
+                      label={`${p.name} 시간 변경`}
+                      onChange={(v) => updatePlaces((list) => sortByTime(list.map((x) => (x.id === p.id ? { ...x, time: v } : x))))}
+                    />
+                  </div>
                   <div className="stop__name">{p.name}</div>
                   <div className="tags">
                     {p.category && <span className="tag">{p.category}</span>}
@@ -260,7 +270,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
       </ol>
 
       <form className="add" onSubmit={onAdd}>
-        <input type="time" value={time} onChange={(e) => setTime(e.target.value)} aria-label="시간" />
+        <TimePicker value={time} onChange={setTimeOverride} label="방문 시간" />
         <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="가고 싶은 장소를 입력하세요" aria-label="장소 이름" autoComplete="off" />
         <button className="btn btn--pri" type="submit" disabled={busy}>{busy ? "위치 찾는 중…" : "+ 추가"}</button>
       </form>

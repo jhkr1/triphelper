@@ -114,11 +114,22 @@ export function sampleTrip(japan: PlannerCountry): Trip {
 
 export const sortByTime = (places: Place[]) => [...places].sort((a, b) => a.time.localeCompare(b.time));
 
+/** "HH:MM"에 시간을 더한다 (23시를 넘기지 않음) */
+export function addHours(time: string, hours: number): string {
+  const [h, m] = time.split(":").map(Number);
+  return `${String(Math.min(h + hours, 23)).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
+
+/** 그날 다음 일정으로 제안할 시간: 마지막 일정 1시간 뒤, 비어 있으면 10:00 */
+export function nextSlot(places: Place[]): string {
+  const last = sortByTime(places).at(-1)?.time;
+  return last ? addHours(last, 1) : "10:00";
+}
+
 /** 관광지를 일정에 담을 때: 장소가 가장 적은 날에, 그날 마지막 일정 1시간 뒤(없으면 10:00)로 */
 export function addAttraction(trip: Trip, a: Attraction): { trip: Trip; day: number } {
   const day = trip.days.reduce((best, d, i) => (d.places.length < trip.days[best].places.length ? i : best), 0);
-  const last = trip.days[day].places.at(-1)?.time;
-  const time = last ? `${String(Math.min(Number(last.slice(0, 2)) + 1, 23)).padStart(2, "0")}:${last.slice(3)}` : "10:00";
+  const time = nextSlot(trip.days[day].places);
   const place: Place = { id: newId(), time, name: a.name, category: "명소", location: a.location, wiki: a.wiki };
   return {
     trip: { ...trip, days: trip.days.map((d, i) => (i === day ? { places: sortByTime([...d.places, place]) } : d)) },

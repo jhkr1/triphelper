@@ -231,9 +231,11 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
                       onChange={(v) => updatePlaces((list) => sortByTime(list.map((x) => (x.id === p.id ? { ...x, time: v } : x))))}
                     />
                   </div>
-                  <div className="stop__name">{p.name}</div>
-                  <div className="tags">
+                  <div className="stop__name">
+                    <span>{p.name}</span>
                     {p.category && <span className="tag">{p.category}</span>}
+                  </div>
+                  <div className="tags">
                     {p.duration && <span className="tag"><Icon name="clock" />{p.duration}</span>}
                     {!p.location && (
                       <button type="button" className="tag tag--warn" onClick={() => onPickRequest(p.id)}>

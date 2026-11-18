@@ -206,12 +206,20 @@ window.TripHelperUI = (() => {
 
     if (label) label.textContent = `1 ${exchange.from} =`;
     if (unit) unit.textContent = ` ${exchange.to}`;
-    // rate >= 1 이면 정수 표시 (예: 1,741), 미만이면 소수점 4자리까지
+    // 1 이상이면 소수점 2자리(예: 1,462.66), 1 미만(동, 루피아 등)은 4자리까지 표시
     value.textContent = exchange.rate.toLocaleString(language === "en" ? "en-US" : "ko-KR", {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: exchange.rate >= 1 ? 0 : 4,
+      minimumFractionDigits: exchange.rate >= 1 ? 2 : 0,
+      maximumFractionDigits: exchange.rate >= 1 ? 2 : 4,
     });
-    if (time) time.textContent = formatLocalTimestamp(exchange.updatedAt, language);
+    if (time) {
+      // 환율 API는 "날짜"만 주므로 시각은 표시하지 않는다 (UTC 자정을 한국 시각 09:00으로 오해하지 않도록)
+      const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(exchange.updatedAt || "");
+      time.textContent = formatDate(exchange.updatedAt, language, {
+        year: "numeric", month: "2-digit", day: "2-digit", ...(dateOnly ? { timeZone: "UTC" } : {}),
+      });
+    }
+    const note = root.querySelector(".rate-note");
+    if (note) note.textContent = translate(exchange.fallback ? "quickInfo.rateFallback" : "quickInfo.rateNote");
 
     setupCalculator(root, exchange, language);
 
@@ -288,6 +296,7 @@ window.TripHelperUI = (() => {
           </div>
           <div class="currency-rate-time"><span>${escapeHtml(translate("quickInfo.rateTime"))}</span> <span class="currency-rate-time__value"></span></div>
         </div>
+        <p class="rate-note"></p>
         <div class="currency-calculator">
           <div class="calculator-input-group">
             <input type="number" class="calculator-input" placeholder="${escapeHtml(translate("quickInfo.calculatorPlaceholder"))}" aria-label="${escapeHtml(translate("quickInfo.calculatorPlaceholder"))}" min="0" step="0.01" />

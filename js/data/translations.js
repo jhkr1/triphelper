@@ -59,7 +59,9 @@ const translations = {
     "quickInfo.drivingSide": "운전 방향",
     "quickInfo.pm25": "PM2.5",
     "quickInfo.uvIndex": "UV 지수",
-    "quickInfo.rateTime": "기준 시간:",
+    "quickInfo.rateTime": "기준일:",
+    "quickInfo.rateNote": "참고용 기준 환율이에요. 은행·환전소의 실제 환율과 다를 수 있어요.",
+    "quickInfo.rateFallback": "환율 서버에 연결하지 못해 대략적인 값을 보여드려요. 실제 환율과 차이가 클 수 있어요.",
     "quickInfo.localTime": "현지 기준 시간:",
     "quickInfo.unavailable": "정보를 불러오지 못했습니다.",
     "affiliate.disclosure": "이 게시물은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다."
@@ -123,6 +125,8 @@ const translations = {
     "quickInfo.pm25": "PM2.5",
     "quickInfo.uvIndex": "UV Index",
     "quickInfo.rateTime": "As of:",
+    "quickInfo.rateNote": "Reference rate only. Actual bank or exchange-counter rates may differ.",
+    "quickInfo.rateFallback": "Couldn't reach the rate server, so this is an approximate value and may differ noticeably.",
     "quickInfo.localTime": "Local time:",
     "quickInfo.unavailable": "Couldn't load the information.",
     "affiliate.disclosure": "This post contains affiliate links. We may receive a commission for purchases made through these links."

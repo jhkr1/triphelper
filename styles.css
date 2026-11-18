@@ -125,6 +125,7 @@ h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-sp
 .currency-rate__label{color:var(--mute);font-weight:600;margin-right:8px;font-size:.8em}
 .currency-rate__unit{color:var(--mute);font-weight:600;font-size:.7em}
 .currency-rate-time{color:var(--mute);font-size:.85rem}
+.rate-note{margin:-6px 0 16px;color:var(--mute);font-size:.82rem;line-height:1.6}
 .currency-calculator{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin-bottom:20px}
 .calculator-input-group{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;font-weight:600}
 .calculator-input{width:min(180px,100%);border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:11px 14px;font:inherit;outline:0}

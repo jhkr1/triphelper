@@ -399,7 +399,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
 
       <DropZone zone="day" className="tl-zone">
       <SortableContext items={view.day.map((p) => p.id)} strategy={verticalListSortingStrategy}>
-      <ol className="tl">
+      <ol className={view.day.length === 0 ? "tl tl--empty" : "tl"}>
         {view.day.length === 0 && <li className="empty-trip">담은 장소가 없습니다. 여행지 바구니에서 끌어오거나 아래에서 추가하세요.</li>}
         {view.day.map((p, i) => {
           const key = nearKey(p);

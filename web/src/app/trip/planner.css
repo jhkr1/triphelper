@@ -32,6 +32,7 @@
 .planner .daybar .sep{color:var(--badge-bd)}
 .planner .tl{list-style:none;margin:0;padding:0;position:relative}
 .planner .tl::before{content:"";position:absolute;left:23px;top:10px;bottom:10px;width:2px;background:var(--line)}
+.planner .tl--empty::before{display:none} /* 장소가 없으면 이을 선도 없다 (안내 문구를 가로지르지 않게) */
 .planner .stop{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;padding:10px 0}
 .planner .stop__n{width:48px;height:48px;display:grid;place-items:center;z-index:1}
 .planner .stop__n i{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font:700 .8rem var(--sans);font-style:normal;display:grid;place-items:center;box-shadow:0 0 0 5px var(--card)}
@@ -147,13 +148,14 @@
 .planner .grid>*{min-width:0} /* Day 탭·공유 링크 같은 가로 스크롤 요소가 열 폭을 밀어내지 않게 */
 @media (max-width:900px){.planner .grid{grid-template-columns:minmax(0,1fr)}.planner .side{position:static}}
 @media (max-width:560px){.planner .stop__body{flex-direction:column-reverse}.planner .stop__ph,.planner .stop__ph img,.planner .stop__ph--loading{width:100%}.planner .stop__ph img{height:150px}}
-@media (max-width:560px){.planner .stop{grid-template-columns:36px minmax(0,1fr) auto}.planner .stop__n{width:36px}.planner .tl::before{left:17px}.planner .add{grid-template-columns:1fr}}
+@media (max-width:560px){.planner .stop{grid-template-columns:36px minmax(0,1fr) auto}.planner .stop__n{width:36px}.planner .tl::before{left:17px}.planner .add{grid-template-columns:1fr}
+  .planner .daybar .sep{display:none} /* 좁은 화면에서는 날씨·환율이 줄바꿈되어 구분선만 끝에 남는다 */}
 
 .planner{background:var(--soft);min-height:100svh}
 .planner .icon{flex:none}
 .planner .btn .icon{width:16px;height:16px}
 .planner .daybar .wx .icon{width:20px;height:20px;color:var(--blue)}
-.planner .empty-trip{padding:28px 0;color:var(--mute);text-align:center;list-style:none}
+.planner .empty-trip{padding:28px 0;color:var(--mute);text-align:center;list-style:none;word-break:keep-all}
 .planner .sample-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:-8px 0 22px;padding:14px 16px;border:1px dashed var(--badge-bd);background:var(--badge-bg);border-radius:16px;font-size:.88rem;color:var(--text2)}
 
 /* 장소 사이 이동 (도보 시간 / 대중교통 길찾기) */

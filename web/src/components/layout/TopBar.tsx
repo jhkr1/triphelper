@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useApp } from "@/components/providers/AppProviders";
 import { Icon } from "@/components/ui/Icon";
+import { AccountMenu } from "@/components/layout/AccountMenu";
 
 export function BrandMark({ size = 34 }: { size?: number }) {
   return (
@@ -47,6 +48,7 @@ export function TopBar({ solid = false }: { solid?: boolean }) {
           <Icon name="globe" />
           <span className="pill__text">{lang === "ko" ? t("controls.languageEn") : t("controls.language")}</span>
         </button>
+        <AccountMenu />
       </div>
     </header>
   );

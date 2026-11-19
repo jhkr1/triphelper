@@ -51,7 +51,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "한국의 공중화장실은 대부분 무료이며, 지하철역, 공원, 대형마트 등에서 쉽게 찾을 수 있습니다. 휴지는 휴지통에 버리며, 변기 옆에 있는 휴지통을 사용하시기 바랍니다. 일부 화장실에는 휴지가 없을 수 있으니 작은 휴지나 물티슈를 챙기는 것이 좋습니다."
+        "description": "한국의 공중화장실은 대부분 무료이며, 지하철역, 공원, 대형마트 등에서 쉽게 찾을 수 있습니다. 2018년부터 공중화장실 칸 안의 휴지통이 없어져 사용한 휴지는 변기에 넣고 물을 내리면 됩니다. 일부 화장실에는 휴지가 없을 수 있으니 작은 휴지나 물티슈를 챙기는 것이 좋습니다."
       }
     ],
     "souvenirs": [
@@ -61,7 +61,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "K-뷰티 제품",
-        "description": "한국 스킨케어 브랜드의 마스크팩, 앰플 세트, 선크림 등이 대표적인 기념품입니다. 올리브영, 롭스 등 드러그스토어에서 다양한 브랜드와 가격대의 제품을 만나볼 수 있습니다."
+        "description": "한국 스킨케어 브랜드의 마스크팩, 앰플 세트, 선크림 등이 대표적인 기념품입니다. 올리브영 같은 드러그스토어나 다이소에서 다양한 브랜드와 가격대의 제품을 만나볼 수 있습니다."
       },
       {
         "title": "지역 특산품",
@@ -91,7 +91,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "드러그스토어 뷰티템",
-        "description": "올리브영, 롭스 등 드러그스토어에서 의약외품 밴드, 멀티비타민, 마스크팩, 선크림 등을 구매할 수 있습니다. 다양한 브랜드와 가격대가 있으며, 할인 행사가 자주 열립니다."
+        "description": "올리브영 같은 드러그스토어에서 의약외품 밴드, 멀티비타민, 마스크팩, 선크림 등을 구매할 수 있습니다. 다양한 브랜드와 가격대가 있으며, 할인 행사가 자주 열립니다."
       },
       {
         "title": "생활용품",
@@ -143,7 +143,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Public restrooms in South Korea are mostly free and can be easily found at subway stations, parks, and large supermarkets. Dispose of toilet paper in the trash bin next to the toilet. Some restrooms may not have toilet paper, so it's good to carry small tissues or wet wipes."
+        "description": "Public restrooms in South Korea are mostly free and can be easily found at subway stations, parks, and large supermarkets. Since 2018, public restroom stalls no longer have trash bins, so flush toilet paper down the toilet. Some restrooms may not have toilet paper, so it's good to carry small tissues or wet wipes."
       }
     ],
     "souvenirsEn": [
@@ -153,7 +153,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "K-Beauty Products",
-        "description": "Korean skincare brand mask packs, ampoule sets, and sunscreens are representative souvenirs. You can find a wide variety of brands and price ranges at drugstores like Olive Young and LOHB's, which are easily accessible throughout the country."
+        "description": "Korean skincare brand mask packs, ampoule sets, and sunscreens are representative souvenirs. You can find a wide variety of brands and price ranges at drugstores like Olive Young, and budget options at Daiso, both easy to find throughout the country."
       },
       {
         "title": "Regional Specialties",
@@ -183,7 +183,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Beauty Drugstore Items",
-        "description": "At drugstores like Olive Young and LOHB's, you can purchase bandages, multivitamins, mask packs, and sunscreens. There's a wide variety of brands and price ranges available, and discount events are frequent."
+        "description": "At drugstores like Olive Young, you can purchase bandages, multivitamins, mask packs, and sunscreens. There's a wide variety of brands and price ranges available, and discount events are frequent."
       },
       {
         "title": "Daily Necessities",
@@ -193,7 +193,7 @@ export const destinations: Destination[] = [
     "essentialsEn": [
       {
         "title": "Electrical Adapter",
-        "description": "South Korea uses Type F plugs (220V, 60Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
+        "description": "South Korea uses Type C and F plugs (220V, 60Hz), the round two-pin European style, so US travelers need a plug adapter. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         "title": "Internet Connection",
@@ -205,7 +205,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Payment Methods",
-        "description": "Prepare a card with no foreign transaction fees, or set up Naver Pay or Kakao Pay for convenience. Most stores accept card payments, though some small businesses may only accept cash, so it's good to carry some small bills."
+        "description": "Bring a card with no foreign transaction fees; Visa and Mastercard are accepted at most stores. Korean pay apps are limited for tourists: Kakao Pay generally requires a Korean phone number, and Naver Pay offers only partial access via passport verification. Some small businesses may only accept cash, so carry some small bills. Check the official app sites before you go."
       },
       {
         "title": "Travel Insurance",
@@ -296,7 +296,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "식당 문화",
-        "description": "일본에서는 팁을 주지 않습니다. 계산은 보통 계산대에서 선불로 하며, 일부 식당에서는 테이블에서 계산을 요청할 수도 있습니다."
+        "description": "일본에서는 팁을 주지 않습니다. 대부분의 식당은 식사 후 출구 쪽 계산대에서 계산하며, 라멘·규동 가게처럼 식권 자판기로 먼저 결제하는 곳도 많습니다."
       },
       {
         "title": "가정 방문 예절",
@@ -308,7 +308,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "신사/사찰 방문",
-        "description": "신사/사찰에서는 삼배 대신 2번 인사, 2번 박수 후 다시 인사하는 것이 일반적입니다. 참배 전 손을 씻는 정화 의식도 있습니다."
+        "description": "신사에서는 두 번 절하고 두 번 손뼉을 친 뒤 한 번 더 절하는 것이 일반적입니다. 사찰에서는 손뼉을 치지 않고 조용히 합장하여 인사합니다. 참배 전 손을 씻는 정화 의식도 있습니다."
       },
       {
         "title": "화장실 이용",
@@ -362,11 +362,11 @@ export const destinations: Destination[] = [
     "essentials": [
       {
         "title": "전기 어댑터",
-        "description": "일본은 콘센트 타입 A (100V, 50/60Hz)를 사용합니다. 전압이 낮으므로 전압 변환기가 필요할 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
+        "description": "일본은 콘센트 타입 A·B(납작한 11자형, 100V, 50/60Hz)를 사용하므로 한국 플러그용 변환 어댑터(돼지코)가 필요합니다. 휴대폰·노트북 충전기는 대부분 100~240V를 지원하지만, 드라이기 등 220V 전용 제품은 전압 변환기가 필요할 수 있으니 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         "title": "인터넷 및 교통패스",
-        "description": "eSIM을 사전 구매하거나, JR 패스 모바일 발권을 준비하는 것이 좋습니다. JR 패스는 외국인 전용으로 온라인에서 미리 구매할 수 있습니다."
+        "description": "eSIM을 사전 구매하면 편리합니다. JR 패스는 '단기체재' 자격으로 입국한 외국인 여행자만 이용할 수 있으며, 온라인으로 구매한 뒤 일본 역에서 여권을 제시하고 실물 패스를 받습니다. 가격이 크게 올라 일정에 따라 지역 패스가 더 저렴할 수 있으니 출발 전 공식 사이트에서 확인하세요."
       },
       {
         "title": "일본 eSIM",
@@ -376,7 +376,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "스이카(Suica) 또는 파스모(Pasmo) 교통카드를 모바일 앱으로 구매하거나 공항에서 구입할 수 있습니다. 버스, 지하철, 편의점 등에서 사용 가능합니다."
+        "description": "스이카(Suica)·파스모(PASMO)는 역 발매기에서 실물 카드로 구입하거나, 아이폰이라면 애플 월렛 또는 'Welcome Suica Mobile' 앱으로 발급할 수 있습니다. 버스, 지하철, 편의점 등에서 사용 가능합니다."
       },
       {
         "title": "현금 준비",
@@ -398,7 +398,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restaurant Culture",
-        "description": "Tipping is not practiced in Japan. Payment is usually made upfront at the counter, though some restaurants may allow you to call for the bill at your table."
+        "description": "Tipping is not practiced in Japan. At most restaurants you pay after your meal at the register near the exit, while many ramen and rice-bowl shops use a ticket machine where you pay first."
       },
       {
         "title": "Home Visit Etiquette",
@@ -410,7 +410,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Shrine/Temple Visits",
-        "description": "At shrines/temples, it's customary to bow twice, clap twice, then bow again (instead of three bows). There's also a purification ritual of washing your hands before worship."
+        "description": "At Shinto shrines, it's customary to bow twice, clap twice, then bow once more. At Buddhist temples, don't clap; simply put your hands together and bow quietly. There's also a purification ritual of washing your hands before worship."
       },
       {
         "title": "Restroom Usage",
@@ -464,15 +464,15 @@ export const destinations: Destination[] = [
     "essentialsEn": [
       {
         "title": "Electrical Adapter",
-        "description": "Japan uses Type A plugs (100V, 50/60Hz). The voltage is low, so a voltage converter may be necessary. Check your device's voltage range before traveling."
+        "description": "Japan uses Type A and B plugs (100V, 50/60Hz). US plugs fit, but some outlets lack the third (ground) hole, so a simple adapter can help. The voltage is slightly lower than in the US, which most chargers handle fine. Check your device's voltage range before traveling."
       },
       {
         "title": "Internet and Transportation Pass",
-        "description": "It's good to pre-purchase an eSIM or prepare a JR Pass mobile ticket. The JR Pass is exclusively for foreigners and can be purchased online in advance."
+        "description": "It's good to pre-purchase an eSIM. The JR Pass is only for foreign visitors entering Japan as 'Temporary Visitors'; buy it online, then collect the physical pass at a JR station with your passport. Prices have risen significantly, so regional passes may be cheaper. Check the official site before you go."
       },
       {
         "title": "Transportation Card",
-        "description": "You can purchase a Suica or Pasmo transportation card via mobile app or at the airport. These cards work on buses, subways, and at convenience stores."
+        "description": "Buy a physical Suica or PASMO card at station ticket machines, or on iPhone add one to Apple Wallet or use JR East's Welcome Suica Mobile app. These cards work on buses, subways, and at convenience stores."
       },
       {
         "title": "Cash Preparation",
@@ -535,7 +535,7 @@ export const destinations: Destination[] = [
       "capitalKo": "도쿄",
       "region": "Asia · Eastern Asia",
       "regionKo": "아시아 · 동아시아",
-      "population": 124500000,
+      "population": 123000000,
       "languages": [
         "Japanese"
       ],
@@ -595,7 +595,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "프랑스의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 지하철역이나 공원의 공중화장실은 보통 유료입니다."
+        "description": "파리의 거리 공중화장실(사니세트)과 공원 화장실은 대부분 무료입니다. 다만 지하철역에는 화장실이 거의 없고, 대형 기차역 화장실은 유료인 경우가 많습니다. 카페나 레스토랑 화장실은 손님용이므로 음료 등을 주문한 뒤 이용하는 것이 일반적입니다."
       }
     ],
     "souvenirs": [
@@ -659,7 +659,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "파리에서는 Navigo Easy 카드를 구매하거나 일회용 티켓을 사용할 수 있습니다. Navigo Easy 카드는 지하철, 버스, 트램, RER에서 사용 가능하며, 티켓은 탑승 전에 반드시 개찰기에 찍어야 합니다. 찍지 않으면 무임승차로 간주되어 높은 벌금이 부과됩니다."
+        "description": "파리에서는 종이 티켓이 단계적으로 폐지되어 Navigo Easy 카드나 스마트폰에 승차권을 충전해 사용합니다. 지하철, 버스, 트램, RER에서 사용할 수 있으며, 탑승 시 반드시 개찰기에 태그해야 합니다. 태그하지 않으면 무임승차로 간주되어 높은 벌금이 부과됩니다. 신용카드 비접촉 결제는 일부 노선부터 단계적으로 도입되고 있습니다."
       },
       {
         "title": "보안 용품",
@@ -697,7 +697,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Most public restrooms in France are paid, and you often need to order a drink or snack to use restrooms in cafes or restaurants. Public restrooms at subway stations and parks are usually paid."
+        "description": "Paris street toilets (sanisettes) and park toilets are mostly free. Métro stations rarely have toilets, and toilets in major train stations are often paid. Café and restaurant toilets are generally for customers, so order something first."
       }
     ],
     "souvenirsEn": [
@@ -755,7 +755,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "In Paris, you can purchase a Navigo Easy card or use single-use tickets. The Navigo Easy card works on subways, buses, trams, and RER. Tickets must be validated at the machine before boarding. Failure to validate may result in a high fine for fare evasion."
+        "description": "Paris has phased out paper tickets; load tickets onto a Navigo Easy card or your smartphone. They work on the metro, buses, trams and RER. Always tap the validator when boarding, or you may be fined for fare evasion. Contactless bank-card payment is being introduced gradually, starting with some lines."
       },
       {
         "title": "Security Items",
@@ -870,7 +870,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "식당 이용",
-        "description": "식당에서 물은 유료인 경우가 많으니 주문 전에 확인하시기 바랍니다. 생수는 보통 유료이며, 수돗물을 요청할 수도 있습니다."
+        "description": "식당에서 생수는 보통 유료입니다. 스페인은 법으로 식당과 바에서 수돗물을 무료로 제공하도록 하고 있으니, 원하면 수돗물(agua del grifo)을 요청하시기 바랍니다."
       },
       {
         "title": "식사 시간",
@@ -878,7 +878,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "스페인의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 지하철역의 화장실도 보통 유료입니다."
+        "description": "스페인은 거리 공중화장실이 많지 않고 지하철역에도 화장실이 거의 없습니다. 카페, 백화점, 쇼핑몰 화장실을 이용하는 경우가 많으며, 카페 화장실은 음료 등을 주문한 손님용인 경우가 많습니다."
       }
     ],
     "souvenirs": [
@@ -892,7 +892,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "전통 공예품",
-        "description": "스페인 세라믹, 톨레도 가위, 마요르카 진주 등 전통 공예품이 좋은 선물이 됩니다. 각 지역별 특색 있는 공예품을 만나볼 수 있습니다."
+        "description": "스페인 세라믹, 금·은실을 상감한 톨레도 다마스키나도 공예품, 마요리카 진주 등 전통 공예품이 좋은 선물이 됩니다. 각 지역별 특색 있는 공예품을 만나볼 수 있습니다."
       },
       {
         "title": "지역 와인",
@@ -918,7 +918,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "요리 재료",
-        "description": "빠에야 키트, 사프란, 치미추리 소스 등이 좋은 선물이 됩니다. 스페인 요리를 집에서 재현할 수 있는 재료들을 구매할 수 있습니다."
+        "description": "빠에야 키트, 사프란, 훈제 파프리카 가루(피멘톤) 등이 좋은 선물이 됩니다. 스페인 요리를 집에서 재현할 수 있는 재료들을 구매할 수 있습니다."
       },
       {
         "title": "현지 브랜드",
@@ -936,7 +936,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "바르셀로나에서는 T-Casual(10회권) 또는 T-10 카드를 구매할 수 있으며, 마드리드에서는 Multi Card를 사용할 수 있습니다. 티켓은 탑승 전에 반드시 개찰기에 찍어야 하며, 찍지 않으면 무임승차로 간주되어 벌금이 부과됩니다."
+        "description": "바르셀로나에서는 1인용 10회권 T-Casual(T-Mobilitat 카드에 충전)을 사용하거나 지하철에서 비접촉 신용카드로 바로 결제할 수 있습니다. 공항 노선(L9 Sud)은 별도 요금입니다. 마드리드 지하철은 2026년 6월부터 모든 역 개찰구에서 비접촉 신용카드·스마트폰 결제가 가능하며, 교통카드(Tarjeta Multi)도 사용할 수 있습니다. 탑승 시 반드시 개찰기에 태그해야 하며, 태그하지 않으면 벌금이 부과됩니다. 요금은 변동될 수 있으니 출발 전 공식 사이트에서 확인하세요."
       },
       {
         "title": "인터넷 연결",
@@ -976,7 +976,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restaurant Usage",
-        "description": "Water is often charged in restaurants, so check before ordering. Bottled water is usually paid, but you can also request tap water."
+        "description": "Bottled water is usually charged. By law, Spanish bars and restaurants must provide tap water (agua del grifo) free of charge on request."
       },
       {
         "title": "Meal Times",
@@ -984,7 +984,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Most public restrooms in Spain are paid, and you often need to order a drink or snack to use restrooms in cafes or restaurants. Restrooms at subway stations are usually paid as well."
+        "description": "Street public toilets are scarce in Spain, and most metro stations have none. Cafés, department stores and malls are the usual options; café toilets are generally for paying customers."
       }
     ],
     "souvenirsEn": [
@@ -998,7 +998,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Traditional Crafts",
-        "description": "Spanish ceramics, Toledo scissors, and Majorca pearls make great gifts. You can find unique crafts from different regions."
+        "description": "Spanish ceramics, Toledo damascene (gold- and silver-inlaid steel) crafts, and Majorica pearls make great gifts. You can find unique crafts from different regions."
       },
       {
         "title": "Regional Wines",
@@ -1024,7 +1024,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Cooking Ingredients",
-        "description": "Paella kit, saffron, and chimichurri sauce make great gifts. You can purchase ingredients to recreate Spanish dishes at home."
+        "description": "Paella kits, saffron and smoked paprika (pimentón) make great gifts. You can purchase ingredients to recreate Spanish dishes at home."
       },
       {
         "title": "Local Brands",
@@ -1042,7 +1042,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "In Barcelona, you can purchase a T-Casual (10-trip) or T-10 card. In Madrid, you can use a Multi Card. Tickets must be validated at the machine before boarding. Failure to validate may result in fines for fare evasion."
+        "description": "In Barcelona, use the single-person 10-trip T-Casual (loaded on a T-Mobilitat card) or tap a contactless bank card on the metro; the airport line (L9 Sud) has a separate fare. Since June 2026, all Madrid Metro gates accept contactless bank cards and phones, and the Tarjeta Multi card also works. Always validate when boarding, or you may be fined. Fares change, so check the official site before you go."
       },
       {
         "title": "Internet Connection",
@@ -1161,7 +1161,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "미국의 공중화장실은 대부분 무료이며, 대형 체인점(스타벅스, 맥도날드, 타겟 등)에서도 무료로 이용할 수 있습니다. 공원, 쇼핑몰, 휴게소 등에서도 쉽게 찾을 수 있습니다."
+        "description": "미국은 공중화장실이 많지 않은 편이며, 카페·패스트푸드점 화장실은 대부분 손님만 이용할 수 있습니다(스타벅스도 2025년부터 구매 고객 전용). 쇼핑몰, 대형마트, 공원, 박물관, 고속도로 휴게소 화장실은 무료로 이용할 수 있는 경우가 많습니다."
       }
     ],
     "souvenirs": [
@@ -1263,7 +1263,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Most public restrooms in the United States are free, and you can use them for free at large chain stores (Starbucks, McDonald's, Target, etc.). You can also easily find them at parks, shopping malls, and rest areas."
+        "description": "Public restrooms are less common than you might expect, and café and fast-food restrooms are usually for customers only (Starbucks has required a purchase since 2025). Malls, large stores, parks, museums, and highway rest areas usually have free restrooms."
       }
     ],
     "souvenirsEn": [
@@ -1372,7 +1372,7 @@ export const destinations: Destination[] = [
       "capitalKo": "워싱턴 D.C.",
       "region": "Americas · North America",
       "regionKo": "아메리카 · 북아메리카",
-      "population": 335000000,
+      "population": 340000000,
       "languages": [
         "English"
       ],
@@ -1428,7 +1428,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "대중교통 이용",
-        "description": "대중교통 탑승 전에 티켓을 개찰기에 꼭 찍어야 합니다. 찍지 않으면 무임승차로 간주되어 높은 벌금이 부과될 수 있습니다."
+        "description": "종이 승차권은 지하철은 개찰구에서, 버스와 트램은 탑승 즉시 차내 개찰기에 각인해야 합니다. 비접촉 카드로 결제했다면 같은 카드를 태그하면 됩니다. 각인하지 않으면 무임승차로 간주되어 높은 벌금이 부과될 수 있습니다."
       },
       {
         "title": "화장실 이용",
@@ -1490,7 +1490,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "로마에서는 BIT 카드나 일회용 티켓을 구매할 수 있으며, 밀라노에서는 ATM 카드를 사용할 수 있습니다. 티켓은 탑승 전에 반드시 개찰기에 찍어야 하며, 찍지 않으면 무임승차로 간주되어 높은 벌금이 부과됩니다."
+        "description": "로마에서는 100분 승차권(BIT)이나 1일권 등을 살 수 있고, 로마와 밀라노 모두 지하철 개찰구와 버스에서 비접촉 신용카드나 스마트폰으로 바로 결제(tap&go)할 수 있습니다. 종이 승차권은 지하철은 개찰구에서, 버스와 트램은 탑승 즉시 차내 개찰기에 각인해야 하며, 각인하지 않으면 높은 벌금이 부과됩니다. 요금은 변동될 수 있으니 출발 전 공식 사이트에서 확인하세요."
       },
       {
         "title": "인터넷 연결",
@@ -1534,7 +1534,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Public Transportation",
-        "description": "Always validate your ticket at the machine before boarding public transportation. Failure to validate may result in a high fine for fare evasion."
+        "description": "Validate paper tickets at the metro gate, or on board immediately after boarding buses and trams. If you pay by contactless card, tap the same card. Unvalidated tickets count as fare evasion and can lead to high fines."
       },
       {
         "title": "Restroom Usage",
@@ -1596,7 +1596,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "In Rome, you can purchase a BIT card or single-use tickets. In Milan, you can use an ATM card. Tickets must be validated at the machine before boarding. Failure to validate may result in a high fine for fare evasion."
+        "description": "In Rome you can buy a 100-minute BIT ticket or day passes, and in both Rome and Milan you can tap a contactless bank card or phone at metro gates and on buses (tap&go). Validate paper tickets at the metro gate, or on board immediately after boarding buses and trams; unvalidated tickets can lead to high fines. Fares change, so check the official site before you go."
       },
       {
         "title": "Internet Connection",
@@ -1700,7 +1700,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "팁 문화",
-        "description": "튀르키예에서는 식당과 가이드 서비스에 5~10%의 팁이 일반적입니다. 서비스에 만족했다면 추가 팁을 주는 것이 예의입니다. 택시는 요금 반올림 정도로 팁을 주는 경우가 있으며, 호텔 벨보이에게는 가방당 TL5, 하우스키핑에는 하루 TL5 정도가 일반적입니다."
+        "description": "튀르키예에서는 식당과 가이드 서비스에 5~10%의 팁이 일반적입니다. 택시는 요금을 반올림하는 정도면 충분하며, 호텔 벨보이와 하우스키핑에는 가방당·하루당 약 1~2달러에 해당하는 리라를 주는 경우가 많습니다. 물가 변동이 커서 리라 금액은 수시로 달라지니 현지 물가에 맞춰 조정하세요."
       },
       {
         "title": "차이(차) 문화",
@@ -1726,7 +1726,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "전통 공예품",
-        "description": "나자르본주, 튀르키예 타일, 전통 카펫/키리무 등이 인기입니다. 튀르키예의 전통 공예 기술을 만나볼 수 있습니다."
+        "description": "나자르 본주, 튀르키예 타일, 전통 카펫·킬림(kilim) 등이 인기입니다. 튀르키예의 전통 공예 기술을 만나볼 수 있습니다."
       },
       {
         "title": "향신료",
@@ -1744,7 +1744,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "Migros 마트 추천템",
-        "description": "수제 갈메, 수프 믹스, 드라이드 프루트 등이 Migros 마트에서 인기입니다. 튀르키예의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
+        "description": "헬바(할바), 수프 믹스, 말린 과일 등이 Migros 마트에서 인기입니다. 튀르키예의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
       },
       {
         "title": "Spice Bazaar",
@@ -1766,7 +1766,7 @@ export const destinations: Destination[] = [
     "essentials": [
       {
         "title": "전기 어댑터",
-        "description": "튀르키예는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
+        "description": "튀르키예는 콘센트 타입 C/F(230V, 50Hz)를 사용합니다. 한국과 같은 모양이라 한국 플러그를 그대로 쓸 수 있으며, 전압도 비슷해 별도의 어댑터나 변압기가 필요 없습니다."
       },
       {
         "title": "교통카드",
@@ -1802,7 +1802,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Tipping Culture",
-        "description": "In Türkiye, 5-10% tipping is common in restaurants and guide services. It's polite to leave additional tips if the service was good. For taxis, rounding up the fare is common. For hotel bellboys, TL5 per bag and TL5 per day for housekeeping are typical."
+        "description": "In Türkiye, 5–10% is a common tip at restaurants and for guides. Rounding up is enough for taxis. For hotel porters and housekeeping, the lira equivalent of about US$1–2 per bag or per day is typical; lira amounts change quickly with inflation, so adjust to local prices."
       },
       {
         "title": "Tea (Çay) Culture",
@@ -1997,7 +1997,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "아트 프린트",
-        "description": "프리다 칼로, 대문호 관련 아트 프린트 등이 좋은 선물이 됩니다. 멕시코의 대표적인 예술가들의 작품을 구매할 수 있습니다."
+        "description": "프리다 칼로, 디에고 리베라의 작품을 담은 아트 프린트 등이 좋은 선물이 됩니다. 멕시코를 대표하는 화가들의 작품을 구매할 수 있습니다."
       },
       {
         "title": "향신료 및 소스",
@@ -2051,7 +2051,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "멕시코시티에서는 Metro 카드나 일회용 티켓을 구매할 수 있습니다. 지하철과 버스에서 사용 가능하며, 지하철 요금이 저렴하여 관광객에게 인기가 있습니다. 일부 노선은 혼잡할 수 있으니 주의가 필요합니다."
+        "description": "멕시코시티 지하철은 종이 승차권이 폐지되어 충전식 통합교통카드(Tarjeta de Movilidad Integrada, MI)가 있어야 탈 수 있습니다. 역 매표소나 자동판매기에서 구매·충전할 수 있으며, 메트로버스, 경전철, 트롤리버스, 케이블카에서도 사용할 수 있습니다. 출퇴근 시간에는 매우 혼잡하니 소지품에 주의하시기 바랍니다."
       },
       {
         "title": "여행자 보험",
@@ -2143,7 +2143,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "In Mexico City, you can purchase a Metro card or single-use tickets. These work on subways and buses. Subway fares are cheap and popular with tourists. Some lines can be crowded, so be careful."
+        "description": "Mexico City's Metro no longer uses paper tickets; you need the rechargeable Integrated Mobility Card (Tarjeta MI), sold and topped up at station booths and machines. It also works on Metrobús, light rail, trolleybuses, and Cablebús. Rush hours are very crowded, so watch your belongings."
       },
       {
         "title": "Travel Insurance",
@@ -2230,7 +2230,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "펍 문화",
-        "description": "펍에서는 바에서 주문 후 결제하며, 팁은 잔돈을 남기거나 카드로 추가하는 것이 일반적입니다. 서비스가 좋았으면 추가 팁을 주는 것이 예의입니다."
+        "description": "펍에서는 바에서 직접 주문하고 바로 결제합니다. 바에서 주문할 때는 팁을 주지 않는 것이 일반적이며, 테이블 서비스를 받은 경우에만 팁을 고려하시면 됩니다."
       },
       {
         "title": "팁 문화",
@@ -2250,7 +2250,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "영국의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 지하철역의 화장실도 보통 유료입니다."
+        "description": "영국은 주요 기차역, 박물관, 백화점 화장실을 무료로 이용할 수 있는 곳이 많습니다. 일부 공중화장실은 소액을 받으며, 런던 지하철역에는 화장실이 없는 곳이 많으니 미리 이용하시기 바랍니다."
       }
     ],
     "souvenirs": [
@@ -2304,7 +2304,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "Oyster/Contactless 교통카드를 충전하는 것이 좋습니다. 버스는 현금 결제가 불가하므로 카드가 필수입니다."
+        "description": "런던에서는 비접촉 신용카드나 스마트폰으로 충전 없이 바로 탑승할 수 있으며, 오이스터 카드와 같은 일일 요금 상한이 적용됩니다. 버스는 현금 결제가 불가하므로 카드가 필수입니다."
       },
       {
         "title": "인터넷 연결",
@@ -2336,7 +2336,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Pub Culture",
-        "description": "In pubs, order and pay at the bar; tip by leaving change or adding to card. It's polite to leave additional tips if the service was good."
+        "description": "In pubs, order and pay at the bar. Tipping at the bar is not expected; consider a tip only if you receive table service."
       },
       {
         "title": "Tipping Culture",
@@ -2356,7 +2356,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Most public restrooms in the UK are paid, and you often need to order a drink or snack to use restrooms in cafes or restaurants. Restrooms at subway stations are usually paid as well."
+        "description": "Toilets at major railway stations, museums and department stores are often free. Some public toilets charge a small fee, and many London Underground stations have no toilets, so plan ahead."
       }
     ],
     "souvenirsEn": [
@@ -2410,7 +2410,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "It's good to recharge Oyster/Contactless transportation cards. Buses don't accept cash, so a card is essential."
+        "description": "In London you can tap a contactless bank card or phone with no top-up needed, and the same daily fare caps as Oyster apply. Buses don't accept cash, so a card is essential."
       },
       {
         "title": "Internet Connection",
@@ -2469,7 +2469,7 @@ export const destinations: Destination[] = [
       "capitalKo": "런던",
       "region": "Europe · Northern Europe",
       "regionKo": "유럽 · 북유럽",
-      "population": 67700000,
+      "population": 69300000,
       "languages": [
         "English"
       ],
@@ -2529,13 +2529,13 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "독일의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 지하철역의 화장실도 보통 유료입니다."
+        "description": "독일의 공중화장실과 기차역 화장실은 대부분 유료(약 0.5~1.5유로)이며, 지하철(U-Bahn)역에는 화장실이 거의 없습니다. 카페나 레스토랑 화장실은 손님용인 경우가 많으니 음료 등을 주문한 뒤 이용하는 것이 좋습니다."
       }
     ],
     "souvenirs": [
       {
         "title": "식품 및 주류",
-        "description": "리터스포트 초콜릿, 할렘 꿀, 독일 맥주 등이 인기 기념품입니다. 독일의 대표적인 식품과 주류를 만나볼 수 있습니다."
+        "description": "리터스포트 초콜릿, 레프쿠헨(Lebkuchen), 독일 맥주 등이 인기 기념품입니다. 독일의 대표적인 식품과 주류를 만나볼 수 있습니다."
       },
       {
         "title": "전통 공예품",
@@ -2573,7 +2573,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "자연 화장품",
-        "description": "Rossmann의 Alverde 자연 화장품 등이 인기입니다. 독일의 천연 화장품 브랜드를 만나볼 수 있습니다."
+        "description": "dm의 Alverde, Rossmann의 Alterra 자연 화장품이 저렴하고 인기 있습니다. 독일의 천연 화장품 브랜드를 만나볼 수 있습니다."
       }
     ],
     "essentials": [
@@ -2587,7 +2587,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "베를린에서는 Berlin WelcomeCard나 일일 티켓을 구매할 수 있으며, 뮌헨에서는 MVV 카드를 사용할 수 있습니다. 일부 지역에서는 티켓을 탑승 전에 개찰기에 찍어야 하며, 검표가 수시로 이루어지므로 티켓을 항상 소지해야 합니다."
+        "description": "베를린과 뮌헨 모두 1회권과 1일권을 BVG·MVV 앱이나 발매기에서 살 수 있으며, 베를린에서는 관광용 Berlin WelcomeCard도 있습니다. 발매기에서 산 종이 승차권은 승강장 개찰기에 각인해야 하는 경우가 있고, 검표가 수시로 이루어지므로 승차권을 항상 소지해야 합니다. 체류가 길다면 전국 근거리·지역 교통을 무제한 이용하는 월 구독형 도이칠란트티켓(약 63유로, 해지 신청 필요)도 고려해 보세요. 요금은 변동될 수 있으니 출발 전 공식 사이트에서 확인하세요."
       },
       {
         "title": "인터넷 연결",
@@ -2635,13 +2635,13 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Most public restrooms in Germany are paid, and you often need to order a drink or snack to use restrooms in cafes or restaurants. Restrooms at subway stations are usually paid as well."
+        "description": "Public and train-station toilets in Germany are usually paid (about €0.50–1.50), and U-Bahn stations rarely have toilets. Café and restaurant toilets are generally for customers, so order something first."
       }
     ],
     "souvenirsEn": [
       {
         "title": "Food and Alcohol",
-        "description": "Ritter Sport chocolate, Harz honey, and German beer are popular souvenirs. You can find representative German foods and alcoholic beverages."
+        "description": "Ritter Sport chocolate, Lebkuchen gingerbread and German beer are popular souvenirs. You can find representative German foods and alcoholic beverages."
       },
       {
         "title": "Traditional Crafts",
@@ -2679,7 +2679,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Natural Cosmetics",
-        "description": "Rossmann Alverde natural cosmetics are popular. You can find German natural cosmetic brands."
+        "description": "dm's Alverde and Rossmann's Alterra natural cosmetics are affordable and popular. You can find German natural cosmetic brands."
       }
     ],
     "essentialsEn": [
@@ -2693,7 +2693,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "In Berlin, you can purchase a Berlin WelcomeCard or daily tickets. In Munich, you can use an MVV card. In some areas, tickets must be validated at the machine before boarding. Ticket checks are frequent, so always carry your ticket."
+        "description": "In Berlin and Munich, buy single or day tickets from the BVG/MVV apps or machines; Berlin also offers the Berlin WelcomeCard for visitors. Paper tickets from machines may need validating at platform stamping machines, and checks are frequent, so always carry your ticket. For longer stays, consider the Deutschlandticket (about €63/month, a subscription you must cancel), valid on all local and regional transport nationwide. Fares change, so check the official site before you go."
       },
       {
         "title": "Internet Connection",
@@ -2752,7 +2752,7 @@ export const destinations: Destination[] = [
       "capitalKo": "베를린",
       "region": "Europe · Western Europe",
       "regionKo": "유럽 · 서유럽",
-      "population": 84300000,
+      "population": 83500000,
       "languages": [
         "German"
       ],
@@ -2812,7 +2812,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "그리스의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 일부 공중화장실은 휴지가 없을 수 있으니 휴지를 준비하는 것이 좋습니다."
+        "description": "그리스는 공중화장실이 많지 않고, 관광지·교통 터미널이나 아크로폴리스 같은 주요 유적지에서는 유료인 경우가 많습니다. 카페·레스토랑 화장실은 보통 손님만 쓸 수 있습니다. 배관이 좁아 사용한 휴지는 변기에 넣지 말고 옆 휴지통에 버리는 것이 일반적이며, 휴지가 없는 곳도 있으니 챙기는 것이 좋습니다."
       }
     ],
     "souvenirs": [
@@ -2834,7 +2834,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "면세점 상품",
-        "description": "코렐라 천연 화장품 세트 등이 면세점에서 인기입니다. 공항 면세점에서 구매할 수 있습니다."
+        "description": "코레스(Korres) 천연 화장품 세트 등이 면세점에서 인기입니다. 공항 면세점에서 구매할 수 있습니다."
       }
     ],
     "market": [
@@ -2862,7 +2862,7 @@ export const destinations: Destination[] = [
     "essentials": [
       {
         "title": "전기 어댑터",
-        "description": "그리스는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
+        "description": "그리스는 콘센트 타입 C/F(230V, 50Hz)를 사용합니다. 한국과 같은 모양이라 한국 플러그를 그대로 쓸 수 있으며, 전압도 비슷해 별도의 어댑터나 변압기가 필요 없습니다."
       },
       {
         "title": "페리 예약",
@@ -2918,7 +2918,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Most public restrooms in Greece are paid, and you often need to order a drink or snack to use restrooms in cafes or restaurants. Some public restrooms may not have toilet paper, so it's good to prepare tissues."
+        "description": "Public toilets are scarce in Greece and are often paid at tourist hotspots, transport hubs, and major archaeological sites such as the Acropolis. Cafe and restaurant restrooms are usually for customers. Because the pipes are narrow, put used toilet paper in the bin next to the toilet rather than flushing it, and carry tissues since some toilets have none."
       }
     ],
     "souvenirsEn": [
@@ -3109,7 +3109,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "식품",
-        "description": "알프스 허브티, 알베르트 코코아 등이 좋은 선물이 됩니다. 오스트리아의 대표적인 식품을 구매할 수 있습니다."
+        "description": "알프스 허브티, 빈의 커피 브랜드 율리우스 마이늘(Julius Meinl) 원두 등이 좋은 선물이 됩니다. 오스트리아의 대표적인 식품을 구매할 수 있습니다."
       },
       {
         "title": "주류",
@@ -3145,7 +3145,7 @@ export const destinations: Destination[] = [
     "essentials": [
       {
         "title": "전기 어댑터",
-        "description": "오스트리아는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
+        "description": "오스트리아는 콘센트 타입 C/F(230V, 50Hz)를 사용합니다. 한국과 같은 모양이라 한국 플러그를 그대로 쓸 수 있으며, 전압도 비슷해 별도의 어댑터나 변압기가 필요 없습니다."
       },
       {
         "title": "교통 예약",
@@ -3153,7 +3153,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "빈에서는 Vienna Card나 일일 티켓을 구매할 수 있습니다. 지하철(U-Bahn), 트램, 버스에서 사용 가능하며, 티켓은 탑승 전에 반드시 개찰기에 찍어야 합니다. 검표가 수시로 이루어지므로 티켓을 항상 소지해야 합니다."
+        "description": "빈에서는 Vienna City Card(24·48·72시간)나 일일 티켓을 구매할 수 있습니다. 지하철(U-Bahn), 트램, 버스에서 사용 가능하며, 종이 티켓은 탑승 전에 개찰기에 찍어야 합니다. 검표가 수시로 이루어지므로 티켓을 항상 소지해야 합니다."
       },
       {
         "title": "인터넷 연결",
@@ -3215,7 +3215,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Food",
-        "description": "Alps herbal tea and Albert cocoa make great gifts. You can purchase representative Austrian foods."
+        "description": "Alpine herbal tea and coffee from Vienna's Julius Meinl make great gifts. You can purchase representative Austrian foods."
       },
       {
         "title": "Alcohol",
@@ -3263,7 +3263,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "In Vienna, you can purchase a Vienna Card or daily tickets. These work on subways (U-Bahn), trams, and buses. Tickets must be validated at the machine before boarding. Ticket checks are frequent, so always carry your ticket."
+        "description": "In Vienna, you can buy a Vienna City Card (24/48/72 hours) or day tickets for the U-Bahn, trams, and buses. Paper tickets must be validated before boarding. Ticket checks are frequent, so always carry your ticket."
       },
       {
         "title": "Alps Travel Preparation",
@@ -3378,7 +3378,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "중국의 공중화장실은 대부분 무료이지만, 일부는 유료입니다. 휴지가 없는 경우가 많으니 휴지를 준비하는 것이 좋습니다. 서양식 변기보다는 양변기가 많은 편입니다."
+        "description": "중국의 공중화장실은 대부분 무료이지만, 일부는 유료입니다. 휴지가 없는 경우가 많으니 휴지를 준비하는 것이 좋습니다. 서양식 좌변기보다 쪼그려 앉는 화변기가 많은 편입니다."
       }
     ],
     "souvenirs": [
@@ -3422,7 +3422,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "티 브랜드",
-        "description": "茶颜悦色 등 인기 티 브랜드 보틀 음료가 인기입니다. 중국의 대표적인 티 브랜드를 만나볼 수 있습니다."
+        "description": "창사에서 시작된 차옌웨써(茶颜悦色) 같은 밀크티 전문점이 인기입니다. 매장 음료 외에 찻잎, 차 분말 등 포장 상품도 판매해 선물로 좋습니다."
       }
     ],
     "essentials": [
@@ -3440,7 +3440,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "인터넷 연결",
-        "description": "eSIM은 제한되니 공항에서 China Unicom, China Mobile 유심을 구입하는 것이 좋습니다. 온라인으로 미리 구매할 수도 있습니다."
+        "description": "출국 전 해외 여행용 eSIM이나 로밍을 준비하는 것이 가장 간편하며, 중국에서도 잘 작동합니다. 현지 China Unicom, China Mobile 유심은 공항이나 매장에서 여권으로 실명 등록 후 구입할 수 있습니다."
       },
       {
         "title": "중국/홍콩 eSIM",
@@ -3450,7 +3450,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "고속철 예약",
-        "description": "고속철(고속열차) 티켓은 30일 전부터 예매 가능합니다. 특히 명절이나 연휴 기간에는 예매가 어려울 수 있으니 미리 예약하시기 바랍니다."
+        "description": "고속철(고속열차) 티켓은 출발 15일 전(당일 포함)부터 12306 앱이나 여행 예약 앱에서 여권으로 예매할 수 있습니다. 특히 명절이나 연휴 기간에는 예매가 어려울 수 있으니 미리 예약하시기 바랍니다."
       },
       {
         "title": "여행자 보험",
@@ -3528,7 +3528,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Tea Brands",
-        "description": "Popular tea brand bottled drinks like Chayanyuese are popular. You can find representative Chinese tea brands."
+        "description": "Milk-tea chains like Chayan Yuese, which started in Changsha, are popular. Besides fresh drinks, they sell packaged tea leaves and tea powder that make good gifts."
       }
     ],
     "essentialsEn": [
@@ -3542,7 +3542,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Internet Connection",
-        "description": "eSIM is restricted, so it's good to purchase China Unicom or China Mobile SIM at the airport. You can also purchase online in advance."
+        "description": "The easiest option is a travel eSIM or roaming plan set up before departure; these work well in China. Local China Unicom or China Mobile SIM cards are sold at airports and stores and require passport registration."
       },
       {
         "title": "Transportation Card",
@@ -3550,7 +3550,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "High-Speed Rail Booking",
-        "description": "High-speed rail tickets can be booked 30 days in advance. Especially during holidays or peak periods, booking may be difficult, so book in advance."
+        "description": "High-speed rail tickets go on sale 15 days before departure (including the travel day) on the 12306 app or travel booking apps, using your passport. Especially during holidays or peak periods, booking may be difficult, so book early."
       },
       {
         "title": "Travel Insurance",
@@ -3658,7 +3658,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "캐나다의 공중화장실은 대부분 무료이며, 쇼핑몰, 공원, 대중교통역 등에서 쉽게 찾을 수 있습니다. 휴지는 휴지통에 버리며, 일부 화장실에는 휴지가 없을 수 있으니 작은 휴지를 챙기는 것이 좋습니다."
+        "description": "캐나다의 공중화장실은 대부분 무료이며, 쇼핑몰, 공원, 대중교통역 등에서 쉽게 찾을 수 있습니다. 휴지는 변기에 버리면 되지만, 물티슈와 생리용품은 휴지통에 버려야 합니다."
       }
     ],
     "souvenirs": [
@@ -3672,7 +3672,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "전통 공예품",
-        "description": "원주민 공예품, 인유어트 조각품 등이 좋은 선물이 됩니다. 캐나다의 독특한 문화를 만나볼 수 있습니다."
+        "description": "원주민 공예품, 이누이트 조각품 등이 좋은 선물이 됩니다. 캐나다의 독특한 문화를 만나볼 수 있습니다."
       },
       {
         "title": "캐나다산 꿀",
@@ -3726,7 +3726,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "토론토에서는 Presto 카드를, 밴쿠버에서는 Compass 카드를 구매할 수 있습니다. 지하철, 버스, 스카이트레인 등에서 사용 가능하며, 온라인으로 충전할 수 있습니다."
+        "description": "토론토에서는 Presto 카드를, 밴쿠버에서는 Compass 카드를 쓸 수 있습니다. 두 도시 모두 비접촉 신용카드나 휴대폰 간편결제를 단말기에 대기만 해도 성인 요금으로 탈 수 있어, 단기 여행이라면 따로 카드를 사지 않아도 됩니다."
       },
       {
         "title": "여행자 보험",
@@ -3760,7 +3760,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Most public restrooms in Canada are free and can be easily found in shopping malls, parks, and public transportation stations. Dispose of toilet paper in trash bins. Some restrooms may not have toilet paper, so it's good to prepare tissues."
+        "description": "Most public restrooms in Canada are free and easy to find in shopping malls, parks, and transit stations. Flush toilet paper, but put wet wipes and sanitary products in the bin."
       }
     ],
     "souvenirsEn": [
@@ -3822,7 +3822,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "In Toronto, you can purchase a Presto card. In Vancouver, you can purchase a Compass card. These work on subways, buses, and SkyTrain. You can recharge them online."
+        "description": "Toronto uses PRESTO and Vancouver uses Compass, but both accept contactless credit cards and mobile wallets at the adult fare, so short-stay visitors don't need to buy a card."
       },
       {
         "title": "Travel Insurance",
@@ -3977,7 +3977,7 @@ export const destinations: Destination[] = [
     "essentials": [
       {
         "title": "전기 어댑터",
-        "description": "헝가리는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
+        "description": "헝가리는 콘센트 타입 C/F(230V, 50Hz)를 사용합니다. 한국과 같은 모양이라 한국 플러그를 그대로 쓸 수 있으며, 전압도 비슷해 별도의 어댑터나 변압기가 필요 없습니다."
       },
       {
         "title": "교통 예약",
@@ -3989,7 +3989,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "인터넷 연결",
-        "description": "유럽 eSIM 또는 Telekom, Vodafone 헝가리 유심을 준비하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
+        "description": "유럽 eSIM 또는 Telekom, Yettel, One(옛 Vodafone) 등 헝가리 통신사 유심을 준비하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴할 수 있습니다."
       },
       {
         "title": "유럽 eSIM",
@@ -4091,7 +4091,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Internet Connection",
-        "description": "It's good to prepare European eSIM or Telekom, Vodafone Hungary SIM. You can also purchase at the airport, but buying online in advance is often cheaper."
+        "description": "It's good to prepare a European eSIM or a SIM from a Hungarian carrier such as Telekom, Yettel, or One (formerly Vodafone). You can also buy one at the airport, but buying online in advance is often cheaper."
       },
       {
         "title": "Travel Insurance",
@@ -4203,7 +4203,7 @@ export const destinations: Destination[] = [
     "souvenirs": [
       {
         "title": "스위스 초콜릿",
-        "description": "린트, 토블로네, 밀카 등 세계적으로 유명한 스위스 초콜릿이 인기 기념품입니다. 다양한 브랜드와 맛을 만나볼 수 있습니다."
+        "description": "린트(Lindt), 까이에(Cailler), 프레이(Frey), 레더라흐(Läderach) 등 스위스 초콜릿이 인기 기념품입니다. 마트에서도 다양한 브랜드와 맛을 저렴하게 만나볼 수 있습니다."
       },
       {
         "title": "스위스 시계",
@@ -4241,13 +4241,13 @@ export const destinations: Destination[] = [
       },
       {
         "title": "편의점 상품",
-        "description": "편의점 커피, 에너지 음료, 여행 간식 등이 인기입니다. 24시간 운영되는 편의점이 많습니다."
+        "description": "편의점에서 커피, 음료, 여행 간식 등을 살 수 있습니다. 스위스는 상점 영업시간이 짧고 일요일에 문을 닫는 곳이 많으니, 늦은 시간이나 일요일에는 기차역의 Coop Pronto, Migrolino, Avec 같은 매장을 이용하세요."
       }
     ],
     "essentials": [
       {
         "title": "전기 어댑터",
-        "description": "스위스는 콘센트 타입 C/J (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, J형 플러그는 스위스 전용입니다. 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
+        "description": "스위스는 J타입(230V, 50Hz) 콘센트를 사용합니다. 얇은 2핀(C타입) 플러그는 꽂히는 경우가 있지만, 한국에서 흔한 굵은 원형 플러그(F타입)는 맞지 않으므로 스위스용(J타입) 어댑터를 준비하시기 바랍니다. 전압은 한국과 비슷해 변압기는 필요 없습니다."
       },
       {
         "title": "교통 예약",
@@ -4255,7 +4255,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "스위스 패스(Swiss Travel Pass)를 구매하면 일정 기간 동안 기차, 버스, 보트를 무제한으로 이용할 수 있습니다. 각 도시별로도 일일 티켓을 구매할 수 있으며, 티켓은 탑승 전에 반드시 개찰기에 찍어야 합니다."
+        "description": "스위스 패스(Swiss Travel Pass)를 구매하면 일정 기간 동안 기차, 버스, 보트를 무제한으로 이용할 수 있습니다. 도시별 일일권도 있으며, 티켓은 SBB 앱이나 발매기에서 탑승 전에 구매해야 합니다. 개찰기에 찍을 필요는 없지만, 차내 검표 때 티켓이 없으면 벌금이 부과됩니다."
       },
       {
         "title": "인터넷 연결",
@@ -4305,7 +4305,7 @@ export const destinations: Destination[] = [
     "souvenirsEn": [
       {
         "title": "Swiss Chocolate",
-        "description": "World-famous Swiss chocolates like Lindt, Toblerone, and Milka are popular souvenirs. You can find various brands and flavors."
+        "description": "Swiss chocolates such as Lindt, Cailler, Frey, and Läderach are popular souvenirs. Supermarkets also carry many brands and flavors at lower prices."
       },
       {
         "title": "Swiss Watches",
@@ -4343,13 +4343,13 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Convenience Store Products",
-        "description": "Convenience store coffee, energy drinks, and travel snacks are popular. Many convenience stores are open 24 hours."
+        "description": "Convenience stores sell coffee, drinks, and snacks. Swiss shop hours are short and most shops close on Sundays, so use station stores like Coop Pronto, Migrolino, or Avec in the evening or on Sundays."
       }
     ],
     "essentialsEn": [
       {
         "title": "Electrical Adapter",
-        "description": "Switzerland uses Type C/J plugs (230V, 50Hz). You'll need a European-style plug. Type J plugs are specific to Switzerland. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
+        "description": "Switzerland uses Type J sockets (230V, 50Hz). Slim two-pin Europlugs (Type C) usually fit, but standard European Schuko (Type F) plugs and US plugs do not, so bring a Swiss Type J adapter. Most modern electronics support 110–240V; check your device before traveling."
       },
       {
         "title": "Transportation Booking",
@@ -4357,7 +4357,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "Purchasing a Swiss Travel Pass allows unlimited travel on trains, buses, and boats for a certain period. You can also purchase daily tickets for each city. Tickets must be validated at the machine before boarding."
+        "description": "A Swiss Travel Pass gives unlimited travel on trains, buses, and boats for a set period, and cities also sell day tickets. Buy your ticket in the SBB app or at a machine before boarding. No validation is needed, but riding without a ticket results in a fine."
       },
       {
         "title": "Internet Connection",
@@ -4481,7 +4481,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "네덜란드의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 지하철역의 화장실도 보통 유료입니다."
+        "description": "네덜란드의 공중화장실과 기차역 화장실은 대부분 유료이며, 지하철역에는 화장실이 거의 없습니다. 카페나 레스토랑 화장실은 손님용인 경우가 많으니 음료 등을 주문한 뒤 이용하는 것이 좋습니다."
       }
     ],
     "souvenirs": [
@@ -4535,7 +4535,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "OV-chipkaart를 구매하여 대중교통을 이용할 수 있습니다. 기차, 버스, 트램, 지하철 모두 사용 가능하며, 편의점이나 역에서 구매 및 충전할 수 있습니다."
+        "description": "네덜란드 대중교통(기차, 지하철, 트램, 버스)은 비접촉 신용카드나 스마트폰(OVpay)으로 바로 이용할 수 있습니다. 탑승 시 체크인하고, 하차 시 반드시 같은 카드로 체크아웃해야 합니다. 익명 OV-chipkaart는 역 발매기 등에서 구매할 수 있지만 카드 발급비가 별도로 듭니다."
       },
       {
         "title": "인터넷 연결",
@@ -4583,7 +4583,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Public restrooms in the Netherlands are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. Subway station restrooms are usually paid as well."
+        "description": "Public and train-station toilets in the Netherlands are usually paid, and metro stations rarely have toilets. Café and restaurant toilets are generally for customers, so order something first."
       }
     ],
     "souvenirsEn": [
@@ -4637,7 +4637,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "You can purchase an OV-chipkaart to use public transportation. It works on trains, buses, trams, and subways, and can be purchased and recharged at convenience stores or stations."
+        "description": "You can tap a contactless bank card or phone (OVpay) on trains, metros, trams and buses across the Netherlands. Always check in and check out with the same card. An anonymous OV-chipkaart is still sold at station machines, but it costs an extra card fee."
       },
       {
         "title": "Internet Connection",
@@ -4739,7 +4739,7 @@ export const destinations: Destination[] = [
     "manners": [
       {
         "title": "팁 문화",
-        "description": "포르투갈에서는 서비스 요금이 계산서에 포함되어 있어 팁이 필수는 아닙니다. 서비스에 만족했다면 소액의 팁(5~10%)을 남기는 것이 일반적입니다. 카페에서는 반올림 정도로 충분합니다."
+        "description": "포르투갈에서 팁은 의무가 아닙니다. 계산서에 서비스 요금(serviço)이 따로 붙는 경우는 많지 않으며, 만족했다면 5~10% 또는 잔돈을 남기는 정도면 충분합니다. 카페에서는 반올림 정도로 충분합니다. 식탁에 미리 놓이는 빵·올리브(couvert)는 먹으면 요금이 청구되니 원하지 않으면 치워 달라고 하세요."
       },
       {
         "title": "식사 시간",
@@ -4747,7 +4747,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "인사 예절",
-        "description": "포르투갈인들은 따뜻하고 친근한 인사를 선호합니다. 만날 때와 헤어질 때 악수나 포옹을 하는 것이 일반적이며, 가까운 사이에서는 볼에 키스(beso)를 하는 경우도 있습니다."
+        "description": "포르투갈인들은 따뜻하고 친근한 인사를 선호합니다. 처음 만나거나 공식적인 자리에서는 악수가 일반적이며, 아는 사이에서는 양 볼에 가볍게 볼 인사(beijinho)를 하는 경우가 많습니다."
       },
       {
         "title": "공공장소 예의",
@@ -4809,11 +4809,11 @@ export const destinations: Destination[] = [
     "essentials": [
       {
         "title": "전기 어댑터",
-        "description": "포르투갈은 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
+        "description": "포르투갈는 콘센트 타입 C/F(230V, 50Hz)를 사용합니다. 한국과 같은 모양이라 한국 플러그를 그대로 쓸 수 있으며, 전압도 비슷해 별도의 어댑터나 변압기가 필요 없습니다."
       },
       {
         "title": "교통카드",
-        "description": "리스본에서는 Lisboa Card, 포르토에서는 Andante 카드를 구매하여 대중교통을 이용할 수 있습니다. 기차, 버스, 지하철, 트램 모두 사용 가능하며, 편의점이나 역에서 구매 및 충전할 수 있습니다."
+        "description": "리스본에서는 충전식 navegante ocasional 카드(옛 Viva Viagem)를, 포르토에서는 Andante 카드를 지하철역·공항 발매기에서 구매·충전해 지하철, 버스, 트램 등을 탈 수 있습니다. 관광지를 많이 둘러볼 계획이라면 교통과 입장 혜택이 묶인 Lisboa Card(24·48·72시간권)도 고려해 보세요."
       },
       {
         "title": "인터넷 연결",
@@ -4837,7 +4837,7 @@ export const destinations: Destination[] = [
     "mannersEn": [
       {
         "title": "Tipping Culture",
-        "description": "In Portugal, service charges are included in the bill, so tipping is not mandatory. If you're satisfied with the service, leaving a small tip (5~10%) is common. At cafes, rounding up is sufficient."
+        "description": "Tipping is optional in Portugal. A service charge (serviço) is not usually added, so if you were happy, leaving 5–10% or rounding up is enough; at cafes, rounding up is sufficient. Bread and starters placed on the table (couvert) are charged if you eat them, so send them back if you don't want them."
       },
       {
         "title": "Meal Times",
@@ -4845,7 +4845,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Greeting Etiquette",
-        "description": "Portuguese people prefer warm and friendly greetings. Handshakes or hugs when meeting and parting are common, and close friends may kiss on the cheek (beso)."
+        "description": "Portuguese people prefer warm and friendly greetings. A handshake is standard for first meetings and formal settings; among acquaintances, a light kiss on each cheek (beijinho) is common."
       },
       {
         "title": "Public Place Etiquette",
@@ -4911,7 +4911,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "In Lisbon, you can purchase a Lisboa Card, and in Porto, an Andante card to use public transportation. They work on trains, buses, subways, and trams, and can be purchased and recharged at convenience stores or stations."
+        "description": "In Lisbon, use the rechargeable navegante ocasional card (formerly Viva Viagem); in Porto, use the Andante card. Buy and top them up at metro or airport ticket machines. If you plan to visit many sights in Lisbon, the Lisboa Card (24/48/72 hours) bundles transport with attraction entry."
       },
       {
         "title": "Internet Connection",
@@ -4966,7 +4966,7 @@ export const destinations: Destination[] = [
       "capitalKo": "리스본",
       "region": "Europe · Southern Europe",
       "regionKo": "유럽 · 남유럽",
-      "population": 10400000,
+      "population": 11400000,
       "languages": [
         "Portuguese"
       ],
@@ -5030,7 +5030,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "필리핀의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 휴지는 휴지통에 버리는 것이 일반적입니다."
+        "description": "쇼핑몰과 식당 화장실은 대부분 무료이지만, 일부 공중화장실과 터미널 화장실은 소액을 받습니다. 휴지가 없는 곳이 많으니 휴지를 챙기시는 것이 좋으며, 사용한 휴지는 휴지통에 버리는 곳이 많습니다."
       }
     ],
     "souvenirs": [
@@ -5132,7 +5132,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Public restrooms in the Philippines are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. It's common to dispose of toilet paper in trash bins."
+        "description": "Restrooms in malls and restaurants are usually free, but some public and terminal toilets charge a small fee. Many lack toilet paper, so carry tissues, and in many places used paper goes in the bin."
       }
     ],
     "souvenirsEn": [
@@ -5311,7 +5311,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "베트남의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 휴지는 휴지통에 버리는 것이 일반적입니다."
+        "description": "쇼핑몰, 카페, 식당 화장실은 대부분 무료이며, 일부 관광지와 공원의 공중화장실은 소액을 받습니다. 휴지가 없는 곳도 있으니 휴지를 챙기시는 것이 좋고, 사용한 휴지는 휴지통에 버리는 곳이 많습니다."
       }
     ],
     "souvenirs": [
@@ -5339,7 +5339,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "마트 추천템",
-        "description": "VinMart, Co.opmart 등 대형 마트에서 커피, 향료, 라크 제품 등을 저렴하게 구매할 수 있습니다."
+        "description": "WinMart(옛 VinMart), Co.opmart 등 대형 마트에서 커피, 향료, 라크 제품 등을 저렴하게 구매할 수 있습니다."
       },
       {
         "title": "약국 상비약",
@@ -5364,8 +5364,8 @@ export const destinations: Destination[] = [
         "description": "베트남은 콘센트 타입 A/C (220V, 50Hz)를 사용합니다. 미국식 또는 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
-        "title": "교통카드",
-        "description": "호치민에서는 버스 카드를 구매하여 대중교통을 이용할 수 있습니다. 편의점이나 역에서 구매 및 충전할 수 있습니다."
+        "title": "대중교통",
+        "description": "호치민에는 2024년 12월 개통한 메트로 1호선이, 하노이에는 도시철도 2A·3호선이 운행합니다. 시내버스는 대부분 현금으로 탈 수 있으며, 여행자는 Grab, Xanh SM 등 차량 호출 앱을 많이 이용합니다."
       },
       {
         "title": "인터넷 연결",
@@ -5387,7 +5387,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "여행하기 좋은 시기",
-        "description": "베트남은 건기(11월~4월)가 가장 여행하기 좋은 시기입니다. 날씨가 맑고 습도가 낮아 편안하게 여행할 수 있습니다. 우기(5월~10월)는 비가 많지만 호텔 가격이 저렴합니다."
+        "description": "베트남은 남북으로 길어 지역마다 날씨가 다릅니다. 하노이 등 북부는 10월~4월이 선선하고(12월~2월은 쌀쌀함), 다낭 등 중부는 2월~8월이 맑은 편이며 9월~12월은 비와 태풍이 잦습니다. 호치민 등 남부는 12월~4월 건기가 여행하기 좋습니다."
       }
     ],
     "mannersEn": [
@@ -5413,7 +5413,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Public restrooms in Vietnam are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. It's common to dispose of toilet paper in trash bins."
+        "description": "Restrooms in malls, cafes, and restaurants are usually free, while some public toilets at sights and parks charge a small fee. Carry tissues, as some have none, and in many places used paper goes in the bin."
       }
     ],
     "souvenirsEn": [
@@ -5441,7 +5441,7 @@ export const destinations: Destination[] = [
     "marketEn": [
       {
         "title": "Market Recommendations",
-        "description": "You can purchase coffee, incense, and lacquer products at affordable prices at large supermarkets like VinMart and Co.opmart."
+        "description": "You can purchase coffee, incense, and lacquer products at affordable prices at large supermarkets like WinMart (formerly VinMart) and Co.opmart."
       },
       {
         "title": "Pharmacy Products",
@@ -5466,8 +5466,8 @@ export const destinations: Destination[] = [
         "description": "Vietnam uses Type A/C plugs (220V, 50Hz). You'll need a US-style or European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
-        "title": "Transportation Card",
-        "description": "In Ho Chi Minh City, you can purchase a bus card to use public transportation. They can be purchased and recharged at convenience stores or stations."
+        "title": "Public Transport",
+        "description": "Ho Chi Minh City's Metro Line 1 opened in December 2024, and Hanoi runs urban rail lines 2A and 3. City buses mostly accept cash, and many visitors use ride-hailing apps such as Grab or Xanh SM."
       },
       {
         "title": "Internet Connection",
@@ -5483,7 +5483,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Best Time to Visit",
-        "description": "Vietnam is best visited during the dry season (November-April). The weather is clear and humidity is low, making it comfortable for travel. The rainy season (May-October) has more rain but hotel prices are lower."
+        "description": "Vietnam's weather varies by region. The north (Hanoi) is pleasant from about October to April, with chilly days in December–February; central Vietnam (Da Nang) is best around February–August, with heavy rain and typhoons in September–December; the south (Ho Chi Minh City) is best in the December–April dry season."
       }
     ],
     "visa": [
@@ -5633,11 +5633,11 @@ export const destinations: Destination[] = [
     "essentials": [
       {
         "title": "전기 어댑터",
-        "description": "호주는 콘센트 타입 I (240V, 50Hz)를 사용합니다. 3핀 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
+        "description": "호주는 콘센트 타입 I(230V, 50Hz)를 사용합니다. 한국 플러그는 맞지 않으니 타입 I 어댑터(멀티 어댑터)를 챙기시기 바랍니다. 한국 기기는 대부분 220V용이라 변압기는 필요 없습니다."
       },
       {
         "title": "교통카드",
-        "description": "시드니에서는 Opal 카드, 멜버른에서는 Myki 카드를 구매하여 대중교통을 이용할 수 있습니다. 편의점이나 역에서 구매 및 충전할 수 있습니다."
+        "description": "시드니(Opal)와 멜버른(myki) 모두 교통카드를 따로 사지 않아도 비접촉 신용카드나 휴대폰 간편결제를 단말기에 대면 성인 요금으로 탈 수 있습니다. 교통카드는 편의점이나 역에서 구매·충전할 수 있습니다."
       },
       {
         "title": "인터넷 연결",
@@ -5729,11 +5729,11 @@ export const destinations: Destination[] = [
     "essentialsEn": [
       {
         "title": "Electrical Adapter",
-        "description": "Australia uses Type I plugs (240V, 50Hz). You'll need a 3-pin plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
+        "description": "Australia uses Type I sockets (230V, 50Hz). Bring a Type I adapter. Many modern electronics support 110V~240V, so a voltage converter may not be necessary, but check your device's voltage range before traveling."
       },
       {
         "title": "Transportation Card",
-        "description": "In Sydney, you can purchase an Opal card, and in Melbourne, a Myki card to use public transportation. They can be purchased and recharged at convenience stores or stations."
+        "description": "In both Sydney (Opal) and Melbourne (myki), you can tap a contactless credit card or phone wallet at the readers and pay the adult fare without buying a transport card. Cards are still sold and topped up at convenience stores and stations."
       },
       {
         "title": "Internet Connection",
@@ -5784,7 +5784,7 @@ export const destinations: Destination[] = [
       "capitalKo": "캔버라",
       "region": "Oceania · Australia and New Zealand",
       "regionKo": "오세아니아 · 호주/뉴질랜드",
-      "population": 26700000,
+      "population": 27500000,
       "languages": [
         "English"
       ],
@@ -5848,7 +5848,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "태국의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 휴지는 휴지통에 버리는 것이 일반적입니다."
+        "description": "쇼핑몰, 식당, 카페 화장실은 대부분 무료이며, 일부 공중화장실과 터미널 화장실은 소액(몇 바트)을 받습니다. 휴지가 없는 곳도 있으니 휴지를 챙기시는 것이 좋고, 변기가 막히기 쉬워 사용한 휴지는 휴지통에 버리는 곳이 많습니다."
       },
       {
         "title": "전자담배 금지",
@@ -5880,7 +5880,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "마트 추천템",
-        "description": "7-Eleven, Big C, Tesco Lotus 등 대형 마트에서 태국 과자, 커피, 향료 등을 저렴하게 구매할 수 있습니다."
+        "description": "Big C, Lotus's(옛 Tesco Lotus) 등 대형 마트에서 태국 과자, 커피, 향신료 등을 저렴하게 구매할 수 있습니다."
       },
       {
         "title": "약국 상비약",
@@ -5902,11 +5902,11 @@ export const destinations: Destination[] = [
     "essentials": [
       {
         "title": "전기 어댑터",
-        "description": "태국은 콘센트 타입 A/C (220V, 50Hz)를 사용합니다. 미국식 또는 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
+        "description": "태국은 230V, 50Hz를 사용하며 콘센트는 A·B·C·F·O 타입이 섞여 있습니다. 한국 플러그(C/F)를 대부분 그대로 쓸 수 있지만, 일부 구형 콘센트에 대비해 멀티 어댑터를 챙기시면 좋습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         "title": "교통카드",
-        "description": "방콕에서는 BTS 스카이트레인 카드나 MRT 카드를 구매하여 대중교통을 이용할 수 있습니다. 편의점이나 역에서 구매 및 충전할 수 있습니다."
+        "description": "방콕 MRT는 2026년 6월부터 기존 MRT 카드를 받지 않으며, 개찰구에서 비접촉식 신용·체크카드(Visa, Mastercard 등)를 바로 찍고 탈 수 있습니다. BTS 스카이트레인은 역에서 Rabbit 카드를 구매·충전(주로 현금)하거나 1회권을 사서 이용합니다. 해외 결제가 가능한 카드인지 미리 확인하시기 바랍니다."
       },
       {
         "title": "인터넷 연결",
@@ -5948,7 +5948,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Public restrooms in Thailand are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. It's common to dispose of toilet paper in trash bins."
+        "description": "Restrooms in malls, restaurants, and cafes are usually free, while some public and terminal toilets charge a few baht. Carry tissues, as some have none, and because plumbing clogs easily, used paper often goes in the bin."
       },
       {
         "title": "Vaping Ban",
@@ -5980,7 +5980,7 @@ export const destinations: Destination[] = [
     "marketEn": [
       {
         "title": "Market Recommendations",
-        "description": "You can purchase Thai snacks, coffee, and spices at affordable prices at large supermarkets like 7-Eleven, Big C, and Tesco Lotus."
+        "description": "You can purchase Thai snacks, coffee, and spices at affordable prices at large supermarkets like Big C and Lotus's (formerly Tesco Lotus)."
       },
       {
         "title": "Pharmacy Products",
@@ -6002,11 +6002,11 @@ export const destinations: Destination[] = [
     "essentialsEn": [
       {
         "title": "Electrical Adapter",
-        "description": "Thailand uses Type A/C plugs (220V, 50Hz). You'll need a US-style or European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
+        "description": "Thailand uses 230V, 50Hz, with a mix of Type A, B, C, F, and O sockets. Most two-pin flat (A) and round (C) plugs fit, but a universal adapter helps with older outlets. Check your device's voltage range before traveling."
       },
       {
         "title": "Transportation Card",
-        "description": "In Bangkok, you can purchase a BTS Skytrain card or MRT card to use public transportation. They can be purchased and recharged at convenience stores or stations."
+        "description": "Since June 2026, Bangkok's MRT no longer accepts its old stored-value cards; tap a contactless Visa or Mastercard bank card directly at the gate. For the BTS Skytrain, buy and top up a Rabbit card at BTS stations (mostly cash) or buy single-journey tickets. Make sure your card is enabled for overseas use."
       },
       {
         "title": "Internet Connection",
@@ -6116,7 +6116,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "신발 착용",
-        "description": "대만에서는 사원이나 집에 들어갈 때 신발을 벗는 것이 일반적입니다. 신발을 벗는 곳에 신발을 정리해서 두는 것이 예의입니다."
+        "description": "대만 가정집에 들어갈 때는 신발을 벗는 것이 일반적입니다. 사원은 대부분 신발을 신고 들어가도 되지만, 일부 법당이나 표시된 구역에서는 벗어야 하니 안내를 따르시기 바랍니다."
       },
       {
         "title": "공공장소 예의",
@@ -6156,7 +6156,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "마트 추천템",
-        "description": "7-Eleven, FamilyMart, PX Mart 등 대형 마트에서 대만 과자, 차, 향료 등을 저렴하게 구매할 수 있습니다."
+        "description": "까르푸(Carrefour), 전련(PX Mart) 같은 마트에서 대만 과자, 차, 향료 등을 저렴하게 구매할 수 있습니다."
       },
       {
         "title": "약국 상비약",
@@ -6212,7 +6212,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Shoe Etiquette",
-        "description": "In Taiwan, it's common to remove shoes when entering temples or homes. It's polite to organize shoes neatly in the designated area."
+        "description": "It's common to remove your shoes when entering Taiwanese homes. Most temples allow shoes, but some inner halls or marked areas require removing them, so follow the signs."
       },
       {
         "title": "Public Place Etiquette",
@@ -6252,7 +6252,7 @@ export const destinations: Destination[] = [
     "marketEn": [
       {
         "title": "Market Recommendations",
-        "description": "You can purchase Taiwanese snacks, tea, and spices at affordable prices at large supermarkets like 7-Eleven, FamilyMart, and PX Mart."
+        "description": "You can purchase Taiwanese snacks, tea, and spices at affordable prices at supermarkets like Carrefour and PX Mart."
       },
       {
         "title": "Pharmacy Products",
@@ -6377,7 +6377,7 @@ export const destinations: Destination[] = [
     "manners": [
       {
         "title": "팁 문화",
-        "description": "홍콩에서는 팁 문화가 일반적입니다. 레스토랑에서는 10% 정도의 팁을 남기는 것이 일반적이며, 택시에서는 반올림 정도로 충분합니다. 호텔 벨보이에게는 가방당 HK$10~20 정도의 팁을 주는 것이 좋습니다."
+        "description": "홍콩의 대부분 레스토랑은 계산서에 10% 봉사료를 자동으로 붙이므로 별도 팁은 필수가 아닙니다. 서비스가 좋았다면 잔돈을 남기는 정도면 충분하고, 택시는 반올림하며, 호텔 포터에게는 소액의 팁을 주는 것이 일반적입니다."
       },
       {
         "title": "인사 예절",
@@ -6415,13 +6415,13 @@ export const destinations: Destination[] = [
       },
       {
         "title": "면세점 상품",
-        "description": "홍콩 공항 면세점에서 명품 화장품, 향수, 시계 등을 구매할 수 있습니다. 면세 혜택을 받을 수 있어 가격이 저렴합니다."
+        "description": "홍콩 공항 면세점에서 명품 화장품, 향수, 시계 등을 구매할 수 있습니다. 홍콩은 판매세가 없어 시내 매장도 세금이 붙지 않으므로, 공항과 시내 가격을 비교해 보는 것이 좋습니다."
       }
     ],
     "market": [
       {
         "title": "마트 추천템",
-        "description": "7-Eleven, Circle K, Wellcome 등 대형 마트에서 홍콩 과자, 차, 향료 등을 저렴하게 구매할 수 있습니다."
+        "description": "웰컴(Wellcome), 파큰샵(PARKnSHOP) 같은 슈퍼마켓에서 홍콩 과자, 차, 향료 등을 저렴하게 구매할 수 있습니다."
       },
       {
         "title": "약국 상비약",
@@ -6437,7 +6437,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "면세점 상품",
-        "description": "홍콩 공항 면세점에서 명품 화장품, 향수, 시계 등을 구매할 수 있습니다. 면세 혜택을 받을 수 있어 가격이 저렴합니다."
+        "description": "홍콩 공항 면세점에서 명품 화장품, 향수, 시계 등을 구매할 수 있습니다. 홍콩은 판매세가 없어 시내 매장도 세금이 붙지 않으므로, 공항과 시내 가격을 비교해 보는 것이 좋습니다."
       }
     ],
     "essentials": [
@@ -6475,7 +6475,7 @@ export const destinations: Destination[] = [
     "mannersEn": [
       {
         "title": "Tipping Culture",
-        "description": "Tipping is common in Hong Kong. It's common to leave about 10% tip at restaurants, and rounding up for taxis is sufficient. For hotel bellboys, HK$10~20 per bag is good."
+        "description": "Most Hong Kong restaurants automatically add a 10% service charge, so extra tipping is optional; leaving small change is enough. Rounding up for taxis is sufficient, and a small tip for hotel porters is customary."
       },
       {
         "title": "Greeting Etiquette",
@@ -6517,13 +6517,13 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Duty-Free Products",
-        "description": "You can purchase luxury cosmetics, perfumes, and watches at Hong Kong airport duty-free shops. You can receive duty-free benefits, making prices cheaper."
+        "description": "You can purchase luxury cosmetics, perfumes, and watches at Hong Kong airport duty-free shops. Hong Kong has no sales tax, so prices in town are tax-free too; compare before you buy."
       }
     ],
     "marketEn": [
       {
         "title": "Market Recommendations",
-        "description": "You can purchase Hong Kong snacks, tea, and spices at affordable prices at large supermarkets like 7-Eleven, Circle K, and Wellcome."
+        "description": "You can purchase Hong Kong snacks, tea, and spices at affordable prices at supermarkets like Wellcome and PARKnSHOP."
       },
       {
         "title": "Pharmacy Products",
@@ -6539,7 +6539,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Duty-Free Products",
-        "description": "You can purchase luxury cosmetics, perfumes, and watches at Hong Kong airport duty-free shops. You can receive duty-free benefits, making prices cheaper."
+        "description": "You can purchase luxury cosmetics, perfumes, and watches at Hong Kong airport duty-free shops. Hong Kong has no sales tax, so prices in town are tax-free too; compare before you buy."
       }
     ],
     "essentialsEn": [
@@ -6662,6 +6662,10 @@ export const destinations: Destination[] = [
       {
         "title": "전자담배 금지",
         "description": "싱가포르에서는 전자담배의 소지·사용·반입이 모두 불법이며, 2026년부터 처벌이 크게 강화되었습니다. 외국인은 벌금과 함께 추방·재입국 금지 처분을 받을 수 있고, 마취제 성분이 든 전자담배(일명 K팟)는 마약 범죄로 다뤄집니다. 전자담배는 절대 가져가지 마시기 바랍니다."
+      },
+      {
+        "title": "껌 반입 금지",
+        "description": "싱가포르는 일반 껌의 수입과 판매를 금지하고 있어 입국 시 껌이 압수되거나 벌금을 물 수 있습니다. 치료용 니코틴 껌 등은 예외이지만 처방전을 지참하는 것이 안전하니, 껌은 가져가지 않는 것이 좋습니다."
       }
     ],
     "souvenirs": [
@@ -6675,7 +6679,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "전자제품",
-        "description": "싱가포르는 전자제품 쇼핑의 천국입니다. 특히 카메라, 스마트폰, 노트북 등이 저렴하게 구매할 수 있습니다."
+        "description": "싱가포르의 전자제품 가격은 한국과 비슷하거나 더 비싼 경우가 많아 예전처럼 저렴하지 않습니다. 구매한다면 공식 매장을 이용하시고, 일정 금액(약 S$100) 이상 구매하면 출국 시 공항에서 부가세(GST) 환급을 신청할 수 있으니 출발 전 공식 사이트에서 확인하세요."
       }
     ],
     "market": [
@@ -6701,7 +6705,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "교통카드",
-        "description": "EZ-Link 카드나 NETS FlashPay 카드를 구매하여 대중교통을 이용할 수 있습니다. 지하철, 버스, 택시 등에서 사용 가능하며, 편의점에서 충전할 수 있습니다."
+        "description": "해외 결제가 가능한 비접촉식 신용·체크카드(Visa, Mastercard 등)나 모바일 페이를 MRT 개찰구와 버스 단말기에 바로 찍고 탈 수 있습니다. 해외 발급 Visa·Mastercard는 이용일마다 약 S$0.60의 관리 수수료가 붙으니 출발 전 공식 사이트에서 확인하세요. EZ-Link나 NETS FlashPay 교통카드를 구매해 역이나 편의점에서 충전해 쓸 수도 있습니다."
       }
     ],
     "mannersEn": [
@@ -6728,6 +6732,10 @@ export const destinations: Destination[] = [
       {
         "title": "Vaping Ban",
         "description": "Possessing, using, or bringing in e-cigarettes is illegal in Singapore, and penalties were sharply increased in 2026. Foreigners may be fined, deported, and banned from re-entry, and vapes laced with etomidate ('Kpods') are treated like drug offences. Do not bring vapes."
+      },
+      {
+        "title": "No Chewing Gum",
+        "description": "Singapore bans the import and sale of regular chewing gum, so gum may be confiscated or fined at entry. Therapeutic gum such as nicotine gum is an exception, but carry a prescription to be safe; it's best not to bring gum."
       }
     ],
     "souvenirsEn": [
@@ -6741,7 +6749,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Electronics",
-        "description": "Singapore is known as a shopping destination for electronics such as cameras, smartphones, and laptops."
+        "description": "Electronics in Singapore are no longer especially cheap compared with many other countries. If you buy, use official stores; purchases above a set amount (about S$100) may qualify for a GST tourist refund at the airport, so check the official site before you go."
       }
     ],
     "marketEn": [
@@ -6761,7 +6769,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Transportation Card",
-        "description": "Use an EZ-Link or NETS FlashPay card for public transport. It works on the MRT, buses, and taxis, and you can top it up at convenience stores."
+        "description": "You can tap a contactless Visa or Mastercard enabled for overseas use (or a mobile wallet) directly at MRT gates and on buses. Foreign-issued Visa and Mastercard cards incur an admin fee of about S$0.60 per day of travel, so check the official site before you go. EZ-Link and NETS FlashPay cards also work and can be topped up at stations and convenience stores."
       }
     ],
     "visa": [
@@ -6796,7 +6804,7 @@ export const destinations: Destination[] = [
       "capitalKo": "싱가포르",
       "region": "Asia · South-Eastern Asia",
       "regionKo": "아시아 · 동남아시아",
-      "population": 5900000,
+      "population": 6100000,
       "languages": [
         "English",
         "Malay",
@@ -6864,7 +6872,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "말레이시아의 공중화장실은 대부분 무료이며, 쇼핑몰, 지하철역, 공원 등에서 쉽게 찾을 수 있습니다. 일부 화장실은 좌변기 대신 양변기 형태를 사용하므로 주의가 필요합니다."
+        "description": "쇼핑몰 화장실은 대부분 무료이며, 일부 공중화장실은 소액을 받습니다. 쪼그려 앉는 화변기나 휴지 대신 물 호스가 있는 화장실도 있으니 휴지를 챙기시는 것이 좋습니다."
       }
     ],
     "souvenirs": [
@@ -6886,13 +6894,13 @@ export const destinations: Destination[] = [
       },
       {
         "title": "말레이시아 향신료",
-        "description": "말레이시아 전통 향신료 세트가 인기입니다. 커리 파우더, 렘파 향신료 등 다양한 향신료를 구매할 수 있습니다."
+        "description": "말레이시아 전통 향신료 세트가 인기입니다. 커리 파우더와 렌당·락사용 양념 페이스트(렘파, rempah) 등 다양한 향신료를 구매할 수 있습니다."
       }
     ],
     "market": [
       {
         "title": "마트 추천템",
-        "description": "7-Eleven, Tesco, Giant 등 대형 마트에서 말레이시아 과자, 커피, 향료 등을 저렴하게 구매할 수 있습니다."
+        "description": "Lotus's(옛 Tesco), AEON, Mydin 등 대형 마트에서 말레이시아 과자, 커피, 향신료 등을 저렴하게 구매할 수 있습니다."
       },
       {
         "title": "약국 상비약",
@@ -6922,7 +6930,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "인터넷 연결",
-        "description": "말레이시아 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. Celcom, Maxis, Digi 등 주요 통신사가 있으며, 공항에서 바로 구매 가능합니다."
+        "description": "말레이시아 eSIM을 사전 구매하거나, 공항에서 현지 SIM을 구매할 수 있습니다. CelcomDigi(셀콤과 디지가 합병), Maxis(Hotlink), U Mobile 등 주요 통신사가 있으며, 공항에서 바로 구매 가능합니다."
       },
       {
         "title": "말레이시아 eSIM",
@@ -6932,7 +6940,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "현금 준비",
-        "description": "말레이시아는 아직도 현금 중심 사회이므로 소액 현금이 필요합니다. 편의점 ATM 위치를 확인하거나, 공항에서 환전하는 것이 좋습니다."
+        "description": "도시에서는 신용카드, 비접촉 결제, QR 결제가 널리 쓰이지만, 야시장·호커 노점·소규모 상점에서는 현금만 받는 경우가 있으니 소액 현금을 준비하시는 것이 좋습니다. 환전은 시내 환전소가 공항보다 환율이 좋은 편입니다."
       },
       {
         "title": "여행자 보험",
@@ -6940,7 +6948,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "여행하기 좋은 시기",
-        "description": "말레이시아는 건기(12월~3월)가 가장 여행하기 좋은 시기입니다. 날씨가 맑고 습도가 낮아 편안하게 여행할 수 있습니다. 우기(4월~11월)는 비가 많지만 호텔 가격이 저렴합니다."
+        "description": "말레이시아는 연중 덥고 습하며 비가 자주 내립니다. 쿠알라룸푸르·페낭 등 서해안은 12월~2월과 6월~8월이 비교적 건조하고, 동해안과 그 앞바다 섬들은 11월~3월 몬순 기간에 비가 많아 일부 리조트가 문을 닫습니다."
       }
     ],
     "mannersEn": [
@@ -6966,7 +6974,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Public restrooms in Malaysia are mostly free and can be easily found at shopping malls, subway stations, and parks. Some restrooms use squat toilets instead of sitting toilets, so be careful."
+        "description": "Restrooms in shopping malls are usually free, while some public toilets charge a small fee. Some have squat toilets or a water hose instead of toilet paper, so carry tissues."
       }
     ],
     "souvenirsEn": [
@@ -6988,13 +6996,13 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Malaysian Spice Sets",
-        "description": "Traditional Malaysian spice sets are popular. You can purchase various spices like curry powder and lemongrass spices."
+        "description": "Traditional Malaysian spice sets are popular. You can buy curry powder and spice pastes (rempah) for dishes such as rendang and laksa."
       }
     ],
     "marketEn": [
       {
         "title": "Market Recommendations",
-        "description": "You can purchase Malaysian snacks, coffee, and spices at affordable prices at large markets like 7-Eleven, Tesco, and Giant."
+        "description": "You can purchase Malaysian snacks, coffee, and spices at affordable prices at large supermarkets like Lotus's (formerly Tesco), AEON, and Mydin."
       },
       {
         "title": "Pharmacy Items",
@@ -7024,11 +7032,11 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Internet Connection",
-        "description": "You can pre-purchase a Malaysian eSIM or buy a local SIM at the airport. Major carriers include Celcom, Maxis, and Digi, and you can purchase directly at the airport."
+        "description": "You can pre-purchase a Malaysian eSIM or buy a local SIM at the airport. Major carriers include CelcomDigi (the merged Celcom and Digi), Maxis (Hotlink), and U Mobile, and you can purchase directly at the airport."
       },
       {
         "title": "Cash Preparation",
-        "description": "Malaysia is still a cash-based society, so small cash is needed. Check ATM locations at convenience stores or exchange at the airport."
+        "description": "Cards, contactless, and QR payments are widely accepted in cities, but night markets, hawker stalls, and small shops may be cash-only, so carry some small cash. City money changers usually offer better rates than the airport."
       },
       {
         "title": "Travel Insurance",
@@ -7036,7 +7044,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Best Time to Visit",
-        "description": "Malaysia is best visited during the dry season (December-March). The weather is clear and humidity is low, making it comfortable for travel. The rainy season (April-November) has more rain but hotel prices are lower."
+        "description": "Malaysia is hot and humid year-round with frequent rain. The west coast (Kuala Lumpur, Penang) is relatively drier in December–February and June–August, while the east coast and its islands get heavy monsoon rain from November to March, when some resorts close."
       }
     ],
     "visa": [
@@ -7121,7 +7129,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "팁 문화",
-        "description": "인도네시아에서는 팁 문화가 일반적입니다. 레스토랑에서는 5~10% 정도, 택시에서는 반올림 정도로 충분합니다. 호텔 벨보이에게는 5,000~10,000루피아 정도의 팁을 주는 것이 좋습니다."
+        "description": "인도네시아에서 팁은 의무가 아닙니다. 식당과 호텔은 계산서에 서비스 요금이 포함된 경우가 많으며, 포함되지 않았다면 소액의 팁을 남기거나 택시 요금을 반올림하면 충분합니다. 호텔 벨보이에게는 소액의 팁을 주는 경우가 많습니다."
       },
       {
         "title": "인사 예절",
@@ -7137,7 +7145,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "인도네시아의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 일부 화장실은 좌변기 대신 양변기 형태를 사용하므로 주의가 필요합니다."
+        "description": "쇼핑몰과 식당 화장실은 대부분 무료이며, 일부 공중화장실은 소액을 받습니다. 쪼그려 앉는 화변기나 휴지 대신 물바가지·호스가 있는 화장실도 있으니 휴지를 챙기시는 것이 좋습니다."
       },
       {
         "title": "마약 엄벌",
@@ -7169,7 +7177,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "마트 추천템",
-        "description": "Indomaret, Alfamart 등 대형 마트에서 인도네시아 과자, 커피, 향신료 등을 저렴하게 구매할 수 있습니다."
+        "description": "Superindo, Transmart, Hypermart 등 대형 마트에서 인도네시아 과자, 커피, 향신료 등을 저렴하게 구매할 수 있습니다."
       },
       {
         "title": "약국 상비약",
@@ -7227,7 +7235,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Tipping Culture",
-        "description": "Tipping is common in Indonesia. About 5~10% at restaurants and rounding up for taxis is sufficient. For hotel bellboys, it's good to tip about 5,000~10,000 rupiah."
+        "description": "Tipping isn't mandatory in Indonesia. Many restaurants and hotels add a service charge to the bill; where none is included, a small tip or rounding up a taxi fare is enough. A small tip for hotel porters is common."
       },
       {
         "title": "Greeting Etiquette",
@@ -7243,7 +7251,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Public restrooms in Indonesia are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. Some restrooms use squat toilets instead of sitting toilets, so be careful."
+        "description": "Restrooms in malls and restaurants are usually free, while some public toilets charge a small fee. Some have squat toilets or a water scoop or hose instead of toilet paper, so carry tissues."
       },
       {
         "title": "Strict Drug Laws",
@@ -7275,7 +7283,7 @@ export const destinations: Destination[] = [
     "marketEn": [
       {
         "title": "Market Recommendations",
-        "description": "You can purchase Indonesian snacks, coffee, and spices at affordable prices at large markets like Indomaret and Alfamart."
+        "description": "You can purchase Indonesian snacks, coffee, and spices at affordable prices at large supermarkets like Superindo, Transmart, and Hypermart."
       },
       {
         "title": "Pharmacy Items",
@@ -7460,7 +7468,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "마트 추천템",
-        "description": "알룐카 초콜릿, 해바라기씨(세미치키), 꿀, 메밀(그레치카), 연유 등이 인기입니다."
+        "description": "알룐카 초콜릿, 해바라기씨(세미치키), 꿀, 메밀(그레치카), 연유 등이 인기입니다. 연유 같은 유제품은 한국 입국 시 검역 대상이 될 수 있으니 미개봉 상업 제품으로 사고, 반입 가능 여부를 출발 전 농림축산검역본부 누리집에서 확인하세요."
       },
       {
         "title": "유제품",

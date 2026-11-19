@@ -6540,6 +6540,62 @@ export const destinations: Destination[] = [
         "description": "EZ-Link 카드나 NETS FlashPay 카드를 구매하여 대중교통을 이용할 수 있습니다. 지하철, 버스, 택시 등에서 사용 가능하며, 편의점에서 충전할 수 있습니다."
       }
     ],
+    "mannersEn": [
+      {
+        "title": "Public Etiquette",
+        "description": "Singapore is famous for being clean, and littering in public or smoking outside designated areas brings heavy fines. Eating and drinking are prohibited on the MRT and buses."
+      },
+      {
+        "title": "Tipping Culture",
+        "description": "Tipping isn't common in Singapore. Most restaurants and hotels already include a service charge. Rounding up the fare is enough for taxis, and some upscale hotels see small tips for bellhops."
+      },
+      {
+        "title": "Transit Etiquette",
+        "description": "Keep priority seats free on the MRT and buses, and don't block the doors. On escalators, stand on the left and walk on the right."
+      },
+      {
+        "title": "Religious Etiquette",
+        "description": "Singapore is home to many religions. Dress appropriately when visiting temples, mosques, or churches, and ask before taking photos."
+      },
+      {
+        "title": "Restroom Usage",
+        "description": "Most public restrooms in Singapore are free and very clean. You'll find them easily in malls, MRT stations, and parks. Toilet paper goes in the toilet."
+      }
+    ],
+    "souvenirsEn": [
+      {
+        "title": "Singapore Slippers",
+        "description": "Singapore slippers are a popular souvenir, available in many designs and colors."
+      },
+      {
+        "title": "Spices and Kaya Jam",
+        "description": "Local spices and kaya jam are popular souvenirs and a good way to bring home Singapore's signature flavors."
+      },
+      {
+        "title": "Electronics",
+        "description": "Singapore is known as a shopping destination for electronics such as cameras, smartphones, and laptops."
+      }
+    ],
+    "marketEn": [
+      {
+        "title": "Convenience Store Picks",
+        "description": "Convenience stores such as 7-Eleven and Cheers sell local snacks and drinks. They're open 24 hours and easy to find anywhere in the city."
+      }
+    ],
+    "essentialsEn": [
+      {
+        "title": "Electrical Adapter",
+        "description": "Singapore uses Type G plugs (230V, 50Hz). You'll need a UK-style plug adapter. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
+      },
+      {
+        "title": "Internet Connection",
+        "description": "You can buy a Singapore eSIM in advance or a local SIM at the airport. The main carriers are Singtel, StarHub, and M1, all available right at the airport."
+      },
+      {
+        "title": "Transportation Card",
+        "description": "Use an EZ-Link or NETS FlashPay card for public transport. It works on the MRT, buses, and taxis, and you can top it up at convenience stores."
+      }
+    ],
     "visa": [
       {
         "title": "무비자 입국",

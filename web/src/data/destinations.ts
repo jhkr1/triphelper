@@ -87,7 +87,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "약국 필수템",
-        "description": "동전파스(근육통 완화), 후시딘(구강염 치료), 정관장 홍삼정 스틱 등이 약국에서 인기입니다. 처방전 없이 구매 가능한 일반의약품이며, 약사에게 상담을 받을 수 있습니다."
+        "description": "동전파스(근육통 완화), 후시딘(상처·피부 감염에 바르는 항생제 연고), 정관장 홍삼정 스틱 등이 약국에서 인기입니다. 처방전 없이 구매할 수 있으며, 약사에게 복용·사용법을 상담받을 수 있습니다."
       },
       {
         "title": "드러그스토어 뷰티템",
@@ -179,7 +179,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Pharmacy Essentials",
-        "description": "Popular items at pharmacies include coin patches (for muscle pain relief), Fusidin (for oral inflammation), and Cheong Kwan Jang ginseng sticks. These are over-the-counter medicines available without a prescription, and pharmacists can provide consultation."
+        "description": "Popular pharmacy items include coin patches (for muscle pain relief), Fucidin (an antibiotic ointment for cuts and skin infections), and Cheong Kwan Jang red ginseng sticks. They are available without a prescription, and pharmacists can advise you on how to use them."
       },
       {
         "title": "Beauty Drugstore Items",
@@ -225,7 +225,11 @@ export const destinations: Destination[] = [
     "visaEn": [
       {
         "title": "Visa-Free Entry",
-        "description": "US citizens can enter South Korea visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months."
+        "description": "US citizens can visit South Korea visa-free for up to 90 days for tourism. Your passport must be valid for your entire stay (Korea sets no 6-month minimum, but some airlines may apply their own rules)."
+      },
+      {
+        "title": "K-ETA and e-Arrival Card",
+        "description": "US citizens are temporarily exempt from the K-ETA (Korea Electronic Travel Authorization) until December 31, 2026; during the exemption, fill in the online e-Arrival Card before landing. From January 1, 2027, you will need an approved K-ETA before departure (apply at least 72 hours ahead on the official site k-eta.go.kr). Exemption dates can change, so check the official site before you go."
       }
     ],
     "cities": [
@@ -256,7 +260,8 @@ export const destinations: Destination[] = [
         "한국어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "japan",
@@ -329,13 +334,13 @@ export const destinations: Destination[] = [
       },
       {
         "title": "면세점 상품",
-        "description": "나리타 한정 위스키, 하카타 도자기 등 면세점 한정 상품들이 인기입니다. 공항 면세점에서 구매하면 더 저렴하게 살 수 있습니다."
+        "description": "공항 면세점에서는 공항 한정 과자, 일본 위스키와 사케 등이 인기입니다. 출국 직전에 선물을 한 번에 구매하기 좋습니다."
       }
     ],
     "market": [
       {
         "title": "드럭스토어 상비약",
-        "description": "이부키 통증 패치, 오타이산 위장약 등이 약국이나 드럭스토어에서 인기입니다. 처방전 없이 구매 가능한 일반의약품입니다."
+        "description": "샤론파스·로이히츠보코(동전파스) 같은 통증 패치, 오타이산 위장약 등이 약국이나 드럭스토어에서 인기입니다. 처방전 없이 구매 가능한 일반의약품입니다."
       },
       {
         "title": "편의점 추천템",
@@ -347,11 +352,11 @@ export const destinations: Destination[] = [
       },
       {
         "title": "키친템",
-        "description": "닌자 칼, 교토 마차 가루 등 주방용품이 좋은 선물이 됩니다. 일본의 정교한 주방 도구들은 전 세계적으로 인기가 높습니다."
+        "description": "사카이·세키 등 유명 산지의 일본 식칼, 교토 말차 가루 등이 좋은 선물이 됩니다. 칼은 기내 반입이 안 되므로 위탁 수하물에 넣어야 합니다."
       },
       {
         "title": "뷰티템",
-        "description": "료한(양치) 시트, 사보리노 마스크 등 뷰티 제품들이 드럭스토어에서 구매 가능합니다. 다양한 브랜드와 가격대가 있습니다."
+        "description": "사보리노 아침 마스크 등 뷰티 제품을 드럭스토어에서 구매할 수 있습니다. 다양한 브랜드와 가격대가 있습니다."
       }
     ],
     "essentials": [
@@ -431,13 +436,13 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Duty-Free Items",
-        "description": "Duty-free exclusive items like Narita limited whisky and Hakata ceramics are popular. You can purchase them at lower prices at airport duty-free shops."
+        "description": "Airport-exclusive sweets and Japanese whisky and sake are popular at airport duty-free shops. They're convenient for picking up last-minute gifts before departure."
       }
     ],
     "marketEn": [
       {
         "title": "Drugstore Essentials",
-        "description": "Ibuki pain patches and Otaisan stomach medicine are popular at pharmacies and drugstores. These are over-the-counter medicines available without a prescription."
+        "description": "Pain patches such as Salonpas and Roihi-tsuboko, and Ota-isan stomach medicine are popular at pharmacies and drugstores. These are over-the-counter medicines available without a prescription."
       },
       {
         "title": "Convenience Store Recommendations",
@@ -449,11 +454,11 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Kitchen Items",
-        "description": "Ninja knives and Kyoto matcha powder make great gifts. Japanese precision kitchen tools are popular worldwide."
+        "description": "Japanese kitchen knives from famous makers in Sakai or Seki, and Kyoto matcha powder make great gifts. Knives are not allowed in carry-on bags, so pack them in checked baggage."
       },
       {
         "title": "Beauty Items",
-        "description": "Beauty products like Ryo-han (toothpaste) sheets and Sabolino masks are available at drugstores. There's a wide variety of brands and price ranges."
+        "description": "Beauty products like Saborino morning face masks are available at drugstores. There's a wide variety of brands and price ranges."
       }
     ],
     "essentialsEn": [
@@ -485,21 +490,29 @@ export const destinations: Destination[] = [
     "visa": [
       {
         "title": "무비자 입국",
-        "description": "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "description": "한국인은 관광 목적으로 최대 90일간 무비자 입국이 가능합니다. 여권은 체류 기간 동안 유효하면 되며(일본은 6개월 이상 잔여 기간을 요구하지 않지만, 일부 항공사는 자체 기준을 둘 수 있습니다), 귀국 또는 제3국행 항공권을 소지하는 것이 좋습니다."
       },
       {
         "title": "입국 시 필요 서류",
-        "description": "유효한 여권, 왕복 항공권, 숙박 예약 확인서를 준비하시기 바랍니다. 입국 심사 시 여행 목적과 체류 기간을 물어볼 수 있습니다."
+        "description": "유효한 여권과 귀국(또는 제3국행) 항공권을 준비하시기 바랍니다. 숙소 예약 확인서가 필수 서류는 아니지만, 입국 심사에서 체류지 주소·여행 목적·체류 기간을 물어볼 수 있으니 숙소 정보를 바로 보여줄 수 있게 준비하는 것이 좋습니다."
+      },
+      {
+        "title": "Visit Japan Web·JESTA",
+        "description": "입국 전 'Visit Japan Web'에 입국·세관 정보를 등록하면 QR 코드로 빠르게 수속할 수 있습니다. 일본의 전자여행허가(JESTA)는 2028년도 이후 도입 예정으로 현재는 필요하지 않습니다. 도입 시기는 바뀔 수 있으니 출발 전 공식 사이트에서 확인하세요."
       }
     ],
     "visaEn": [
       {
         "title": "Visa-Free Entry",
-        "description": "US citizens can enter Japan visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+        "description": "US citizens can visit Japan visa-free for up to 90 days for tourism. Your passport must be valid for your entire stay (Japan has no 6-month rule, though some airlines apply their own), and you should hold a return or onward ticket."
       },
       {
         "title": "Required Documents",
-        "description": "Prepare a valid passport, round-trip ticket, and accommodation confirmation. Immigration may ask about your travel purpose and length of stay."
+        "description": "Bring a valid passport and a return or onward ticket. An accommodation confirmation isn't a formal requirement, but immigration may ask for your address in Japan, travel purpose, and length of stay, so keep your hotel details handy."
+      },
+      {
+        "title": "Visit Japan Web & JESTA",
+        "description": "Register your immigration and customs details on Visit Japan Web before arrival to get QR codes for faster processing. Japan's planned electronic travel authorization (JESTA) is expected from fiscal 2028 at the earliest and is not required yet. Timing may change, so check the official site before you go."
       }
     ],
     "cities": [
@@ -530,7 +543,8 @@ export const destinations: Destination[] = [
         "일본어"
       ],
       "drivingSide": "left"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "france",
@@ -587,7 +601,7 @@ export const destinations: Destination[] = [
     "souvenirs": [
       {
         "title": "과자 및 식품",
-        "description": "라뒤레 마카롱, 파리 바게트 초콜릿, 카망베르 치즈 등이 인기 기념품입니다. 프랑스의 대표적인 미식 문화를 담은 선물로 좋습니다."
+        "description": "라뒤레 마카롱, 본 마망(Bonne Maman) 비스킷·잼, 마들렌, 게랑드 소금 등이 인기 기념품입니다. 단, 카망베르 등 치즈는 한국 입국 시 휴대 반입이 금지된 유제품이니 현지에서 즐기시기 바랍니다."
       },
       {
         "title": "향수 및 화장품",
@@ -617,15 +631,15 @@ export const destinations: Destination[] = [
       },
       {
         "title": "약국 상비약",
-        "description": "몬프티커 약국에서 멀티비타민, 감기약, 파스 등을 구매할 수 있습니다. 처방전 없이 구매 가능한 일반의약품입니다."
+        "description": "감기약, 진통제, 파스 등 일반의약품은 초록색 십자가 간판의 약국(pharmacie)에서만 살 수 있습니다. 증상을 설명하면 약사가 처방전 없이 살 수 있는 제품을 추천해 줍니다."
       },
       {
         "title": "미식 선물용 식료품",
-        "description": "치즈, 와인, 생하몽 등 미식 선물용 식료품들이 좋은 선물이 됩니다. 프랑스의 다양한 지역 특산품을 만나볼 수 있습니다."
+        "description": "와인, 잼, 초콜릿, 디종 머스터드 등이 좋은 미식 선물이 됩니다. 햄·소시지 같은 육가공품과 치즈 등 유제품은 한국 입국 시 휴대 반입이 금지되어 과태료가 부과될 수 있으니 현지에서 즐기시기 바랍니다."
       },
       {
-        "title": "파리 바자르 상품",
-        "description": "파리 바자르에서 파운드 케이크, 크래커 세트 등을 구매할 수 있습니다. 프랑스의 전통 과자들을 저렴하게 살 수 있습니다."
+        "title": "슈퍼마켓 과자",
+        "description": "모노프리(Monoprix), 까르푸 등 슈퍼마켓에서 비스킷, 마들렌, 잼 같은 프랑스 과자를 저렴하게 살 수 있습니다."
       }
     ],
     "essentials": [
@@ -689,7 +703,7 @@ export const destinations: Destination[] = [
     "souvenirsEn": [
       {
         "title": "Confectionery and Food",
-        "description": "Ladurée macarons, Paris baguette chocolate, and Camembert cheese are popular souvenirs. These make great gifts representing French gastronomic culture."
+        "description": "Ladurée macarons, Bonne Maman biscuits and jam, madeleines, and Guérande salt are popular souvenirs. These make great gifts representing French gastronomic culture."
       },
       {
         "title": "Perfumes and Cosmetics",
@@ -719,15 +733,15 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Pharmacy Essentials",
-        "description": "You can purchase multivitamins, cold medicine, and patches at Monoprix pharmacies. These are over-the-counter medicines available without a prescription."
+        "description": "Over-the-counter medicines such as cold remedies, painkillers and patches are sold only in pharmacies (look for the green cross). Describe your symptoms and the pharmacist can recommend non-prescription products."
       },
       {
         "title": "Gourmet Gift Items",
-        "description": "Cheese, wine, and saucisson make great gourmet gifts. You can find a variety of regional specialty products from different parts of France."
+        "description": "Wine, jams, chocolate and Dijon mustard make great gourmet gifts. Cured meats like saucisson are restricted by US customs, so check the rules before buying meat products to bring home."
       },
       {
-        "title": "Paris Market Items",
-        "description": "You can purchase pound cakes and cracker sets from Paris markets. You can find traditional French pastries at affordable prices."
+        "title": "Supermarket Treats",
+        "description": "Supermarkets such as Monoprix and Carrefour sell French biscuits, madeleines and jams at low prices."
       }
     ],
     "essentialsEn": [
@@ -758,22 +772,30 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국 (Schengen)",
-        "description": "한국인은 Schengen 지역(프랑스 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "무비자 입국",
+        "description": "한국인은 프랑스를 포함한 솅겐 지역에서 180일 중 최대 90일까지 비자 없이 체류할 수 있습니다. 여권은 솅겐 지역 출국 예정일 기준 3개월 이상 유효해야 하며, 발급일이 10년 이내여야 합니다. 입국 심사 시 귀국(또는 제3국행) 항공권, 숙소, 체류 경비를 증명할 자료를 요구받을 수 있습니다."
       },
       {
         "title": "입국 시 필요 서류",
-        "description": "유효한 여권, 왕복 항공권, 숙박 예약 확인서, 여행자 보험 증서를 준비하시기 바랍니다. 입국 심사 시 여행 목적과 체류 기간을 물어볼 수 있습니다."
+        "description": "유효한 여권, 귀국(또는 제3국행) 항공권, 숙소 예약 확인서, 체류 경비를 증명할 자료를 준비하시기 바랍니다. 여행자 보험은 무비자 입국의 필수 서류는 아니지만 가입을 권장합니다. 입국 심사 시 여행 목적과 체류 기간을 물어볼 수 있습니다."
+      },
+      {
+        "title": "EES 출입국 등록",
+        "description": "2026년 4월부터 솅겐 지역 출입국 시 여권 도장 대신 EES(출입국 시스템)에 얼굴 사진과 지문(만 12세 미만은 지문 제외)이 등록됩니다. 첫 입국 시 등록 절차로 대기 시간이 길어질 수 있습니다. ETIAS(유럽 사전 여행 허가)는 아직 시행되지 않았고 공식 시행일도 정해지지 않아 지금은 신청할 필요가 없습니다. 유료 대행 사이트에 주의하시고, 출발 전 공식 사이트(travel-europe.europa.eu)에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry (Schengen)",
-        "description": "US citizens can enter France (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months, and you must have a return ticket."
+        "title": "Visa-Free Entry",
+        "description": "US citizens can stay in the Schengen area (including France) visa-free for up to 90 days in any 180-day period. Your passport must be valid for at least 3 months beyond your planned departure from the Schengen area and issued within the last 10 years (6 months' validity is recommended). Border officers may ask for a return or onward ticket, accommodation details and proof of sufficient funds."
       },
       {
         "title": "Required Documents",
-        "description": "Prepare a valid passport, round-trip ticket, accommodation confirmation, and travel insurance certificate. Immigration may ask about your travel purpose and length of stay."
+        "description": "Carry a valid passport, a return or onward ticket, accommodation confirmation and proof of sufficient funds. Travel insurance is not mandatory for visa-free visitors but is strongly recommended. Immigration may ask about your travel purpose and length of stay."
+      },
+      {
+        "title": "EES Border Registration",
+        "description": "Since April 2026, the Entry/Exit System (EES) records your face and fingerprints (no fingerprints for children under 12) instead of stamping your passport. Expect longer lines on your first entry. ETIAS (the EU travel authorization) has not launched and has no official start date, so you do not need it yet. Avoid paid third-party sites and check the official site (travel-europe.europa.eu) before you go."
       }
     ],
     "cities": [
@@ -804,7 +826,8 @@ export const destinations: Destination[] = [
         "프랑스어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "spain",
@@ -861,7 +884,7 @@ export const destinations: Destination[] = [
     "souvenirs": [
       {
         "title": "식품 기념품",
-        "description": "하몬, 이베리코 살라미, 엑스트라 버진 올리브오일 등이 인기 기념품입니다. 스페인의 대표적인 미식 문화를 담은 선물로 좋습니다."
+        "description": "엑스트라 버진 올리브오일, 투론(Turrón), 사프란 등이 인기 기념품입니다. 하몬, 이베리코 살라미 등 육가공품은 한국 입국 시 휴대 반입이 금지되어 과태료가 부과될 수 있으니 현지에서 즐기시기 바랍니다."
       },
       {
         "title": "플라멩코 소품",
@@ -891,7 +914,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "약국 상비약",
-        "description": "엔솔(소화제), Nolotil 진통제, 아프터선 젤 등이 약국에서 인기입니다. 처방전 없이 구매 가능한 일반의약품입니다."
+        "description": "Almax(제산제), 이부프로펜·파라세타몰 진통제, 애프터선 젤 등은 약국에서 처방전 없이 구매할 수 있습니다. 진통제 놀로틸(Nolotil)은 스페인에서 처방전이 필요한 약이며, 부작용 위험 때문에 외국인 여행자에게는 권장되지 않습니다."
       },
       {
         "title": "요리 재료",
@@ -967,7 +990,7 @@ export const destinations: Destination[] = [
     "souvenirsEn": [
       {
         "title": "Food Souvenirs",
-        "description": "Jamón, Iberico salami, and extra virgin olive oil are popular souvenirs. These make great gifts representing Spanish gastronomic culture."
+        "description": "Extra virgin olive oil, turrón and saffron are popular souvenirs. Cured meats like jamón and Iberico salami are restricted by US customs, so enjoy them in Spain rather than packing them home."
       },
       {
         "title": "Flamenco Items",
@@ -997,7 +1020,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Pharmacy Essentials",
-        "description": "Enso (digestive), Nolotil pain reliever, and after-sun gel are popular at pharmacies. These are over-the-counter medicines available without a prescription."
+        "description": "Almax (antacid), ibuprofen or paracetamol painkillers, and after-sun gel are available at pharmacies without a prescription. Nolotil (metamizole) requires a prescription in Spain and is not recommended for visitors because of the risk of serious side effects."
       },
       {
         "title": "Cooking Ingredients",
@@ -1040,14 +1063,22 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국 (Schengen)",
-        "description": "한국인은 Schengen 지역(스페인 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "무비자 입국",
+        "description": "한국인은 스페인을 포함한 솅겐 지역에서 180일 중 최대 90일까지 비자 없이 체류할 수 있습니다. 여권은 솅겐 지역 출국 예정일 기준 3개월 이상 유효해야 하며, 발급일이 10년 이내여야 합니다. 입국 심사 시 귀국(또는 제3국행) 항공권, 숙소, 체류 경비를 증명할 자료를 요구받을 수 있습니다."
+      },
+      {
+        "title": "EES 출입국 등록",
+        "description": "2026년 4월부터 솅겐 지역 출입국 시 여권 도장 대신 EES(출입국 시스템)에 얼굴 사진과 지문(만 12세 미만은 지문 제외)이 등록됩니다. 첫 입국 시 등록 절차로 대기 시간이 길어질 수 있습니다. ETIAS(유럽 사전 여행 허가)는 아직 시행되지 않았고 공식 시행일도 정해지지 않아 지금은 신청할 필요가 없습니다. 유료 대행 사이트에 주의하시고, 출발 전 공식 사이트(travel-europe.europa.eu)에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry (Schengen)",
-        "description": "US citizens can enter Spain (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+        "title": "Visa-Free Entry",
+        "description": "US citizens can stay in the Schengen area (including Spain) visa-free for up to 90 days in any 180-day period. Your passport must be valid for at least 3 months beyond your planned departure from the Schengen area and issued within the last 10 years (6 months' validity is recommended). Border officers may ask for a return or onward ticket, accommodation details and proof of sufficient funds."
+      },
+      {
+        "title": "EES Border Registration",
+        "description": "Since April 2026, the Entry/Exit System (EES) records your face and fingerprints (no fingerprints for children under 12) instead of stamping your passport. Expect longer lines on your first entry. ETIAS (the EU travel authorization) has not launched and has no official start date, so you do not need it yet. Avoid paid third-party sites and check the official site (travel-europe.europa.eu) before you go."
       }
     ],
     "cities": [
@@ -1078,7 +1109,8 @@ export const destinations: Destination[] = [
         "스페인어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "united-states",
@@ -1311,7 +1343,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "ESTA 신청 방법",
-        "description": "미국 국토안보부 공식 웹사이트(esta.cbp.dhs.gov)에서 신청할 수 있습니다. 수수료는 약 $21이며, 승인 여부는 이메일로 통보됩니다."
+        "description": "미국 국토안보부 공식 웹사이트(esta.cbp.dhs.gov)나 공식 앱에서 신청할 수 있습니다. 수수료는 약 40달러이며 물가에 따라 매년 조정되므로, 출발 전 공식 사이트에서 확인하세요. 대행 사이트는 추가 수수료를 받으니 주의하시기 바랍니다. 승인 여부는 이메일로 통보됩니다."
       }
     ],
     "visaEn": [
@@ -1348,7 +1380,8 @@ export const destinations: Destination[] = [
         "영어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "italy",
@@ -1416,8 +1449,8 @@ export const destinations: Destination[] = [
         "description": "에스프레소 커피, 카페 보르본 캡슐 등이 좋은 선물이 됩니다. 이탈리아의 커피 문화를 집에서 즐길 수 있습니다."
       },
       {
-        "title": "파스타 및 치즈",
-        "description": "파스타, 페스토 소스, 그라나 파다노 치즈 등이 인기입니다. 이탈리아 요리를 집에서 재현할 수 있는 재료들을 구매할 수 있습니다."
+        "title": "파스타 및 소스",
+        "description": "파스타, 페스토 소스, 리몬첼로 등이 인기입니다. 그라나 파다노 등 치즈는 한국 입국 시 휴대 반입이 금지된 유제품이니 현지에서 즐기시기 바랍니다."
       },
       {
         "title": "면세점 상품",
@@ -1439,7 +1472,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "치즈 및 햄",
-        "description": "Parmigiano Reggiano, 프로슈토 슬라이스 등이 좋은 선물이 됩니다. 이탈리아의 대표적인 치즈와 햄을 구매할 수 있습니다."
+        "description": "파르미지아노 레지아노, 프로슈토 등은 현지에서 맛보시기 바랍니다. 육가공품과 치즈 등 유제품은 한국 입국 시 휴대 반입이 금지되어 과태료가 부과될 수 있습니다. 선물용으로는 파스타, 발사믹 식초, 페스토 등이 좋습니다."
       },
       {
         "title": "천연 화장품",
@@ -1545,7 +1578,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Cheese and Ham",
-        "description": "Parmigiano Reggiano and prosciutto slices make great gifts. You can purchase representative Italian cheeses and hams."
+        "description": "Enjoy Parmigiano Reggiano and prosciutto locally. Meat products are restricted by US customs, so check the rules before packing cured meats; pasta, balsamic vinegar and pesto are safer gift choices."
       },
       {
         "title": "Natural Cosmetics",
@@ -1584,14 +1617,22 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국 (Schengen)",
-        "description": "한국인은 Schengen 지역(이탈리아 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "무비자 입국",
+        "description": "한국인은 이탈리아를 포함한 솅겐 지역에서 180일 중 최대 90일까지 비자 없이 체류할 수 있습니다. 여권은 솅겐 지역 출국 예정일 기준 3개월 이상 유효해야 하며, 발급일이 10년 이내여야 합니다. 입국 심사 시 귀국(또는 제3국행) 항공권, 숙소, 체류 경비를 증명할 자료를 요구받을 수 있습니다."
+      },
+      {
+        "title": "EES 출입국 등록",
+        "description": "2026년 4월부터 솅겐 지역 출입국 시 여권 도장 대신 EES(출입국 시스템)에 얼굴 사진과 지문(만 12세 미만은 지문 제외)이 등록됩니다. 첫 입국 시 등록 절차로 대기 시간이 길어질 수 있습니다. ETIAS(유럽 사전 여행 허가)는 아직 시행되지 않았고 공식 시행일도 정해지지 않아 지금은 신청할 필요가 없습니다. 유료 대행 사이트에 주의하시고, 출발 전 공식 사이트(travel-europe.europa.eu)에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry (Schengen)",
-        "description": "US citizens can enter Italy (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+        "title": "Visa-Free Entry",
+        "description": "US citizens can stay in the Schengen area (including Italy) visa-free for up to 90 days in any 180-day period. Your passport must be valid for at least 3 months beyond your planned departure from the Schengen area and issued within the last 10 years (6 months' validity is recommended). Border officers may ask for a return or onward ticket, accommodation details and proof of sufficient funds."
+      },
+      {
+        "title": "EES Border Registration",
+        "description": "Since April 2026, the Entry/Exit System (EES) records your face and fingerprints (no fingerprints for children under 12) instead of stamping your passport. Expect longer lines on your first entry. ETIAS (the EU travel authorization) has not launched and has no official start date, so you do not need it yet. Avoid paid third-party sites and check the official site (travel-europe.europa.eu) before you go."
       }
     ],
     "cities": [
@@ -1622,7 +1663,8 @@ export const destinations: Destination[] = [
         "이탈리아어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "turkey",
@@ -1852,7 +1894,7 @@ export const destinations: Destination[] = [
     "visa": [
       {
         "title": "무비자 입국",
-        "description": "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "description": "한국인은 관광 목적으로 180일 중 최대 90일간 무비자로 머물 수 있습니다. 여권은 입국일 기준 6개월 이상 남아 있는 것이 안전하며(튀르키예 규정상 최소 체류 기간+60일), 입국 심사에서 귀국 항공권을 요구받을 수 있습니다."
       }
     ],
     "visaEn": [
@@ -1889,7 +1931,8 @@ export const destinations: Destination[] = [
         "튀르키예어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "mexico",
@@ -1968,7 +2011,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "마트 추천템",
-        "description": "Soriana/La Comer 마트의 토르티야 칩, 살사, 마사카루 등이 인기입니다. 멕시코의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
+        "description": "Soriana/La Comer 마트의 토르티야 칩, 살사, 마사 아리나(옥수수 가루) 등이 인기입니다. 멕시코의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
       },
       {
         "title": "약국 추천템",
@@ -1994,7 +2037,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "입국 서류",
-        "description": "입국 시 FMM 관광카드를 보관하고, 출국 시 제출해야 합니다. 분실 시 벌금이 부과될 수 있으므로 주의가 필요합니다."
+        "description": "항공편으로 입국하면 종이 FMM 관광카드 대신 여권 입국 도장이나 디지털 FMM(FMMD)으로 체류 허가 일수가 기록됩니다. 멕시코 이민청(INM) 누리집에서 디지털 FMM을 내려받아 보관하고, 출국할 때 요청하면 보여 줄 수 있도록 하시기 바랍니다. 육로로 입국할 때는 FMM을 따로 작성해야 합니다. 절차가 자주 바뀌니 출발 전 공식 사이트에서 확인하세요."
       },
       {
         "title": "인터넷 연결",
@@ -2092,7 +2135,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Entry Documents",
-        "description": "Keep the FMM tourist card upon entry and submit it when leaving. Loss may result in fines, so be careful."
+        "description": "If you arrive by air, the paper FMM tourist card has been replaced by a passport stamp or digital FMM (FMMD) showing your permitted stay. Download the digital FMM from the INM (immigration) website and keep it for departure. Land arrivals still need to complete an FMM. Procedures change often, so check the official site before you go."
       },
       {
         "title": "Internet Connection",
@@ -2114,13 +2157,13 @@ export const destinations: Destination[] = [
     "visa": [
       {
         "title": "무비자 입국",
-        "description": "한국인은 관광 목적으로 180일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "description": "한국인은 관광 목적으로 최대 180일까지 무비자로 머물 수 있습니다. 다만 실제 체류 가능 일수는 입국 심사관이 정해 여권 도장이나 디지털 입국 기록에 적어 주며, 180일보다 짧게 허가되는 경우도 많습니다. 여권은 체류 기간 내내 유효해야 하며, 항공사 탑승 문제를 피하려면 6개월 이상 남겨 두는 것이 안전합니다. 돌아가는 항공권과 숙소 예약 내역을 준비하시기 바랍니다."
       }
     ],
     "visaEn": [
       {
         "title": "Visa-Free Entry",
-        "description": "US citizens can enter Mexico visa-free for up to 180 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+        "description": "US citizens can visit Mexico visa-free for tourism for up to 180 days, but the immigration officer decides the actual number of days and records it at entry; it is often fewer than 180. Your passport must be valid for your whole stay (6+ months is recommended to avoid airline issues). Have a return or onward ticket and accommodation details ready."
       }
     ],
     "cities": [
@@ -2151,7 +2194,8 @@ export const destinations: Destination[] = [
         "스페인어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "united-kingdom",
@@ -2238,7 +2282,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Boots 약국",
-        "description": "세룰러7, No7 뷰티 제품 등이 Boots 약국에서 인기입니다. 영국의 인기 스킨케어 제품들을 구매할 수 있습니다."
+        "description": "Boots 자체 브랜드인 No7, Soap & Glory 등의 뷰티 제품이 인기입니다. 영국의 인기 스킨케어 제품들을 구매할 수 있습니다."
       },
       {
         "title": "Tesco 상품",
@@ -2344,7 +2388,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Boots Pharmacy",
-        "description": "CeraVe and No7 beauty products are popular at Boots pharmacies. You can purchase popular British skincare products."
+        "description": "Boots' own brands No7 and Soap & Glory are popular beauty products. You can purchase popular British skincare products."
       },
       {
         "title": "Tesco Products",
@@ -2387,14 +2431,22 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국",
-        "description": "한국인은 관광 목적으로 6개월간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "ETA 필요",
+        "description": "한국인은 관광 목적으로 최대 6개월까지 비자 없이 체류할 수 있지만, 출국 전 반드시 전자여행허가(ETA)를 받아야 합니다. ETA는 영국 정부 공식 앱(UK ETA) 또는 gov.uk에서 신청하며 보통 3영업일 이내에 결과가 나옵니다. 수수료는 약 20파운드이며 변동될 수 있으니 출발 전 공식 사이트에서 확인하세요. 한 번 받으면 2년간(그 전에 여권이 만료되면 만료일까지) 여러 번 방문할 수 있습니다."
+      },
+      {
+        "title": "여권·입국 서류",
+        "description": "영국은 여권이 체류 기간 내내 유효하면 입국할 수 있습니다. 귀국 항공권 등 체류 후 출국 계획과 체류 경비를 증명할 자료를 준비하시기 바랍니다. 여권을 새로 발급받으면 ETA도 다시 신청해야 하며, 추가 수수료를 받는 대행 사이트에 주의하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry",
-        "description": "US citizens can enter the UK visa-free for up to 6 months for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+        "title": "ETA Required",
+        "description": "US citizens can visit the UK visa-free for up to 6 months, but must get an Electronic Travel Authorisation (ETA) before travelling. Apply on the official UK ETA app or gov.uk; decisions usually take up to 3 working days. The fee is about £20 and may change, so check the official site before you go. An ETA lasts 2 years (or until your passport expires) and covers multiple trips."
+      },
+      {
+        "title": "Passport & Documents",
+        "description": "Your passport must be valid for your whole stay in the UK. Be ready to show a return or onward ticket and proof of funds. If you get a new passport, you need a new ETA. Avoid unofficial sites that charge extra fees."
       }
     ],
     "cities": [
@@ -2425,7 +2477,8 @@ export const destinations: Destination[] = [
         "영어"
       ],
       "drivingSide": "left"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "germany",
@@ -2486,7 +2539,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "전통 공예품",
-        "description": "바데세 라이너 향초, 카우보이 컵 등이 인기입니다. 독일의 전통 공예품을 구매할 수 있습니다."
+        "description": "에르츠게비르게 지방의 호두까기 인형과 향 피우는 인형(Räuchermännchen), 전통 맥주잔(Bierkrug) 등이 인기 전통 공예품입니다."
       },
       {
         "title": "크리스마스 마켓 상품",
@@ -2498,7 +2551,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "면세점 상품",
-        "description": "바이텐세브 향수, 니베아 세트 등이 면세점에서 인기입니다. 공항 면세점에서 구매할 수 있습니다."
+        "description": "4711 오드콜로뉴, 니베아 세트 등이 면세점에서 인기입니다. 공항 면세점에서 구매할 수 있습니다."
       }
     ],
     "market": [
@@ -2508,7 +2561,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "마트 상품",
-        "description": "REWE, Edeka의 소시지, 프레첼, 치즈 등이 좋은 선물이 됩니다. 독일의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
+        "description": "REWE, Edeka에서는 머스터드, 프레첼 과자, 티칸네(Teekanne) 차 등을 저렴하게 살 수 있습니다. 소시지 등 육가공품과 치즈 등 유제품은 한국 입국 시 휴대 반입이 금지되어 과태료가 부과될 수 있습니다."
       },
       {
         "title": "약국 추천템",
@@ -2592,7 +2645,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Traditional Crafts",
-        "description": "Badesalz scented candles and cowboy cups are popular. You can purchase traditional German crafts."
+        "description": "Erzgebirge nutcrackers and incense smokers (Räuchermännchen) and traditional beer steins are popular German crafts."
       },
       {
         "title": "Christmas Market Items",
@@ -2604,7 +2657,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Duty-Free Items",
-        "description": "Wütensee perfume and Nivea sets are popular at duty-free shops. You can purchase them at airport duty-free shops."
+        "description": "4711 Eau de Cologne and Nivea sets are popular at duty-free shops. You can purchase them at airport duty-free shops."
       }
     ],
     "marketEn": [
@@ -2614,7 +2667,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Market Products",
-        "description": "Sausages, pretzels, and cheese from REWE and Edeka make great gifts. You can purchase representative German ingredients at affordable prices."
+        "description": "REWE and Edeka sell mustard, pretzel snacks and Teekanne teas at low prices. Sausages and other meat products are restricted by US customs, so check the rules before packing them."
       },
       {
         "title": "Pharmacy Recommendations",
@@ -2661,14 +2714,22 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국 (Schengen)",
-        "description": "한국인은 Schengen 지역(독일 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "무비자 입국",
+        "description": "한국인은 독일을 포함한 솅겐 지역에서 180일 중 최대 90일까지 비자 없이 체류할 수 있습니다. 여권은 솅겐 지역 출국 예정일 기준 3개월 이상 유효해야 하며, 발급일이 10년 이내여야 합니다. 입국 심사 시 귀국(또는 제3국행) 항공권, 숙소, 체류 경비를 증명할 자료를 요구받을 수 있습니다."
+      },
+      {
+        "title": "EES 출입국 등록",
+        "description": "2026년 4월부터 솅겐 지역 출입국 시 여권 도장 대신 EES(출입국 시스템)에 얼굴 사진과 지문(만 12세 미만은 지문 제외)이 등록됩니다. 첫 입국 시 등록 절차로 대기 시간이 길어질 수 있습니다. ETIAS(유럽 사전 여행 허가)는 아직 시행되지 않았고 공식 시행일도 정해지지 않아 지금은 신청할 필요가 없습니다. 유료 대행 사이트에 주의하시고, 출발 전 공식 사이트(travel-europe.europa.eu)에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry (Schengen)",
-        "description": "US citizens can enter Germany (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+        "title": "Visa-Free Entry",
+        "description": "US citizens can stay in the Schengen area (including Germany) visa-free for up to 90 days in any 180-day period. Your passport must be valid for at least 3 months beyond your planned departure from the Schengen area and issued within the last 10 years (6 months' validity is recommended). Border officers may ask for a return or onward ticket, accommodation details and proof of sufficient funds."
+      },
+      {
+        "title": "EES Border Registration",
+        "description": "Since April 2026, the Entry/Exit System (EES) records your face and fingerprints (no fingerprints for children under 12) instead of stamping your passport. Expect longer lines on your first entry. ETIAS (the EU travel authorization) has not launched and has no official start date, so you do not need it yet. Avoid paid third-party sites and check the official site (travel-europe.europa.eu) before you go."
       }
     ],
     "cities": [
@@ -2699,7 +2760,8 @@ export const destinations: Destination[] = [
         "독일어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "greece",
@@ -2778,7 +2840,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "마트 추천템",
-        "description": "AB 바실로풀로스 마트의 올리브, 치즈, 허브 등이 인기입니다. 그리스의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
+        "description": "AB 바실로풀로스 마트의 올리브, 올리브오일, 허브 등이 인기입니다. 그리스의 대표 식재료를 저렴하게 구매할 수 있습니다. 페타 등 치즈는 한국 반입이 대부분 제한되니 현지에서 맛보시기 바랍니다."
       },
       {
         "title": "약국 추천템",
@@ -2935,14 +2997,22 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국 (Schengen)",
-        "description": "한국인은 Schengen 지역(그리스 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "무비자 입국",
+        "description": "한국인은 솅겐 지역(그리스 포함)에서 180일 중 최대 90일간 무비자로 머물 수 있습니다. 여권은 솅겐 지역을 떠나는 날 기준으로 3개월 이상 남아 있어야 하고, 발급일이 10년 이내여야 합니다. 입국 심사에서 귀국 또는 다음 목적지 항공권을 요구받을 수 있으니 준비하시기 바랍니다."
+      },
+      {
+        "title": "EES 출입국 등록",
+        "description": "2026년 4월부터 솅겐 지역 출입국 시스템(EES)이 전면 시행되어, 처음 입국할 때 여권 정보와 얼굴 사진·지문을 등록합니다. 여권 도장 대신 전자 기록이 남으며, 첫 입국 때는 심사가 길어질 수 있으니 여유 있게 이동하시기 바랍니다. 사전 여행허가제(ETIAS)는 아직 시행되지 않았고 공식 시작일도 정해지지 않았습니다. ETIAS 신청을 유료로 대행한다는 사이트에 주의하시고, 출발 전 EU 공식 사이트(travel-europe.europa.eu)에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry (Schengen)",
-        "description": "US citizens can enter Greece (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+        "title": "Visa-Free Entry",
+        "description": "US citizens can stay in the Schengen area (including Greece) visa-free for up to 90 days in any 180-day period for tourism. Your passport must be valid for at least 3 months beyond your planned departure from the Schengen area and must have been issued within the last 10 years. Border officers may ask to see a return or onward ticket."
+      },
+      {
+        "title": "EES Border Registration",
+        "description": "Since April 2026, the Schengen Entry/Exit System (EES) records your passport details, facial image, and fingerprints at your first entry, replacing passport stamps. Allow extra time at the border on your first trip. The ETIAS travel authorization has not launched yet and has no official start date, so be wary of sites charging for ETIAS applications. Check the official EU site (travel-europe.europa.eu) before you go."
       }
     ],
     "cities": [
@@ -2973,7 +3043,8 @@ export const destinations: Destination[] = [
         "그리스어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "austria",
@@ -3052,7 +3123,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "마트 추천템",
-        "description": "Spar Gourmet 치즈, 소시지, 알프스 꿀 등이 인기입니다. 오스트리아의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
+        "description": "Spar Gourmet 등 마트의 알프스 꿀, 초콜릿, 허브티 등이 인기입니다. 소시지·햄 같은 육가공품은 한국 반입이 금지되어 적발 시 최대 약 1000만 원의 과태료가 부과될 수 있고, 치즈 등 유제품도 대부분 반입이 제한되니 현지에서 맛보시기 바랍니다. 출발 전 농림축산검역본부 누리집에서 확인하세요."
       },
       {
         "title": "Billa 마트",
@@ -3158,7 +3229,7 @@ export const destinations: Destination[] = [
     "marketEn": [
       {
         "title": "Market Recommendations",
-        "description": "Cheese, sausages, and Alps honey from Spar Gourmet are popular. You can purchase representative Austrian ingredients at affordable prices."
+        "description": "Alpine honey, chocolate, and herbal tea from supermarkets like Spar Gourmet are popular. Enjoy sausages and other meat products locally: many countries, including the US and Korea, ban bringing them home. Check your home country's customs rules before you go."
       },
       {
         "title": "Billa Market",
@@ -3209,14 +3280,22 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국 (Schengen)",
-        "description": "한국인은 Schengen 지역(오스트리아 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "무비자 입국",
+        "description": "한국인은 솅겐 지역(오스트리아 포함)에서 180일 중 최대 90일간 무비자로 머물 수 있습니다. 여권은 솅겐 지역을 떠나는 날 기준으로 3개월 이상 남아 있어야 하고, 발급일이 10년 이내여야 합니다. 입국 심사에서 귀국 또는 다음 목적지 항공권을 요구받을 수 있으니 준비하시기 바랍니다."
+      },
+      {
+        "title": "EES 출입국 등록",
+        "description": "2026년 4월부터 솅겐 지역 출입국 시스템(EES)이 전면 시행되어, 처음 입국할 때 여권 정보와 얼굴 사진·지문을 등록합니다. 여권 도장 대신 전자 기록이 남으며, 첫 입국 때는 심사가 길어질 수 있으니 여유 있게 이동하시기 바랍니다. 사전 여행허가제(ETIAS)는 아직 시행되지 않았고 공식 시작일도 정해지지 않았습니다. ETIAS 신청을 유료로 대행한다는 사이트에 주의하시고, 출발 전 EU 공식 사이트(travel-europe.europa.eu)에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry (Schengen)",
-        "description": "US citizens can enter Austria (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+        "title": "Visa-Free Entry",
+        "description": "US citizens can stay in the Schengen area (including Austria) visa-free for up to 90 days in any 180-day period for tourism. Your passport must be valid for at least 3 months beyond your planned departure from the Schengen area and must have been issued within the last 10 years. Border officers may ask to see a return or onward ticket."
+      },
+      {
+        "title": "EES Border Registration",
+        "description": "Since April 2026, the Schengen Entry/Exit System (EES) records your passport details, facial image, and fingerprints at your first entry, replacing passport stamps. Allow extra time at the border on your first trip. The ETIAS travel authorization has not launched yet and has no official start date, so be wary of sites charging for ETIAS applications. Check the official EU site (travel-europe.europa.eu) before you go."
       }
     ],
     "cities": [
@@ -3247,7 +3326,8 @@ export const destinations: Destination[] = [
         "독일어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "china",
@@ -3294,7 +3374,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "인터넷 접속",
-        "description": "무료 VPN 사용은 제한되니 합법적인 방식으로 인터넷을 준비하시기 바랍니다. 중국에서는 많은 해외 웹사이트가 차단되어 있습니다."
+        "description": "중국에서는 구글, 유튜브, 인스타그램 등 많은 해외 앱·사이트가 차단되며 카카오톡도 불안정할 수 있습니다. 정부 승인을 받지 않은 VPN 사용은 원칙적으로 불법이니 주의하시고, 출국 전 로밍이나 해외 여행용 eSIM을 준비하는 것이 좋습니다."
       },
       {
         "title": "화장실 이용",
@@ -3330,7 +3410,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "약국 상품",
-        "description": "Watsons 약국의 백초, Yunnan Baiyao 파우더 등이 인기입니다. 중국의 전통 의약품을 구매할 수 있습니다."
+        "description": "약국에서 판매하는 운남백약(云南白药) 파우더·스프레이 등 중국 전통 의약품이 인기입니다. 사용 전 설명서를 확인하고 약사에게 상담하시기 바랍니다."
       },
       {
         "title": "소셜커머스",
@@ -3338,7 +3418,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "약국 추천템",
-        "description": "플루스테톨 감기약, Tiger Balm 등이 약국에서 인기입니다. 처방전 없이 구매 가능한 일반의약품입니다."
+        "description": "감모령(感冒灵) 과립, 판란건(板蓝根) 같은 감기약과 타이거밤 등이 약국에서 인기입니다. 처방전 없이 구매할 수 있는 일반의약품이며, 성분이 한국 약과 다를 수 있으니 약사에게 확인하시기 바랍니다."
       },
       {
         "title": "티 브랜드",
@@ -3400,7 +3480,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Internet Access",
-        "description": "Free VPN usage is restricted, so prepare internet access through legal means. Many foreign websites are blocked in China."
+        "description": "Many foreign apps and sites (Google, YouTube, Instagram, WhatsApp) are blocked in China. Using a VPN that isn't government-approved is technically illegal, so be careful; consider setting up roaming or a travel eSIM before departure."
       },
       {
         "title": "Restroom Usage",
@@ -3436,7 +3516,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Pharmacy Products",
-        "description": "Bai Cao and Yunnan Baiyao powder from Watsons pharmacies are popular. You can purchase traditional Chinese medicines."
+        "description": "Traditional Chinese medicines such as Yunnan Baiyao powder and spray are popular at pharmacies. Read the instructions and ask the pharmacist before use."
       },
       {
         "title": "Social Commerce",
@@ -3444,7 +3524,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Pharmacy Recommendations",
-        "description": "Plustel cold medicine and Tiger Balm are popular at pharmacies. These are over-the-counter medicines available without a prescription."
+        "description": "Cold remedies such as Ganmaoling granules and Banlangen, along with Tiger Balm, are popular at pharmacies. They are over-the-counter, but ingredients may differ from medicines at home, so check with the pharmacist."
       },
       {
         "title": "Tea Brands",
@@ -3483,14 +3563,18 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "비자 필요",
-        "description": "한국인은 중국 입국 시 비자 신청이 필요합니다. 관광 비자는 보통 30일 단수 입국 비자이며, 중국 대사관이나 영사관에서 신청할 수 있습니다. 신청 시 여권, 사진, 항공권 예약 확인서, 숙박 예약 확인서가 필요합니다."
+        "title": "무비자 입국",
+        "description": "한국 일반여권 소지자는 관광·비즈니스·친지 방문·교류·경유 목적으로 최대 30일간 무비자로 중국에 입국할 수 있습니다. 이 조치는 현재 2026년 12월 31일까지 시행되며 연장 여부가 바뀔 수 있으니 출발 전 주한중국대사관 공지에서 확인하세요. 30일을 넘게 머물거나 유학·취업 등 다른 목적이라면 비자를 받아야 합니다."
       }
     ],
     "visaEn": [
       {
         "title": "Visa Required",
-        "description": "US citizens need to apply for a visa to enter China. Tourist visas are typically single-entry visas valid for 30 days. You can apply at the Chinese embassy or consulate. Required documents include passport, photos, flight reservation, and accommodation confirmation."
+        "description": "US citizens need a visa for a round-trip visit to China. Tourist (L) visas for Americans are usually issued as 10-year multiple-entry visas, with stays of up to 60 days per entry. Apply through a Chinese Visa Application Service Center; fees change, so check the official site before you go."
+      },
+      {
+        "title": "240-Hour Visa-Free Transit",
+        "description": "If you are traveling on to a third country or region (not back to the US), you may enter China without a visa for up to 240 hours (10 days) through designated ports. You need a confirmed onward ticket. Eligible ports and regions change, so check the official site before you go."
       }
     ],
     "cities": [
@@ -3521,7 +3605,8 @@ export const destinations: Destination[] = [
         "중국어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "canada",
@@ -3601,7 +3686,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "마트 추천템",
-        "description": "Loblaws, Metro 마트의 메이플 시럽, 캐나다산 치즈, 연어 등이 인기입니다. 캐나다의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
+        "description": "Loblaws, Metro 마트의 메이플 시럽, 메이플 쿠키, 연어 통조림 등이 인기입니다. 치즈 같은 유제품과 육포·소시지 등 육가공품은 현지에서 즐기시고, 한국으로는 가져올 수 없으니 주의하시기 바랍니다."
       },
       {
         "title": "약국 상비약",
@@ -3790,7 +3875,8 @@ export const destinations: Destination[] = [
         "프랑스어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "hungary",
@@ -3869,7 +3955,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "마트 추천템",
-        "description": "Tesco, Spar 마트의 파프리카, 헝가리 치즈, 살라미 등이 인기입니다. 헝가리의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
+        "description": "Tesco, Spar 마트의 파프리카 가루, 꿀, 와인 등이 인기입니다. 살라미 같은 육가공품은 한국 반입이 금지되어 적발 시 최대 약 1000만 원의 과태료가 부과될 수 있고, 치즈 등 유제품도 대부분 반입이 제한되니 현지에서 맛보시기 바랍니다. 출발 전 농림축산검역본부 누리집에서 확인하세요."
       },
       {
         "title": "약국 상비약",
@@ -3971,7 +4057,7 @@ export const destinations: Destination[] = [
     "marketEn": [
       {
         "title": "Market Recommendations",
-        "description": "Paprika, Hungarian cheese, and salami from Tesco and Spar markets are popular. You can purchase representative Hungarian ingredients at affordable prices."
+        "description": "Paprika powder, honey, and wine from Tesco and Spar supermarkets are popular. Enjoy salami and other meat products locally: many countries, including the US and Korea, ban bringing them home. Check your home country's customs rules before you go."
       },
       {
         "title": "Pharmacy Products",
@@ -4018,14 +4104,22 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국 (Schengen)",
-        "description": "한국인은 Schengen 지역(헝가리 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "무비자 입국",
+        "description": "한국인은 솅겐 지역(헝가리 포함)에서 180일 중 최대 90일간 무비자로 머물 수 있습니다. 여권은 솅겐 지역을 떠나는 날 기준으로 3개월 이상 남아 있어야 하고, 발급일이 10년 이내여야 합니다. 입국 심사에서 귀국 또는 다음 목적지 항공권을 요구받을 수 있으니 준비하시기 바랍니다."
+      },
+      {
+        "title": "EES 출입국 등록",
+        "description": "2026년 4월부터 솅겐 지역 출입국 시스템(EES)이 전면 시행되어, 처음 입국할 때 여권 정보와 얼굴 사진·지문을 등록합니다. 여권 도장 대신 전자 기록이 남으며, 첫 입국 때는 심사가 길어질 수 있으니 여유 있게 이동하시기 바랍니다. 사전 여행허가제(ETIAS)는 아직 시행되지 않았고 공식 시작일도 정해지지 않았습니다. ETIAS 신청을 유료로 대행한다는 사이트에 주의하시고, 출발 전 EU 공식 사이트(travel-europe.europa.eu)에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry (Schengen)",
-        "description": "US citizens can enter Hungary (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+        "title": "Visa-Free Entry",
+        "description": "US citizens can stay in the Schengen area (including Hungary) visa-free for up to 90 days in any 180-day period for tourism. Your passport must be valid for at least 3 months beyond your planned departure from the Schengen area and must have been issued within the last 10 years. Border officers may ask to see a return or onward ticket."
+      },
+      {
+        "title": "EES Border Registration",
+        "description": "Since April 2026, the Schengen Entry/Exit System (EES) records your passport details, facial image, and fingerprints at your first entry, replacing passport stamps. Allow extra time at the border on your first trip. The ETIAS travel authorization has not launched yet and has no official start date, so be wary of sites charging for ETIAS applications. Check the official EU site (travel-europe.europa.eu) before you go."
       }
     ],
     "cities": [
@@ -4048,7 +4142,8 @@ export const destinations: Destination[] = [
         "헝가리어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "switzerland",
@@ -4116,11 +4211,11 @@ export const destinations: Destination[] = [
       },
       {
         "title": "스위스 치즈",
-        "description": "그뤼에르, 엠멘탈, 아펜첼러 등 스위스 치즈가 좋은 선물이 됩니다. 스위스의 대표적인 특산품입니다."
+        "description": "그뤼에르, 엠멘탈, 아펜첼러 등 스위스 치즈는 대표 특산품이니 현지에서 꼭 맛보세요. 다만 치즈 등 유제품은 한국 반입이 대부분 제한되고 신고 없이 들여오면 과태료가 부과될 수 있으니, 선물로는 초콜릿이나 퐁뒤 도구 등을 고려하시기 바랍니다. 출발 전 농림축산검역본부 누리집에서 확인하세요."
       },
       {
         "title": "스위스 아미 나이프",
-        "description": "빅토리녹스, 웽거 등 스위스 아미 나이프가 인기입니다. 실용적이고 고품질의 스위스 제품입니다."
+        "description": "빅토리녹스(Victorinox) 스위스 아미 나이프가 인기입니다. 실용적이고 품질이 좋으며, 이름을 새겨 주는 매장도 있습니다. 칼날이 있는 제품은 기내에 반입할 수 없으니 위탁 수하물에 넣으세요."
       },
       {
         "title": "면세점 상품",
@@ -4130,7 +4225,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "마트 추천템",
-        "description": "Coop, Migros 마트의 스위스 치즈, 초콜릿, 요구르트 등이 인기입니다. 스위스의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
+        "description": "Coop, Migros 마트의 초콜릿, 과자, 허브 캔디 등이 인기이며 가격도 기념품점보다 저렴합니다. 치즈, 요구르트 등 유제품은 한국 반입이 대부분 제한되니 현지에서 맛보시기 바랍니다."
       },
       {
         "title": "약국 상비약",
@@ -4142,7 +4237,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "시장 상품",
-        "description": "지역 시장에서 구매하는 치즈, 꿀, 와인 등이 좋은 선물이 됩니다. 스위스의 다양한 특산품을 구매할 수 있습니다."
+        "description": "지역 시장에서 구매하는 꿀, 와인, 수제 초콜릿 등이 좋은 선물이 됩니다. 치즈는 시장에서 맛보는 것을 추천하며, 유제품은 한국 반입이 대부분 제한되니 출발 전 농림축산검역본부 누리집에서 확인하세요."
       },
       {
         "title": "편의점 상품",
@@ -4222,7 +4317,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Swiss Army Knife",
-        "description": "Swiss Army knives from brands like Victorinox and Wenger are popular. These are practical and high-quality Swiss products."
+        "description": "Victorinox Swiss Army knives are popular: practical, high quality, and some shops offer engraving. Knives can't go in carry-on luggage, so pack them in checked baggage."
       },
       {
         "title": "Duty-Free Items",
@@ -4279,14 +4374,22 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국 (Schengen)",
-        "description": "한국인은 Schengen 지역(스위스 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "무비자 입국",
+        "description": "한국인은 솅겐 지역(스위스 포함)에서 180일 중 최대 90일간 무비자로 머물 수 있습니다. 여권은 솅겐 지역을 떠나는 날 기준으로 3개월 이상 남아 있어야 하고, 발급일이 10년 이내여야 합니다. 입국 심사에서 귀국 또는 다음 목적지 항공권을 요구받을 수 있으니 준비하시기 바랍니다."
+      },
+      {
+        "title": "EES 출입국 등록",
+        "description": "2026년 4월부터 솅겐 지역 출입국 시스템(EES)이 전면 시행되어, 처음 입국할 때 여권 정보와 얼굴 사진·지문을 등록합니다. 여권 도장 대신 전자 기록이 남으며, 첫 입국 때는 심사가 길어질 수 있으니 여유 있게 이동하시기 바랍니다. 사전 여행허가제(ETIAS)는 아직 시행되지 않았고 공식 시작일도 정해지지 않았습니다. ETIAS 신청을 유료로 대행한다는 사이트에 주의하시고, 출발 전 EU 공식 사이트(travel-europe.europa.eu)에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry (Schengen)",
-        "description": "US citizens can enter Switzerland (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+        "title": "Visa-Free Entry",
+        "description": "US citizens can stay in the Schengen area (including Switzerland) visa-free for up to 90 days in any 180-day period for tourism. Your passport must be valid for at least 3 months beyond your planned departure from the Schengen area and must have been issued within the last 10 years. Border officers may ask to see a return or onward ticket."
+      },
+      {
+        "title": "EES Border Registration",
+        "description": "Since April 2026, the Schengen Entry/Exit System (EES) records your passport details, facial image, and fingerprints at your first entry, replacing passport stamps. Allow extra time at the border on your first trip. The ETIAS travel authorization has not launched yet and has no official start date, so be wary of sites charging for ETIAS applications. Check the official EU site (travel-europe.europa.eu) before you go."
       }
     ],
     "cities": [
@@ -4323,7 +4426,8 @@ export const destinations: Destination[] = [
         "로만슈어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "netherlands",
@@ -4391,7 +4495,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "치즈",
-        "description": "고우다, 에담 등 네덜란드 치즈가 대표적인 기념품입니다. 다양한 종류와 맛을 만나볼 수 있습니다."
+        "description": "고우다, 에담 등 네덜란드 치즈는 현지에서 꼭 맛봐야 할 명물입니다. 다만 치즈는 한국 입국 시 휴대 반입이 금지된 유제품으로 과태료가 부과될 수 있으니, 선물용으로는 스트루프와플이나 델프트 블루 소품을 권장합니다."
       },
       {
         "title": "클로그(나무신발)",
@@ -4405,7 +4509,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "알버트 하인 마트",
-        "description": "네덜란드의 대형 마트인 알버트 하인(Albert Heijn)에서 치즈, 유제품, 스트루프와플 등을 저렴하게 구매할 수 있습니다."
+        "description": "네덜란드의 대형 마트인 알버트 하인(Albert Heijn)에서 스트루프와플, 초콜릿, 과자 등을 저렴하게 구매할 수 있습니다. 치즈 등 유제품은 한국 입국 시 휴대 반입이 금지되니 현지에서 즐기시기 바랍니다."
       },
       {
         "title": "약국 상비약",
@@ -4417,7 +4521,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "치즈 가게",
-        "description": "전문 치즈 가게에서 다양한 네덜란드 치즈를 구매할 수 있습니다. 시식 후 구매할 수 있어 좋습니다."
+        "description": "전문 치즈 가게에서 다양한 네덜란드 치즈를 시식해 볼 수 있습니다. 단, 치즈는 한국 입국 시 휴대 반입이 금지된 유제품으로 과태료가 부과될 수 있으니 현지에서 즐기시기 바랍니다."
       },
       {
         "title": "편의점 상품",
@@ -4554,14 +4658,22 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국 (Schengen)",
-        "description": "한국인은 Schengen 지역(네덜란드 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "무비자 입국",
+        "description": "한국인은 네덜란드를 포함한 솅겐 지역에서 180일 중 최대 90일까지 비자 없이 체류할 수 있습니다. 여권은 솅겐 지역 출국 예정일 기준 3개월 이상 유효해야 하며, 발급일이 10년 이내여야 합니다. 입국 심사 시 귀국(또는 제3국행) 항공권, 숙소, 체류 경비를 증명할 자료를 요구받을 수 있습니다."
+      },
+      {
+        "title": "EES 출입국 등록",
+        "description": "2026년 4월부터 솅겐 지역 출입국 시 여권 도장 대신 EES(출입국 시스템)에 얼굴 사진과 지문(만 12세 미만은 지문 제외)이 등록됩니다. 첫 입국 시 등록 절차로 대기 시간이 길어질 수 있습니다. ETIAS(유럽 사전 여행 허가)는 아직 시행되지 않았고 공식 시행일도 정해지지 않아 지금은 신청할 필요가 없습니다. 유료 대행 사이트에 주의하시고, 출발 전 공식 사이트(travel-europe.europa.eu)에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry (Schengen)",
-        "description": "US citizens can enter the Netherlands (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+        "title": "Visa-Free Entry",
+        "description": "US citizens can stay in the Schengen area (including the Netherlands) visa-free for up to 90 days in any 180-day period. Your passport must be valid for at least 3 months beyond your planned departure from the Schengen area and issued within the last 10 years (6 months' validity is recommended). Border officers may ask for a return or onward ticket, accommodation details and proof of sufficient funds."
+      },
+      {
+        "title": "EES Border Registration",
+        "description": "Since April 2026, the Entry/Exit System (EES) records your face and fingerprints (no fingerprints for children under 12) instead of stamping your passport. Expect longer lines on your first entry. ETIAS (the EU travel authorization) has not launched and has no official start date, so you do not need it yet. Avoid paid third-party sites and check the official site (travel-europe.europa.eu) before you go."
       }
     ],
     "cities": [
@@ -4592,7 +4704,8 @@ export const destinations: Destination[] = [
         "네덜란드어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "portugal",
@@ -4674,7 +4787,7 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "마트 추천템",
-        "description": "Pingo Doce, Continente 등 대형 마트에서 올리브 오일, 와인, 치즈, 통조림 등을 저렴하게 구매할 수 있습니다."
+        "description": "Pingo Doce, Continente 등 대형 마트에서 올리브 오일, 와인, 생선 통조림 등을 저렴하게 구매할 수 있습니다. 치즈 등 유제품과 육가공품은 한국 반입이 대부분 제한되니 현지에서 맛보시기 바랍니다."
       },
       {
         "title": "약국 상비약",
@@ -4815,14 +4928,22 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국 (Schengen)",
-        "description": "한국인은 Schengen 지역(포르투갈 포함)에서 180일 중 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 3개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "무비자 입국",
+        "description": "한국인은 솅겐 지역(포르투갈 포함)에서 180일 중 최대 90일간 무비자로 머물 수 있습니다. 여권은 솅겐 지역을 떠나는 날 기준으로 3개월 이상 남아 있어야 하고, 발급일이 10년 이내여야 합니다. 입국 심사에서 귀국 또는 다음 목적지 항공권을 요구받을 수 있으니 준비하시기 바랍니다."
+      },
+      {
+        "title": "EES 출입국 등록",
+        "description": "2026년 4월부터 솅겐 지역 출입국 시스템(EES)이 전면 시행되어, 처음 입국할 때 여권 정보와 얼굴 사진·지문을 등록합니다. 여권 도장 대신 전자 기록이 남으며, 첫 입국 때는 심사가 길어질 수 있으니 여유 있게 이동하시기 바랍니다. 사전 여행허가제(ETIAS)는 아직 시행되지 않았고 공식 시작일도 정해지지 않았습니다. ETIAS 신청을 유료로 대행한다는 사이트에 주의하시고, 출발 전 EU 공식 사이트(travel-europe.europa.eu)에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry (Schengen)",
-        "description": "US citizens can enter Portugal (Schengen area) visa-free for up to 90 days within a 180-day period for tourism purposes. Your passport must be valid for at least 3 months."
+        "title": "Visa-Free Entry",
+        "description": "US citizens can stay in the Schengen area (including Portugal) visa-free for up to 90 days in any 180-day period for tourism. Your passport must be valid for at least 3 months beyond your planned departure from the Schengen area and must have been issued within the last 10 years. Border officers may ask to see a return or onward ticket."
+      },
+      {
+        "title": "EES Border Registration",
+        "description": "Since April 2026, the Schengen Entry/Exit System (EES) records your passport details, facial image, and fingerprints at your first entry, replacing passport stamps. Allow extra time at the border on your first trip. The ETIAS travel authorization has not launched yet and has no official start date, so be wary of sites charging for ETIAS applications. Check the official EU site (travel-europe.europa.eu) before you go."
       }
     ],
     "cities": [
@@ -4853,7 +4974,8 @@ export const destinations: Destination[] = [
         "포르투갈어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "philippines",
@@ -5086,13 +5208,21 @@ export const destinations: Destination[] = [
     "visa": [
       {
         "title": "무비자 입국",
-        "description": "한국인은 관광 목적으로 30일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다. 30일 이상 체류하려면 비자 연장이 필요합니다."
+        "description": "한국인은 관광 목적으로 30일간 무비자 입국이 가능합니다. 여권 유효기간이 체류 예정기간 이후 6개월 이상 남아 있어야 하며, 30일 이내에 출국하는 왕복 또는 제3국행 항공권이 필요합니다. 30일 넘게 체류하려면 현지 이민국에서 연장 신청을 해야 합니다."
+      },
+      {
+        "title": "eTravel 등록 필수",
+        "description": "필리핀에 입국하는 모든 외국인은 도착 전 72시간 이내에 공식 사이트(etravel.gov.ph)에서 eTravel을 등록하고 QR코드를 받아야 합니다. 등록은 무료이며 입국할 때마다 새로 해야 합니다. 비용을 요구하는 대행 사이트에 주의하시고, 출발 전 공식 사이트에서 확인하세요."
       }
     ],
     "visaEn": [
       {
         "title": "Visa-Free Entry",
-        "description": "US citizens can enter the Philippines visa-free for up to 30 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket. Visa extension is required for stays longer than 30 days."
+        "description": "US citizens can enter the Philippines visa-free for up to 30 days for tourism. Your passport must be valid for at least 6 months beyond your stay, and you need a return or onward ticket departing within 30 days. Extensions beyond 30 days are handled by the Bureau of Immigration."
+      },
+      {
+        "title": "eTravel Registration",
+        "description": "All foreign arrivals must register on eTravel (etravel.gov.ph) within 72 hours before arrival and show the QR code. Registration is free and required for every entry. Beware of look-alike sites that charge a fee, and check the official site before you go."
       }
     ],
     "cities": [
@@ -5125,7 +5255,8 @@ export const destinations: Destination[] = [
         "영어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "vietnam",
@@ -5358,13 +5489,13 @@ export const destinations: Destination[] = [
     "visa": [
       {
         "title": "무비자 입국",
-        "description": "한국인은 관광 목적으로 15일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다. 15일 이상 체류하려면 비자 신청이 필요합니다."
+        "description": "한국인은 입국일로부터 최대 45일간 무비자로 체류할 수 있습니다. 여권 유효기간이 6개월 이상 남아 있어야 하며, 귀국 또는 제3국행 항공권을 요구받을 수 있습니다. 45일을 넘게 체류하려면 베트남 출입국관리국 공식 사이트(evisa.gov.vn)에서 최대 90일 전자비자를 미리 신청해야 합니다. 비자 수수료는 바뀔 수 있으니 출발 전 공식 사이트에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa Required",
-        "description": "US citizens need to apply for a visa to enter Vietnam. Tourist visas are typically valid for 30 days. You can apply for an e-visa online or at the Vietnamese embassy/consulate. Required documents include passport, photos, and application form."
+        "title": "E-Visa Required",
+        "description": "US citizens need a visa to enter Vietnam. Apply online for an e-visa on the official portal (evisa.gov.vn); it allows stays of up to 90 days with single or multiple entry, and processing usually takes about 3–5 business days. Your passport should be valid for at least 6 months. Avoid look-alike sites that charge extra, and check the official site for current fees before you go."
       }
     ],
     "cities": [
@@ -5395,7 +5526,8 @@ export const destinations: Destination[] = [
         "베트남어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "australia",
@@ -5622,14 +5754,14 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "eVisitor 신청 필요",
-        "description": "한국인은 호주 입국 시 eVisitor(전자여행허가) 신청이 필요합니다. 관광 목적으로 3개월간 체류 가능하며, 온라인으로 무료 신청할 수 있습니다. 승인까지 보통 즉시 또는 몇 시간 내 소요됩니다."
+        "title": "ETA 필요",
+        "description": "한국인은 호주 입국 전에 전자여행허가 ETA(subclass 601)를 받아야 합니다. 'Australian ETA' 공식 앱으로만 신청할 수 있으며, 약 20호주달러의 서비스 수수료가 있습니다. 승인 후 12개월 동안 여러 번 입국할 수 있고, 한 번 입국할 때마다 최대 3개월까지 머물 수 있습니다. 보통 당일 안에 승인되지만 여유 있게 신청하시기 바랍니다. 수수료는 바뀔 수 있으니 출발 전 공식 사이트에서 확인하세요."
       }
     ],
     "visaEn": [
       {
         "title": "ETA Required",
-        "description": "US citizens need to apply for an ETA (Electronic Travel Authority) to enter Australia. You can stay for up to 3 months for tourism purposes. The ETA can be applied for online and is usually approved within minutes."
+        "description": "US citizens need an ETA (Electronic Travel Authority, subclass 601) to enter Australia. Apply only through the official Australian ETA app; there is a service charge of about AUD 20. The ETA allows multiple visits over 12 months, with stays of up to 3 months each, and is usually approved quickly. Fees can change, so check the official site before you go."
       }
     ],
     "cities": [
@@ -5660,7 +5792,8 @@ export const destinations: Destination[] = [
         "영어"
       ],
       "drivingSide": "left"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "thailand",
@@ -5716,6 +5849,10 @@ export const destinations: Destination[] = [
       {
         "title": "화장실 이용",
         "description": "태국의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 휴지는 휴지통에 버리는 것이 일반적입니다."
+      },
+      {
+        "title": "전자담배 금지",
+        "description": "태국에서는 전자담배(액상형·궐련형 포함)의 반입·판매·소지가 모두 불법입니다. 관광객도 벌금, 구금, 추방 처분을 받을 수 있으니 전자담배는 가져가지 마시기 바랍니다."
       }
     ],
     "souvenirs": [
@@ -5812,6 +5949,10 @@ export const destinations: Destination[] = [
       {
         "title": "Restroom Usage",
         "description": "Public restrooms in Thailand are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. It's common to dispose of toilet paper in trash bins."
+      },
+      {
+        "title": "Vaping Ban",
+        "description": "E-cigarettes and vapes, including heated tobacco devices, are illegal to import, sell, or possess in Thailand. Tourists can be fined, detained, or deported, so leave them at home."
       }
     ],
     "souvenirsEn": [
@@ -5887,13 +6028,21 @@ export const destinations: Destination[] = [
     "visa": [
       {
         "title": "무비자 입국",
-        "description": "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "description": "한국인은 한-태 사증면제협정에 따라 관광 목적으로 최대 90일간 무비자 체류가 가능합니다. 2026년 9월 다른 여러 나라의 무비자 기간이 30일로 줄었지만 한국인은 해당되지 않습니다. 여권 유효기간이 6개월 이상 남아 있어야 하며, 귀국 또는 제3국행 항공권이 필요합니다."
+      },
+      {
+        "title": "TDAC 작성 필수",
+        "description": "태국에 입국하는 모든 외국인은 도착 전 3일 이내에 공식 사이트(tdac.immigration.go.th)에서 디지털 입국신고서(TDAC)를 작성하고 QR코드를 받아야 합니다. 작성은 무료이며, 비용을 요구하는 대행 사이트에 주의하시기 바랍니다. 출발 전 공식 사이트에서 확인하세요."
       }
     ],
     "visaEn": [
       {
         "title": "Visa-Free Entry",
-        "description": "US citizens can enter Thailand visa-free for up to 30 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket. For longer stays, a visa extension or tourist visa is required."
+        "description": "US citizens can enter Thailand visa-free for up to 30 days for tourism (shortened from 60 days on 15 September 2026). Your passport must be valid for at least 6 months, and you need a return or onward ticket. A one-time extension of up to 30 days may be granted at a local immigration office at the officer's discretion; for longer stays, get an appropriate visa."
+      },
+      {
+        "title": "TDAC Arrival Card",
+        "description": "All foreign arrivals must complete the Thailand Digital Arrival Card (TDAC) at tdac.immigration.go.th within 3 days before arrival and show the QR code. It's free, so avoid sites that charge a fee. Check the official site before you go."
       }
     ],
     "cities": [
@@ -5924,7 +6073,8 @@ export const destinations: Destination[] = [
         "태국어"
       ],
       "drivingSide": "left"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "taiwan",
@@ -6000,7 +6150,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "대만 화장품",
-        "description": "대만 화장품 브랜드의 제품이 인기입니다. 마이 스키니, 메디힐 등 다양한 브랜드를 만나볼 수 있습니다."
+        "description": "대만 화장품 브랜드의 제품이 인기입니다. 마이 스키밍(我的心機) 마스크팩, 나루코(Naruko) 등 대만 브랜드를 드럭스토어에서 만나볼 수 있습니다."
       }
     ],
     "market": [
@@ -6096,7 +6246,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Taiwanese Cosmetics",
-        "description": "Products from Taiwanese cosmetic brands are popular. You can find various brands like My Scheming and Mediheal."
+        "description": "Products from Taiwanese cosmetic brands are popular. You can find local brands like My Scheming sheet masks and Naruko at drugstores."
       }
     ],
     "marketEn": [
@@ -6151,12 +6301,20 @@ export const destinations: Destination[] = [
       {
         "title": "무비자 입국",
         "description": "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+      },
+      {
+        "title": "온라인 입국카드",
+        "description": "대만은 입국카드를 온라인(Taiwan Arrival Card)으로 미리 작성할 수 있어, 도착 후 종이 카드를 쓰지 않아도 됩니다. 출발 전 대만 이민서 공식 사이트에서 작성하세요."
       }
     ],
     "visaEn": [
       {
         "title": "Visa-Free Entry",
-        "description": "US citizens can enter Taiwan visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+        "description": "US citizens can visit Taiwan visa-free for up to 90 days. Your passport must be valid for the duration of your stay, and you need a confirmed return or onward ticket."
+      },
+      {
+        "title": "Online Arrival Card",
+        "description": "You can fill in Taiwan's arrival card online (Taiwan Arrival Card) before your flight, so you don't need a paper card on arrival. Complete it on the National Immigration Agency's official site before you go."
       }
     ],
     "cities": [
@@ -6187,7 +6345,8 @@ export const destinations: Destination[] = [
         "중국어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "hong-kong",
@@ -6412,13 +6571,13 @@ export const destinations: Destination[] = [
     "visa": [
       {
         "title": "무비자 입국",
-        "description": "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "description": "한국인은 관광 목적으로 최대 90일간 무비자 입국이 가능합니다. 여권은 체류 예정 기간보다 최소 1개월 이상 유효해야 하며(항공사 기준을 고려하면 6개월 이상 권장), 귀국 또는 다음 목적지 항공권을 소지해야 합니다."
       }
     ],
     "visaEn": [
       {
         "title": "Visa-Free Entry",
-        "description": "US citizens can enter Hong Kong visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+        "description": "US citizens can visit Hong Kong visa-free for up to 90 days. Your passport must be valid for at least one month beyond your stay (six months is recommended to avoid airline issues), and you should hold a return or onward ticket."
       }
     ],
     "cities": [
@@ -6451,7 +6610,8 @@ export const destinations: Destination[] = [
         "영어"
       ],
       "drivingSide": "left"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "singapore",
@@ -6498,12 +6658,16 @@ export const destinations: Destination[] = [
       {
         "title": "화장실 이용",
         "description": "싱가포르의 공중화장실은 대부분 무료이며 매우 깨끗합니다. 쇼핑몰, 지하철역, 공원 등에서 쉽게 찾을 수 있습니다. 휴지는 변기에 버리는 것이 일반적입니다."
+      },
+      {
+        "title": "전자담배 금지",
+        "description": "싱가포르에서는 전자담배의 소지·사용·반입이 모두 불법이며, 2026년부터 처벌이 크게 강화되었습니다. 외국인은 벌금과 함께 추방·재입국 금지 처분을 받을 수 있고, 마취제 성분이 든 전자담배(일명 K팟)는 마약 범죄로 다뤄집니다. 전자담배는 절대 가져가지 마시기 바랍니다."
       }
     ],
     "souvenirs": [
       {
-        "title": "싱가포르 슬리퍼",
-        "description": "싱가포르의 대표적인 기념품인 싱가포르 슬리퍼가 인기입니다. 다양한 디자인과 색상으로 구매할 수 있습니다."
+        "title": "TWG 티",
+        "description": "싱가포르에서 시작된 차 브랜드 TWG 티는 다양한 블렌딩 차를 고급스러운 틴 케이스에 담아 판매해 선물용으로 인기가 많습니다. 시내 매장과 창이 공항에서 구매할 수 있습니다."
       },
       {
         "title": "싱가포르 향료",
@@ -6560,12 +6724,16 @@ export const destinations: Destination[] = [
       {
         "title": "Restroom Usage",
         "description": "Most public restrooms in Singapore are free and very clean. You'll find them easily in malls, MRT stations, and parks. Toilet paper goes in the toilet."
+      },
+      {
+        "title": "Vaping Ban",
+        "description": "Possessing, using, or bringing in e-cigarettes is illegal in Singapore, and penalties were sharply increased in 2026. Foreigners may be fined, deported, and banned from re-entry, and vapes laced with etomidate ('Kpods') are treated like drug offences. Do not bring vapes."
       }
     ],
     "souvenirsEn": [
       {
-        "title": "Singapore Slippers",
-        "description": "Singapore slippers are a popular souvenir, available in many designs and colors."
+        "title": "TWG Tea",
+        "description": "TWG Tea, a Singapore-founded tea brand, sells a wide range of blends in elegant tins that make popular gifts. You'll find its shops around the city and at Changi Airport."
       },
       {
         "title": "Spices and Kaya Jam",
@@ -6599,13 +6767,21 @@ export const destinations: Destination[] = [
     "visa": [
       {
         "title": "무비자 입국",
-        "description": "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "description": "한국인은 관광 목적으로 최대 90일간 무비자 입국이 가능하며, 실제 체류 허가 기간은 입국 심사 때 정해집니다. 여권 유효기간이 6개월 이상 남아 있어야 하며, 귀국 또는 제3국행 항공권이 필요합니다."
+      },
+      {
+        "title": "SG Arrival Card 제출 필수",
+        "description": "싱가포르에 입국하는 모든 여행자는 도착일 포함 3일 이내에 ICA 공식 사이트나 MyICA 앱에서 SG Arrival Card(전자 입국신고서와 건강 신고)를 제출해야 합니다. 제출은 무료이며, 입국 심사 없이 환승만 하는 경우는 제외됩니다. 출발 전 공식 사이트에서 확인하세요."
       }
     ],
     "visaEn": [
       {
         "title": "Visa-Free Entry",
-        "description": "US citizens can enter Singapore visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+        "description": "US citizens can enter Singapore visa-free for up to 90 days for tourism; the actual length of stay is set at immigration. Your passport must be valid for at least 6 months, and you need a return or onward ticket."
+      },
+      {
+        "title": "SG Arrival Card",
+        "description": "All travellers must submit the SG Arrival Card, which includes a health declaration, on the ICA website or MyICA app within 3 days before arrival (the arrival day counts). It's free; travellers transiting without clearing immigration are exempt. Check the official site before you go."
       }
     ],
     "cities": [
@@ -6634,7 +6810,8 @@ export const destinations: Destination[] = [
         "타밀어"
       ],
       "drivingSide": "left"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "malaysia",
@@ -6865,13 +7042,21 @@ export const destinations: Destination[] = [
     "visa": [
       {
         "title": "무비자 입국",
-        "description": "한국인은 관광 목적으로 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "description": "한국인은 관광 목적으로 최대 90일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아 있어야 하며, 귀국 또는 제3국행 항공권이 필요합니다."
+      },
+      {
+        "title": "MDAC 제출 필수",
+        "description": "무비자로 입국하더라도 도착 전 3일 이내에 말레이시아 이민국 공식 사이트에서 디지털 입국카드(MDAC)를 제출해야 하며, 공항에서는 작성할 수 없습니다. 제출은 무료이고, MDAC를 제출한 한국인은 쿠알라룸푸르 공항 자동출입국심사대를 이용할 수 있습니다(첫 방문 시에는 일반 심사대를 이용해야 할 수 있습니다). 출발 전 공식 사이트에서 확인하세요."
       }
     ],
     "visaEn": [
       {
         "title": "Visa-Free Entry",
-        "description": "US citizens can enter Malaysia visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+        "description": "US citizens can enter Malaysia visa-free for up to 90 days for tourism. Your passport must be valid for at least 6 months, and you need a return or onward ticket."
+      },
+      {
+        "title": "MDAC Arrival Card",
+        "description": "Even visa-free visitors must submit the Malaysia Digital Arrival Card (MDAC) on the official Immigration Department site within 3 days before arrival; it can't be done at the airport. It's free. Check the official site before you go."
       }
     ],
     "cities": [
@@ -6898,7 +7083,8 @@ export const destinations: Destination[] = [
         "말레이어"
       ],
       "drivingSide": "left"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "indonesia",
@@ -6952,6 +7138,10 @@ export const destinations: Destination[] = [
       {
         "title": "화장실 이용",
         "description": "인도네시아의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 일부 화장실은 좌변기 대신 양변기 형태를 사용하므로 주의가 필요합니다."
+      },
+      {
+        "title": "마약 엄벌",
+        "description": "인도네시아는 마약 범죄를 매우 엄하게 처벌하며, 마약을 밀반입하면 사형이 선고될 수 있습니다. 모르는 사람의 짐을 대신 들어 주지 마시기 바랍니다."
       }
     ],
     "souvenirs": [
@@ -7054,6 +7244,10 @@ export const destinations: Destination[] = [
       {
         "title": "Restroom Usage",
         "description": "Public restrooms in Indonesia are mostly paid, and to use restrooms in cafes or restaurants, you often need to order a drink or simple food. Some restrooms use squat toilets instead of sitting toilets, so be careful."
+      },
+      {
+        "title": "Strict Drug Laws",
+        "description": "Indonesia punishes drug offences extremely severely, and drug trafficking can carry the death penalty. Never carry luggage for someone you don't know."
       }
     ],
     "souvenirsEn": [
@@ -7128,14 +7322,30 @@ export const destinations: Destination[] = [
     ],
     "visa": [
       {
-        "title": "무비자 입국",
-        "description": "한국인은 관광 목적으로 30일간 무비자 입국이 가능합니다. 여권 유효기간이 6개월 이상 남아있어야 하며, 왕복 항공권을 소지해야 합니다."
+        "title": "도착 비자 필요",
+        "description": "한국인은 인도네시아 무비자 입국 대상이 아니므로 도착비자(VOA)가 필요합니다. 출국 전 인도네시아 이민국 공식 사이트(evisa.imigrasi.go.id)에서 전자도착비자(e-VOA)를 미리 받거나 도착 공항에서 발급받을 수 있으며, 수수료는 약 50만 루피아입니다. 30일간 체류할 수 있고 현지에서 1회(30일) 연장할 수 있습니다. 여권 유효기간이 6개월 이상 남아 있어야 하며 귀국 또는 제3국행 항공권이 필요합니다. 수수료 인상이 검토되고 있으니 출발 전 공식 사이트에서 확인하세요."
+      },
+      {
+        "title": "All Indonesia 입국신고",
+        "description": "인도네시아에 입국하는 모든 여행자는 도착 전 'All Indonesia' 공식 사이트(allindonesia.imigrasi.go.id)나 앱에서 입국·세관·건강 신고를 합친 전자 입국신고서를 작성하고 QR코드를 받아야 합니다. 작성은 무료이며 비자를 대신하지 않습니다. 출발 전 공식 사이트에서 확인하세요."
+      },
+      {
+        "title": "발리 관광세",
+        "description": "발리를 방문하는 외국인은 비자와 별도로 1인당 약 15만 루피아의 발리 관광세를 내야 합니다. 공식 사이트(lovebali.baliprov.go.id)에서 미리 납부할 수 있으며, 금액이 바뀔 수 있으니 출발 전 공식 사이트에서 확인하세요."
       }
     ],
     "visaEn": [
       {
-        "title": "Visa-Free Entry",
-        "description": "US citizens can enter Indonesia visa-free for up to 30 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+        "title": "Visa on Arrival",
+        "description": "US citizens are not visa-exempt for Indonesia and need a Visa on Arrival. Apply in advance for an e-VOA on the official immigration site (evisa.imigrasi.go.id) or get one at the airport; the fee is about IDR 500,000. It allows 30 days and can be extended once for another 30 days. Your passport must be valid for at least 6 months, and you need a return or onward ticket. A fee increase has been proposed, so check the official site before you go."
+      },
+      {
+        "title": "All Indonesia Arrival Card",
+        "description": "All travellers must complete the free 'All Indonesia' digital arrival card (immigration, customs, and health in one form) at allindonesia.imigrasi.go.id or in the app before arrival and show the QR code. It does not replace a visa. Check the official site before you go."
+      },
+      {
+        "title": "Bali Tourist Levy",
+        "description": "Foreign visitors to Bali must pay a provincial tourist levy of about IDR 150,000 per person, separate from the visa. Pay in advance on the official Love Bali site (lovebali.baliprov.go.id). The amount can change, so check the official site before you go."
       }
     ],
     "cities": [
@@ -7162,7 +7372,8 @@ export const destinations: Destination[] = [
         "인도네시아어"
       ],
       "drivingSide": "left"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "russia",
@@ -7271,11 +7482,11 @@ export const destinations: Destination[] = [
       },
       {
         "title": "여행경보 확인",
-        "description": "외교부 해외안전여행 누리집(0404.go.kr)에서 러시아의 지역별 여행경보를 확인하세요. 우크라이나와 맞닿은 지역 등에는 높은 단계의 경보가 내려져 있습니다."
+        "description": "외교부는 러시아 전역에 특별여행주의보를 발령하고 있습니다. 쿠르스크주 전역과 우크라이나 국경 약 30km 이내 지역은 여행금지(4단계), 그 밖의 우크라이나 접경 지역과 체첸·다게스탄 등 북캅카스 지역은 출국권고(3단계)입니다. 여행금지 지역을 허가 없이 방문하면 여권법에 따라 처벌받을 수 있습니다. 경보 지역은 수시로 바뀌니 출발 전 해외안전여행 누리집(0404.go.kr)에서 최신 정보를 확인하세요."
       },
       {
         "title": "항공편",
-        "description": "한국과 러시아를 잇는 직항이 크게 줄었습니다. 경유 노선이나 블라디보스토크 등 극동 노선을 미리 확인하고, 일정 변경에 대비하세요."
+        "description": "2022년 3월 이후 한국과 러시아 사이 직항편은 운항하지 않습니다(모스크바·블라디보스토크 포함). 중국, 중앙아시아, 몽골, 중동, 튀르키예 등을 경유해야 하므로 경유지의 환승·입국 조건과 일정 변경 가능성을 미리 확인하세요."
       },
       {
         "title": "전기 어댑터",
@@ -7283,11 +7494,11 @@ export const destinations: Destination[] = [
       },
       {
         "title": "인터넷 연결",
-        "description": "현지 SIM은 MTS, MegaFon, Beeline 등에서 여권을 보여 주고 살 수 있습니다. 일부 해외 앱·사이트는 러시아에서 접속이 막혀 있으니 연락 수단을 미리 정해 두세요."
+        "description": "2025년부터 외국인이 러시아 현지 유심을 사려면 정부 포털(Gosuslugi) 등록과 은행 생체정보 등록 등을 거쳐야 해, 단기 여행자는 사실상 구매가 어렵습니다. 한국 통신사 로밍도 되지 않을 수 있으니 출국 전 통신사에 확인하세요. 왓츠앱은 차단되었고 텔레그램 등도 제한되며, 지역에 따라 모바일 인터넷이 수시로 끊기기도 합니다. 오프라인 지도를 받아 두고 숙소 Wi-Fi를 활용하며, 가족과의 연락 방법을 미리 정해 두세요."
       },
       {
         "title": "체류 등록",
-        "description": "외국인은 도착 후 체류지 등록을 해야 합니다. 호텔에 묵으면 숙소가 대신 처리하지만, 개인 숙소라면 집주인에게 등록을 요청하세요."
+        "description": "외국인은 도착 후 7영업일 이내에 체류지 등록을 해야 합니다(7영업일 안에 출국하면 필요 없습니다). 호텔에 묵으면 숙소가 대신 처리하지만, 개인 숙소라면 집주인에게 등록을 요청하세요. 입국 때 받은 출입국카드(migration card)는 숙박과 출국에 필요하니 출국할 때까지 꼭 보관하세요."
       },
       {
         "title": "교통카드",
@@ -7379,7 +7590,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Flights",
-        "description": "Direct flights to Russia have been sharply reduced. Check connecting routes in advance and be ready for schedule changes."
+        "description": "There are no direct flights between the US and Russia. Plan to connect via Türkiye, the Middle East, Central Asia, or China, and check transit rules and the risk of schedule changes in advance."
       },
       {
         "title": "Electrical Adapter",
@@ -7387,11 +7598,11 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Internet Connection",
-        "description": "Local SIM cards from MTS, MegaFon, or Beeline can be bought with your passport. Some foreign apps and websites are blocked in Russia, so agree on how to stay in touch beforehand."
+        "description": "Since 2025, foreigners need a Gosuslugi (government portal) account and biometric registration at a bank to buy a Russian SIM, which makes it practically impossible for short-term visitors. Check with your carrier whether roaming works in Russia. WhatsApp is blocked, Telegram is restricted, and mobile internet is often shut down in some regions, so download offline maps, rely on accommodation Wi-Fi, and agree on how to stay in touch before you go."
       },
       {
         "title": "Registration",
-        "description": "Foreigners must register their place of stay after arrival. Hotels handle this for you; at a private rental, ask your host to register you."
+        "description": "Foreigners must register their place of stay within 7 business days of arrival (not needed if you leave sooner). Hotels do this for you; at a private rental, ask your host to register you. Keep the migration card you receive on entry until you leave, as hotels and border officers ask for it."
       },
       {
         "title": "Transportation Card",
@@ -7405,7 +7616,7 @@ export const destinations: Destination[] = [
     "visa": [
       {
         "title": "무비자 입국",
-        "description": "한국 일반여권 소지자는 관광 목적으로 한 번에 최대 60일, 180일 안에 모두 합쳐 90일까지 무비자로 머물 수 있습니다. 여권 유효기간은 6개월 이상 남아 있는 것이 좋습니다."
+        "description": "한국 일반여권 소지자는 관광 목적으로 한 번에 최대 60일, 180일 안에 모두 합쳐 90일까지 무비자로 머물 수 있습니다. 여권 유효기간은 6개월 이상 남아 있는 것이 좋습니다. 주러시아 대사관은 입국 전 러시아 RuID 앱으로 입국 정보와 생체정보를 미리 보내 둘 것을 강력히 권고합니다. 한국인은 현재 의무가 아니지만, 입국 72시간 전까지 등록해 두면 공항 혼선을 줄일 수 있습니다. 규정이 바뀔 수 있으니 출발 전 대사관 공지를 확인하세요."
       }
     ],
     "visaEn": [
@@ -7442,7 +7653,8 @@ export const destinations: Destination[] = [
         "러시아어"
       ],
       "drivingSide": "right"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   },
   {
     "slug": "new-zealand",
@@ -7557,7 +7769,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "렌터카와 운전면허",
-        "description": "렌터카로 여행하는 사람이 많습니다. 한국 운전면허증과 국제운전면허증을 함께 가져가세요."
+        "description": "렌터카로 여행하는 사람이 많습니다. 한국 운전면허증 원본과 함께 국제운전면허증이나 뉴질랜드 교통국(NZTA)이 인정하는 영문 번역본을 반드시 지참해야 합니다."
       },
       {
         "title": "인터넷 연결",
@@ -7712,7 +7924,8 @@ export const destinations: Destination[] = [
         "뉴질랜드 수어"
       ],
       "drivingSide": "left"
-    }
+    },
+    "reviewedAt": "2026-11-19"
   }
 ];
 

@@ -9,6 +9,7 @@ const SITE_URL = "https://triphelper.kr";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${SITE_URL}/`, changeFrequency: "weekly", priority: 1 },
+    { url: `${SITE_URL}/board/`, changeFrequency: "daily", priority: 0.7 },
     ...getAllDestinations().map((d) => ({
       url: `${SITE_URL}/destinations/${d.slug}/`,
       changeFrequency: "weekly" as const,

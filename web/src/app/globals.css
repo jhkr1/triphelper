@@ -44,7 +44,7 @@ button{font:inherit;cursor:pointer;color:inherit}
 /* 첫 화면 */
 /* 넓은 화면에서도 글과 지구본이 한 덩어리로 모이도록 내용 폭을 1280px로 묶고 가운데 둔다 */
 .stage{position:relative;min-height:min(100svh,900px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:center;gap:clamp(32px,6vw,96px);
-  padding:96px max(clamp(16px,5vw,72px),calc((100% - 1280px) / 2)) 48px;overflow:hidden;
+  padding:136px max(clamp(16px,5vw,72px),calc((100% - 1280px) / 2)) 40px;overflow:hidden; /* 위 여백을 넉넉히: 내용이 화면 위로 붙어 보이지 않게 */
   background:radial-gradient(900px 620px at 72% 48%,var(--glow) 0%,transparent 62%),var(--bg)}
 .stage__copy{position:relative;z-index:2;max-width:540px}
 .badge{display:inline-flex;gap:8px;align-items:center;font-size:.72rem;font-weight:600;letter-spacing:.16em;color:var(--blue);border:1px solid var(--badge-bd);background:var(--badge-bg);padding:7px 14px;border-radius:99px;margin:0 0 22px}
@@ -322,3 +322,36 @@ a{color:inherit}
 .acct__item:hover{border-color:var(--blue);color:var(--blue)}
 .acct__err{margin:0;font-size:.8rem;color:#dc2626}
 @media (max-width:560px){.acct__name{max-width:5em}}
+
+/* 계정 · 설정 메뉴 (다크 모드 · 언어 · 주 메뉴) */
+.acct__btn{padding:8px 12px 8px 12px}
+.acct__chev{width:14px;height:14px;opacity:.6;transition:transform .15s}
+.acct button[aria-expanded="true"] .acct__chev{transform:rotate(180deg)}
+.acct__menu{gap:4px}
+.acct__hello{display:flex;align-items:center;gap:10px;margin:0 0 6px;padding:2px 2px 10px;border-bottom:1px solid var(--line)}
+.acct__login{display:grid;gap:8px;padding-bottom:12px;margin-bottom:4px;border-bottom:1px solid var(--line)}
+.acct__nav{display:none;padding:4px 0;border-bottom:1px solid var(--line);margin-bottom:4px}
+.acct__nav a{display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:10px;text-decoration:none;color:var(--ink);font-weight:600;font-size:.92rem}
+.acct__nav a:hover,.acct__nav a[aria-current="page"]{background:var(--soft)}
+.acct__nav .icon{width:18px;height:18px;color:var(--mute)}
+.acct__settings{display:grid;gap:2px}
+.acct__row{display:flex;align-items:center;gap:10px;width:100%;padding:10px 8px;border:0;border-radius:10px;background:none;color:var(--ink);font:inherit;font-size:.92rem;font-weight:500;text-align:left}
+button.acct__row{cursor:pointer}
+button.acct__row:hover{background:var(--soft)}
+.acct__row>.icon{width:18px;height:18px;color:var(--mute);flex:none}
+.acct__row>span{flex:1}
+.acct__switch{position:relative;width:38px;height:22px;border-radius:99px;background:var(--line);flex:none;transition:background .15s}
+.acct__switch::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0003;transition:transform .15s}
+.acct__row[aria-checked="true"] .acct__switch{background:var(--blue)}
+.acct__row[aria-checked="true"] .acct__switch::after{transform:translateX(16px)}
+.acct__row:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+
+
+
+
+.acct__logout{margin-top:6px;color:var(--mute)}
+/* 휴대폰: 상단 바의 주 메뉴를 메뉴 안으로 */
+@media (max-width:640px){
+  .top__nav{display:none}
+  .acct__nav{display:block}
+}

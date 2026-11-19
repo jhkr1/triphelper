@@ -9,6 +9,8 @@ import { TripSetup, type SetupResult } from "@/components/trip/TripSetup";
 import { LOADING, tripStore } from "@/lib/trip-store";
 import { startTripSync } from "@/lib/trip-sync";
 import { MyTrips, SyncBadge } from "@/components/trip/MyTrips";
+import { PublishDialog } from "@/components/board/PublishDialog";
+import { authStore } from "@/lib/supabase";
 import {
   addDays, createTrip, dateParts, defaultTrip, nightsBetween, readSharedTrip, sampleTrip, shareUrl, withDatesUnset, type PlannerCountry,
 } from "@/lib/trip-model";
@@ -75,6 +77,9 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
   const [day, setDay] = useState(0);
   const [mapDay, setMapDay] = useState<"all" | number>("all");
   const [setupOpen, setSetupOpen] = useState(false);
+  const auth = useSyncExternalStore(authStore.subscribe, authStore.getSnapshot, authStore.getServerSnapshot);
+  const [publishOpen, setPublishOpen] = useState(false);
+  const closePublish = useCallback(() => setPublishOpen(false), []);
   const [pickTarget, setPickTarget] = useState<{ day: number; id: string } | null>(null);
   const [toastMsg, setToastMsg] = useState<{ text: string; n: number } | null>(null);
   // 공유 링크는 압축이 비동기라 일정이 바뀔 때마다 미리 만들어 둔다.
@@ -258,9 +263,22 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
           <button className="btn edit-trip" type="button" aria-expanded={setupOpen} onClick={() => setSetupOpen((o) => !o)}>
             <Icon name="calendar" />여행 설정
           </button>
+          {auth.status === "in" && (
+            <button
+              className="btn"
+              type="button"
+              onClick={() => setPublishOpen(true)}
+              disabled={totalPlaces === 0}
+              title={totalPlaces === 0 ? "장소를 담으면 올릴 수 있어요" : undefined}
+            >
+              <Icon name="landmark" />게시판에 올리기
+            </button>
+          )}
           <button className="btn btn--pri" type="button" onClick={share}><Icon name="link" />링크 공유</button>
         </div>
       </div>
+
+      {publishOpen && <PublishDialog trip={trip} countryName={country.name} onClose={closePublish} />}
 
       {setupOpen && <TripSetup trip={trip} countries={countries} onApply={applySetup} onCancel={() => setSetupOpen(false)} />}
 

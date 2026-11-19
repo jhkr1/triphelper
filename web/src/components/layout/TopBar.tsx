@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useApp } from "@/components/providers/AppProviders";
-import { Icon } from "@/components/ui/Icon";
 import { AccountMenu } from "@/components/layout/AccountMenu";
 
 export function BrandMark({ size = 34 }: { size?: number }) {
@@ -23,12 +22,10 @@ export function BrandMark({ size = 34 }: { size?: number }) {
   );
 }
 
-/** 상단 바: 로고(홈), 다크 모드, 언어 전환. solid는 지구본이 없는 페이지에서 배경을 깐다. */
+/** 상단 바: 로고(홈), 주 메뉴, 계정·설정 메뉴(다크 모드·언어 포함). solid는 지구본이 없는 페이지에서 배경을 깐다. */
 export function TopBar({ solid = false }: { solid?: boolean }) {
-  const { lang, setLang, t, theme, toggleTheme } = useApp();
+  const { t } = useApp();
   const pathname = usePathname();
-  const dark = theme === "dark";
-  const themeLabel = dark ? t("controls.lightMode") : t("controls.darkMode");
 
   return (
     <header className={solid ? "top top--solid" : "top"}>
@@ -39,15 +36,8 @@ export function TopBar({ solid = false }: { solid?: boolean }) {
       <div className="top__actions">
         <nav className="top__nav" aria-label="주 메뉴">
           <Link href="/trip/" aria-current={pathname.startsWith("/trip") ? "page" : undefined}>{t("nav.trip")}</Link>
+          <Link href="/board/" aria-current={pathname.startsWith("/board") ? "page" : undefined}>{t("nav.board")}</Link>
         </nav>
-        <button className="pill" type="button" onClick={toggleTheme} aria-label={themeLabel}>
-          <Icon name={dark ? "sun" : "moon"} />
-          <span className="pill__text">{themeLabel}</span>
-        </button>
-        <button className="pill" type="button" onClick={() => setLang(lang === "ko" ? "en" : "ko")}>
-          <Icon name="globe" />
-          <span className="pill__text">{lang === "ko" ? t("controls.languageEn") : t("controls.language")}</span>
-        </button>
         <AccountMenu />
       </div>
     </header>

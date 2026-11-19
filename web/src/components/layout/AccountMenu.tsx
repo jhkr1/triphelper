@@ -1,6 +1,10 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useApp } from "@/components/providers/AppProviders";
+import { Icon } from "@/components/ui/Icon";
 import { authEnabled, authStore, enabledProviders, PROVIDERS, signIn, signOut, type ProviderId } from "@/lib/supabase";
 
 /** 소셜 로그인 버튼 모양 (각 회사 안내에 맞춘 색) */
@@ -21,8 +25,13 @@ function ProviderMark({ id }: { id: ProviderId }) {
   );
 }
 
-/** 상단 바의 로그인 / 내 계정 메뉴. Supabase 설정이 없으면 아무것도 그리지 않는다 */
+/**
+ * 상단 바 오른쪽 메뉴: 프로필(또는 로그인) 버튼을 누르면
+ * 계정 · (휴대폰에서는) 주 메뉴 · 다크 모드 · 로그아웃이 한곳에 나온다.
+ */
 export function AccountMenu() {
+  const { t, theme, toggleTheme } = useApp();
+  const pathname = usePathname();
   const auth = useSyncExternalStore(authStore.subscribe, authStore.getSnapshot, authStore.getServerSnapshot);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
@@ -38,32 +47,46 @@ export function AccountMenu() {
     return () => { document.removeEventListener("pointerdown", onDown); document.removeEventListener("keydown", onKey); };
   }, [open]);
 
-  if (!authEnabled || auth.status === "loading") return null;
-
   const providers = PROVIDERS.filter((p) => enabledProviders().includes(p.id));
   const me = auth.status === "in" ? auth.me : null;
+  const dark = theme === "dark";
+  const menuLabel = me ? "내 계정과 설정" : "로그인과 설정";
 
   return (
     <div className="acct" ref={boxRef}>
-      <button className={me ? "pill acct__me" : "pill"} type="button" aria-expanded={open} aria-haspopup="true" onClick={() => { setError(""); setOpen((o) => !o); }}>
+      <button
+        className={me ? "pill acct__me" : "pill acct__btn"}
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="true"
+        aria-label={me ? `${me.nickname} · ${menuLabel}` : menuLabel}
+        onClick={() => { setError(""); setOpen((o) => !o); }}
+      >
         {me ? (
           me.avatar
             // eslint-disable-next-line @next/next/no-img-element -- 소셜 계정 프로필 사진 (외부 주소)
             ? <img className="acct__avatar" src={me.avatar} alt="" referrerPolicy="no-referrer" />
             : <span className="acct__avatar acct__avatar--text" aria-hidden="true">{me.nickname.slice(0, 1)}</span>
-        ) : null}
-        <span className={me ? "acct__name" : undefined}>{me ? me.nickname : "로그인"}</span>
+        ) : (
+          <Icon name="menu" />
+        )}
+        <span className="acct__name">{me ? me.nickname : authEnabled && auth.status !== "loading" ? "로그인" : "메뉴"}</span>
+        <Icon name="chevronDown" className="acct__chev" />
       </button>
 
       {open && (
-        <div className="acct__menu" role="dialog" aria-label={me ? "내 계정" : "로그인"}>
+        <div className="acct__menu" role="dialog" aria-label={menuLabel}>
+          {/* 계정 */}
           {me ? (
-            <>
-              <p className="acct__hello"><b>{me.nickname}</b>님</p>
-              <button type="button" className="acct__item" onClick={async () => { await signOut(); setOpen(false); }}>로그아웃</button>
-            </>
-          ) : (
-            <>
+            <p className="acct__hello">
+              {me.avatar
+                // eslint-disable-next-line @next/next/no-img-element -- 소셜 계정 프로필 사진
+                ? <img className="acct__avatar" src={me.avatar} alt="" referrerPolicy="no-referrer" />
+                : <span className="acct__avatar acct__avatar--text" aria-hidden="true">{me.nickname.slice(0, 1)}</span>}
+              <span><b>{me.nickname}</b>님</span>
+            </p>
+          ) : authEnabled && providers.length > 0 ? (
+            <div className="acct__login">
               <p className="acct__title">로그인하고 일정을 저장하세요</p>
               <p className="acct__sub">어느 기기에서든 내 여행을 이어서 짜고, 게시판에 공유할 수 있어요.</p>
               {providers.map((p) => (
@@ -77,7 +100,32 @@ export function AccountMenu() {
                 </button>
               ))}
               {error && <p className="acct__err" role="alert">{error}</p>}
-            </>
+            </div>
+          ) : null}
+
+          {/* 주 메뉴 (휴대폰에서만 보임: 넓은 화면은 상단 바에 있음) */}
+          <nav className="acct__nav" aria-label="주 메뉴">
+            <Link href="/trip/" aria-current={pathname.startsWith("/trip") ? "page" : undefined} onClick={() => setOpen(false)}>
+              <Icon name="calendar" />{t("nav.trip")}
+            </Link>
+            <Link href="/board/" aria-current={pathname.startsWith("/board") ? "page" : undefined} onClick={() => setOpen(false)}>
+              <Icon name="landmark" />{t("nav.board")}
+            </Link>
+          </nav>
+
+          {/* 설정 */}
+          <div className="acct__settings">
+            <button type="button" className="acct__row" role="switch" aria-checked={dark} onClick={toggleTheme}>
+              <Icon name={dark ? "moon" : "sun"} />
+              <span>{t("controls.darkMode")}</span>
+              <i className="acct__switch" aria-hidden="true" />
+            </button>
+          </div>
+
+          {me && (
+            <button type="button" className="acct__item acct__logout" onClick={async () => { await signOut(); setOpen(false); }}>
+              로그아웃
+            </button>
           )}
         </div>
       )}

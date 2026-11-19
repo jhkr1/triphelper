@@ -5,6 +5,7 @@ import { getAllDestinations } from "@/lib/destinations";
 import { toPlannerCountry, type PlannerCountry } from "@/lib/trip-model";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./planner.css";
+import "../board/board.css";
 
 export const metadata: Metadata = {
   title: "내 여행 플래너 · 일정표, 지도, 체크리스트",

@@ -29,6 +29,8 @@ const PATHS = {
   arrowUp: <><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></>,
   search: <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></>,
   plus: <path d="M5 12h14M12 5v14" />,
+  menu: <path d="M4 6h16M4 12h16M4 18h16" />,
+  chevronDown: <path d="m6 9 6 6 6-6" />,
   bed: <><path d="M2 4v16" /><path d="M2 8h18a2 2 0 0 1 2 2v10" /><path d="M2 17h20" /><path d="M6 8v9" /></>,
   note: <><path d="M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8Z" /><path d="M15 3v4a2 2 0 0 0 2 2h4" /></>,
   minus: <path d="M5 12h14" />,

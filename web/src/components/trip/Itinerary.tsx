@@ -37,7 +37,7 @@ interface Props {
 
 /* ───────── 사진 ───────── */
 
-function PlacePhoto({ place }: { place: Place }) {
+export function PlacePhoto({ place }: { place: Place }) {
   const [result, setResult] = useState<{ key: string; photo: Photo | null } | null>(null);
   const key = place.wiki ?? "";
   useEffect(() => {
@@ -114,7 +114,7 @@ function NearbyPanel({ place, state, inTrip, onTake }: { place: Place; state: Ne
 /* ───────── 장소 사이 이동 ───────── */
 
 /** 앞 장소 → 다음 장소: 가까우면 도보 시간, 멀면 거리 + 대중교통 길찾기(지도 앱) */
-function Leg({ from, to, countryCode, hidden = false }: { from: Place; to: Place; countryCode: string; hidden?: boolean }) {
+export function Leg({ from, to, countryCode, hidden = false }: { from: Place; to: Place; countryCode: string; hidden?: boolean }) {
   if (!from.location || !to.location) return null;
   const meters = distanceMeters(from.location, to.location);
   const walk = meters <= WALKABLE_METERS;

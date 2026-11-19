@@ -1,5 +1,6 @@
 // 나라별 주요 관광지 데이터를 만들어 src/data/attractions.ts 로 저장한다.
 // 실행 (컨테이너 /app/web): node scripts/build-attractions.mjs
+// 일부 나라만 다시 받기: ONLY=russia,japan node scripts/build-attractions.mjs (나머지 나라는 기존 데이터 유지)
 //
 // 관광지 목록(아래 CURATED, 영어 위키백과 문서 제목)은 사람이 정하고,
 // 위키백과에서 사진·좌표·한국어 이름·한 줄 설명만 가져온다. (자동 수집은 행정구역·사건 문서가 섞여 쓰지 않음)
@@ -7,6 +8,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { destinations } from "../src/data/destinations.ts";
+import { attractions as existing } from "../src/data/attractions.ts";
 
 const OUT = path.resolve(import.meta.dirname, "../src/data/attractions.ts");
 const UA = { "User-Agent": "TripHelper-data-builder/1.0 (https://triphelper.kr)" };
@@ -38,6 +40,8 @@ const CURATED = {
   "hong-kong": ["Victoria Peak", "Victoria Harbour", "Tian Tan Buddha", "Former Kowloon-Canton Railway Clock Tower", "Temple Street Night Market", "Avenue of Stars, Hong Kong", "Man Mo Temple", "Hong Kong Disneyland"],
   singapore: ["Marina Bay Sands", "Gardens by the Bay", "Merlion", "Sentosa", "Singapore Botanic Gardens", "Chinatown, Singapore", "Raffles Hotel", "Clarke Quay"],
   malaysia: ["Petronas Towers", "Batu Caves", "Merdeka Square, Kuala Lumpur", "Kuala Lumpur Tower", "George Town, Penang", "Malacca City", "Langkawi", "Mount Kinabalu"],
+  russia: ["Red Square", "Saint Basil's Cathedral", "Moscow Kremlin", "Bolshoi Theatre", "Hermitage Museum", "Peterhof Palace", "Church of the Savior on Spilled Blood", "Lake Baikal"],
+  "new-zealand": ["Milford Sound", "Hobbiton Movie Set", "Waitomo Glowworm Caves", "Sky Tower (Auckland)", "Lake Tekapo", "Aoraki / Mount Cook", "Tongariro Alpine Crossing", "Museum of New Zealand Te Papa Tongarewa"],
   indonesia: ["Borobudur", "Prambanan", "Tanah Lot", "Uluwatu Temple", "Ubud", "Mount Bromo", "Komodo National Park", "National Monument (Indonesia)"],
 };
 
@@ -64,6 +68,9 @@ const DISPLAY_NAMES = {
   "Hội An Old Town": "호이안 구시가지",
   "Hội An Ancient Town": "호이안 구시가지",
   "Mỹ Sơn": "미선 유적",
+  "Waitomo Glowworm Cave": "와이토모 반딧불이 동굴",
+  "Waitomo Glowworm Caves": "와이토모 반딧불이 동굴",
+  "Tongariro Alpine Crossing": "통가리로 알파인 크로싱",
 };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -164,9 +171,14 @@ const km = (a, b) => {
   return 2 * 6371 * Math.asin(Math.sqrt(h));
 };
 
+const ONLY = process.env.ONLY ? new Set(process.env.ONLY.split(",").map((x) => x.trim())) : null;
 const result = {};
 const missing = [];
 for (const d of destinations) {
+  if (ONLY && !ONLY.has(d.slug)) {
+    if (existing[d.slug]) result[d.slug] = existing[d.slug];
+    continue;
+  }
   const titles = CURATED[d.slug] ?? [];
   const found = await lookupEn(titles);
   await sleep(400);

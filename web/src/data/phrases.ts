@@ -929,6 +929,64 @@ export const phraseSets = {
       "meaning": "체크아웃은 몇 시인가요?",
       "meaningEn": "What time is checkout?"
     }
+  ],
+  "russian": [
+    {
+      "source": "Здравствуйте",
+      "pronunciation": "즈드라스트부이쩨",
+      "pronunciationEn": "ZDRAST-vooy-tye",
+      "meaning": "안녕하세요.",
+      "meaningEn": "Hello."
+    },
+    {
+      "source": "Спасибо",
+      "pronunciation": "스빠씨바",
+      "pronunciationEn": "spa-SEE-ba",
+      "meaning": "감사합니다.",
+      "meaningEn": "Thank you."
+    },
+    {
+      "source": "Извините",
+      "pronunciation": "이즈비니쩨",
+      "pronunciationEn": "iz-vee-NEE-tye",
+      "meaning": "죄송합니다.",
+      "meaningEn": "I'm sorry."
+    },
+    {
+      "source": "Сколько это стоит?",
+      "pronunciation": "스꼴까 에따 스또잇?",
+      "pronunciationEn": "SKOL-ka E-ta STO-it?",
+      "meaning": "이거 얼마예요?",
+      "meaningEn": "How much is this?"
+    },
+    {
+      "source": "Где туалет?",
+      "pronunciation": "그제 뚜알롓?",
+      "pronunciationEn": "gdye too-a-LYET?",
+      "meaning": "화장실이 어디예요?",
+      "meaningEn": "Where is the restroom?"
+    },
+    {
+      "source": "Покажите это, пожалуйста",
+      "pronunciation": "빠까쥐쩨 에따, 빠좔스따",
+      "pronunciationEn": "pa-ka-ZHEE-tye E-ta, pa-ZHAL-sta",
+      "meaning": "이것 좀 보여주세요.",
+      "meaningEn": "Can I see this?"
+    },
+    {
+      "source": "Я хочу заселиться",
+      "pronunciation": "야 하추 자셀리짜",
+      "pronunciationEn": "ya kha-CHOO za-se-LEET-sa",
+      "meaning": "체크인 하려고 합니다.",
+      "meaningEn": "I'd like to check in."
+    },
+    {
+      "source": "Во сколько выезд?",
+      "pronunciation": "바 스꼴까 븨예스트?",
+      "pronunciationEn": "va SKOL-ka VY-yezd?",
+      "meaning": "체크아웃은 몇 시인가요?",
+      "meaningEn": "What time is checkout?"
+    }
   ]
 } satisfies Record<string, Phrase[]>;
 

@@ -602,7 +602,7 @@ export const attractions: Record<string, Attraction[]> = {
         "lng": 28.98
       },
       "city": "이스탄불",
-      "summary": "터키 이스탄불에 위치한 비잔티움 제국의 대성당이자 이슬람 사원"
+      "summary": "튀르키예 이스탄불에 위치한 비잔티움 제국의 대성당이자 이슬람 사원"
     },
     {
       "name": "술탄 아흐메트 모스크",
@@ -638,7 +638,7 @@ export const attractions: Record<string, Attraction[]> = {
         "lng": 28.96793
       },
       "city": "이스탄불",
-      "summary": "카팔르차르슈는 터키 이스탄불에 있는 바자르이다."
+      "summary": "카팔르차르슈는 튀르키예 이스탄불에 있는 바자르이다."
     },
     {
       "name": "예레바탄 사라이",
@@ -662,7 +662,7 @@ export const attractions: Record<string, Attraction[]> = {
         "lng": 28.97415
       },
       "city": "이스탄불",
-      "summary": "갈라타 탑은 제노바인들이 크리스테아 투리스이라고 부르던 터키 이스탄불 갈라타/카라쾨이 지구에 위치한 중세시대의 석제 탑이며…"
+      "summary": "갈라타 탑은 제노바인들이 크리스테아 투리스이라고 부르던 튀르키예 이스탄불 갈라타/카라쾨이 지구에 위치한 중세시대의 석제 탑이며…"
     },
     {
       "name": "괴레메 국립공원",
@@ -2647,6 +2647,202 @@ export const attractions: Record<string, Attraction[]> = {
       },
       "city": "자카르타",
       "summary": "국립기념물 또는 모나스는 인도네시아 자카르타 므르데카 광장 중심에 있는 국가 독립 기념탑이다."
+    }
+  ],
+  "russia": [
+    {
+      "name": "붉은 광장",
+      "nameEn": "Red Square",
+      "wiki": "붉은 광장",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Kremlin_and_Red_Square.1.jpg/500px-Kremlin_and_Red_Square.1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 55.75417,
+        "lng": 37.62
+      },
+      "city": "모스크바",
+      "summary": "붉은 광장은 러시아 모스크바에 있는 광장이다."
+    },
+    {
+      "name": "성 바실리 대성당",
+      "nameEn": "Saint Basil's Cathedral",
+      "wiki": "성 바실리 대성당",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Saint_Basil%27s_Cathedral_in_Moscow.jpg/500px-Saint_Basil%27s_Cathedral_in_Moscow.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 55.7525,
+        "lng": 37.62306
+      },
+      "city": "모스크바",
+      "summary": "러시아 모스크바에 위치한 러시아 정교회 대성당"
+    },
+    {
+      "name": "모스크바 크렘린",
+      "nameEn": "Kremlin",
+      "wiki": "모스크바 크렘린",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Moscow_Kremlin_%288281675670%29.jpg/500px-Moscow_Kremlin_%288281675670%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 55.75167,
+        "lng": 37.61778
+      },
+      "city": "모스크바",
+      "summary": "러시아 모스크바에 위치한 크렘린"
+    },
+    {
+      "name": "볼쇼이 극장",
+      "nameEn": "Bolshoi Theatre",
+      "wiki": "볼쇼이 극장",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Moscow-Bolshoi-Theare-1.jpg/500px-Moscow-Bolshoi-Theare-1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 55.76028,
+        "lng": 37.61861
+      },
+      "city": "모스크바",
+      "summary": "러시아 모스크바에 위치한 극장"
+    },
+    {
+      "name": "에르미타시 박물관",
+      "nameEn": "Hermitage Museum",
+      "wiki": "에르미타시 박물관",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/5174-3._St._Petersburg._Greater_Hermitage.jpg/500px-5174-3._St._Petersburg._Greater_Hermitage.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 59.9406,
+        "lng": 30.3136
+      },
+      "city": "상트페테르부르크",
+      "summary": "러시아 상트페테르부르크에 위치한 국립 박물관"
+    },
+    {
+      "name": "페테르고프궁",
+      "nameEn": "Peterhof Palace",
+      "wiki": "페테르고프궁",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Peterhof_Palace%2C_Saint_Petersburg%2C_Russia_%2844408938295%29.jpg/500px-Peterhof_Palace%2C_Saint_Petersburg%2C_Russia_%2844408938295%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 59.88444,
+        "lng": 29.90889
+      },
+      "city": "상트페테르부르크",
+      "summary": "러시아 상트페테르부르크에 위치한 궁전"
+    },
+    {
+      "name": "피의 구원 사원",
+      "nameEn": "Church of the Savior on Blood",
+      "wiki": "피의 구원 사원",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Auferstehungskirche_%28Sankt_Petersburg%29.JPG/500px-Auferstehungskirche_%28Sankt_Petersburg%29.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 59.94,
+        "lng": 30.32861
+      },
+      "city": "상트페테르부르크",
+      "summary": "러시아 상트페테르부르크에 위치한 교회"
+    },
+    {
+      "name": "바이칼호",
+      "nameEn": "Lake Baikal",
+      "wiki": "바이칼호",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/Baikal.A2001296.0420.250m-NASA.jpg/500px-Baikal.A2001296.0420.250m-NASA.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 53.5,
+        "lng": 108
+      },
+      "city": "",
+      "summary": "러시아에 위치한 호수"
+    }
+  ],
+  "new-zealand": [
+    {
+      "name": "밀퍼드 사운드",
+      "nameEn": "Milford Sound",
+      "wiki": "밀퍼드 사운드",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Milford_Sound_%28New_Zealand%29.JPG/500px-Milford_Sound_%28New_Zealand%29.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": -44.64806,
+        "lng": 167.90556
+      },
+      "city": "",
+      "summary": "밀퍼드 사운드는 뉴질랜드 남섬의 남서부 피오르드랜드 국립공원에 위치한 피오르드이다."
+    },
+    {
+      "name": "호비턴 무비 세트",
+      "nameEn": "Hobbiton Movie Set",
+      "wiki": "호비턴 무비 세트",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Waterhouse_Lake_Front.jpg/500px-Waterhouse_Lake_Front.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": -37.8575,
+        "lng": 175.67972
+      },
+      "city": "",
+      "summary": "뉴질랜드의 영화 촬영장"
+    },
+    {
+      "name": "와이토모 반딧불이 동굴",
+      "nameEn": "Waitomo Glowworm Cave",
+      "wiki": "en:Waitomo Glowworm Cave",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Glowworm_Grotto%2C_Waitomo_Glowworm_Cave.jpg/500px-Glowworm_Grotto%2C_Waitomo_Glowworm_Cave.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": -38.2608,
+        "lng": 175.1036
+      },
+      "city": "",
+      "summary": ""
+    },
+    {
+      "name": "스카이 타워",
+      "nameEn": "Sky Tower (Auckland)",
+      "wiki": "스카이 타워 (오클랜드)",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Sky_Tower%2C_Auckland_-_0206_%28cropped%29.jpg/500px-Sky_Tower%2C_Auckland_-_0206_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": -36.84847,
+        "lng": 174.76231
+      },
+      "city": "오클랜드",
+      "summary": "스카이 타워는 뉴질랜드 오클랜드에 위치한 328미터의 타워이다."
+    },
+    {
+      "name": "테카포 호수",
+      "nameEn": "Lake Tekapo",
+      "wiki": "테카포 호수",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/LakeTekapoNov242024_05.jpg/500px-LakeTekapoNov242024_05.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": -43.88333,
+        "lng": 170.51667
+      },
+      "city": "",
+      "summary": "테카포 호수는 뉴질랜드 남섬에 있는 맥킨지 분지의 북단을 따라 남북으로 뻗어 있는 3개의 호수 중 최대의 호수이다."
+    },
+    {
+      "name": "쿡산",
+      "nameEn": "Aoraki / Mount Cook",
+      "wiki": "쿡산",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Aoraki_Mount_Cook.JPG/500px-Aoraki_Mount_Cook.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": -43.595,
+        "lng": 170.14194
+      },
+      "city": "",
+      "summary": "뉴질랜드 남부 알프스에 위치한 산"
+    },
+    {
+      "name": "통가리로 알파인 크로싱",
+      "nameEn": "Tongariro Alpine Crossing",
+      "wiki": "en:Tongariro Alpine Crossing",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tongariro_Crossing_Emerald_Lakes_Blue_Lake.jpg?width=480",
+      "location": {
+        "lat": -39.07394,
+        "lng": 175.6638
+      },
+      "city": "",
+      "summary": ""
+    },
+    {
+      "name": "뉴질랜드 테 파파 통가레와 박물관",
+      "nameEn": "Te Papa",
+      "wiki": "뉴질랜드 테 파파 통가레와 박물관",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Museum_of_New_Zealand_Te_Papa_Tongarewa_unsaturated.jpg/500px-Museum_of_New_Zealand_Te_Papa_Tongarewa_unsaturated.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": -41.2906,
+        "lng": 174.7819
+      },
+      "city": "웰링턴",
+      "summary": "뉴질랜드 테 파파 통가레와 박물관은 뉴질랜드의 국립박물관으로, 웰링턴 케이블 스트리트에 위치하고 있다."
     }
   ]
 };

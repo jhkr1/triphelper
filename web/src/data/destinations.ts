@@ -1632,9 +1632,10 @@ export const destinations: Destination[] = [
       "lat": 39.2,
       "lng": 34.5
     },
-    "name": "터키",
-    "nameEn": "Turkey",
+    "name": "튀르키예",
+    "nameEn": "Türkiye",
     "keywords": [
+      "튀르키예",
       "터키",
       "turkey",
       "istanbul",
@@ -1642,11 +1643,11 @@ export const destinations: Destination[] = [
     ],
     "flag": "🇹🇷",
     "languageCode": "tr-TR",
-    "summary": "동서양이 만나는 터키를 깊이 있게 즐기기 위한 핵심 정보.",
-    "summaryEn": "Essential information for deeply enjoying Turkey, where East meets West.",
+    "summary": "동서양이 만나는 튀르키예를 깊이 있게 즐기기 위한 핵심 정보.",
+    "summaryEn": "Essential information for deeply enjoying Türkiye, where East meets West.",
     "currency": {
       "code": "TRY",
-      "name": "터키 리라",
+      "name": "튀르키예 리라",
       "nameEn": "Turkish Lira",
       "symbol": "₺"
     },
@@ -1657,11 +1658,11 @@ export const destinations: Destination[] = [
       },
       {
         "title": "팁 문화",
-        "description": "터키에서는 식당과 가이드 서비스에 5~10%의 팁이 일반적입니다. 서비스에 만족했다면 추가 팁을 주는 것이 예의입니다. 택시는 요금 반올림 정도로 팁을 주는 경우가 있으며, 호텔 벨보이에게는 가방당 TL5, 하우스키핑에는 하루 TL5 정도가 일반적입니다."
+        "description": "튀르키예에서는 식당과 가이드 서비스에 5~10%의 팁이 일반적입니다. 서비스에 만족했다면 추가 팁을 주는 것이 예의입니다. 택시는 요금 반올림 정도로 팁을 주는 경우가 있으며, 호텔 벨보이에게는 가방당 TL5, 하우스키핑에는 하루 TL5 정도가 일반적입니다."
       },
       {
         "title": "차이(차) 문화",
-        "description": "차이(차)로 환영을 받으면 한 잔 함께하는 것이 예의로 여겨집니다. 터키의 대표적인 환대 문화입니다."
+        "description": "차이(차)로 환영을 받으면 한 잔 함께하는 것이 예의로 여겨집니다. 튀르키예의 대표적인 환대 문화입니다."
       },
       {
         "title": "시장 흥정",
@@ -1673,25 +1674,25 @@ export const destinations: Destination[] = [
       },
       {
         "title": "화장실 이용",
-        "description": "터키의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 일부 공중화장실은 휴지가 없을 수 있으니 휴지를 준비하는 것이 좋습니다."
+        "description": "튀르키예의 공중화장실은 대부분 유료이며, 카페나 레스토랑의 화장실을 이용하려면 음료나 간단한 음식을 주문해야 하는 경우가 많습니다. 일부 공중화장실은 휴지가 없을 수 있으니 휴지를 준비하는 것이 좋습니다."
       }
     ],
     "souvenirs": [
       {
         "title": "과자 및 식품",
-        "description": "터키시 딜라이트(로쿰), 바클라바, 피스타치오 과자 등이 인기 기념품입니다. 터키의 대표적인 과자들을 만나볼 수 있습니다."
+        "description": "터키시 딜라이트(로쿰), 바클라바, 피스타치오 과자 등이 인기 기념품입니다. 튀르키예의 대표적인 과자들을 만나볼 수 있습니다."
       },
       {
         "title": "전통 공예품",
-        "description": "나자르본주, 터키 타일, 전통 카펫/키리무 등이 인기입니다. 터키의 전통 공예 기술을 만나볼 수 있습니다."
+        "description": "나자르본주, 튀르키예 타일, 전통 카펫/키리무 등이 인기입니다. 튀르키예의 전통 공예 기술을 만나볼 수 있습니다."
       },
       {
         "title": "향신료",
-        "description": "그랜드 바자르의 향신료 세트, 사프란 등이 좋은 선물이 됩니다. 터키의 다양한 향신료를 구매할 수 있습니다."
+        "description": "그랜드 바자르의 향신료 세트, 사프란 등이 좋은 선물이 됩니다. 튀르키예의 다양한 향신료를 구매할 수 있습니다."
       },
       {
         "title": "커피 세트",
-        "description": "터키 커피 세트, 커피포트(제즈베) 등이 인기입니다. 터키의 전통 커피 문화를 집에서 즐길 수 있습니다."
+        "description": "튀르키예 커피 세트, 커피포트(제즈베) 등이 인기입니다. 튀르키예의 전통 커피 문화를 집에서 즐길 수 있습니다."
       },
       {
         "title": "면세점 상품",
@@ -1701,29 +1702,29 @@ export const destinations: Destination[] = [
     "market": [
       {
         "title": "Migros 마트 추천템",
-        "description": "수제 갈메, 수프 믹스, 드라이드 프루트 등이 Migros 마트에서 인기입니다. 터키의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
+        "description": "수제 갈메, 수프 믹스, 드라이드 프루트 등이 Migros 마트에서 인기입니다. 튀르키예의 대표적인 식재료들을 저렴하게 구매할 수 있습니다."
       },
       {
         "title": "Spice Bazaar",
-        "description": "향신료, 허브 차, 석류 농축액 등이 Spice Bazaar에서 구매 가능합니다. 터키의 다양한 향신료와 허브를 만나볼 수 있습니다."
+        "description": "향신료, 허브 차, 석류 농축액 등이 Spice Bazaar에서 구매 가능합니다. 튀르키예의 다양한 향신료와 허브를 만나볼 수 있습니다."
       },
       {
         "title": "약국 추천템",
-        "description": "Bepanthol 크림, Arko Nem 보습크림 등이 약국에서 인기입니다. 터키의 인기 스킨케어 제품들을 구매할 수 있습니다."
+        "description": "Bepanthol 크림, Arko Nem 보습크림 등이 약국에서 인기입니다. 튀르키예의 인기 스킨케어 제품들을 구매할 수 있습니다."
       },
       {
         "title": "전통 과자",
-        "description": "Lokumcu 만의 전통 과자 선물 세트가 좋은 선물이 됩니다. 터키의 전통 과자들을 선물용으로 포장된 세트로 구매할 수 있습니다."
+        "description": "Lokumcu 만의 전통 과자 선물 세트가 좋은 선물이 됩니다. 튀르키예의 전통 과자들을 선물용으로 포장된 세트로 구매할 수 있습니다."
       },
       {
         "title": "생활용품",
-        "description": "Derby 면도기, Eyüp Sabri Tuncer 콜로냐 등이 인기입니다. 터키의 전통 생활용품들을 만나볼 수 있습니다."
+        "description": "Derby 면도기, Eyüp Sabri Tuncer 콜로냐 등이 인기입니다. 튀르키예의 전통 생활용품들을 만나볼 수 있습니다."
       }
     ],
     "essentials": [
       {
         "title": "전기 어댑터",
-        "description": "터키는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
+        "description": "튀르키예는 콘센트 타입 C/F (230V, 50Hz)를 사용합니다. 유럽식 플러그가 필요하며, 대부분의 현대 전자제품이 110V~240V를 지원하므로 전압 변환기는 필요 없을 수 있습니다. 여행 전 기기의 전압 지원 범위를 확인하시기 바랍니다."
       },
       {
         "title": "교통카드",
@@ -1734,8 +1735,8 @@ export const destinations: Destination[] = [
         "description": "Turkcell, Vodafone eSIM/유심을 사전 등록하는 것이 좋습니다. 공항에서도 구매 가능하지만 온라인으로 미리 구매하면 더 저렴합니다."
       },
       {
-        "title": "터키 eSIM",
-        "titleEn": "Turkey eSIM",
+        "title": "튀르키예 eSIM",
+        "titleEn": "Türkiye eSIM",
         "link": "https://link.coupang.com/a/c5SyVT",
         "iframe": "<iframe src=\"https://coupa.ng/ckJr2R\" width=\"120\" height=\"240\" frameborder=\"0\" scrolling=\"no\" referrerpolicy=\"unsafe-url\" browsingtopics></iframe>"
       },
@@ -1749,7 +1750,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "여행하기 좋은 시기",
-        "description": "터키는 봄(4~6월)과 가을(9~10월)이 가장 여행하기 좋은 시기입니다. 날씨가 온화하고 관광객이 상대적으로 적습니다. 여름(7~8월)은 매우 덥지만 해변과 터키 리비에라를 즐기기에 좋고, 겨울(12~2월)은 추우나 이스탄불 등 도시 관광에는 적합합니다."
+        "description": "튀르키예는 봄(4~6월)과 가을(9~10월)이 가장 여행하기 좋은 시기입니다. 날씨가 온화하고 관광객이 상대적으로 적습니다. 여름(7~8월)은 매우 덥지만 해변과 튀르키예 리비에라를 즐기기에 좋고, 겨울(12~2월)은 추우나 이스탄불 등 도시 관광에는 적합합니다."
       }
     ],
     "mannersEn": [
@@ -1759,11 +1760,11 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Tipping Culture",
-        "description": "In Turkey, 5-10% tipping is common in restaurants and guide services. It's polite to leave additional tips if the service was good. For taxis, rounding up the fare is common. For hotel bellboys, TL5 per bag and TL5 per day for housekeeping are typical."
+        "description": "In Türkiye, 5-10% tipping is common in restaurants and guide services. It's polite to leave additional tips if the service was good. For taxis, rounding up the fare is common. For hotel bellboys, TL5 per bag and TL5 per day for housekeeping are typical."
       },
       {
         "title": "Tea (Çay) Culture",
-        "description": "It's considered polite to share a cup when welcomed with tea (çay). This is a representative hospitality culture of Turkey."
+        "description": "It's considered polite to share a cup when welcomed with tea (çay). This is a representative hospitality culture of Türkiye."
       },
       {
         "title": "Market Bargaining",
@@ -1775,7 +1776,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Restroom Usage",
-        "description": "Most public restrooms in Turkey are paid, and you often need to order a drink or snack to use restrooms in cafes or restaurants. Some public restrooms may not have toilet paper, so it's good to prepare tissues."
+        "description": "Most public restrooms in Türkiye are paid, and you often need to order a drink or snack to use restrooms in cafes or restaurants. Some public restrooms may not have toilet paper, so it's good to prepare tissues."
       }
     ],
     "souvenirsEn": [
@@ -1825,7 +1826,7 @@ export const destinations: Destination[] = [
     "essentialsEn": [
       {
         "title": "Electrical Adapter",
-        "description": "Turkey uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
+        "description": "Türkiye uses Type C/F plugs (230V, 50Hz). You'll need a European-style plug. Most modern electronics support 110V~240V, so a voltage converter may not be necessary. Check your device's voltage range before traveling."
       },
       {
         "title": "Transportation Card",
@@ -1845,7 +1846,7 @@ export const destinations: Destination[] = [
       },
       {
         "title": "Best Time to Visit",
-        "description": "Turkey is best visited in spring (April-June) and autumn (September-October). The weather is mild and there are fewer tourists. Summer (July-August) is very hot but great for beaches and the Turkish Riviera, while winter (December-February) is cold but suitable for city tours like Istanbul."
+        "description": "Türkiye is best visited in spring (April-June) and autumn (September-October). The weather is mild and there are fewer tourists. Summer (July-August) is very hot but great for beaches and the Turkish Riviera, while winter (December-February) is cold but suitable for city tours like Istanbul."
       }
     ],
     "visa": [
@@ -1857,7 +1858,7 @@ export const destinations: Destination[] = [
     "visaEn": [
       {
         "title": "Visa-Free Entry",
-        "description": "US citizens can enter Turkey visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
+        "description": "US citizens can enter Türkiye visa-free for up to 90 days for tourism purposes. Your passport must be valid for at least 6 months, and you must have a return ticket."
       }
     ],
     "cities": [
@@ -7103,6 +7104,556 @@ export const destinations: Destination[] = [
       ],
       "languagesKo": [
         "인도네시아어"
+      ],
+      "drivingSide": "left"
+    }
+  },
+  {
+    "slug": "russia",
+    "countryCode": "ru",
+    "isoNumeric": 643,
+    "center": {
+      "lat": 61.5,
+      "lng": 105.3
+    },
+    "name": "러시아",
+    "nameEn": "Russia",
+    "keywords": [
+      "러시아",
+      "russia",
+      "모스크바",
+      "moscow",
+      "상트페테르부르크",
+      "saint petersburg",
+      "블라디보스토크",
+      "vladivostok"
+    ],
+    "flag": "🇷🇺",
+    "languageCode": "ru-RU",
+    "summary": "붉은 광장부터 블라디보스토크까지, 러시아를 여행하기 전에 알아 둘 핵심 정보.",
+    "summaryEn": "Essential information to know before traveling Russia, from Red Square to Vladivostok.",
+    "currency": {
+      "code": "RUB",
+      "name": "러시아 루블",
+      "nameEn": "Russian Ruble",
+      "symbol": "₽"
+    },
+    "manners": [
+      {
+        "title": "성당 방문",
+        "description": "러시아 정교회 성당에서는 여성은 스카프로 머리를 가리고 치마를 입는 것이 좋고, 남성은 모자를 벗습니다. 반바지·민소매 차림은 피하세요. 입구에서 스카프를 빌려주는 곳도 있습니다."
+      },
+      {
+        "title": "꽃 선물",
+        "description": "꽃은 반드시 홀수로 선물합니다. 짝수 송이는 장례식에 쓰는 것으로 여겨집니다."
+      },
+      {
+        "title": "집에 초대받았을 때",
+        "description": "현관에서 신발을 벗는 집이 많고, 빈손으로 가지 않는 것이 예의입니다. 케이크·초콜릿·와인 같은 작은 선물을 준비하세요. 문턱을 사이에 두고 악수하지 않는 풍습도 있습니다."
+      },
+      {
+        "title": "무표정은 무례가 아님",
+        "description": "러시아에서는 낯선 사람에게 웃어 보이지 않는 것이 보통입니다. 점원이나 행인이 무뚝뚝해 보여도 불친절한 뜻은 아닙니다."
+      },
+      {
+        "title": "팁 문화",
+        "description": "식당에서는 서비스가 괜찮았다면 10% 정도 팁을 남기는 것이 일반적입니다. 카드 영수증에 팁을 더할 수 없는 곳이 많아 현금으로 두고 나옵니다."
+      },
+      {
+        "title": "사진 촬영",
+        "description": "군사 시설, 정부 건물, 경찰, 국경 지역 등은 촬영이 금지되어 있습니다. 드론 비행도 허가 없이는 할 수 없으니 촬영 전에 주변을 확인하세요."
+      }
+    ],
+    "souvenirs": [
+      {
+        "title": "마트료시카",
+        "description": "인형 안에 작은 인형이 겹겹이 들어 있는 러시아 대표 기념품입니다. 손으로 그린 제품은 기념품 시장이나 전문점에서 살 수 있습니다."
+      },
+      {
+        "title": "초콜릿과 과자",
+        "description": "아기 얼굴이 그려진 알룐카 초콜릿, 크라스니 옥탸브리 초콜릿, 툴라 프랴니크(전통 생강빵)가 가볍게 사 가기 좋습니다."
+      },
+      {
+        "title": "홍차와 찻잔",
+        "description": "러시아는 차를 즐겨 마시는 나라입니다. 이반차(허브차), 홍차 세트, 사모바르 모양 소품이 인기입니다."
+      },
+      {
+        "title": "전통 공예품",
+        "description": "파란 무늬의 그젤 도자기, 붉은·금색 무늬의 호흘로마 나무 그릇, 털실 숄 등 지역 공예품이 있습니다."
+      },
+      {
+        "title": "자연주의 화장품",
+        "description": "나투라 시베리카 같은 시베리아 식물 원료 화장품이 선물용으로 많이 팔립니다."
+      }
+    ],
+    "market": [
+      {
+        "title": "대형 마트",
+        "description": "피아테로치카(Пятёрочка), 마그닛(Магнит)은 어디서나 보이는 저렴한 마트이고, 아즈부카 브쿠사(Азбука Вкуса)는 수입·고급 식품이 많습니다."
+      },
+      {
+        "title": "마트 추천템",
+        "description": "알룐카 초콜릿, 해바라기씨(세미치키), 꿀, 메밀(그레치카), 연유 등이 인기입니다."
+      },
+      {
+        "title": "유제품",
+        "description": "케피르(발효유), 트보로크(코티지치즈) 등 유제품 종류가 많아 숙소에서 맛보기 좋습니다."
+      },
+      {
+        "title": "약국 추천템",
+        "description": "약국(Аптека)에서 파는 보습 크림, 립밤, 허브 캔디 등이 저렴하고 품질이 괜찮습니다."
+      },
+      {
+        "title": "기념품 시장",
+        "description": "모스크바의 이즈마일롭스키 시장에서는 마트료시카, 공예품, 옛 소련 시절 물건을 한곳에서 구경할 수 있습니다."
+      }
+    ],
+    "essentials": [
+      {
+        "title": "현금 준비",
+        "description": "2022년 이후 해외에서 발급한 Visa·Mastercard 카드는 러시아에서 결제와 ATM 출금이 되지 않습니다. 여행 경비는 달러나 유로 현금으로 넉넉히 가져가 현지 은행·환전소에서 루블로 바꾸세요. 출발 전 최신 상황을 꼭 확인하세요."
+      },
+      {
+        "title": "여행경보 확인",
+        "description": "외교부 해외안전여행 누리집(0404.go.kr)에서 러시아의 지역별 여행경보를 확인하세요. 우크라이나와 맞닿은 지역 등에는 높은 단계의 경보가 내려져 있습니다."
+      },
+      {
+        "title": "항공편",
+        "description": "한국과 러시아를 잇는 직항이 크게 줄었습니다. 경유 노선이나 블라디보스토크 등 극동 노선을 미리 확인하고, 일정 변경에 대비하세요."
+      },
+      {
+        "title": "전기 어댑터",
+        "description": "러시아는 콘센트 타입 C/F(220V, 50Hz)를 사용합니다. 한국 플러그를 그대로 쓸 수 있습니다."
+      },
+      {
+        "title": "인터넷 연결",
+        "description": "현지 SIM은 MTS, MegaFon, Beeline 등에서 여권을 보여 주고 살 수 있습니다. 일부 해외 앱·사이트는 러시아에서 접속이 막혀 있으니 연락 수단을 미리 정해 두세요."
+      },
+      {
+        "title": "체류 등록",
+        "description": "외국인은 도착 후 체류지 등록을 해야 합니다. 호텔에 묵으면 숙소가 대신 처리하지만, 개인 숙소라면 집주인에게 등록을 요청하세요."
+      },
+      {
+        "title": "교통카드",
+        "description": "모스크바에서는 트로이카, 상트페테르부르크에서는 포도로즈니크 교통카드로 지하철과 버스를 탈 수 있습니다."
+      },
+      {
+        "title": "여행하기 좋은 시기",
+        "description": "5~9월이 여행하기 가장 좋습니다. 6월 하순 상트페테르부르크의 백야가 유명합니다. 겨울(12~2월)은 모스크바도 영하 10도 아래로 내려가고 시베리아는 훨씬 추우니 방한 준비가 필수입니다."
+      }
+    ],
+    "mannersEn": [
+      {
+        "title": "Church Visits",
+        "description": "In Russian Orthodox churches, women should cover their heads with a scarf and wear a skirt, and men should remove their hats. Avoid shorts and sleeveless tops. Some churches lend scarves at the entrance."
+      },
+      {
+        "title": "Giving Flowers",
+        "description": "Always give flowers in odd numbers. Even numbers are associated with funerals."
+      },
+      {
+        "title": "Visiting a Home",
+        "description": "Many homes expect you to take off your shoes at the door, and it's polite to bring a small gift such as cake, chocolate, or wine. By tradition, people don't shake hands across a threshold."
+      },
+      {
+        "title": "A Straight Face Isn't Rude",
+        "description": "Russians don't usually smile at strangers. A clerk or passerby who looks stern isn't being unfriendly."
+      },
+      {
+        "title": "Tipping Culture",
+        "description": "If the service was good, about 10% is a common tip at restaurants. Many places can't add a tip to a card payment, so leave it in cash."
+      },
+      {
+        "title": "Photography",
+        "description": "Photographing military sites, government buildings, police, and border areas is prohibited. Flying drones also requires a permit, so check your surroundings before taking pictures."
+      }
+    ],
+    "souvenirsEn": [
+      {
+        "title": "Matryoshka Dolls",
+        "description": "Russia's signature souvenir: wooden dolls nested inside one another. Hand-painted ones are sold at souvenir markets and specialty shops."
+      },
+      {
+        "title": "Chocolate and Sweets",
+        "description": "Alenka chocolate with the baby on the wrapper, Krasny Oktyabr chocolate, and Tula pryanik (gingerbread) are easy gifts to bring home."
+      },
+      {
+        "title": "Tea and Teaware",
+        "description": "Russia loves its tea. Ivan-chai (herbal tea), black tea sets, and samovar-shaped items are popular."
+      },
+      {
+        "title": "Traditional Crafts",
+        "description": "Blue-patterned Gzhel porcelain, red-and-gold Khokhloma woodenware, and wool shawls are well-known regional crafts."
+      },
+      {
+        "title": "Natural Cosmetics",
+        "description": "Cosmetics made with Siberian plants, such as Natura Siberica, are popular as gifts."
+      }
+    ],
+    "marketEn": [
+      {
+        "title": "Supermarkets",
+        "description": "Pyaterochka and Magnit are affordable chains found everywhere; Azbuka Vkusa carries more imported and premium food."
+      },
+      {
+        "title": "Supermarket Picks",
+        "description": "Alenka chocolate, sunflower seeds (semechki), honey, buckwheat (grechka), and condensed milk are popular."
+      },
+      {
+        "title": "Dairy",
+        "description": "Kefir, tvorog (farmer's cheese), and other dairy products come in many varieties and are good to try at your accommodation."
+      },
+      {
+        "title": "Pharmacy Picks",
+        "description": "Moisturizing creams, lip balms, and herbal lozenges from pharmacies (Apteka) are inexpensive and good quality."
+      },
+      {
+        "title": "Souvenir Market",
+        "description": "Moscow's Izmailovsky Market gathers matryoshkas, crafts, and Soviet-era items in one place."
+      }
+    ],
+    "essentialsEn": [
+      {
+        "title": "Bring Cash",
+        "description": "Since 2022, Visa and Mastercard cards issued outside Russia don't work for payments or ATM withdrawals. Bring enough US dollars or euros in cash and exchange them for rubles at local banks or exchange offices. Check the latest situation before you go."
+      },
+      {
+        "title": "Check Travel Advisories",
+        "description": "Check your government's travel advisory for Russia before planning a trip. The U.S. Department of State advises against all travel to Russia."
+      },
+      {
+        "title": "Flights",
+        "description": "Direct flights to Russia have been sharply reduced. Check connecting routes in advance and be ready for schedule changes."
+      },
+      {
+        "title": "Electrical Adapter",
+        "description": "Russia uses Type C/F plugs (220V, 50Hz). You'll need a European-style plug adapter."
+      },
+      {
+        "title": "Internet Connection",
+        "description": "Local SIM cards from MTS, MegaFon, or Beeline can be bought with your passport. Some foreign apps and websites are blocked in Russia, so agree on how to stay in touch beforehand."
+      },
+      {
+        "title": "Registration",
+        "description": "Foreigners must register their place of stay after arrival. Hotels handle this for you; at a private rental, ask your host to register you."
+      },
+      {
+        "title": "Transportation Card",
+        "description": "Use the Troika card in Moscow and the Podorozhnik card in Saint Petersburg for the metro and buses."
+      },
+      {
+        "title": "Best Time to Visit",
+        "description": "May to September is the best time to visit, and Saint Petersburg's White Nights in late June are famous. Winters (December–February) drop below -10°C even in Moscow and are far colder in Siberia, so pack for the cold."
+      }
+    ],
+    "visa": [
+      {
+        "title": "무비자 입국",
+        "description": "한국 일반여권 소지자는 관광 목적으로 한 번에 최대 60일, 180일 안에 모두 합쳐 90일까지 무비자로 머물 수 있습니다. 여권 유효기간은 6개월 이상 남아 있는 것이 좋습니다."
+      }
+    ],
+    "visaEn": [
+      {
+        "title": "Visa Required",
+        "description": "US citizens need a Russian tourist visa issued in advance. Requirements can change, so check with a Russian consulate before you travel."
+      }
+    ],
+    "cities": [
+      {
+        "name": "Moscow",
+        "nameKo": "모스크바"
+      },
+      {
+        "name": "Saint Petersburg",
+        "nameKo": "상트페테르부르크"
+      },
+      {
+        "name": "Vladivostok",
+        "nameKo": "블라디보스토크"
+      }
+    ],
+    "phraseSet": "russian",
+    "profile": {
+      "capital": "Moscow",
+      "capitalKo": "모스크바",
+      "region": "Europe · Eastern Europe",
+      "regionKo": "유럽 · 동유럽",
+      "population": 144000000,
+      "languages": [
+        "Russian"
+      ],
+      "languagesKo": [
+        "러시아어"
+      ],
+      "drivingSide": "right"
+    }
+  },
+  {
+    "slug": "new-zealand",
+    "countryCode": "nz",
+    "isoNumeric": 554,
+    "center": {
+      "lat": -41.5,
+      "lng": 172.5
+    },
+    "name": "뉴질랜드",
+    "nameEn": "New Zealand",
+    "keywords": [
+      "뉴질랜드",
+      "new zealand",
+      "newzealand",
+      "nz",
+      "오클랜드",
+      "auckland",
+      "퀸스타운",
+      "queenstown",
+      "웰링턴",
+      "wellington"
+    ],
+    "flag": "🇳🇿",
+    "languageCode": "en-NZ",
+    "summary": "피오르와 빙하, 마오리 문화가 있는 뉴질랜드를 여행하기 전에 알아 둘 핵심 정보.",
+    "summaryEn": "Essential information before you travel New Zealand, a land of fiords, glaciers, and Māori culture.",
+    "currency": {
+      "code": "NZD",
+      "name": "뉴질랜드 달러",
+      "nameEn": "New Zealand Dollar",
+      "symbol": "NZ$"
+    },
+    "manners": [
+      {
+        "title": "엄격한 검역",
+        "description": "뉴질랜드는 동식물 검역이 매우 엄격합니다. 과일, 꿀, 육류 등 음식과 흙 묻은 등산화·캠핑 장비는 입국 신고서에 반드시 신고하세요. 신고하지 않으면 현장에서 벌금(NZ$400)을 낼 수 있습니다."
+      },
+      {
+        "title": "마오리 문화 존중",
+        "description": "\"키아 오라(Kia ora)\"는 마오리어 인사로 널리 쓰입니다. 마라에(마오리 집회 장소)를 방문할 때는 안내에 따라 신발을 벗고, 앉아 있는 사람의 머리를 만지지 않습니다."
+      },
+      {
+        "title": "팁 문화",
+        "description": "팁은 필수가 아닙니다. 가격에 서비스가 포함되어 있으며, 특별히 좋은 서비스를 받았을 때만 10% 정도 남기기도 합니다."
+      },
+      {
+        "title": "자연 보호",
+        "description": "국립공원과 트레킹 코스에서는 쓰레기를 모두 되가져가고, 정해진 길로만 다닙니다. 야생 동물에게 먹이를 주지 마세요."
+      },
+      {
+        "title": "운전 예절",
+        "description": "뉴질랜드는 좌측통행입니다. 시골길에는 한 차선 다리(One Lane Bridge)가 많으니 표지판의 양보 방향을 확인하고, 느리게 달릴 때는 갓길로 비켜 뒤차를 보내 주세요."
+      }
+    ],
+    "souvenirs": [
+      {
+        "title": "마누카 꿀",
+        "description": "뉴질랜드를 대표하는 기념품입니다. UMF나 MGO 숫자가 높을수록 등급이 높고 비쌉니다. 공항 면세점보다 마트가 저렴한 경우가 많습니다."
+      },
+      {
+        "title": "양모 제품",
+        "description": "메리노 울 의류와 포섬 울을 섞은 장갑·목도리가 가볍고 따뜻해 인기입니다."
+      },
+      {
+        "title": "그린스톤 펜던트",
+        "description": "마오리어로 포우나무라 부르는 비취 펜던트는 행운과 보호의 의미가 있어 선물로 많이 삽니다."
+      },
+      {
+        "title": "와인",
+        "description": "말버러 지역의 소비뇽 블랑, 센트럴 오타고의 피노 누아가 유명합니다. 한국 입국 시 주류 면세 한도를 확인하세요."
+      },
+      {
+        "title": "키위 소품",
+        "description": "뉴질랜드 상징인 키위새 인형, 열쇠고리, 티타월 등 가벼운 기념품이 많습니다."
+      }
+    ],
+    "market": [
+      {
+        "title": "대형 마트",
+        "description": "가장 저렴한 팩앤세이브(PAK'nSAVE), 매장이 많은 울워스(Woolworths), 품질 좋은 뉴월드(New World)가 대표적인 마트입니다."
+      },
+      {
+        "title": "초콜릿",
+        "description": "휘태커스(Whittaker's) 초콜릿은 현지인이 가장 즐겨 먹는 브랜드로, 다양한 맛을 저렴하게 살 수 있습니다."
+      },
+      {
+        "title": "마트 추천템",
+        "description": "픽스(Pic's) 땅콩버터, 파인애플 럼프스 젤리, 레몬 탄산음료 L&P 등이 뉴질랜드에서만 맛볼 수 있는 간식입니다."
+      },
+      {
+        "title": "약국 추천템",
+        "description": "약국(Chemist)에서 파는 프로폴리스, 라놀린 크림, 비타민 등 건강·보습 제품이 인기입니다."
+      },
+      {
+        "title": "파머스 마켓",
+        "description": "주말마다 열리는 지역 파머스 마켓에서 치즈, 과일, 꿀 같은 현지 먹거리를 맛볼 수 있습니다."
+      }
+    ],
+    "essentials": [
+      {
+        "title": "NZeTA 신청",
+        "description": "무비자로 가더라도 출발 전에 전자여행허가(NZeTA)를 앱이나 이민국 누리집에서 신청하고, 관광세(IVL)를 함께 내야 합니다. 승인까지 며칠 걸릴 수 있으니 미리 신청하세요."
+      },
+      {
+        "title": "전기 어댑터",
+        "description": "뉴질랜드는 콘센트 타입 I(230V, 50Hz)를 사용합니다. 한국 플러그는 맞지 않으니 멀티 어댑터를 챙기세요."
+      },
+      {
+        "title": "자외선 차단",
+        "description": "오존층이 얇아 햇볕이 매우 강합니다. 흐린 날에도 선크림, 선글라스, 모자를 챙기세요."
+      },
+      {
+        "title": "렌터카와 운전면허",
+        "description": "렌터카로 여행하는 사람이 많습니다. 한국 운전면허증과 국제운전면허증을 함께 가져가세요."
+      },
+      {
+        "title": "인터넷 연결",
+        "description": "One NZ, Spark, 2degrees가 주요 통신사입니다. 산간·국립공원에서는 신호가 잡히지 않는 곳이 많으니 오프라인 지도를 받아 두세요."
+      },
+      {
+        "title": "교통",
+        "description": "도시 간 이동은 렌터카나 국내선이 편합니다. 오클랜드 대중교통은 AT HOP 카드나 비접촉 신용카드로 탈 수 있습니다."
+      },
+      {
+        "title": "여행하기 좋은 시기",
+        "description": "남반구라 계절이 한국과 반대입니다. 12~2월 여름이 트레킹과 관광에 좋고, 6~8월 겨울에는 퀸스타운 등에서 스키를 탈 수 있습니다. 하루에도 날씨가 자주 바뀌니 겹쳐 입을 옷을 챙기세요."
+      }
+    ],
+    "mannersEn": [
+      {
+        "title": "Strict Biosecurity",
+        "description": "New Zealand has very strict biosecurity rules. Declare food such as fruit, honey, and meat, as well as hiking boots or camping gear with soil on them. Undeclared items can mean an on-the-spot fine (NZ$400)."
+      },
+      {
+        "title": "Respect Māori Culture",
+        "description": "\"Kia ora\" is a Māori greeting used across the country. When visiting a marae (Māori meeting ground), follow your hosts' guidance, remove your shoes when asked, and don't touch a seated person's head."
+      },
+      {
+        "title": "Tipping Culture",
+        "description": "Tipping isn't expected. Service is included in prices, though some people leave about 10% for exceptional service."
+      },
+      {
+        "title": "Protecting Nature",
+        "description": "In national parks and on tracks, carry out all your rubbish and stay on marked paths. Don't feed wildlife."
+      },
+      {
+        "title": "Driving Etiquette",
+        "description": "New Zealand drives on the left. Rural roads have many one-lane bridges, so check the signs for who gives way, and pull over to let faster traffic pass."
+      }
+    ],
+    "souvenirsEn": [
+      {
+        "title": "Mānuka Honey",
+        "description": "New Zealand's signature souvenir. Higher UMF or MGO numbers mean a higher grade and price. Supermarkets are often cheaper than airport duty-free."
+      },
+      {
+        "title": "Wool Products",
+        "description": "Merino clothing and possum-merino blend gloves and scarves are light, warm, and popular."
+      },
+      {
+        "title": "Greenstone Pendants",
+        "description": "Pounamu (jade) pendants carry meanings of luck and protection and are a popular gift."
+      },
+      {
+        "title": "Wine",
+        "description": "Marlborough Sauvignon Blanc and Central Otago Pinot Noir are famous. Check your home country's duty-free alcohol allowance."
+      },
+      {
+        "title": "Kiwi Keepsakes",
+        "description": "Kiwi bird toys, keyrings, and tea towels make light, easy souvenirs."
+      }
+    ],
+    "marketEn": [
+      {
+        "title": "Supermarkets",
+        "description": "PAK'nSAVE is the cheapest, Woolworths has the most stores, and New World is known for quality."
+      },
+      {
+        "title": "Chocolate",
+        "description": "Whittaker's is the locals' favorite chocolate brand, with many flavors at good prices."
+      },
+      {
+        "title": "Supermarket Picks",
+        "description": "Pic's peanut butter, Pineapple Lumps, and the lemon soft drink L&P are uniquely Kiwi snacks."
+      },
+      {
+        "title": "Pharmacy Picks",
+        "description": "Propolis, lanolin cream, and vitamins from pharmacies (chemists) are popular health and skincare buys."
+      },
+      {
+        "title": "Farmers' Markets",
+        "description": "Weekend farmers' markets are a good place to try local cheese, fruit, and honey."
+      }
+    ],
+    "essentialsEn": [
+      {
+        "title": "Apply for an NZeTA",
+        "description": "Even visa-free visitors must apply for an NZeTA (electronic travel authority) through the app or Immigration New Zealand website and pay the tourism levy (IVL) before departure. Approval can take a few days, so apply early."
+      },
+      {
+        "title": "Electrical Adapter",
+        "description": "New Zealand uses Type I plugs (230V, 50Hz). Bring a travel adapter."
+      },
+      {
+        "title": "Sun Protection",
+        "description": "The sun is very strong here. Pack sunscreen, sunglasses, and a hat, even on cloudy days."
+      },
+      {
+        "title": "Car Rental and License",
+        "description": "Many visitors travel by rental car. Bring your home driver's license, plus an International Driving Permit if it isn't in English."
+      },
+      {
+        "title": "Internet Connection",
+        "description": "One NZ, Spark, and 2degrees are the main carriers. Many mountain and national park areas have no signal, so download offline maps."
+      },
+      {
+        "title": "Getting Around",
+        "description": "Rental cars and domestic flights are the easiest way between cities. Auckland public transport accepts AT HOP cards and contactless bank cards."
+      },
+      {
+        "title": "Best Time to Visit",
+        "description": "Seasons are reversed from the Northern Hemisphere. December–February (summer) is best for hiking and sightseeing, and June–August brings ski season around Queenstown. The weather changes quickly, so pack layers."
+      }
+    ],
+    "visa": [
+      {
+        "title": "무비자 입국 (NZeTA 필요)",
+        "description": "한국 여권 소지자는 관광 목적으로 최대 90일까지 무비자로 머물 수 있지만, 출발 전에 NZeTA(전자여행허가)를 받아야 합니다. 여권은 출국 예정일로부터 3개월 이상 남아 있어야 하며, 돌아가는 항공권이 필요합니다."
+      }
+    ],
+    "visaEn": [
+      {
+        "title": "Visa Waiver (NZeTA Required)",
+        "description": "US citizens can visit visa-free for up to 90 days but must get an NZeTA before departure. Your passport must be valid for at least 3 months beyond your departure date, and you need an onward or return ticket."
+      }
+    ],
+    "cities": [
+      {
+        "name": "Auckland",
+        "nameKo": "오클랜드"
+      },
+      {
+        "name": "Wellington",
+        "nameKo": "웰링턴"
+      },
+      {
+        "name": "Queenstown",
+        "nameKo": "퀸스타운"
+      }
+    ],
+    "phraseSet": "english",
+    "profile": {
+      "capital": "Wellington",
+      "capitalKo": "웰링턴",
+      "region": "Oceania · Australia and New Zealand",
+      "regionKo": "오세아니아 · 호주/뉴질랜드",
+      "population": 5300000,
+      "languages": [
+        "English",
+        "Māori",
+        "NZ Sign Language"
+      ],
+      "languagesKo": [
+        "영어",
+        "마오리어",
+        "뉴질랜드 수어"
       ],
       "drivingSide": "left"
     }

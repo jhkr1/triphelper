@@ -53,7 +53,19 @@ export function dayLabel(start: string, index: number) {
   return `${p.m}.${String(p.d).padStart(2, "0")} ${p.w}`;
 }
 
-const todayIso = () => new Date().toISOString().slice(0, 10);
+/** 오늘 날짜 (사용자 기기 시간대 기준, YYYY-MM-DD) */
+export const todayIso = () => new Date().toLocaleDateString("sv-SE");
+
+/**
+ * 날씨 예보가 없는 날의 안내. 예보는 오늘부터 16일치(오늘 + 15일)만 있다.
+ * "future"면 from(그날 예보를 볼 수 있는 첫날)을 함께 준다.
+ */
+export function forecastGap(dayIso: string): { kind: "past" } | { kind: "future"; from: string } | { kind: "soon" } {
+  const today = todayIso();
+  if (dayIso < today) return { kind: "past" };
+  const from = addDays(dayIso, -15);
+  return from > today ? { kind: "future", from } : { kind: "soon" };
+}
 
 /* ───────── 만들기 ───────── */
 
@@ -168,6 +180,18 @@ export function insertAt(places: Place[], place: Place, index: number): Place[] 
   return [...list.slice(0, i), { ...place, time: fits ? place.time : timeBetween(prev, next) }, ...list.slice(i)];
 }
 
+/**
+ * night 번째 날 밤의 숙소를 정한다. 같은 곳에 이어서 묵는 경우가 많아, 바로 뒤에 이어지는 숙소 빈 밤도 같은 숙소로 채운다
+ * (다른 숙소가 정해진 밤에서 멈춤). 마지막 날은 밤이 없으므로 채우지 않는다. 함께 채운 밤 수도 돌려준다.
+ */
+export function setStay(trip: Trip, night: number, stay: Omit<Place, "id">): { trip: Trip; filled: number } {
+  const lastNight = trip.days.length - 2;
+  let to = night;
+  while (to + 1 <= lastNight && !trip.days[to + 1].stay) to++;
+  const days = trip.days.map((d, i) => (i >= night && i <= to ? { ...d, stay: { ...stay, id: newId() } } : d));
+  return { trip: { ...trip, days }, filled: to - night };
+}
+
 /** 관광지를 여행지 바구니에 담는다 (이미 일정이나 여행지 바구니에 있으면 그대로) */
 export function addToBasket(trip: Trip, a: Attraction): Trip {
   const all = [...(trip.basket ?? []), ...trip.days.flatMap((d) => d.places)];
@@ -186,8 +210,11 @@ type SharedPlace = [time: string, name: string, category: PlaceCategory, lat?: n
 interface SharedTrip { v: 1; c: string; ci: string; ce: [number, number]; s: string; e: string; d: SharedPlace[][]; b?: SharedPlace[] }
 
 /** v2 장소: 위키 문서 이름이 장소 이름과 같으면 1, 뒤쪽 빈 값은 생략 */
-type CompactPlace = [time: string, name: string, category: PlaceCategory, lat?: number | null, lng?: number | null, wiki?: string | 1 | null, image?: string | null];
-interface CompactTrip { v: 2; c: string; ci: string; ce: [number, number]; s: string; e: string; d: CompactPlace[][]; b?: CompactPlace[]; u?: 1 }
+type CompactPlace = [
+  time: string, name: string, category: PlaceCategory, lat?: number | null, lng?: number | null, wiki?: string | 1 | null, image?: string | null, memo?: string | null,
+];
+/** st: 날짜별 숙소 (없는 날은 0). 예전 링크에는 없다 */
+interface CompactTrip { v: 2; c: string; ci: string; ce: [number, number]; s: string; e: string; d: CompactPlace[][]; b?: CompactPlace[]; u?: 1; st?: (CompactPlace | 0)[] }
 
 const bytesToBase64Url = (bytes: Uint8Array) => {
   let bin = "";
@@ -208,16 +235,16 @@ function toCompact(p: Place): CompactPlace {
   const row: CompactPlace = [
     p.time, p.name, p.category,
     p.location ? round5(p.location.lat) : null, p.location ? round5(p.location.lng) : null,
-    p.wiki ? (p.wiki === p.name ? 1 : p.wiki) : null, p.image ?? null,
+    p.wiki ? (p.wiki === p.name ? 1 : p.wiki) : null, p.image ?? null, p.memo?.trim() || null,
   ];
   while (row.length > 3 && row[row.length - 1] == null) row.pop();
   return row;
 }
 
-const fromCompact = ([time, name, category, lat, lng, wiki, image]: CompactPlace): Place => ({
+const fromCompact = ([time, name, category, lat, lng, wiki, image, memo]: CompactPlace): Place => ({
   id: newId(), time, name, category,
   ...(lat != null && lng != null ? { location: { lat, lng } } : {}),
-  ...(wiki ? { wiki: wiki === 1 ? name : wiki } : {}), ...(image ? { image } : {}),
+  ...(wiki ? { wiki: wiki === 1 ? name : wiki } : {}), ...(image ? { image } : {}), ...(memo ? { memo } : {}),
 });
 
 /** 공유 링크 주소 (#z=...) */
@@ -227,16 +254,19 @@ export async function shareUrl(siteUrl: string, trip: Trip): Promise<string> {
     d: trip.days.map((day) => day.places.map(toCompact)),
     ...(trip.basket?.length ? { b: trip.basket.map(toCompact) } : {}),
     ...(trip.datesUnset ? { u: 1 as const } : {}),
+    ...(trip.days.some((d) => d.stay) ? { st: trip.days.map((d) => (d.stay ? toCompact(d.stay) : 0 as const)) } : {}),
   };
   const packed = await pipeBytes(new TextEncoder().encode(JSON.stringify(data)), new CompressionStream("deflate-raw"));
   return `${siteUrl}/trip/#z=${bytesToBase64Url(packed)}`;
 }
 
-function toTrip(s: { c: string; ci: string; ce: [number, number]; s: string; e: string; u?: 1 }, days: Place[][], basket: Place[], country: PlannerCountry): Trip {
+function toTrip(
+  s: { c: string; ci: string; ce: [number, number]; s: string; e: string; u?: 1 }, days: Place[][], basket: Place[], country: PlannerCountry, stays: (Place | undefined)[] = [],
+): Trip {
   return {
     ...(s.u === 1 ? { datesUnset: true as const } : {}),
     country: s.c, city: s.ci, center: { lat: s.ce[0], lng: s.ce[1] }, start: s.s, end: s.e,
-    days: days.map((places) => ({ places })),
+    days: days.map((places, i) => (stays[i] ? { places, stay: stays[i] } : { places })),
     ...(basket.length ? { basket } : {}),
     checklist: checklistFor(country),
   };
@@ -257,7 +287,8 @@ export async function readSharedTrip(hash: string, countryOf: (slug: string) => 
       const s = JSON.parse(json) as CompactTrip;
       const country = countryOf(s.c);
       if (s.v !== 2 || !country || nightsBetween(s.s, s.e) < 0) return "invalid";
-      return toTrip(s, s.d.map((places) => places.map(fromCompact)), (s.b ?? []).map(fromCompact), country);
+      const stays = (s.st ?? []).map((x) => (x ? { ...fromCompact(x), category: "숙소" as const } : undefined));
+      return toTrip(s, s.d.map((places) => places.map(fromCompact)), (s.b ?? []).map(fromCompact), country, stays);
     }
     const s = JSON.parse(new TextDecoder().decode(base64UrlToBytes(t!))) as SharedTrip;
     const country = countryOf(s.c);

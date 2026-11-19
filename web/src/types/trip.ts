@@ -22,6 +22,8 @@ export interface Place {
 
 export interface TripDay {
   places: Place[];
+  /** 이날 밤 묵는 숙소 (마지막 날에는 없음. 예전에 저장된 일정에도 없음) */
+  stay?: Place;
 }
 
 export interface Trip {

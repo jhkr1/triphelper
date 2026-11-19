@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { GeoJSONSource, LngLatBounds as LngLatBoundsType, MapLibreMap, Marker as MarkerType } from "maplibre-gl";
 import type { LatLng } from "@/types/destination";
-import type { TripDay } from "@/types/trip";
+import type { Place, TripDay } from "@/types/trip";
 import { toLngLatTuple } from "@/lib/geo";
 import { getPhoto } from "@/lib/places";
 
@@ -21,6 +21,8 @@ interface Props {
   /** 지정하면 "지도에서 위치 지정" 모드: 다음 클릭 위치를 넘긴다 */
   onPick?: (p: LatLng) => void;
 }
+
+const BED_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>';
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
@@ -91,8 +93,20 @@ export function TripMap({ days, mapDay, onMapDayChange, center, onPick }: Props)
     const bounds: LngLatBoundsType = new lib.LngLatBounds();
     const lines: GeoJSON.Feature<GeoJSON.LineString, { color: string }>[] = [];
 
+    // 숙소: 같은 곳에 여러 밤 묵으면 마커 하나로 (전날 밤 숙소 = 그날 아침 출발지)
+    const stays = new Map<string, { stay: Place; nights: Set<number> }>();
+    const addStay = (s: Place | undefined, night: number) => {
+      if (!s?.location) return;
+      const key = `${s.location.lat.toFixed(4)},${s.location.lng.toFixed(4)}`;
+      if (!stays.has(key)) stays.set(key, { stay: s, nights: new Set() });
+      stays.get(key)!.nights.add(night);
+    };
+    const stayOf = (i: number) => (i >= 0 && i < days.length - 1 ? days[i].stay : undefined);
+
     days.forEach((day, di) => {
       if (mapDay !== "all" && mapDay !== di) return;
+      addStay(stayOf(di - 1), di - 1);
+      addStay(stayOf(di), di);
       const located = day.places.filter((p) => p.location);
       located.forEach((p) => {
         const n = day.places.indexOf(p) + 1;
@@ -113,12 +127,26 @@ export function TripMap({ days, mapDay, onMapDayChange, center, onPick }: Props)
         markersRef.current.push(new lib.Marker({ element: el }).setLngLat(toLngLatTuple(p.location!)).setPopup(popup).addTo(map));
         bounds.extend(toLngLatTuple(p.location!));
       });
-      if (located.length > 1) {
+      // 경로: 전날 숙소 → 장소들 → 오늘 밤 숙소
+      const path = [stayOf(di - 1), ...located, stayOf(di)].filter((p): p is Place => Boolean(p?.location));
+      if (path.length > 1) {
         lines.push({
           type: "Feature", properties: { color: dayColor(di) },
-          geometry: { type: "LineString", coordinates: located.map((p) => toLngLatTuple(p.location!)) },
+          geometry: { type: "LineString", coordinates: path.map((p) => toLngLatTuple(p.location!)) },
         });
       }
+    });
+
+    stays.forEach(({ stay, nights }) => {
+      const list = [...nights].filter((n) => n >= 0).sort((x, y) => x - y);
+      const el = document.createElement("div");
+      el.className = "mk mk--stay";
+      el.innerHTML = BED_SVG;
+      el.title = `숙소 · ${stay.name}`;
+      const label = list.length > 1 ? `${list[0] + 1}~${list[list.length - 1] + 1}일차 밤` : `${list[0] + 1}일차 밤`;
+      const popup = new lib.Popup({ offset: 16 }).setHTML(`<div class="pop"><b>숙소 · ${esc(stay.name)}</b><br>${label}</div>`);
+      markersRef.current.push(new lib.Marker({ element: el }).setLngLat(toLngLatTuple(stay.location!)).setPopup(popup).addTo(map));
+      bounds.extend(toLngLatTuple(stay.location!));
     });
     map.getSource<GeoJSONSource>("route")?.setData({ type: "FeatureCollection", features: lines });
     if (!bounds.isEmpty()) map.fitBounds(bounds, { padding: 70, maxZoom: 14, duration: 600 });
@@ -128,7 +156,7 @@ export function TripMap({ days, mapDay, onMapDayChange, center, onPick }: Props)
   useEffect(() => {
     const m = mapRef.current;
     if (!ready || !m) return;
-    const hasPlaces = days.some((d) => d.places.some((p) => p.location));
+    const hasPlaces = days.some((d) => d.stay?.location || d.places.some((p) => p.location));
     if (!hasPlaces) m.map.flyTo({ center: toLngLatTuple(center), zoom: 11 });
     // days는 의도적으로 제외: 장소가 바뀔 때는 위 effect가 경계에 맞춘다
     // eslint-disable-next-line react-hooks/exhaustive-deps

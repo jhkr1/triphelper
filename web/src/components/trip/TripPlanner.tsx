@@ -119,7 +119,7 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
   /* 일정 바꾸기 */
   const update = (fn: (t: Trip) => Trip) => tripStore.update(fn);
   const updatePlaces = (fn: (places: Place[]) => Place[]) =>
-    update((t) => ({ ...t, days: t.days.map((d, i) => (i === safeDay ? { places: fn(d.places) } : d)) }));
+    update((t) => ({ ...t, days: t.days.map((d, i) => (i === safeDay ? { ...d, places: fn(d.places) } : d)) }));
 
   function applySetup(r: SetupResult) {
     const n = nightsBetween(r.start, r.end);
@@ -131,12 +131,21 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
       update((t) => {
         const days = t.days.slice(0, n + 1);
         while (days.length < n + 1) days.push({ places: [] });
+        // 줄어든 일정의 새 마지막 날은 밤이 없으므로 숙소를 뺀다
+        const { stay: _, ...last } = days[n]; // eslint-disable-line @typescript-eslint/no-unused-vars
+        days[n] = last;
         return withDatesUnset({ ...t, start: r.start, end: r.end, days }, r.datesUnset);
       });
     }
     setDay((d) => Math.min(d, n));
     setSetupOpen(false);
     toast(`${r.city || r.country.name} 여행 · ${r.datesUnset ? "날짜 미정 · " : ""}${n}박 ${n + 1}일로 설정했습니다${r.approxName ? ` (가장 가까운 결과: ${r.approxName})` : ""}`);
+  }
+
+  /** 여행 설정 열기: 일정표 아래쪽에서 눌러도 보이도록 설정 칸으로 스크롤 */
+  function openSetup() {
+    setSetupOpen(true);
+    requestAnimationFrame(() => document.querySelector(".setup")?.scrollIntoView({ behavior: "smooth", block: "start" }));
   }
 
   function addDay() {
@@ -150,7 +159,11 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
     const n = trip.days[i].places.length;
     const label = `${i + 1}일차`;
     if (!confirm(`${label}를 삭제할까요?\n${n ? `담은 장소 ${n}곳도 함께 삭제되고, ` : ""}이후 일정은 하루씩 앞당겨집니다.`)) return;
-    update((t) => ({ ...t, end: addDays(t.end, -1), days: t.days.filter((_, j) => j !== i) }));
+    update((t) => {
+      const days = t.days.filter((_, j) => j !== i);
+      const { stay: _, ...last } = days[days.length - 1]; // eslint-disable-line @typescript-eslint/no-unused-vars
+      return { ...t, end: addDays(t.end, -1), days: [...days.slice(0, -1), last] };
+    });
     const next = Math.min(i, trip.days.length - 2);
     setDay(next);
     if (mapDay !== "all") setMapDay(next);
@@ -161,7 +174,11 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
     if (!pickTarget) return;
     update((t) => ({
       ...t,
-      days: t.days.map((d, i) => (i === pickTarget.day ? { places: d.places.map((x) => (x.id === pickTarget.id ? { ...x, location: p } : x)) } : d)),
+      days: t.days.map((d, i) => (i !== pickTarget.day ? d : {
+        ...d,
+        places: d.places.map((x) => (x.id === pickTarget.id ? { ...x, location: p } : x)),
+        ...(d.stay?.id === pickTarget.id ? { stay: { ...d.stay, location: p } } : {}),
+      })),
     }));
     setPickTarget(null);
     toast("위치를 지정했습니다");
@@ -214,7 +231,7 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
           {trip.datesUnset ? (
             <p>
               날짜 미정 · {nights}박 {nights + 1}일
-              <button type="button" className="date-cta" onClick={() => setSetupOpen(true)}><Icon name="calendar" />날짜 정하기</button>
+              <button type="button" className="date-cta" onClick={openSetup}><Icon name="calendar" />날짜 정하기</button>
             </p>
           ) : (
             <p>{a.y}.{a.m}.{a.d} ({a.w}) – {b.m}.{b.d} ({b.w}) · {nights}박 {nights + 1}일</p>
@@ -269,6 +286,7 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
               document.querySelector(".trip-map")?.scrollIntoView({ behavior: "smooth", block: "center" });
               toast("지도에서 위치를 선택하세요");
             }}
+            onOpenSetup={openSetup}
             toast={toast}
           />
           <aside className="side">

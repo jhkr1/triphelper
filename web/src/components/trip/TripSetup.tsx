@@ -3,6 +3,8 @@
 import { useState, type FormEvent } from "react";
 import { findCity } from "@/lib/places";
 import { addDays, nightsBetween, placeholderStart, type PlannerCountry } from "@/lib/trip-model";
+import { DateRangePicker, shortDate } from "@/components/trip/DateRangePicker";
+import { Icon } from "@/components/ui/Icon";
 import type { LatLng } from "@/types/destination";
 import type { Trip } from "@/types/trip";
 
@@ -24,6 +26,7 @@ const QUICK_NIGHTS = [
   { nights: 1, label: "1박 2일" },
   { nights: 2, label: "2박 3일" },
   { nights: 3, label: "3박 4일" },
+  { nights: 4, label: "4박 5일" },
 ];
 
 interface Props {
@@ -41,6 +44,8 @@ export function TripSetup({ trip, countries, onApply, onCancel }: Props) {
   const [start, setStart] = useState(trip.datesUnset ? "" : trip.start);
   const [end, setEnd] = useState(trip.datesUnset ? "" : trip.end);
   const [nights, setNights] = useState(nightsBetween(trip.start, trip.end));
+  // 날짜 미정 일정은 달력을 펼친 채로 연다 ("날짜 정하기"로 들어온 경우)
+  const [calOpen, setCalOpen] = useState(Boolean(trip.datesUnset));
   const [hint, setHint] = useState("");
   const [busy, setBusy] = useState(false);
   const country = countries.find((c) => c.slug === countrySlug)!;
@@ -48,7 +53,6 @@ export function TripSetup({ trip, countries, onApply, onCancel }: Props) {
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (end && !start) return setHint("가는 날을 입력하세요.");
     // 가는 날이 비어 있으면 날짜 미정: 임시 출발일 + 고른 기간
     const datesUnset = !start;
     const from = start || placeholderStart();
@@ -93,30 +97,29 @@ export function TripSetup({ trip, countries, onApply, onCancel }: Props) {
           />
           <datalist id="trip-city-list">{suggestions.map((s) => <option key={s} value={s} />)}</datalist>
         </label>
-        <label>가는 날
-          <input
-            type="date"
-            value={start}
-            onChange={(e) => {
-              const v = e.target.value;
-              setStart(v);
-              setEnd(v ? addDays(v, nights) : ""); // 고른 기간을 유지한 채 오는 날을 맞춘다
-            }}
-          />
-        </label>
-        <label>오는 날
-          <input
-            type="date"
-            value={end}
-            min={start}
-            disabled={!start}
-            onChange={(e) => {
-              setEnd(e.target.value);
-              if (start && e.target.value) setNights(Math.max(0, nightsBetween(start, e.target.value)));
-            }}
-          />
-        </label>
+        <div className="setup__dates">
+          <span className="setup__lbl" id="trip-dates-lbl">여행 날짜</span>
+          <button type="button" className="setup__datebtn" aria-expanded={calOpen} aria-labelledby="trip-dates-lbl trip-dates-val" onClick={() => setCalOpen((o) => !o)}>
+            <Icon name="calendar" />
+            <span id="trip-dates-val">
+              {!start ? `날짜 미정 · ${nights ? `${nights}박 ${nights + 1}일` : "당일"}`
+                : `${shortDate(start)} – ${shortDate(end || addDays(start, nights))} · ${nights ? `${nights}박 ${nights + 1}일` : "당일"}`}
+            </span>
+          </button>
+        </div>
       </div>
+      {calOpen && (
+        <DateRangePicker
+          start={start}
+          end={end}
+          onChange={(s, e) => {
+            setStart(s);
+            setEnd(e);
+            setHint("");
+            if (e) setNights(nightsBetween(s, e));
+          }}
+        />
+      )}
       <div className="setup__nights" role="group" aria-label="여행 기간">
         {QUICK_NIGHTS.map((q) => (
           <button
@@ -128,9 +131,16 @@ export function TripSetup({ trip, countries, onApply, onCancel }: Props) {
             {q.label}
           </button>
         ))}
+        {start && (
+          <button type="button" className="setup__unset" onClick={() => { setStart(""); setEnd(""); }}>
+            날짜 미정으로 두기
+          </button>
+        )}
       </div>
       <p className={hint ? "setup__hint err" : "setup__hint"} role="status">
-        {hint || (!start ? `날짜를 아직 모르면 비워 두세요. 기간(${nights}박 ${nights + 1}일)만 정해 둘 수 있어요.` : "")}
+        {hint || (!start
+          ? `날짜를 아직 모르면 기간만 골라 두세요. 나중에 날짜를 정하면 날씨 예보도 보여 드려요.`
+          : !end ? `오는 날을 고르지 않으면 ${nights ? `${nights}박 ${nights + 1}일` : "당일"}로 정합니다.` : "")}
       </p>
       <div className="setup__act">
         <button type="button" className="btn" onClick={onCancel}>취소</button>

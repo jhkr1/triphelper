@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { findCity } from "@/lib/places";
-import { nightsBetween, type PlannerCountry } from "@/lib/trip-model";
+import { addDays, nightsBetween, placeholderStart, type PlannerCountry } from "@/lib/trip-model";
 import type { LatLng } from "@/types/destination";
 import type { Trip } from "@/types/trip";
 
@@ -14,7 +14,17 @@ export interface SetupResult {
   end: string;
   /** 정확히 일치하지 않아 가장 가까운 도시로 설정된 경우 */
   approxName?: string;
+  /** 가는 날을 비워 둔 경우: 기간만 정하고 날짜는 미정 */
+  datesUnset: boolean;
 }
+
+/** 기간 빠른 선택 (박 수) */
+const QUICK_NIGHTS = [
+  { nights: 0, label: "당일" },
+  { nights: 1, label: "1박 2일" },
+  { nights: 2, label: "2박 3일" },
+  { nights: 3, label: "3박 4일" },
+];
 
 interface Props {
   trip: Trip;
@@ -23,12 +33,14 @@ interface Props {
   onCancel: () => void;
 }
 
-/** 여행 설정: 나라 · 도시(자유 입력) · 날짜 */
+/** 여행 설정: 나라 · 도시(자유 입력) · 기간 · 날짜 (날짜는 비워 두면 '날짜 미정') */
 export function TripSetup({ trip, countries, onApply, onCancel }: Props) {
   const [countrySlug, setCountrySlug] = useState(trip.country);
   const [city, setCity] = useState(trip.city);
-  const [start, setStart] = useState(trip.start);
-  const [end, setEnd] = useState(trip.end);
+  // 날짜 미정 일정은 날짜 칸을 비워서 보여 준다 (임시 날짜를 정해진 것처럼 채우지 않게)
+  const [start, setStart] = useState(trip.datesUnset ? "" : trip.start);
+  const [end, setEnd] = useState(trip.datesUnset ? "" : trip.end);
+  const [nights, setNights] = useState(nightsBetween(trip.start, trip.end));
   const [hint, setHint] = useState("");
   const [busy, setBusy] = useState(false);
   const country = countries.find((c) => c.slug === countrySlug)!;
@@ -36,8 +48,12 @@ export function TripSetup({ trip, countries, onApply, onCancel }: Props) {
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!start || !end) return setHint("날짜를 입력하세요.");
-    const n = nightsBetween(start, end);
+    if (end && !start) return setHint("가는 날을 입력하세요.");
+    // 가는 날이 비어 있으면 날짜 미정: 임시 출발일 + 고른 기간
+    const datesUnset = !start;
+    const from = start || placeholderStart();
+    const to = start ? end || addDays(start, nights) : addDays(from, nights);
+    const n = nightsBetween(from, to);
     if (n < 0) return setHint("오는 날이 가는 날보다 빠릅니다.");
     if (n > 29) return setHint("여행 기간은 최대 30일까지 설정할 수 있습니다.");
 
@@ -48,15 +64,15 @@ export function TripSetup({ trip, countries, onApply, onCancel }: Props) {
     const lost = trip.days.slice(n + 1).reduce((a, d) => a + d.places.length, 0);
     if (!placeChanged && lost && !confirm(`줄어든 날짜에 담긴 장소 ${lost}곳이 지워집니다. 계속할까요?`)) return;
 
-    if (!placeChanged) return onApply({ country, city: trip.city, center: trip.center, start, end });
-    if (!name) return onApply({ country, city: "", center: country.center, start, end }); // 나라 전체
+    if (!placeChanged) return onApply({ country, city: trip.city, center: trip.center, start: from, end: to, datesUnset });
+    if (!name) return onApply({ country, city: "", center: country.center, start: from, end: to, datesUnset }); // 나라 전체
 
     // 그 나라 안의 실제 도시인지 확인하고 중심 좌표를 받아 옴
     setBusy(true);
     const found = await findCity(name, country.countryCode);
     setBusy(false);
     if (!found) return setHint(`"${name}"을(를) ${country.name}에서 찾지 못했습니다. 도시 이름을 확인해 주세요.`);
-    onApply({ country, city: found.name, center: found.center, start, end, approxName: found.approxName });
+    onApply({ country, city: found.name, center: found.center, start: from, end: to, approxName: found.approxName, datesUnset });
   }
 
   return (
@@ -78,13 +94,44 @@ export function TripSetup({ trip, countries, onApply, onCancel }: Props) {
           <datalist id="trip-city-list">{suggestions.map((s) => <option key={s} value={s} />)}</datalist>
         </label>
         <label>가는 날
-          <input type="date" required value={start} onChange={(e) => { setStart(e.target.value); if (end < e.target.value) setEnd(e.target.value); }} />
+          <input
+            type="date"
+            value={start}
+            onChange={(e) => {
+              const v = e.target.value;
+              setStart(v);
+              setEnd(v ? addDays(v, nights) : ""); // 고른 기간을 유지한 채 오는 날을 맞춘다
+            }}
+          />
         </label>
         <label>오는 날
-          <input type="date" required value={end} min={start} onChange={(e) => setEnd(e.target.value)} />
+          <input
+            type="date"
+            value={end}
+            min={start}
+            disabled={!start}
+            onChange={(e) => {
+              setEnd(e.target.value);
+              if (start && e.target.value) setNights(Math.max(0, nightsBetween(start, e.target.value)));
+            }}
+          />
         </label>
       </div>
-      <p className={hint ? "setup__hint err" : "setup__hint"} role="status">{hint}</p>
+      <div className="setup__nights" role="group" aria-label="여행 기간">
+        {QUICK_NIGHTS.map((q) => (
+          <button
+            key={q.nights}
+            type="button"
+            aria-pressed={nights === q.nights}
+            onClick={() => { setNights(q.nights); if (start) setEnd(addDays(start, q.nights)); }}
+          >
+            {q.label}
+          </button>
+        ))}
+      </div>
+      <p className={hint ? "setup__hint err" : "setup__hint"} role="status">
+        {hint || (!start ? `날짜를 아직 모르면 비워 두세요. 기간(${nights}박 ${nights + 1}일)만 정해 둘 수 있어요.` : "")}
+      </p>
       <div className="setup__act">
         <button type="button" className="btn" onClick={onCancel}>취소</button>
         <button type="submit" className="btn btn--pri" disabled={busy}>{busy ? "도시 확인 중…" : "적용"}</button>

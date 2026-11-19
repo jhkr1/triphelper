@@ -84,11 +84,28 @@ export function createTrip(country: PlannerCountry, city: string, center: LatLng
   };
 }
 
-/** 처음 들어온 사람에게 보여 줄 빈 일정: 한 달 뒤 출발, 3박 4일 */
+/** 날짜를 정하지 않은 일정의 임시 출발일 (기간 계산용, 화면에는 보이지 않음) */
+export const placeholderStart = () => addDays(todayIso(), 30);
+
+/** 새 일정의 기본 기간: 1박 2일 */
+export const DEFAULT_NIGHTS = 1;
+
+/** 날짜 미정 일정: 기간(nights)만 정하고, 날짜는 사용자가 정할 때 넣는다 */
+export function undatedTrip(country: PlannerCountry, city: string, center: LatLng, nights = DEFAULT_NIGHTS): Trip {
+  const start = placeholderStart();
+  return { ...createTrip(country, city, center, start, addDays(start, nights)), datesUnset: true };
+}
+
+/** 날짜 미정 표시를 붙이거나 뗀다 */
+export function withDatesUnset(trip: Trip, unset: boolean): Trip {
+  const { datesUnset: _, ...rest } = trip; // eslint-disable-line @typescript-eslint/no-unused-vars
+  return unset ? { ...rest, datesUnset: true } : rest;
+}
+
+/** 처음 들어온 사람에게 보여 줄 빈 일정: 날짜 미정 · 1박 2일 (사용자가 고르지 않은 날짜를 정해진 것처럼 보이지 않게) */
 export function defaultTrip(country: PlannerCountry): Trip {
-  const start = addDays(todayIso(), 30);
   const city = country.cities[0];
-  return createTrip(country, city ? city.nameKo || city.name : "", country.center, start, addDays(start, 3));
+  return undatedTrip(country, city ? city.nameKo || city.name : "", country.center);
 }
 
 /** 예시 일정 (도쿄 3박 4일) */
@@ -170,7 +187,7 @@ interface SharedTrip { v: 1; c: string; ci: string; ce: [number, number]; s: str
 
 /** v2 장소: 위키 문서 이름이 장소 이름과 같으면 1, 뒤쪽 빈 값은 생략 */
 type CompactPlace = [time: string, name: string, category: PlaceCategory, lat?: number | null, lng?: number | null, wiki?: string | 1 | null, image?: string | null];
-interface CompactTrip { v: 2; c: string; ci: string; ce: [number, number]; s: string; e: string; d: CompactPlace[][]; b?: CompactPlace[] }
+interface CompactTrip { v: 2; c: string; ci: string; ce: [number, number]; s: string; e: string; d: CompactPlace[][]; b?: CompactPlace[]; u?: 1 }
 
 const bytesToBase64Url = (bytes: Uint8Array) => {
   let bin = "";
@@ -209,13 +226,15 @@ export async function shareUrl(siteUrl: string, trip: Trip): Promise<string> {
     v: 2, c: trip.country, ci: trip.city, ce: [round5(trip.center.lat), round5(trip.center.lng)], s: trip.start, e: trip.end,
     d: trip.days.map((day) => day.places.map(toCompact)),
     ...(trip.basket?.length ? { b: trip.basket.map(toCompact) } : {}),
+    ...(trip.datesUnset ? { u: 1 as const } : {}),
   };
   const packed = await pipeBytes(new TextEncoder().encode(JSON.stringify(data)), new CompressionStream("deflate-raw"));
   return `${siteUrl}/trip/#z=${bytesToBase64Url(packed)}`;
 }
 
-function toTrip(s: { c: string; ci: string; ce: [number, number]; s: string; e: string }, days: Place[][], basket: Place[], country: PlannerCountry): Trip {
+function toTrip(s: { c: string; ci: string; ce: [number, number]; s: string; e: string; u?: 1 }, days: Place[][], basket: Place[], country: PlannerCountry): Trip {
   return {
+    ...(s.u === 1 ? { datesUnset: true as const } : {}),
     country: s.c, city: s.ci, center: { lat: s.ce[0], lng: s.ce[1] }, start: s.s, end: s.e,
     days: days.map((places) => ({ places })),
     ...(basket.length ? { basket } : {}),

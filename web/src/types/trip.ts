@@ -34,6 +34,11 @@ export interface Trip {
   /** YYYY-MM-DD */
   start: string;
   end: string;
+  /**
+   * 아직 날짜를 정하지 않은 일정. 이때 start/end는 기간(며칠)만 나타내는 임시 값이라 화면에 날짜를 보여 주지 않는다.
+   * 예전에 저장된 일정에는 없다 (= 날짜가 정해진 일정).
+   */
+  datesUnset?: true;
   days: TripDay[];
   /** 여행지 바구니: 담아 두고 아직 날짜에 배치하지 않은 장소 (예전에 저장된 일정에는 없음) */
   basket?: Place[];

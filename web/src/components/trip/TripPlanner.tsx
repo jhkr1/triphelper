@@ -8,7 +8,7 @@ import { ChecklistPanel } from "@/components/trip/ChecklistPanel";
 import { TripSetup, type SetupResult } from "@/components/trip/TripSetup";
 import { LOADING, tripStore } from "@/lib/trip-store";
 import {
-  addDays, createTrip, dateParts, defaultTrip, nightsBetween, readSharedTrip, sampleTrip, shareUrl, type PlannerCountry,
+  addDays, createTrip, dateParts, defaultTrip, nightsBetween, readSharedTrip, sampleTrip, shareUrl, withDatesUnset, type PlannerCountry,
 } from "@/lib/trip-model";
 import { fetchExchange, formatRate } from "@/lib/exchange";
 import { fetchDailyForecast, type DailyForecast } from "@/lib/weather";
@@ -109,7 +109,8 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
       .catch(() => { /* 예보 없이 표시 */ });
     return () => { alive = false; };
   }, [forecastKey, trip.center.lat, trip.center.lng]);
-  const byDate = forecast?.key === forecastKey ? forecast.byDate : {};
+  // 날짜 미정이면 날짜별 예보를 붙일 수 없다
+  const byDate = !trip.datesUnset && forecast?.key === forecastKey ? forecast.byDate : {};
   const rainyIndex = trip.days.findIndex((_, i) => (byDate[addDays(trip.start, i)]?.rainChance ?? 0) >= 50);
   const rainyDay = rainyIndex >= 0
     ? (() => { const f = byDate[addDays(trip.start, rainyIndex)]; return { index: rainyIndex, start: trip.start, text: `강수 ${Math.round(f.rainChance)}% · 최저 ${Math.round(f.tempMin)}°` }; })()
@@ -124,18 +125,18 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
     const n = nightsBetween(r.start, r.end);
     const placeChanged = r.country.slug !== trip.country || r.city !== trip.city;
     if (placeChanged) {
-      tripStore.set(createTrip(r.country, r.city, r.center, r.start, r.end));
+      tripStore.set(withDatesUnset(createTrip(r.country, r.city, r.center, r.start, r.end), r.datesUnset));
       setMapDay("all");
     } else {
       update((t) => {
         const days = t.days.slice(0, n + 1);
         while (days.length < n + 1) days.push({ places: [] });
-        return { ...t, start: r.start, end: r.end, days };
+        return withDatesUnset({ ...t, start: r.start, end: r.end, days }, r.datesUnset);
       });
     }
     setDay((d) => Math.min(d, n));
     setSetupOpen(false);
-    toast(`${r.city || r.country.name} 여행 · ${n}박 ${n + 1}일로 설정했습니다${r.approxName ? ` (가장 가까운 결과: ${r.approxName})` : ""}`);
+    toast(`${r.city || r.country.name} 여행 · ${r.datesUnset ? "날짜 미정 · " : ""}${n}박 ${n + 1}일로 설정했습니다${r.approxName ? ` (가장 가까운 결과: ${r.approxName})` : ""}`);
   }
 
   function addDay() {
@@ -210,7 +211,14 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
             <img className="fl" style={{ height: ".7em" }} src={flagUrl(country.countryCode)} alt="" />
             {trip.city || country.name} 여행
           </h1>
-          <p>{a.y}.{a.m}.{a.d} ({a.w}) – {b.m}.{b.d} ({b.w}) · {nights}박 {nights + 1}일</p>
+          {trip.datesUnset ? (
+            <p>
+              날짜 미정 · {nights}박 {nights + 1}일
+              <button type="button" className="date-cta" onClick={() => setSetupOpen(true)}><Icon name="calendar" />날짜 정하기</button>
+            </p>
+          ) : (
+            <p>{a.y}.{a.m}.{a.d} ({a.w}) – {b.m}.{b.d} ({b.w}) · {nights}박 {nights + 1}일</p>
+          )}
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           <button className="btn edit-trip" type="button" aria-expanded={setupOpen} onClick={() => setSetupOpen((o) => !o)}>

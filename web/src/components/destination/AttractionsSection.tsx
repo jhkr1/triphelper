@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useApp } from "@/components/providers/AppProviders";
 import { Icon } from "@/components/ui/Icon";
 import { LOADING, tripStore } from "@/lib/trip-store";
-import { addToBasket, addDays, createTrip, defaultTrip, type PlannerCountry } from "@/lib/trip-model";
+import { addToBasket, defaultTrip, undatedTrip, type PlannerCountry } from "@/lib/trip-model";
 import type { Attraction } from "@/types/destination";
 
 interface Props {
@@ -27,9 +27,8 @@ export function AttractionsSection({ attractions, country }: Props) {
     if (!base || base.country !== country.slug) {
       const hasPlaces = base?.days.some((d) => d.places.length);
       if (hasPlaces && !confirm(t("attractions.newTripConfirm", { country: country.name }))) return;
-      // 관광지가 있는 도시로 새 일정 (도시 정보가 없으면 나라 기본값)
-      const start = addDays(new Date().toISOString().slice(0, 10), 30);
-      base = a.city ? createTrip(country, a.city, a.location, start, addDays(start, 3)) : defaultTrip(country);
+      // 관광지가 있는 도시로 새 일정 (날짜 미정 · 1박 2일, 도시 정보가 없으면 나라 기본값)
+      base = a.city ? undatedTrip(country, a.city, a.location) : defaultTrip(country);
     }
     tripStore.set(addToBasket(base, a));
     setNotice(t("attractions.addedToast", { name: a.name }));

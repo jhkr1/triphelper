@@ -131,6 +131,13 @@
 .planner .setup label{display:grid;gap:6px;font-size:.8rem;font-weight:600;color:var(--mute)}
 .planner .setup select,.planner .setup input{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:10px 12px;font:inherit;font-size:.95rem;font-weight:500;min-width:0}
 .planner .setup select:focus,.planner .setup input:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 3px #2563eb33}
+.planner .setup input:disabled{opacity:.5}
+.planner .setup__nights{display:flex;flex-wrap:wrap;gap:8px}
+.planner .setup__nights button{border:1px solid var(--line);background:var(--card);color:var(--text2);border-radius:99px;padding:7px 14px;font-size:.86rem;font-weight:600}
+.planner .setup__nights button:hover{border-color:var(--blue);color:var(--blue)}
+.planner .setup__nights button[aria-pressed="true"]{background:var(--btn);border-color:var(--btn);color:#fff}
+.planner .date-cta{display:inline-flex;align-items:center;gap:4px;margin-left:10px;border:0;background:none;padding:0;color:var(--blue);font-weight:700;font-size:inherit;vertical-align:baseline}
+.planner .date-cta:hover{text-decoration:underline}
 .planner .setup__hint{margin:0;font-size:.82rem;color:var(--mute)}
 .planner .setup__hint.err{color:#dc2626}
 .planner .setup__act{display:flex;gap:8px;justify-content:flex-end}

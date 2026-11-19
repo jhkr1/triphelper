@@ -150,11 +150,11 @@ const collision: CollisionDetection = (args) => {
   return closestCenter({ ...args, droppableContainers: args.droppableContainers.filter((c) => items.some((h) => h.id === c.id)) });
 };
 
-function DayTab({ i, start, selected, dragging, onClick }: { i: number; start: string; selected: boolean; dragging: boolean; onClick: () => void }) {
+function DayTab({ i, start, selected, dragging, onClick }: { i: number; start: string | null; selected: boolean; dragging: boolean; onClick: () => void }) {
   const { setNodeRef, isOver } = useDroppable({ id: `${TAB_PREFIX}${i}` });
   return (
     <button ref={setNodeRef} className={`day${dragging ? " day--drop" : ""}${isOver ? " day--over" : ""}`} role="tab" aria-selected={selected} onClick={onClick}>
-      <b>Day {i + 1}</b><span>{dayLabel(start, i)}</span>
+      <b>Day {i + 1}</b>{start && <span>{dayLabel(start, i)}</span>}
     </button>
   );
 }
@@ -352,7 +352,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
       >
       <div className="days" role="tablist" aria-label="날짜">
         {trip.days.map((_, i) => (
-          <DayTab key={i} i={i} start={trip.start} selected={i === day} dragging={Boolean(drag)} onClick={() => { setTimeOverride(null); onDayChange(i); }} />
+          <DayTab key={i} i={i} start={trip.datesUnset ? null : trip.start} selected={i === day} dragging={Boolean(drag)} onClick={() => { setTimeOverride(null); onDayChange(i); }} />
         ))}
         <button className="day day--add" type="button" onClick={onAddDay}>+ 날짜 추가</button>
       </div>
@@ -361,7 +361,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
         {w ? (
           <span className="wx"><Icon name={weatherIcon(w.weatherCode)} /><b>{Math.round(w.tempMax)}° / {Math.round(w.tempMin)}° · 강수 {Math.round(w.rainChance)}%</b></span>
         ) : (
-          <span className="wx muted"><Icon name="calendar" />날씨 예보는 여행 16일 전부터 표시됩니다</span>
+          <span className="wx muted"><Icon name="calendar" />{trip.datesUnset ? "날짜를 정하면 날씨 예보를 보여 드려요" : "날씨 예보는 여행 16일 전부터 표시됩니다"}</span>
         )}
         <span className="sep">|</span>
         <span>환율 {rateText}</span>

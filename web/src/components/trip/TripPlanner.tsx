@@ -216,6 +216,7 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
             onAddDay={addDay}
             onRemoveDay={removeDay}
             updatePlaces={updatePlaces}
+            updateTrip={update}
             onPickRequest={(id) => {
               setPickTarget({ day: safeDay, id });
               document.querySelector(".trip-map")?.scrollIntoView({ behavior: "smooth", block: "center" });

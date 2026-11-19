@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useApp } from "@/components/providers/AppProviders";
 import { Icon } from "@/components/ui/Icon";
 import { LOADING, tripStore } from "@/lib/trip-store";
-import { addAttraction, addDays, createTrip, defaultTrip, type PlannerCountry } from "@/lib/trip-model";
+import { addToBasket, addDays, createTrip, defaultTrip, type PlannerCountry } from "@/lib/trip-model";
 import type { Attraction } from "@/types/destination";
 
 interface Props {
@@ -13,14 +13,14 @@ interface Props {
   country: PlannerCountry;
 }
 
-/** 주요 관광지 사진 카드 + "일정에 담기" (내 여행 일정에 바로 추가) */
+/** 주요 관광지 사진 카드 + "일정에 담기" (내 여행의 여행지 바구니에 모아 두고, 날짜·순서는 내 여행에서 드래그로 정한다) */
 export function AttractionsSection({ attractions, country }: Props) {
   const { lang, t } = useApp();
   const trip = useSyncExternalStore(tripStore.subscribe, tripStore.getSnapshot, tripStore.getServerSnapshot);
   const [notice, setNotice] = useState<string | null>(null);
   const currentTrip = trip && trip !== LOADING ? trip : null;
   const sameCountry = currentTrip?.country === country.slug;
-  const inTrip = new Set(sameCountry ? currentTrip.days.flatMap((d) => d.places.map((p) => p.wiki ?? p.name)) : []);
+  const inTrip = new Set(sameCountry ? [...(currentTrip.basket ?? []), ...currentTrip.days.flatMap((d) => d.places)].map((p) => p.wiki ?? p.name) : []);
 
   function add(a: Attraction) {
     let base = currentTrip;
@@ -31,9 +31,8 @@ export function AttractionsSection({ attractions, country }: Props) {
       const start = addDays(new Date().toISOString().slice(0, 10), 30);
       base = a.city ? createTrip(country, a.city, a.location, start, addDays(start, 3)) : defaultTrip(country);
     }
-    const { trip: next, day } = addAttraction(base, a);
-    tripStore.set(next);
-    setNotice(t("attractions.addedToast", { name: a.name, day: day + 1 }));
+    tripStore.set(addToBasket(base, a));
+    setNotice(t("attractions.addedToast", { name: a.name }));
   }
 
   return (

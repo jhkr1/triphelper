@@ -1,9 +1,15 @@
 "use client";
 
 import { Fragment, useEffect, useState, type FormEvent } from "react";
+import {
+  DndContext, DragOverlay, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, pointerWithin, useDroppable, useSensor, useSensors,
+  type CollisionDetection, type DragEndEvent, type DragOverEvent, type DragStartEvent,
+} from "@dnd-kit/core";
+import { SortableContext, arrayMove, rectSortingStrategy, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { dayColor } from "@/components/trip/TripMap";
-import { dayLabel, newId, sortByTime, addDays, addHours, nextSlot } from "@/lib/trip-model";
+import { dayLabel, newId, sortByTime, addDays, addHours, nextSlot, insertAt } from "@/lib/trip-model";
 import { TimePicker } from "@/components/trip/TimePicker";
 import { fetchNearby, getPhoto, isConfident, searchPlace, type NearbyPlace, type Photo, type PlaceCandidate } from "@/lib/places";
 import { directionsUrl, distanceMeters, formatDistance, walkingMinutes, WALKABLE_METERS } from "@/lib/geo";
@@ -21,6 +27,8 @@ interface Props {
   onRemoveDay: (i: number) => void;
   /** 선택한 날의 장소 목록 바꾸기 */
   updatePlaces: (fn: (places: Place[]) => Place[]) => void;
+  /** 일정 전체 바꾸기 (여행지 바구니·다른 날로 옮길 때) */
+  updateTrip: (fn: (trip: Trip) => Trip) => void;
   onPickRequest: (placeId: string) => void;
   toast: (msg: string) => void;
 }
@@ -104,7 +112,7 @@ function NearbyPanel({ place, state, inTrip, onTake }: { place: Place; state: Ne
 /* ───────── 장소 사이 이동 ───────── */
 
 /** 앞 장소 → 다음 장소: 가까우면 도보 시간, 멀면 거리 + 대중교통 길찾기(지도 앱) */
-function Leg({ from, to, countryCode }: { from: Place; to: Place; countryCode: string }) {
+function Leg({ from, to, countryCode, hidden = false }: { from: Place; to: Place; countryCode: string; hidden?: boolean }) {
   if (!from.location || !to.location) return null;
   const meters = distanceMeters(from.location, to.location);
   const walk = meters <= WALKABLE_METERS;
@@ -112,7 +120,7 @@ function Leg({ from, to, countryCode }: { from: Place; to: Place; countryCode: s
   const b = { name: to.name, location: to.location };
   const appName = countryCode === "kr" ? "카카오맵" : "구글 지도";
   return (
-    <li className="leg" aria-label={`${from.name}에서 ${to.name}까지`}>
+    <li className={hidden ? "leg leg--hidden" : "leg"} aria-label={`${from.name}에서 ${to.name}까지`} aria-hidden={hidden || undefined}>
       <span className="leg__line" aria-hidden="true" />
       <span className="leg__info">
         <Icon name={walk ? "walk" : "transit"} />
@@ -125,15 +133,80 @@ function Leg({ from, to, countryCode }: { from: Place; to: Place; countryCode: s
   );
 }
 
+/* ───────── 끌어서 옮기기 (여행지 바구니 ↔ 일정 ↔ 다른 날) ───────── */
+
+type Zone = "basket" | "day";
+const ZONE_ID: Record<Zone, string> = { basket: "c-basket", day: "c-day" };
+const TAB_PREFIX = "tab-";
+
+/** Day 탭 위를 먼저, 그다음 장소 카드, 마지막으로 빈 목록 영역 순으로 놓을 곳을 정한다 */
+const collision: CollisionDetection = (args) => {
+  const hits = pointerWithin(args);
+  if (!hits.length) return closestCenter(args);
+  const tab = hits.find((h) => String(h.id).startsWith(TAB_PREFIX));
+  if (tab) return [tab];
+  const items = hits.filter((h) => !String(h.id).startsWith("c-"));
+  if (!items.length) return hits;
+  return closestCenter({ ...args, droppableContainers: args.droppableContainers.filter((c) => items.some((h) => h.id === c.id)) });
+};
+
+function DayTab({ i, start, selected, dragging, onClick }: { i: number; start: string; selected: boolean; dragging: boolean; onClick: () => void }) {
+  const { setNodeRef, isOver } = useDroppable({ id: `${TAB_PREFIX}${i}` });
+  return (
+    <button ref={setNodeRef} className={`day${dragging ? " day--drop" : ""}${isOver ? " day--over" : ""}`} role="tab" aria-selected={selected} onClick={onClick}>
+      <b>Day {i + 1}</b><span>{dayLabel(start, i)}</span>
+    </button>
+  );
+}
+
+function DropZone({ zone, className, children }: { zone: Zone; className: string; children: React.ReactNode }) {
+  const { setNodeRef, isOver } = useDroppable({ id: ZONE_ID[zone] });
+  return <div ref={setNodeRef} className={isOver ? `${className} is-over` : className}>{children}</div>;
+}
+
+function BasketItem({ place, dayNo, onPlace, onRemove }: { place: Place; dayNo: number; onPlace: () => void; onRemove: () => void }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: place.id });
+  return (
+    <li
+      ref={setNodeRef}
+      className={isDragging ? "bk is-ghost" : "bk"}
+      style={{ transform: CSS.Translate.toString(transform), transition }}
+      {...attributes}
+      {...listeners}
+      aria-label={`${place.name} (끌어서 일정에 놓기)`}
+    >
+      <Icon name="grip" className="bk__grip" />
+      <span className="bk__name">{place.name}</span>
+      <button type="button" className="bk__btn" onClick={onPlace} aria-label={`${place.name}을(를) Day ${dayNo} 마지막에 넣기`}>+ Day {dayNo}</button>
+      <button type="button" className="bk__x" onClick={onRemove} aria-label={`${place.name} 여행지 바구니에서 빼기`}><Icon name="x" /></button>
+    </li>
+  );
+}
+
+/** 일정 카드: 카드 아무 곳이나 끌면(휴대폰은 길게 눌러) 옮겨지고, 번호 동그라미는 키보드로 옮길 때 쓰는 손잡이 */
+function SortableStop({ id, n, color, children }: { id: string; n: number; color: string; children: (bodyProps: Record<string, unknown>) => React.ReactNode }) {
+  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id });
+  const { onKeyDown, ...pointer } = (listeners ?? {}) as Record<string, (e: unknown) => void>;
+  return (
+    <li ref={setNodeRef} className={isDragging ? "stop is-ghost" : "stop"} style={{ "--dc": color, transform: CSS.Translate.toString(transform), transition } as React.CSSProperties}>
+      <button ref={setActivatorNodeRef} type="button" className="stop__n" {...attributes} onKeyDown={onKeyDown} aria-label={`${n}번째 장소 · 스페이스로 들어서 방향키로 옮기기`}>
+        <i>{n}</i>
+      </button>
+      {children(pointer)}
+    </li>
+  );
+}
+
 /* ───────── 일정표 ───────── */
 
-export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateText, onAddDay, onRemoveDay, updatePlaces, onPickRequest, toast }: Props) {
+export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateText, onAddDay, onRemoveDay, updatePlaces, updateTrip, onPickRequest, toast }: Props) {
   const places = trip.days[day]?.places ?? [];
+  const basket = trip.basket ?? [];
   const w = forecast[addDays(trip.start, day)];
   const [openNear, setOpenNear] = useState<string | null>(null);
   const [, setNearTick] = useState(0);
   const refreshNear = () => setNearTick((n) => n + 1);
-  const inTrip = new Set(trip.days.flatMap((d) => d.places.flatMap((p) => [p.name, p.wiki].filter((x): x is string => Boolean(x)))));
+  const inTrip = new Set([...basket, ...trip.days.flatMap((d) => d.places)].flatMap((p) => [p.name, p.wiki].filter((x): x is string => Boolean(x))));
 
   // 장소 추가
   // 직접 고르기 전에는 그날 마지막 일정 1시간 뒤를 제안한다
@@ -170,13 +243,14 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
     }
   }
 
+  /** 근처 추천: 기준 장소 바로 다음 자리에 넣는다 (시간은 그 사이로 맞춤) */
   function takeNearby(from: Place, x: NearbyPlace) {
-    const t = addHours(from.time, 1); // 기준 장소 1시간 뒤로 제안
-    addPlace({
-      time: t, name: x.name, category: "명소", memo: `${from.name}에서 도보 약 ${walkingMinutes(x.meters)}분`,
+    const place: Place = {
+      id: newId(), time: addHours(from.time, 1), name: x.name, category: "명소", memo: `${from.name}에서 도보 약 ${walkingMinutes(x.meters)}분`,
       location: x.location, ...(x.wiki ? { wiki: x.wiki } : { image: x.image }),
-    });
-    toast(`${x.name} 담음`);
+    };
+    updatePlaces((list) => insertAt(list, place, list.findIndex((p) => p.id === from.id) + 1));
+    toast(`${x.name}을(를) ${from.name} 다음에 담았습니다`);
   }
 
   function toggleNear(p: Place) {
@@ -185,13 +259,100 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
     loadNearby(p, inTrip, refreshNear);
   }
 
+  /* 끌어서 옮기기: 끄는 동안에는 화면용 사본(drag)을 움직이고, 놓을 때 한 번에 저장한다 */
+  const [drag, setDrag] = useState<{ id: string; basket: Place[]; day: Place[] } | null>(null);
+  const view = { basket: drag?.basket ?? basket, day: drag?.day ?? places };
+  const sensors = useSensors(
+    useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 220, tolerance: 6 } }), // 휴대폰: 길게 누르면 집기 (그냥 밀면 스크롤)
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  );
+  const zoneOf = (id: string, lists: { basket: Place[]; day: Place[] }): Zone | null =>
+    id === ZONE_ID.basket ? "basket" : id === ZONE_ID.day ? "day"
+      : lists.basket.some((p) => p.id === id) ? "basket" : lists.day.some((p) => p.id === id) ? "day" : null;
+  const dragged = drag ? [...basket, ...places].find((p) => p.id === drag.id) : undefined;
+
+  function onDragStart(e: DragStartEvent) {
+    setDrag({ id: String(e.active.id), basket, day: places });
+  }
+
+  // 다른 목록 위로 넘어가면 그 자리로 미리 옮겨서 보여 준다
+  function onDragOver({ active, over }: DragOverEvent) {
+    if (!drag || !over || String(over.id).startsWith(TAB_PREFIX)) return;
+    const from = zoneOf(String(active.id), drag), to = zoneOf(String(over.id), drag);
+    if (!from || !to || from === to) return;
+    const item = drag[from].find((p) => p.id === active.id);
+    if (!item) return;
+    const target = drag[to];
+    const found = target.findIndex((p) => p.id === over.id);
+    // 카드의 아래쪽 절반에 있으면 그 카드 다음 자리로
+    const r = active.rect.current.translated;
+    const below = r != null && r.top + r.height / 2 > over.rect.top + over.rect.height / 2;
+    const at = found < 0 ? target.length : found + (below ? 1 : 0);
+    setDrag({ ...drag, [from]: drag[from].filter((p) => p.id !== active.id), [to]: [...target.slice(0, at), item, ...target.slice(at)] });
+  }
+
+  function onDragEnd({ active, over }: DragEndEvent) {
+    const d = drag;
+    setDrag(null);
+    if (!d || !over) return;
+    const id = String(active.id), overId = String(over.id);
+    const item = [...basket, ...places].find((p) => p.id === id);
+    if (!item) return;
+
+    // Day 탭에 놓기 → 그날 마지막으로
+    if (overId.startsWith(TAB_PREFIX)) {
+      const target = Number(overId.slice(TAB_PREFIX.length));
+      if (target === day && places.some((p) => p.id === id)) return;
+      updateTrip((t) => ({
+        ...t,
+        basket: (t.basket ?? []).filter((p) => p.id !== id),
+        days: t.days.map((x, i) => {
+          const rest = x.places.filter((p) => p.id !== id);
+          return i === target ? { places: insertAt(rest, { ...item, time: "" }, rest.length) } : i === day ? { places: rest } : x;
+        }),
+      }));
+      toast(`${item.name}을(를) Day ${target + 1}로 옮겼습니다`);
+      return;
+    }
+
+    // 여행지 바구니/오늘 일정 안에서 자리 정하기
+    const zone = zoneOf(overId, d);
+    if (!zone) return;
+    let list = d[zone];
+    // 끄는 동안 화면에 보이던 자리(정렬 미리보기) 그대로 확정
+    const fromIdx = list.findIndex((p) => p.id === id), toIdx = list.findIndex((p) => p.id === overId);
+    if (fromIdx >= 0 && toIdx >= 0 && fromIdx !== toIdx) list = arrayMove(list, fromIdx, toIdx);
+    const finalBasket = zone === "basket" ? list : d.basket;
+    let finalDay = zone === "day" ? list : d.day;
+    const at = finalDay.findIndex((p) => p.id === id);
+    if (at >= 0) finalDay = insertAt(finalDay, finalDay[at], at); // 놓은 자리에 맞게 시간 조정
+    updateTrip((t) => ({ ...t, basket: finalBasket, days: t.days.map((x, i) => (i === day ? { places: finalDay } : x)) }));
+  }
+
+  /** 여행지 바구니 항목을 이 날 마지막에 넣기 (끌기 어려울 때) */
+  function placeFromBasket(p: Place) {
+    updateTrip((t) => ({
+      ...t,
+      basket: (t.basket ?? []).filter((x) => x.id !== p.id),
+      days: t.days.map((x, i) => (i === day ? { places: insertAt(x.places, { ...p, time: "" }, x.places.length) } : x)),
+    }));
+    toast(`${p.name}을(를) Day ${day + 1}에 넣었습니다`);
+  }
+
   return (
     <div className="card">
+      <DndContext
+        sensors={sensors}
+        collisionDetection={collision}
+        onDragStart={onDragStart}
+        onDragOver={onDragOver}
+        onDragEnd={onDragEnd}
+        onDragCancel={() => setDrag(null)}
+      >
       <div className="days" role="tablist" aria-label="날짜">
         {trip.days.map((_, i) => (
-          <button key={i} className="day" role="tab" aria-selected={i === day} onClick={() => { setTimeOverride(null); onDayChange(i); }}>
-            <b>Day {i + 1}</b><span>{dayLabel(trip.start, i)}</span>
-          </button>
+          <DayTab key={i} i={i} start={trip.start} selected={i === day} dragging={Boolean(drag)} onClick={() => { setTimeOverride(null); onDayChange(i); }} />
         ))}
         <button className="day day--add" type="button" onClick={onAddDay}>+ 날짜 추가</button>
       </div>
@@ -209,18 +370,48 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
         </button>
       </div>
 
+      <DropZone zone="basket" className="basket">
+        <div className="basket__hd">
+          <b><Icon name="bag" />여행지 바구니</b>
+          {view.basket.length > 0 && <span className="basket__n">{view.basket.length}</span>}
+          <small>
+            {drag && !basket.some((p) => p.id === drag.id) ? "여기에 놓으면 일정에서 빼서 보관합니다"
+              : view.basket.length ? "끌어서 원하는 날·자리에 놓으세요 (휴대폰은 길게 눌러서)"
+              : "나라 페이지에서 ‘일정에 담기’를 누르면 여기 모입니다"}
+          </small>
+        </div>
+        {(view.basket.length > 0 || (drag && basket.length > 0)) && (
+          <SortableContext items={view.basket.map((p) => p.id)} strategy={rectSortingStrategy}>
+            <ul className="basket__list">
+              {view.basket.map((p) => (
+                <BasketItem
+                  key={p.id}
+                  place={p}
+                  dayNo={day + 1}
+                  onPlace={() => placeFromBasket(p)}
+                  onRemove={() => updateTrip((t) => ({ ...t, basket: (t.basket ?? []).filter((x) => x.id !== p.id) }))}
+                />
+              ))}
+            </ul>
+          </SortableContext>
+        )}
+      </DropZone>
+
+      <DropZone zone="day" className="tl-zone">
+      <SortableContext items={view.day.map((p) => p.id)} strategy={verticalListSortingStrategy}>
       <ol className="tl">
-        {places.length === 0 && <li className="empty-trip">담은 장소가 없습니다. 아래에서 추가하세요.</li>}
-        {places.map((p, i) => {
+        {view.day.length === 0 && <li className="empty-trip">담은 장소가 없습니다. 여행지 바구니에서 끌어오거나 아래에서 추가하세요.</li>}
+        {view.day.map((p, i) => {
           const key = nearKey(p);
-          const open = Boolean(key) && openNear === key;
-          const prev = places[i - 1];
+          const open = Boolean(key) && openNear === key && !drag;
+          const prev = view.day[i - 1];
           return (
             <Fragment key={p.id}>
-            {prev && <Leg from={prev} to={p} countryCode={countryCode} />}
-            <li className="stop" style={{ "--dc": dayColor(day) } as React.CSSProperties}>
-              <div className="stop__n"><i>{i + 1}</i></div>
-              <div className="stop__body">
+            {/* 끄는 동안에는 자리만 지키고 숨긴다 (없애면 목록이 당겨져 놓을 자리가 커서 밑에서 밀려남) */}
+            {prev && <Leg from={prev} to={p} countryCode={countryCode} hidden={Boolean(drag)} />}
+            <SortableStop id={p.id} n={i + 1} color={dayColor(day)}>
+              {(pointer) => (<>
+              <div className="stop__body" {...pointer}>
                 <PlacePhoto place={p} />
                 <div className="stop__txt">
                   <div className="stop__time">
@@ -265,11 +456,25 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
                   <NearbyPanel place={p} state={nearCache.get(key)} inTrip={inTrip} onTake={(x) => takeNearby(p, x)} />
                 </div>
               )}
-            </li>
+              </>)}
+            </SortableStop>
             </Fragment>
           );
         })}
       </ol>
+      </SortableContext>
+      </DropZone>
+
+      <DragOverlay dropAnimation={null}>
+        {dragged && (
+          <div className="drag-card">
+            <Icon name="grip" />
+            <b>{dragged.name}</b>
+            {dragged.category && <span className="tag">{dragged.category}</span>}
+          </div>
+        )}
+      </DragOverlay>
+      </DndContext>
 
       <form className="add" onSubmit={onAdd}>
         <TimePicker value={time} onChange={setTimeOverride} label="방문 시간" />

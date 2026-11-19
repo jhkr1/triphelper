@@ -183,7 +183,10 @@ export function TimePicker({ value, onChange, label, variant = "field" }: Props)
             id={panelId}
             role="dialog"
             aria-label={label}
-            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); confirm(); } }}
+            onKeyDown={(e) => { e.stopPropagation(); if (e.key === "Enter") { e.preventDefault(); confirm(); } }}
+            // 일정 카드는 끌어서 옮길 수 있으므로, 휠을 굴리는 동작이 카드 끌기로 번지지 않게 막는다
+            onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
           >
             <p className="tp__title">{label}</p>
             <div className="tp__wheels">

@@ -35,6 +35,8 @@ export interface Trip {
   start: string;
   end: string;
   days: TripDay[];
+  /** 여행지 바구니: 담아 두고 아직 날짜에 배치하지 않은 장소 (예전에 저장된 일정에는 없음) */
+  basket?: Place[];
   checklist: Checklist;
 }
 

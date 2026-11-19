@@ -126,30 +126,60 @@ export function nextSlot(places: Place[]): string {
   return last ? addHours(last, 1) : "10:00";
 }
 
-/** 관광지를 일정에 담을 때: 장소가 가장 적은 날에, 그날 마지막 일정 1시간 뒤(없으면 10:00)로 */
-export function addAttraction(trip: Trip, a: Attraction): { trip: Trip; day: number } {
-  const day = trip.days.reduce((best, d, i) => (d.places.length < trip.days[best].places.length ? i : best), 0);
-  const time = nextSlot(trip.days[day].places);
-  const place: Place = { id: newId(), time, name: a.name, category: "명소", location: a.location, wiki: a.wiki };
-  return {
-    trip: { ...trip, days: trip.days.map((d, i) => (i === day ? { places: sortByTime([...d.places, place]) } : d)) },
-    day,
-  };
+const toMin = (t: string) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+const fromMin = (n: number) => `${String(Math.floor(n / 60)).padStart(2, "0")}:${String(n % 60).padStart(2, "0")}`;
+
+/** 두 일정 사이에 넣을 시간: 앞 일정 1시간 뒤, 그럴 틈이 없으면 두 시간의 가운데(5분 단위) */
+export function timeBetween(prev?: string, next?: string): string {
+  if (!prev && !next) return "10:00";
+  if (!prev) return fromMin(Math.max(0, toMin(next!) - 60));
+  if (!next) return addHours(prev, 1);
+  const p = toMin(prev), n = toMin(next);
+  if (p + 60 < n) return fromMin(p + 60);
+  return fromMin(p + Math.max(0, Math.floor((n - p) / 2 / 5) * 5));
+}
+
+/**
+ * 장소를 목록의 index 자리에 넣는다. 드래그한 순서가 기준이라, 원래 시간이 앞뒤 일정 사이에 맞으면 그대로 두고
+ * 어긋나면 그 사이 시간으로 바꾼다 (그래서 목록은 언제나 시간순을 유지한다).
+ */
+export function insertAt(places: Place[], place: Place, index: number): Place[] {
+  const list = places.filter((p) => p.id !== place.id);
+  const i = Math.max(0, Math.min(index, list.length));
+  const prev = list[i - 1]?.time, next = list[i]?.time;
+  const fits = Boolean(place.time) && (!prev || prev <= place.time) && (!next || place.time <= next);
+  return [...list.slice(0, i), { ...place, time: fits ? place.time : timeBetween(prev, next) }, ...list.slice(i)];
+}
+
+/** 관광지를 여행지 바구니에 담는다 (이미 일정이나 여행지 바구니에 있으면 그대로) */
+export function addToBasket(trip: Trip, a: Attraction): Trip {
+  const all = [...(trip.basket ?? []), ...trip.days.flatMap((d) => d.places)];
+  if (all.some((p) => (p.wiki ?? p.name) === a.wiki || p.name === a.name)) return trip;
+  const place: Place = { id: newId(), time: "", name: a.name, category: "명소", location: a.location, wiki: a.wiki };
+  return { ...trip, basket: [...(trip.basket ?? []), place] };
 }
 
 /* ───────── 공유 링크 (서버 없이 주소 안에 일정 담기) ───────── */
 
 type SharedPlace = [time: string, name: string, category: PlaceCategory, lat?: number, lng?: number, wiki?: string, image?: string];
-interface SharedTrip { v: 1; c: string; ci: string; ce: [number, number]; s: string; e: string; d: SharedPlace[][] }
+interface SharedTrip { v: 1; c: string; ci: string; ce: [number, number]; s: string; e: string; d: SharedPlace[][]; b?: SharedPlace[] }
 
 const toBase64Url = (s: string) => btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 const fromBase64Url = (s: string) =>
   new TextDecoder().decode(Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0)));
 
+const toShared = (p: Place): SharedPlace => [p.time, p.name, p.category, p.location?.lat, p.location?.lng, p.wiki, p.image];
+const fromShared = ([time, name, category, lat, lng, wiki, image]: SharedPlace): Place => ({
+  id: newId(), time, name, category,
+  ...(lat != null && lng != null ? { location: { lat, lng } } : {}),
+  ...(wiki ? { wiki } : {}), ...(image ? { image } : {}),
+});
+
 export function encodeShare(trip: Trip): string {
   const data: SharedTrip = {
     v: 1, c: trip.country, ci: trip.city, ce: [trip.center.lat, trip.center.lng], s: trip.start, e: trip.end,
-    d: trip.days.map((day) => day.places.map((p) => [p.time, p.name, p.category, p.location?.lat, p.location?.lng, p.wiki, p.image])),
+    d: trip.days.map((day) => day.places.map(toShared)),
+    ...(trip.basket?.length ? { b: trip.basket.map(toShared) } : {}),
   };
   return toBase64Url(JSON.stringify(data));
 }
@@ -162,13 +192,8 @@ export function decodeShare(code: string, countryOf: (slug: string) => PlannerCo
     if (s.v !== 1 || !country || nightsBetween(s.s, s.e) < 0) return null;
     return {
       country: s.c, city: s.ci, center: { lat: s.ce[0], lng: s.ce[1] }, start: s.s, end: s.e,
-      days: s.d.map((places) => ({
-        places: places.map(([time, name, category, lat, lng, wiki, image]) => ({
-          id: newId(), time, name, category,
-          ...(lat != null && lng != null ? { location: { lat, lng } } : {}),
-          ...(wiki ? { wiki } : {}), ...(image ? { image } : {}),
-        })),
-      })),
+      days: s.d.map((places) => ({ places: places.map(fromShared) })),
+      ...(s.b?.length ? { basket: s.b.map(fromShared) } : {}),
       checklist: checklistFor(country),
     };
   } catch {

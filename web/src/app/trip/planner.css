@@ -208,3 +208,36 @@
 @keyframes tp-sheet{from{transform:translateY(100%)}}
 @keyframes tp-fade{from{opacity:0}}
 @media (prefers-reduced-motion:reduce){.planner .tp__panel,.planner .tp__scrim{animation:none}}
+
+/* 여행지 바구니 + 끌어서 옮기기 */
+.planner .basket{margin-bottom:18px;padding:12px 14px;border:1px dashed var(--badge-bd);border-radius:16px;background:var(--card);transition:background .15s,border-color .15s}
+.planner .basket.is-over{border-color:var(--blue);background:var(--badge-bg)}
+.planner .basket__hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px}
+.planner .basket__hd b{display:inline-flex;align-items:center;gap:6px;font-size:.92rem}
+.planner .basket__hd b .icon{color:var(--blue)}
+.planner .basket__n{min-width:22px;height:22px;padding:0 7px;border-radius:99px;background:var(--btn);color:#fff;font-size:.75rem;font-weight:700;display:grid;place-items:center}
+.planner .basket__hd small{color:var(--mute);font-size:.8rem}
+.planner .basket__list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.planner .bk{display:flex;align-items:center;gap:6px;padding:6px 6px 6px 8px;border:1px solid var(--line);border-radius:12px;background:var(--soft);cursor:grab;touch-action:manipulation;user-select:none;max-width:100%}
+.planner .bk:hover{border-color:var(--blue)}
+.planner .bk__grip{color:var(--mute);flex:none}
+.planner .bk__name{font-weight:600;font-size:.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.planner .bk__btn{flex:none;border:0;background:var(--badge-bg);color:var(--blue);border-radius:99px;padding:5px 10px;font-size:.75rem;font-weight:700}
+.planner .bk__btn:hover{background:var(--btn);color:#fff}
+.planner .bk__x{flex:none;border:0;background:transparent;color:var(--mute);width:28px;height:28px;border-radius:50%;display:grid;place-items:center}
+.planner .bk__x:hover{background:var(--card);color:#dc2626}
+
+.planner .stop__n{border:0;background:transparent;padding:0;cursor:grab;touch-action:manipulation}
+.planner .stop__body{cursor:grab;touch-action:manipulation}
+.planner .stop__body :is(button,a,input){cursor:pointer}
+.planner .is-ghost{opacity:.35}
+.planner .tl-zone{border-radius:16px;transition:background .15s}
+.planner .tl-zone.is-over{background:var(--badge-bg)}
+.planner .day--drop{border-style:dashed}
+.planner .day--over{border-color:var(--blue);border-style:solid;background:var(--badge-bg);transform:scale(1.04)}
+.planner .day--over[aria-selected="true"]{background:var(--blue-d)}
+.planner .drag-card{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--blue);border-radius:14px;background:var(--card);box-shadow:0 14px 40px #11182733;cursor:grabbing;font-size:.92rem;max-width:280px}
+.planner .drag-card .icon{color:var(--mute);flex:none}
+.planner .drag-card b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.planner .leg--hidden{visibility:hidden}
+.planner .basket__list:empty{min-height:40px;border-radius:12px;background:var(--soft)} /* 끄는 동안 여행지 바구니가 비어도 높이 유지 */

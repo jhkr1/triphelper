@@ -64,7 +64,8 @@ export function TripSetup({ trip, countries, onApply, onCancel }: Props) {
     const name = city.trim();
     const placeChanged = countrySlug !== trip.country || name !== trip.city;
     const total = trip.days.reduce((a, d) => a + d.places.length, 0);
-    if (placeChanged && total && !confirm("여행지를 바꾸면 담은 장소가 모두 지워집니다. 계속할까요?")) return;
+    // 로그인해서 저장된 일정은 그대로 '내 여행 목록'에 남고 새 여행이 만들어지므로 묻지 않는다
+    if (placeChanged && total && !trip.cloud && !confirm("여행지를 바꾸면 담은 장소가 모두 지워집니다. 계속할까요?")) return;
     const lost = trip.days.slice(n + 1).reduce((a, d) => a + d.places.length, 0);
     if (!placeChanged && lost && !confirm(`줄어든 날짜에 담긴 장소 ${lost}곳이 지워집니다. 계속할까요?`)) return;
 

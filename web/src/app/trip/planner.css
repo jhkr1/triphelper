@@ -331,3 +331,62 @@
 .planner .drp__day.start span,.planner .drp__day.end span{background:var(--blue);color:#fff;font-weight:700;box-shadow:none}
 @media (max-width:700px){.planner .setup__dates{grid-column:1/-1}}
 @media (max-width:560px){.planner .drp__months{grid-template-columns:1fr}.planner .drp__month--2{display:none}.planner .drp{padding:10px}}
+
+/* 저장 상태 · 내 여행 목록 */
+.planner .sync{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:.78rem;color:var(--mute)}
+.planner .sync .icon{width:14px;height:14px}
+.planner .sync--saved .icon{color:#10b981}
+.planner .sync--error{color:#dc2626}
+.planner .mytrips{position:relative}
+.planner .mytrips__panel{position:absolute;right:0;top:calc(100% + 8px);z-index:40;width:min(360px,calc(100vw - 32px));max-height:min(460px,70vh);overflow:auto;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:0 12px 32px #0002}
+.planner .mytrips__hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.planner .mytrips__new{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--badge-bd);background:var(--badge-bg);color:var(--blue);border-radius:99px;padding:5px 12px;font-size:.8rem;font-weight:700}
+.planner .mytrips__new .icon{width:14px;height:14px}
+.planner .mytrips__msg{margin:8px 2px;font-size:.85rem;color:var(--mute);line-height:1.5}
+.planner .mytrips__msg button{border:0;background:none;color:var(--blue);font:inherit;font-weight:700;padding:0;cursor:pointer}
+.planner .mytrips__list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.planner .mytrips__list li{display:flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:12px;padding:2px 2px 2px 0}
+.planner .mytrips__list li.is-current{border-color:var(--blue);background:var(--badge-bg)}
+.planner .mytrips__open{flex:1;min-width:0;display:grid;gap:2px;text-align:left;border:0;background:none;padding:8px 12px;font:inherit;color:var(--ink);cursor:pointer}
+.planner .mytrips__open b{font-size:.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.planner .mytrips__open small{font-size:.76rem;color:var(--mute)}
+.planner .mytrips__list .icon-btn{margin-top:0;flex:none}
+@media (max-width:560px){.planner .mytrips__panel{right:auto;left:0}}
+
+/* 체크리스트: 카테고리 편집 · 끌어서 옮기기 */
+.planner .chk li{display:flex;align-items:center;gap:4px}
+.planner .chk li>label{flex:1;min-width:0}
+.planner .chk__grip{flex:none;display:grid;place-items:center;width:28px;height:40px;border-radius:8px;color:var(--mute);cursor:grab;touch-action:none}
+.planner .chk__grip:hover{background:var(--soft);color:var(--ink)}
+.planner .chk__grip:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.planner .chk__grip .icon{width:16px;height:16px}
+.planner .chk{min-height:44px;border-radius:14px;transition:background .15s}
+.planner .chk.is-over{background:var(--badge-bg)}
+.planner .chk__empty{list-style:none;padding:12px 14px;border:1px dashed var(--line);border-radius:14px;color:var(--mute);font-size:.82rem;justify-content:center}
+.planner .grp__hd{display:flex;align-items:center;gap:4px;margin:0 0 8px;min-height:28px}
+.planner .grp__hd h4{margin:0}
+.planner .grp__name{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:2px 6px 2px 0;border-radius:6px;cursor:pointer;color:var(--mute)}
+.planner .grp__name .icon{width:13px;height:13px;opacity:0;transition:opacity .15s}
+.planner .grp__name:hover .icon,.planner .grp__name:focus-visible .icon{opacity:1}
+.planner .grp__name:hover h4{color:var(--ink)}
+.planner .grp__del{margin-left:auto;border:0;background:none;color:var(--mute);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;opacity:.5}
+.planner .grp__del:hover{opacity:1;background:var(--soft);color:#dc2626}
+.planner .grp__del .icon{width:14px;height:14px}
+.planner .grp__input{border:1px solid var(--blue);box-shadow:0 0 0 3px #2563eb33;background:var(--bg);color:var(--ink);border-radius:8px;padding:4px 8px;font:inherit;font-size:.85rem;outline:0;min-width:0;width:200px}
+.planner .grp__err{color:#dc2626;font-size:.75rem}
+.planner .grp__add{display:inline-flex;align-items:center;gap:6px;margin:0 0 12px;border:1px dashed var(--line);background:transparent;color:var(--text3);border-radius:99px;padding:7px 14px;font-size:.85rem;font-weight:600}
+.planner .grp__add:hover{border-color:var(--blue);color:var(--blue)}
+.planner .grp__add .icon{width:14px;height:14px}
+
+.planner .addrow + .addrow{margin-top:8px}
+.planner .ck-msg{margin:6px 2px 0;min-height:1.2em;font-size:.8rem;color:var(--mute)}
+.planner .ck-hint{margin:-10px 0 14px;font-size:.8rem;color:var(--blue)}
+.planner .bag--drop{border-style:dashed;border-color:var(--blue)}
+.planner .bag--over{background:var(--badge-bg);border-style:solid;transform:scale(1.05)}
+
+.planner .chk__add{display:inline-flex;align-items:center;gap:6px;margin:8px 0 0 32px;border:0;background:none;color:var(--mute);padding:6px 10px;border-radius:10px;font:inherit;font-size:.85rem;font-weight:600;cursor:pointer}
+.planner .chk__add:hover{background:var(--soft);color:var(--blue)}
+.planner .chk__add .icon{width:14px;height:14px}
+.planner .chk__addform{display:flex;gap:8px;margin:8px 0 0 32px}
+.planner .chk__addform input{flex:1;min-width:0;border:1px solid var(--blue);box-shadow:0 0 0 3px #2563eb33;background:var(--bg);color:var(--ink);border-radius:12px;padding:10px 14px;font:inherit;font-size:.92rem;outline:0}
+.planner .chk__addform .btn{padding:8px 16px}

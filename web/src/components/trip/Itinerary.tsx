@@ -152,8 +152,9 @@ const collision: CollisionDetection = (args) => {
   return closestCenter({ ...args, droppableContainers: args.droppableContainers.filter((c) => items.some((h) => h.id === c.id)) });
 };
 
-function DayTab({ i, start, selected, dragging, onClick }: { i: number; start: string | null; selected: boolean; dragging: boolean; onClick: () => void }) {
-  const { setNodeRef, isOver } = useDroppable({ id: `${TAB_PREFIX}${i}` });
+function DayTab({ i, start, selected, dragging, keyboard, onClick }: { i: number; start: string | null; selected: boolean; dragging: boolean; keyboard: boolean; onClick: () => void }) {
+  // 키보드로 옮길 때는 방향키가 Day 탭으로 튀지 않게 탭을 놓을 곳에서 뺀다
+  const { setNodeRef, isOver } = useDroppable({ id: `${TAB_PREFIX}${i}`, disabled: keyboard });
   return (
     <button ref={setNodeRef} className={`day${dragging ? " day--drop" : ""}${isOver ? " day--over" : ""}`} role="tab" aria-selected={selected} onClick={onClick}>
       <b>Day {i + 1}</b>{start && <span>{dayLabel(start, i)}</span>}
@@ -405,7 +406,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
   }
 
   /* 끌어서 옮기기: 끄는 동안에는 화면용 사본(drag)을 움직이고, 놓을 때 한 번에 저장한다 */
-  const [drag, setDrag] = useState<{ id: string; basket: Place[]; day: Place[] } | null>(null);
+  const [drag, setDrag] = useState<{ id: string; basket: Place[]; day: Place[]; keyboard?: boolean } | null>(null);
   const view = { basket: drag?.basket ?? basket, day: drag?.day ?? places };
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
@@ -418,7 +419,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
   const dragged = drag ? [...basket, ...places].find((p) => p.id === drag.id) : undefined;
 
   function onDragStart(e: DragStartEvent) {
-    setDrag({ id: String(e.active.id), basket, day: places });
+    setDrag({ id: String(e.active.id), basket, day: places, keyboard: e.activatorEvent instanceof KeyboardEvent });
   }
 
   // 다른 목록 위로 넘어가면 그 자리로 미리 옮겨서 보여 준다
@@ -497,7 +498,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
       >
       <div className="days" role="tablist" aria-label="날짜">
         {trip.days.map((_, i) => (
-          <DayTab key={i} i={i} start={trip.datesUnset ? null : trip.start} selected={i === day} dragging={Boolean(drag)} onClick={() => { setTimeOverride(null); onDayChange(i); }} />
+          <DayTab key={i} i={i} start={trip.datesUnset ? null : trip.start} selected={i === day} dragging={Boolean(drag) && !drag?.keyboard} keyboard={Boolean(drag?.keyboard)} onClick={() => { setTimeOverride(null); onDayChange(i); }} />
         ))}
         <button className="day day--add" type="button" onClick={onAddDay}>+ 날짜 추가</button>
       </div>

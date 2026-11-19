@@ -45,6 +45,20 @@ export interface Trip {
   /** 여행지 바구니: 담아 두고 아직 날짜에 배치하지 않은 장소 (예전에 저장된 일정에는 없음) */
   basket?: Place[];
   checklist: Checklist;
+  /**
+   * 로그인해서 DB에 저장된 일정이면 그 정보 (브라우저에만 있는 일정에는 없음).
+   * DB에 저장하는 내용(data)에는 넣지 않는다.
+   */
+  cloud?: TripCloud;
+}
+
+export interface TripCloud {
+  /** DB의 일정 id */
+  id: string;
+  /** 주인 (다른 계정으로 로그인하면 이 일정과 연결을 끊는다) */
+  userId: string;
+  /** 마지막으로 DB에 저장된 시각 (다른 기기에서 고쳤는지 비교) */
+  savedAt: string;
 }
 
 /** 가방 → 묶음 → 준비물 목록 */

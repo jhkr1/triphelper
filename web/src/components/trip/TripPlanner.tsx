@@ -7,6 +7,8 @@ import { Itinerary } from "@/components/trip/Itinerary";
 import { ChecklistPanel } from "@/components/trip/ChecklistPanel";
 import { TripSetup, type SetupResult } from "@/components/trip/TripSetup";
 import { LOADING, tripStore } from "@/lib/trip-store";
+import { startTripSync } from "@/lib/trip-sync";
+import { MyTrips, SyncBadge } from "@/components/trip/MyTrips";
 import {
   addDays, createTrip, dateParts, defaultTrip, nightsBetween, readSharedTrip, sampleTrip, shareUrl, withDatesUnset, type PlannerCountry,
 } from "@/lib/trip-model";
@@ -27,6 +29,12 @@ export function TripPlanner({ countries }: { countries: PlannerCountry[] }) {
   // 처음 열 때: 공유 링크(#z= / 예전 #t=) → 나라 페이지에서 온 경우(?country=) → 저장된 일정 → 기본 일정
   // 공유 링크는 압축을 풀어야 해서 비동기로 읽는다. 개발 모드에서 effect가 두 번 돌아도 한 번만 처리한다.
   const opened = useRef(false);
+  const ready = useRef(false); // 처음 열기 처리가 끝났는지
+  useEffect(() => { startTripSync(); }, []); // 로그인했으면 DB에 자동 저장
+  // 로그아웃 등으로 이 기기의 일정이 지워지면 기본 일정으로 다시 시작
+  useEffect(() => {
+    if (snapshot === null && ready.current) tripStore.set(defaultTrip(countryOf(DEFAULT_COUNTRY) ?? countries[0]));
+  }, [snapshot, countries, countryOf]);
   useEffect(() => {
     if (opened.current) return;
     opened.current = true;
@@ -37,19 +45,20 @@ export function TripPlanner({ countries }: { countries: PlannerCountry[] }) {
       const wanted = new URLSearchParams(window.location.search).get("country");
       const saved = tripStore.getSnapshot();
       const savedTrip = saved && saved !== LOADING ? saved : null;
+      // DB에 저장된 일정은 바꿔도 '내 여행 목록'에 남으므로 묻지 않는다
+      const keep = (t: Trip | null) => !t?.days.some((d) => d.places.length) || Boolean(t?.cloud);
       if (shared !== "none" && shared !== "invalid") {
-        const hasPlaces = savedTrip?.days.some((d) => d.places.length);
-        if (!hasPlaces || confirm("공유받은 일정으로 바꿀까요? 지금 일정은 지워집니다.")) tripStore.set(shared);
+        if (keep(savedTrip) || confirm("공유받은 일정으로 바꿀까요? 지금 일정은 지워집니다.")) tripStore.set(shared);
         history.replaceState(null, "", window.location.pathname);
       } else if (wanted && countryOf(wanted) && savedTrip?.country !== wanted) {
-        const hasPlaces = savedTrip?.days.some((d) => d.places.length);
-        if (!hasPlaces || confirm(`${countryOf(wanted)!.name} 여행으로 새 일정을 만들까요? 지금 일정은 지워집니다.`)) {
+        if (keep(savedTrip) || confirm(`${countryOf(wanted)!.name} 여행으로 새 일정을 만들까요? 지금 일정은 지워집니다.`)) {
           tripStore.set(defaultTrip(countryOf(wanted)!));
         }
       } else if (!savedTrip) {
         // 처음 온 사람의 기본 여행지: 한국 · 서울 (나라 데이터의 첫 도시)
         tripStore.set(defaultTrip(countryOf(DEFAULT_COUNTRY) ?? countries[0]));
       }
+      ready.current = true;
     })();
     return () => { cancelled = true; opened.current = false; };
   }, [countries, countryOf]);
@@ -236,8 +245,16 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
           ) : (
             <p>{a.y}.{a.m}.{a.d} ({a.w}) – {b.m}.{b.d} ({b.w}) · {nights}박 {nights + 1}일</p>
           )}
+          <SyncBadge />
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <MyTrips
+            trip={trip}
+            countries={countries}
+            onOpened={(t) => { tripStore.set(t); setDay(0); setMapDay("all"); setSetupOpen(false); toast(`${t.city || countryOf(t.country)?.name || ""} 여행을 열었어요`); }}
+            onNew={() => { tripStore.set(defaultTrip(country)); setDay(0); setMapDay("all"); setSetupOpen(true); }}
+            toast={toast}
+          />
           <button className="btn edit-trip" type="button" aria-expanded={setupOpen} onClick={() => setSetupOpen((o) => !o)}>
             <Icon name="calendar" />여행 설정
           </button>

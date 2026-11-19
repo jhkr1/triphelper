@@ -9,13 +9,23 @@ export const LOADING = "loading" as const;
 export type TripSnapshot = Trip | null | typeof LOADING;
 
 const KEY = "th-trip";
+
+/** 저장된 일정에 빠진 칸이 있어도 화면이 깨지지 않게 채운다 (예전 형식·손상된 데이터) */
+export function normalizeTrip(t: Trip): Trip {
+  const checklist = t.checklist && typeof t.checklist.bags === "object" ? t.checklist : { bags: {}, done: [] };
+  return {
+    ...t,
+    days: Array.isArray(t.days) && t.days.length ? t.days : [{ places: [] }],
+    checklist: { bags: checklist.bags ?? {}, done: Array.isArray(checklist.done) ? checklist.done : [] },
+  };
+}
 const listeners = new Set<() => void>();
 let current: Trip | null | undefined; // undefined = 아직 읽지 않음
 
 function read(): Trip | null {
   try {
     const raw = localStorage.getItem(KEY);
-    return raw ? (JSON.parse(raw) as Trip) : null;
+    return raw ? normalizeTrip(JSON.parse(raw) as Trip) : null;
   } catch {
     return null;
   }
@@ -41,8 +51,14 @@ export const tripStore = {
     return LOADING;
   },
   set(next: Trip) {
-    current = next;
-    try { localStorage.setItem(KEY, JSON.stringify(next)); } catch { /* 저장 공간 부족 등 */ }
+    current = normalizeTrip(next);
+    try { localStorage.setItem(KEY, JSON.stringify(current)); } catch { /* 저장 공간 부족 등 */ }
+    listeners.forEach((l) => l());
+  },
+  /** 이 기기에 저장된 일정을 지운다 (로그아웃) → 화면에서 기본 일정을 새로 만든다 */
+  clear() {
+    current = null;
+    try { localStorage.removeItem(KEY); } catch { /* ignore */ }
     listeners.forEach((l) => l());
   },
   update(fn: (trip: Trip) => Trip) {

@@ -8,6 +8,7 @@
   --ocean1:#e0edff; --ocean2:#cfe2ff; --ocean3:#b4d0fa;
   --land:#ffffff; --land-stroke:#b6cdf3; --dest:#d1d5db; --dest-stroke:#9ca3af; --rim:#93b8ef; --grat:#ffffff;
   --pin:#ef4444; --pin-ring:#ffffff; --label-halo:#ffffff;
+  --plane-wing:#ffffff; --plane-keel:#a9c6f7; --plane-fold:#2563eb; --plane-edge:#7fa6e6; --plane-shadow:#1d4ed833; --trail:#8fb0e8;
   --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
   color-scheme:light;
 }
@@ -20,6 +21,7 @@
   --ocean1:#24478a; --ocean2:#17306a; --ocean3:#0c1c43;
   --land:#223350; --land-stroke:#3b5380; --dest:#7c8aa5; --dest-stroke:#b4bfd3; --rim:#4b78c9; --grat:#8fb4ff;
   --pin-ring:#0b1220; --label-halo:#0b1220;
+  --plane-wing:#eef4ff; --plane-keel:#6f9cf0; --plane-fold:#1d4ed8; --plane-edge:#c7d9ff; --plane-shadow:#0009; --trail:#4b78c9;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -40,10 +42,11 @@ button{font:inherit;cursor:pointer;color:inherit}
 .pill:hover{border-color:var(--blue);color:var(--blue)}
 
 /* 첫 화면 */
-.stage{position:relative;min-height:min(100svh,900px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:center;gap:clamp(12px,3vw,48px);
-  padding:96px clamp(16px,5vw,72px) 48px;overflow:hidden;
-  background:radial-gradient(1000px 640px at 78% 45%,var(--glow) 0%,transparent 62%),var(--bg)}
-.stage__copy{position:relative;z-index:2;max-width:560px}
+/* 넓은 화면에서도 글과 지구본이 한 덩어리로 모이도록 내용 폭을 1280px로 묶고 가운데 둔다 */
+.stage{position:relative;min-height:min(100svh,900px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:center;gap:clamp(32px,6vw,96px);
+  padding:96px max(clamp(16px,5vw,72px),calc((100% - 1280px) / 2)) 48px;overflow:hidden;
+  background:radial-gradient(900px 620px at 72% 48%,var(--glow) 0%,transparent 62%),var(--bg)}
+.stage__copy{position:relative;z-index:2;max-width:540px}
 .badge{display:inline-flex;gap:8px;align-items:center;font-size:.72rem;font-weight:600;letter-spacing:.16em;color:var(--blue);border:1px solid var(--badge-bd);background:var(--badge-bg);padding:7px 14px;border-radius:99px;margin:0 0 22px}
 .badge span{color:var(--sky)}
 h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-spacing:-.03em;color:var(--ink);word-break:keep-all;text-wrap:balance}
@@ -61,10 +64,34 @@ h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-sp
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .chip{border:1px solid var(--line);background:var(--card);color:var(--text2);padding:7px 12px;border-radius:99px;font-size:.86rem;font-weight:500;transition:.2s}
 .chip:hover,.chip.on{background:var(--btn);color:#fff;border-color:var(--btn)}
+/* 더 보기/접기: 나라 칩과 구분되도록 점선 테두리에 파란 글자 */
+.chip.chip--toggle{border-style:dashed;border-color:var(--badge-bd);background:transparent;color:var(--blue);font-weight:600}
+.chip.chip--toggle:hover{background:var(--badge-bg);color:var(--blue);border-color:var(--blue)}
+/* 전체 보기: 대륙 이름을 왼쪽에, 그 대륙 나라들을 오른쪽에 */
+.chip-groups{display:grid;gap:12px;margin-top:10px;animation:chips-in .22s ease-out}
+.chip-group{display:grid;grid-template-columns:5.2em minmax(0,1fr);gap:8px;align-items:start}
+.chip-group__name{margin:0;padding-top:8px;color:var(--mute);font-size:.82rem;font-weight:600}
+.chip-group .chips{margin-top:0}
+.chip-groups>div:last-child{padding-left:calc(5.2em + 8px)}
+@keyframes chips-in{from{opacity:0;transform:translateY(-4px)}}
 
 /* 지구본 */
 .globe-wrap{margin:0;position:relative;z-index:1;display:grid;justify-items:center}
-.globe-box{position:relative;width:100%;max-width:720px}
+.globe-stage{position:relative;width:100%;max-width:680px}
+.globe-box{position:relative;width:100%}
+
+/* 종이비행기: 지구본 왼쪽 위에서 중심을 겨누고, 뒤로 점선 항로를 끈다 */
+.plane{--p:clamp(80px,10vw,140px);position:absolute;z-index:3;left:-11%;top:0;width:var(--p);height:var(--p);pointer-events:none}
+.plane__trail{position:absolute;left:calc(var(--p) * -1.72);top:calc(var(--p) * -.62);width:calc(var(--p) * 2);height:var(--p);overflow:visible;transition:opacity .25s}
+.plane__trail path{fill:none;stroke:var(--trail);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:.1 9;vector-effect:non-scaling-stroke}
+.plane__body{width:100%;height:100%;transform-origin:50% 50%}
+.plane__art{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 14px 10px var(--plane-shadow));animation:plane-glide 5s ease-in-out infinite}
+.plane__wing{fill:var(--plane-wing);stroke:var(--plane-edge);stroke-width:.6;stroke-linejoin:round}
+.plane__keel{fill:var(--plane-keel);stroke:var(--plane-edge);stroke-width:.6;stroke-linejoin:round}
+.plane__fold{fill:none;stroke:var(--plane-fold);stroke-width:1.4;stroke-linecap:round}
+.plane.is-flying .plane__trail{opacity:0}
+.plane.is-flying .plane__art{animation:none}
+@keyframes plane-glide{50%{transform:translate(-3px,-6px) rotate(-2deg)}}
 #globe{display:block;width:100%;height:auto;touch-action:none;cursor:grab;filter:drop-shadow(0 24px 40px #2563eb33)}
 .globe-zoom{position:absolute;right:2%;bottom:6%;display:grid;gap:8px}
 .globe-zoom button{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--card);color:var(--ink);font-size:1.15rem;box-shadow:var(--shadow-sm);transition:.2s}
@@ -212,7 +239,8 @@ h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-sp
 @media (max-width:900px){
   .stage{grid-template-columns:minmax(0,1fr);padding-top:84px;min-height:0}
   .stage__copy{min-width:0;max-width:none}
-  .globe-box{max-width:440px}
+  .globe-stage{max-width:440px}
+  .plane{left:2%;top:0}
   .ed__body{grid-template-columns:minmax(0,1fr)} /* 1fr이면 가로 목차(nowrap) 폭만큼 열이 늘어나 화면 밖으로 넘친다 */
   .toc{min-width:0;top:var(--header-h);z-index:4;max-height:none;overflow:visible;margin:0 -16px;padding:0 16px;background:var(--soft)} /* 모바일: 가로 목차가 상단 바 아래에 고정 */
   .chap{scroll-margin-top:calc(var(--header-h) + 64px)}
@@ -225,6 +253,8 @@ h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-sp
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .pin .pulse{animation:none}
+  .plane__art{animation:none}
+  .chip-groups{animation:none}
   .reveal{opacity:1;transform:none;transition:none}
 }
 

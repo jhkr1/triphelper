@@ -8,7 +8,7 @@ import "./planner.css";
 
 export const metadata: Metadata = {
   title: "내 여행 플래너 · 일정표, 지도, 체크리스트",
-  description: "여행지와 날짜를 정하고 날짜별 일정을 지도에 담아 보세요. 근처 추천, 날씨 예보, 환율, 가방별 체크리스트, 링크 공유까지.",
+  description: "여행지와 날짜를 정하고 날짜별 일정을 지도에 담아 보세요. 근처 추천 여행지, 날씨 예보, 환율, 가방별 체크리스트, 링크 공유까지.",
   alternates: { canonical: "/trip/" },
 };
 

@@ -443,7 +443,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
                       onClick={() => toggleNear(p)}
                       onPointerEnter={() => loadNearby(p, inTrip, refreshNear)} // 마우스를 올리면 미리 불러오기
                     >
-                      근처 추천
+                      근처 추천 여행지
                     </button>
                   )}
                 </div>

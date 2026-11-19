@@ -159,44 +159,93 @@ export function addToBasket(trip: Trip, a: Attraction): Trip {
   return { ...trip, basket: [...(trip.basket ?? []), place] };
 }
 
-/* ───────── 공유 링크 (서버 없이 주소 안에 일정 담기) ───────── */
+/* ───────── 공유 링크 (서버 없이 주소 안에 일정 담기) ─────────
+ * 새 링크: #z=  일정을 짧게 줄여(중복 제거·좌표 반올림) 압축한 뒤 base64url
+ * 예전 링크: #t=  압축 없는 JSON (계속 열 수 있게 읽기만 지원)
+ * 메신저(카카오톡 등)가 긴 주소를 다루다 잘리는 일을 줄이려고 최대한 짧게 만든다.
+ */
 
 type SharedPlace = [time: string, name: string, category: PlaceCategory, lat?: number, lng?: number, wiki?: string, image?: string];
 interface SharedTrip { v: 1; c: string; ci: string; ce: [number, number]; s: string; e: string; d: SharedPlace[][]; b?: SharedPlace[] }
 
-const toBase64Url = (s: string) => btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-const fromBase64Url = (s: string) =>
-  new TextDecoder().decode(Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0)));
+/** v2 장소: 위키 문서 이름이 장소 이름과 같으면 1, 뒤쪽 빈 값은 생략 */
+type CompactPlace = [time: string, name: string, category: PlaceCategory, lat?: number | null, lng?: number | null, wiki?: string | 1 | null, image?: string | null];
+interface CompactTrip { v: 2; c: string; ci: string; ce: [number, number]; s: string; e: string; d: CompactPlace[][]; b?: CompactPlace[] }
 
-const toShared = (p: Place): SharedPlace => [p.time, p.name, p.category, p.location?.lat, p.location?.lng, p.wiki, p.image];
-const fromShared = ([time, name, category, lat, lng, wiki, image]: SharedPlace): Place => ({
-  id: newId(), time, name, category,
-  ...(lat != null && lng != null ? { location: { lat, lng } } : {}),
-  ...(wiki ? { wiki } : {}), ...(image ? { image } : {}),
-});
+const bytesToBase64Url = (bytes: Uint8Array) => {
+  let bin = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+};
+const base64UrlToBytes = (s: string) => Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0));
 
-export function encodeShare(trip: Trip): string {
-  const data: SharedTrip = {
-    v: 1, c: trip.country, ci: trip.city, ce: [trip.center.lat, trip.center.lng], s: trip.start, e: trip.end,
-    d: trip.days.map((day) => day.places.map(toShared)),
-    ...(trip.basket?.length ? { b: trip.basket.map(toShared) } : {}),
-  };
-  return toBase64Url(JSON.stringify(data));
+async function pipeBytes(bytes: Uint8Array, stream: CompressionStream | DecompressionStream): Promise<Uint8Array> {
+  const out = new Response(new Blob([bytes as BlobPart]).stream().pipeThrough(stream));
+  return new Uint8Array(await out.arrayBuffer());
 }
 
-/** 공유 링크의 일정을 내 일정으로 만든다 (체크리스트는 공유하지 않으므로 나라 기본값) */
-export function decodeShare(code: string, countryOf: (slug: string) => PlannerCountry | undefined): Trip | null {
+/** 좌표는 소수 5자리(약 1m)면 충분하다 */
+const round5 = (n: number) => Math.round(n * 1e5) / 1e5;
+
+function toCompact(p: Place): CompactPlace {
+  const row: CompactPlace = [
+    p.time, p.name, p.category,
+    p.location ? round5(p.location.lat) : null, p.location ? round5(p.location.lng) : null,
+    p.wiki ? (p.wiki === p.name ? 1 : p.wiki) : null, p.image ?? null,
+  ];
+  while (row.length > 3 && row[row.length - 1] == null) row.pop();
+  return row;
+}
+
+const fromCompact = ([time, name, category, lat, lng, wiki, image]: CompactPlace): Place => ({
+  id: newId(), time, name, category,
+  ...(lat != null && lng != null ? { location: { lat, lng } } : {}),
+  ...(wiki ? { wiki: wiki === 1 ? name : wiki } : {}), ...(image ? { image } : {}),
+});
+
+/** 공유 링크 주소 (#z=...) */
+export async function shareUrl(siteUrl: string, trip: Trip): Promise<string> {
+  const data: CompactTrip = {
+    v: 2, c: trip.country, ci: trip.city, ce: [round5(trip.center.lat), round5(trip.center.lng)], s: trip.start, e: trip.end,
+    d: trip.days.map((day) => day.places.map(toCompact)),
+    ...(trip.basket?.length ? { b: trip.basket.map(toCompact) } : {}),
+  };
+  const packed = await pipeBytes(new TextEncoder().encode(JSON.stringify(data)), new CompressionStream("deflate-raw"));
+  return `${siteUrl}/trip/#z=${bytesToBase64Url(packed)}`;
+}
+
+function toTrip(s: { c: string; ci: string; ce: [number, number]; s: string; e: string }, days: Place[][], basket: Place[], country: PlannerCountry): Trip {
+  return {
+    country: s.c, city: s.ci, center: { lat: s.ce[0], lng: s.ce[1] }, start: s.s, end: s.e,
+    days: days.map((places) => ({ places })),
+    ...(basket.length ? { basket } : {}),
+    checklist: checklistFor(country),
+  };
+}
+
+/**
+ * 주소의 # 부분(공유 링크)에서 일정을 읽는다. 체크리스트는 공유하지 않으므로 나라 기본값.
+ * 공유 링크가 아니면 "none", 읽을 수 없으면(잘린 링크 등) "invalid".
+ */
+export async function readSharedTrip(hash: string, countryOf: (slug: string) => PlannerCountry | undefined): Promise<Trip | "none" | "invalid"> {
+  const params = new URLSearchParams(hash.replace(/^#/, ""));
+  const z = params.get("z");
+  const t = params.get("t");
+  if (!z && !t) return "none";
   try {
-    const s = JSON.parse(fromBase64Url(code)) as SharedTrip;
+    if (z) {
+      const json = new TextDecoder().decode(await pipeBytes(base64UrlToBytes(z), new DecompressionStream("deflate-raw")));
+      const s = JSON.parse(json) as CompactTrip;
+      const country = countryOf(s.c);
+      if (s.v !== 2 || !country || nightsBetween(s.s, s.e) < 0) return "invalid";
+      return toTrip(s, s.d.map((places) => places.map(fromCompact)), (s.b ?? []).map(fromCompact), country);
+    }
+    const s = JSON.parse(new TextDecoder().decode(base64UrlToBytes(t!))) as SharedTrip;
     const country = countryOf(s.c);
-    if (s.v !== 1 || !country || nightsBetween(s.s, s.e) < 0) return null;
-    return {
-      country: s.c, city: s.ci, center: { lat: s.ce[0], lng: s.ce[1] }, start: s.s, end: s.e,
-      days: s.d.map((places) => ({ places: places.map(fromShared) })),
-      ...(s.b?.length ? { basket: s.b.map(fromShared) } : {}),
-      checklist: checklistFor(country),
-    };
+    if (s.v !== 1 || !country || nightsBetween(s.s, s.e) < 0) return "invalid";
+    const fromV1 = ([time, name, category, lat, lng, wiki, image]: SharedPlace): Place => fromCompact([time, name, category, lat, lng, wiki, image]);
+    return toTrip(s, s.d.map((places) => places.map(fromV1)), (s.b ?? []).map(fromV1), country);
   } catch {
-    return null;
+    return "invalid";
   }
 }

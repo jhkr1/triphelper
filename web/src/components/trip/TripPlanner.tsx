@@ -8,7 +8,7 @@ import { ChecklistPanel } from "@/components/trip/ChecklistPanel";
 import { TripSetup, type SetupResult } from "@/components/trip/TripSetup";
 import { LOADING, tripStore } from "@/lib/trip-store";
 import {
-  addDays, createTrip, dateParts, decodeShare, defaultTrip, encodeShare, nightsBetween, sampleTrip, type PlannerCountry,
+  addDays, createTrip, dateParts, defaultTrip, nightsBetween, readSharedTrip, sampleTrip, shareUrl, type PlannerCountry,
 } from "@/lib/trip-model";
 import { fetchExchange, formatRate } from "@/lib/exchange";
 import { fetchDailyForecast, type DailyForecast } from "@/lib/weather";
@@ -24,26 +24,34 @@ export function TripPlanner({ countries }: { countries: PlannerCountry[] }) {
   const snapshot = useSyncExternalStore(tripStore.subscribe, tripStore.getSnapshot, tripStore.getServerSnapshot);
   const countryOf = useCallback((slug: string) => countries.find((c) => c.slug === slug), [countries]);
 
-  // 처음 열 때: 공유 링크(#t=) → 나라 페이지에서 온 경우(?country=) → 저장된 일정 → 기본 일정
+  // 처음 열 때: 공유 링크(#z= / 예전 #t=) → 나라 페이지에서 온 경우(?country=) → 저장된 일정 → 기본 일정
+  // 공유 링크는 압축을 풀어야 해서 비동기로 읽는다. 개발 모드에서 effect가 두 번 돌아도 한 번만 처리한다.
+  const opened = useRef(false);
   useEffect(() => {
-    const hash = new URLSearchParams(window.location.hash.slice(1)).get("t");
-    const wanted = new URLSearchParams(window.location.search).get("country");
-    const shared = hash ? decodeShare(hash, countryOf) : null;
-    const saved = tripStore.getSnapshot();
-    const savedTrip = saved && saved !== LOADING ? saved : null;
-    if (shared) {
-      const hasPlaces = savedTrip?.days.some((d) => d.places.length);
-      if (!hasPlaces || confirm("공유받은 일정으로 바꿀까요? 지금 일정은 지워집니다.")) tripStore.set(shared);
-      history.replaceState(null, "", window.location.pathname);
-    } else if (wanted && countryOf(wanted) && savedTrip?.country !== wanted) {
-      const hasPlaces = savedTrip?.days.some((d) => d.places.length);
-      if (!hasPlaces || confirm(`${countryOf(wanted)!.name} 여행으로 새 일정을 만들까요? 지금 일정은 지워집니다.`)) {
-        tripStore.set(defaultTrip(countryOf(wanted)!));
+    if (opened.current) return;
+    opened.current = true;
+    let cancelled = false;
+    (async () => {
+      const shared = await readSharedTrip(window.location.hash, countryOf);
+      if (cancelled) return;
+      const wanted = new URLSearchParams(window.location.search).get("country");
+      const saved = tripStore.getSnapshot();
+      const savedTrip = saved && saved !== LOADING ? saved : null;
+      if (shared !== "none" && shared !== "invalid") {
+        const hasPlaces = savedTrip?.days.some((d) => d.places.length);
+        if (!hasPlaces || confirm("공유받은 일정으로 바꿀까요? 지금 일정은 지워집니다.")) tripStore.set(shared);
+        history.replaceState(null, "", window.location.pathname);
+      } else if (wanted && countryOf(wanted) && savedTrip?.country !== wanted) {
+        const hasPlaces = savedTrip?.days.some((d) => d.places.length);
+        if (!hasPlaces || confirm(`${countryOf(wanted)!.name} 여행으로 새 일정을 만들까요? 지금 일정은 지워집니다.`)) {
+          tripStore.set(defaultTrip(countryOf(wanted)!));
+        }
+      } else if (!savedTrip) {
+        // 처음 온 사람의 기본 여행지: 한국 · 서울 (나라 데이터의 첫 도시)
+        tripStore.set(defaultTrip(countryOf(DEFAULT_COUNTRY) ?? countries[0]));
       }
-    } else if (!savedTrip) {
-      // 처음 온 사람의 기본 여행지: 한국 · 서울 (나라 데이터의 첫 도시)
-      tripStore.set(defaultTrip(countryOf(DEFAULT_COUNTRY) ?? countries[0]));
-    }
+    })();
+    return () => { cancelled = true; opened.current = false; };
   }, [countries, countryOf]);
 
   if (snapshot === LOADING || snapshot === null) {
@@ -60,6 +68,14 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
   const [setupOpen, setSetupOpen] = useState(false);
   const [pickTarget, setPickTarget] = useState<{ day: number; id: string } | null>(null);
   const [toastMsg, setToastMsg] = useState<{ text: string; n: number } | null>(null);
+  // 공유 링크는 압축이 비동기라 일정이 바뀔 때마다 미리 만들어 둔다.
+  // 누르는 순간 바로 공유 창·복사를 열어야 휴대폰(특히 사파리)이 막지 않는다.
+  const [link, setLink] = useState<{ trip: Trip; url: string } | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    shareUrl(SITE_URL, trip).then((url) => { if (!cancelled) setLink({ trip, url }); }, () => {});
+    return () => { cancelled = true; };
+  }, [trip]);
   const toastTimer = useRef<number | undefined>(undefined);
   const safeDay = Math.min(day, trip.days.length - 1);
 
@@ -151,16 +167,39 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
   }
 
   async function share() {
-    const url = `${SITE_URL}/trip/#t=${encodeShare(trip)}`;
-    try { await navigator.clipboard.writeText(url); toast("공유 링크를 복사했습니다"); }
-    catch { toast("이 환경에서는 복사할 수 없습니다"); }
+    const ready = link?.trip === trip ? link.url : null;
+    const url = ready ?? shareUrl(SITE_URL, trip);
+    // 휴대폰: 기본 공유 창(카카오톡·문자 등). 컴퓨터는 공유 창보다 복사가 익숙하므로 복사한다.
+    if (ready && navigator.share && matchMedia("(pointer: coarse)").matches) {
+      try {
+        await navigator.share({ title: `${trip.city || country.name} 여행 일정`, url: ready });
+        return;
+      } catch (e) {
+        if ((e as DOMException).name === "AbortError") return; // 공유 창을 닫은 경우
+      }
+    }
+    try {
+      if (typeof url === "string") {
+        await navigator.clipboard.writeText(url);
+      } else {
+        // 링크가 아직 준비 중이면 완성될 링크(Promise)를 바로 넘겨 '누른 순간'의 복사로 처리되게 한다 (사파리)
+        try {
+          await navigator.clipboard.write([new ClipboardItem({ "text/plain": url.then((u) => new Blob([u], { type: "text/plain" })) })]);
+        } catch {
+          await navigator.clipboard.writeText(await url);
+        }
+      }
+      toast("공유 링크를 복사했습니다");
+    } catch {
+      toast("이 환경에서는 복사할 수 없습니다");
+    }
   }
+
 
   const a = dateParts(trip.start);
   const b = dateParts(trip.end);
   const nights = nightsBetween(trip.start, trip.end);
   const totalPlaces = trip.days.reduce((s, d) => s + d.places.length, 0);
-  const shareUrl = `${SITE_URL}/trip/#t=${encodeShare(trip)}`;
 
   return (
     <div className="wrap">
@@ -233,11 +272,6 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
                 <div><span>비자</span><b>{country.visa || "-"}</b></div>
                 <div><span>등록한 장소</span><b>{totalPlaces}곳</b></div>
               </div>
-            </div>
-            <div className="card share">
-              <h3>공유 링크</h3>
-              <code>{shareUrl}</code>
-              <p>일정이 주소 안에 담깁니다. 서버에 저장하지 않아도 받은 사람이 같은 일정을 볼 수 있습니다.</p>
             </div>
           </aside>
         </section>

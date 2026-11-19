@@ -17,9 +17,6 @@
 .planner .kv{display:grid;gap:10px;font-size:.9rem}
 .planner .kv div{display:flex;justify-content:space-between;gap:12px}
 .planner .kv span{color:var(--mute)}
-.planner .share{display:grid;gap:10px}
-.planner .share p{margin:0;color:var(--mute);font-size:.82rem;line-height:1.6}
-.planner .share code{display:block;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:9px 10px;font-size:.72rem;color:var(--text3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* 일정표 */
 .planner .days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:18px}
 .planner .day{flex:none;border:1px solid var(--line);background:var(--card);border-radius:16px;padding:10px 16px;text-align:left;min-width:92px}

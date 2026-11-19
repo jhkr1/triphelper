@@ -107,4 +107,9 @@ export interface Destination {
   /** src/data/phrases.ts 의 phraseSets 키 */
   phraseSet: string;
   profile: CountryProfile;
+  /**
+   * 비자·여행경보·결제처럼 바뀔 수 있는 정보를 마지막으로 확인한 날 (YYYY-MM-DD).
+   * 없거나 1년이 지나면 scripts/check-countries.mjs 가 경고한다.
+   */
+  reviewedAt?: string;
 }

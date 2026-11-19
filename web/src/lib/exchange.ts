@@ -20,7 +20,7 @@ export interface ExchangeBundle {
 const BASE_URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api";
 
 /** 환율 서버에 연결하지 못할 때 쓰는 대략값 (1단위 = USD 기준) */
-const FALLBACK_USD: Record<string, number> = {
+export const FALLBACK_USD: Record<string, number> = {
   USD: 1, EUR: 1.08, JPY: 0.0067, GBP: 1.27, CNY: 0.14, KRW: 0.00074, TRY: 0.026, MXN: 0.059, CAD: 0.73, CHF: 1.1,
   AUD: 0.66, TWD: 0.031, HKD: 0.13, SGD: 0.74, MYR: 0.22, IDR: 0.000061, PHP: 0.018, VND: 0.000039, THB: 0.027, HUF: 0.0028, RUB: 0.012, NZD: 0.59,
 };

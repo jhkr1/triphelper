@@ -77,14 +77,17 @@ h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-sp
 
 /* 지구본 */
 .globe-wrap{margin:0;position:relative;z-index:1;display:grid;justify-items:center}
-.globe-stage{position:relative;width:100%;max-width:680px}
+/* 세로가 짧은 화면(노트북 등)에서도 지구본이 잘리지 않게 높이에 맞춰 줄인다. 위·아래 여백과 안내 문구 몫 약 190px */
+.globe-stage{position:relative;width:100%;max-width:min(680px,max(360px,calc(100svh - 190px)))}
 .globe-box{position:relative;width:100%}
 
-/* 종이비행기: 지구본 왼쪽 위에서 중심을 겨누고, 뒤로 점선 항로를 끈다 */
-.plane{--p:clamp(80px,10vw,140px);position:absolute;z-index:3;left:-11%;top:0;width:var(--p);height:var(--p);pointer-events:none}
-.plane__trail{position:absolute;left:calc(var(--p) * -1.72);top:calc(var(--p) * -.62);width:calc(var(--p) * 2);height:var(--p);overflow:visible;transition:opacity .25s}
-.plane__trail path{fill:none;stroke:var(--trail);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:.1 9;vector-effect:non-scaling-stroke}
-.plane__body{width:100%;height:100%;transform-origin:50% 50%}
+/* 종이비행기: 지구본 왼쪽 위 바깥에서 중심을 겨누고 긴 항로를 끈다. 모두 지구본 영역 기준 %라 화면 비율과 함께 움직인다 */
+.plane{position:absolute;inset:0;z-index:3;pointer-events:none;transition:opacity .2s}
+.plane.is-hidden{opacity:0}
+.plane__trail{position:absolute;inset:0;width:100%;height:100%;overflow:visible;transition:opacity .25s}
+.plane__trail path{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:.1 9;vector-effect:non-scaling-stroke}
+.plane__trail-stop{stop-color:var(--trail)}
+.plane__body{position:absolute;left:-14%;top:-4%;width:20%;aspect-ratio:1;transform-origin:50% 50%}
 .plane__art{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 14px 10px var(--plane-shadow));animation:plane-glide 5s ease-in-out infinite}
 .plane__wing{fill:var(--plane-wing);stroke:var(--plane-edge);stroke-width:.6;stroke-linejoin:round}
 .plane__keel{fill:var(--plane-keel);stroke:var(--plane-edge);stroke-width:.6;stroke-linejoin:round}
@@ -240,7 +243,9 @@ h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-sp
   .stage{grid-template-columns:minmax(0,1fr);padding-top:84px;min-height:0}
   .stage__copy{min-width:0;max-width:none}
   .globe-stage{max-width:440px}
-  .plane{left:2%;top:0}
+  /* 한 줄 배치: 지구본 옆 빈 공간이 없으니 항로는 빼고 비행기만 지구본 모서리에 */
+  .plane__body{left:0;top:0;width:17%}
+  .plane__trail{display:none}
   .ed__body{grid-template-columns:minmax(0,1fr)} /* 1fr이면 가로 목차(nowrap) 폭만큼 열이 늘어나 화면 밖으로 넘친다 */
   .toc{min-width:0;top:var(--header-h);z-index:4;max-height:none;overflow:visible;margin:0 -16px;padding:0 16px;background:var(--soft)} /* 모바일: 가로 목차가 상단 바 아래에 고정 */
   .chap{scroll-margin-top:calc(var(--header-h) + 64px)}

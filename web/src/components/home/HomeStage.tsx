@@ -56,6 +56,14 @@ export function HomeStage({ list }: { list: DestinationSummary[] }) {
 
   useEffect(() => () => window.clearTimeout(openTimer.current), []);
 
+  // 지구본을 확대하면 지구본이 비행기 자리까지 커지므로 비행기를 숨긴다 (매 프레임 호출이라 렌더링 없이 클래스만 바꾼다)
+  // 단, 날아가는 중(확대를 되돌리며 나라로 가는 중)에는 숨기지 않는다
+  const onGlobeZoom = useCallback((k: number) => {
+    const plane = planeRef.current;
+    if (!plane || plane.classList.contains("is-flying")) return;
+    plane.classList.toggle("is-hidden", k > 1.02);
+  }, []);
+
   // 뒤로 가기(bfcache)로 돌아오면 날아간 비행기를 제자리로
   useEffect(() => {
     const onShow = (e: PageTransitionEvent) => {
@@ -145,7 +153,7 @@ export function HomeStage({ list }: { list: DestinationSummary[] }) {
       <figure className="globe-wrap">
         <div className="globe-stage" ref={globeRef}>
           <PaperPlane ref={planeRef} />
-          <Globe list={list} activeSlug={activeSlug} labelOf={labelOf} onSelect={select} ariaLabel={t("globe.label")} zoomInLabel={t("globe.zoomIn")} zoomOutLabel={t("globe.zoomOut")} />
+          <Globe list={list} activeSlug={activeSlug} labelOf={labelOf} onSelect={select} ariaLabel={t("globe.label")} zoomInLabel={t("globe.zoomIn")} zoomOutLabel={t("globe.zoomOut")} onZoom={onGlobeZoom} />
         </div>
         <figcaption>{t("globe.hint")}</figcaption>
       </figure>

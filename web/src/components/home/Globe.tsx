@@ -19,6 +19,8 @@ interface GlobeProps {
   ariaLabel: string;
   zoomInLabel: string;
   zoomOutLabel: string;
+  /** 확대 배율이 바뀔 때마다 (제스처 중 매 프레임). 1 = 기본 크기 */
+  onZoom?: (k: number) => void;
 }
 
 const W = 800;
@@ -30,12 +32,12 @@ const MAX_ZOOM = 5;
  * D3 직교 투영 지구본. 드래그로 회전, 핀 클릭/Enter로 선택.
  * D3가 SVG를 직접 다루므로 React는 <svg> 자리만 만들고, 그리기는 effect 안에서 한다.
  */
-export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLabel, zoomOutLabel }: GlobeProps) {
+export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLabel, zoomOutLabel, onZoom }: GlobeProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   // 최신 props를 effect 안의 D3 콜백에서 읽기 위한 ref
-  const latest = useRef({ activeSlug, labelOf, onSelect });
+  const latest = useRef({ activeSlug, labelOf, onSelect, onZoom });
   useLayoutEffect(() => {
-    latest.current = { activeSlug, labelOf, onSelect };
+    latest.current = { activeSlug, labelOf, onSelect, onZoom };
   });
   const api = useRef<{ draw: () => void; rotateTo: (d: DestinationSummary) => void; zoomBy: (factor: number) => void } | null>(null);
   // 버튼 활성/비활성용 현재 배율 (제스처가 끝날 때만 갱신해서 매 프레임 렌더링을 피한다)
@@ -102,9 +104,25 @@ export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLa
       pins.filter(".active").raise();
     }
 
+    // 나라를 골라 확대를 되돌리는 중에는 zoom "start"가 회전 연출을 끊지 않게 한다
+    let resetting = false;
+
     function rotateTo(d: DestinationSummary) {
       interacted = true;
       svg.interrupt();
+      // 확대한 채로 골랐으면 원래 크기로 되돌려, 지구본 전체와 날아가는 비행기가 함께 보이게 한다
+      if (d3.zoomTransform(el!).k > MIN_ZOOM + 0.001) {
+        resetting = true;
+        if (reduceMotion) {
+          zoom.transform(svg, d3.zoomIdentity);
+          resetting = false;
+        } else {
+          zoom.transform(
+            svg.transition("zoom-reset").duration(700).ease(d3.easeCubicInOut).on("end interrupt", () => { resetting = false; }),
+            d3.zoomIdentity,
+          );
+        }
+      }
       const r0 = proj.rotate();
       const r1: [number, number, number] = [-d.center.lng, -d.center.lat * 0.85, 0];
       while (r1[0] - r0[0] > 180) r1[0] -= 360;
@@ -121,7 +139,11 @@ export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLa
       .scaleExtent([MIN_ZOOM, MAX_ZOOM])
       // 일반 휠은 페이지 스크롤에 양보하고, Ctrl+휠(트랙패드 핀치)만 확대로 쓴다
       .filter((e: MouseEvent | WheelEvent | TouchEvent) => (e.type === "wheel" ? (e as WheelEvent).ctrlKey : !(e as MouseEvent).button))
-      .on("start", () => { interacted = true; svg.interrupt(); })
+      .on("start", () => {
+        if (resetting) return;
+        interacted = true;
+        svg.interrupt();
+      })
       .on("zoom", (e: d3.D3ZoomEvent<SVGSVGElement, unknown>) => {
         const t = e.transform;
         if (t.k === last.k) {
@@ -131,6 +153,7 @@ export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLa
           proj.rotate([r[0] + (t.x - last.x) * s, Math.max(-65, Math.min(65, r[1] - (t.y - last.y) * s))]);
         }
         last = t;
+        latest.current.onZoom?.(t.k);
         proj.scale(R * t.k);
         draw();
       })
@@ -166,6 +189,7 @@ export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLa
       timer?.stop();
       svg.interrupt();
       svg.interrupt("zoom-btn");
+      svg.interrupt("zoom-reset");
       svg.on(".zoom", null);
       api.current = null;
     };

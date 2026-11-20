@@ -8,6 +8,7 @@ import {
   type Invite, type Member, type MemberRole,
 } from "@/lib/trip-collab";
 import { markShared } from "@/lib/trip-sync";
+import { makeViewLink, removeViewLink, viewUrl } from "@/lib/trip-link";
 import type { Trip } from "@/types/trip";
 
 interface Props {
@@ -17,6 +18,9 @@ interface Props {
   /** 멤버가 이 일정에서 나갔을 때 */
   onLeft: () => void;
   toast: (msg: string) => void;
+  /** 보기 전용 링크 코드 (null = 꺼짐, undefined = 아직 모름) */
+  viewCode: string | null | undefined;
+  onViewCode: (code: string | null) => void;
 }
 
 const INVITE_HINT: Record<MemberRole, string> = {
@@ -25,7 +29,7 @@ const INVITE_HINT: Record<MemberRole, string> = {
 };
 
 /** 함께 짜기: 주인은 초대 링크를 만들고 멤버를 관리, 멤버는 사람 목록을 보고 나갈 수 있다 */
-export function CollabDialog({ trip, meId, onClose, onLeft, toast }: Props) {
+export function CollabDialog({ trip, meId, onClose, onLeft, toast, viewCode, onViewCode }: Props) {
   const tripId = trip.cloud!.id;
   const owner = (trip.cloud!.role ?? "owner") === "owner";
   const [members, setMembers] = useState<Member[] | null>(null);
@@ -71,6 +75,15 @@ export function CollabDialog({ trip, meId, onClose, onLeft, toast }: Props) {
     copy(inv.code);
   });
 
+  const copyView = (code: string, msg = "보기 링크를 복사했어요") =>
+    navigator.clipboard.writeText(viewUrl(window.location.origin, code)).then(() => toast(msg), () => toast("이 환경에서는 복사할 수 없어요"));
+
+  const makeView = (renew: boolean) => run(async () => {
+    const code = await makeViewLink(tripId, renew);
+    onViewCode(code);
+    copyView(code, renew ? "새 보기 링크를 복사했어요 · 예전 링크는 더 이상 열리지 않아요" : "보기 링크를 복사했어요");
+  });
+
   const expires = (iso: string) => { const d = new Date(iso); return `${d.getMonth() + 1}월 ${d.getDate()}일까지`; };
 
   return (
@@ -106,6 +119,37 @@ export function CollabDialog({ trip, meId, onClose, onLeft, toast }: Props) {
                   </li>
                 ))}
               </ul>
+            )}
+          </section>
+        )}
+
+        {owner && (
+          <section className="collab__invite" aria-labelledby="collab-view">
+            <h3 id="collab-view">보기 링크</h3>
+            <p className="pub__msg">링크를 받은 사람은 로그인하지 않아도 지금의 일정을 볼 수 있어요. 일정을 고치면 바로 반영되고, 준비물과 여행지 바구니는 보이지 않아요.</p>
+            {viewCode === undefined ? (
+              <p className="pub__msg">불러오는 중…</p>
+            ) : viewCode ? (
+              <ul className="collab__invites">
+                <li>
+                  <span><b>켜짐</b> · 링크가 있는 누구나 보기</span>
+                  <button type="button" className="btn btn--sm" onClick={() => copyView(viewCode)}><Icon name="copy" />복사</button>
+                  <button type="button" className="btn btn--sm" disabled={busy} onClick={() => makeView(true)} title="예전 링크는 더 이상 열리지 않아요">
+                    새 링크로 바꾸기
+                  </button>
+                  <button type="button" className="btn btn--sm" disabled={busy}
+                    onClick={() => run(async () => { await removeViewLink(tripId); onViewCode(null); toast("보기 링크를 껐어요 · 이제 링크로 열 수 없어요"); })}>
+                    끄기
+                  </button>
+                </li>
+              </ul>
+            ) : (
+              <div className="collab__make">
+                <button type="button" className="collab__opt" onClick={() => makeView(false)} disabled={busy}>
+                  <b>보기 링크 만들기</b>
+                  <small>&lsquo;링크 공유&rsquo; 버튼을 눌러도 만들어져요</small>
+                </button>
+              </div>
             )}
           </section>
         )}

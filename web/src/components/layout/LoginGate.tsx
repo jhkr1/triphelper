@@ -6,7 +6,7 @@ import { authEnabled, authStore, enabledProviders, PROVIDERS, signIn } from "@/l
 interface Props {
   title: string;
   desc: string;
-  /** 일정 공유 링크(#z= · 예전 #t=)로 열었으면 로그인 없이 보여 준다 */
+  /** 일정 공유 링크(보기 전용 ?v= · 주소에 담은 #z= · 예전 #t=)로 열었으면 로그인 없이 보여 준다 */
   allowSharedLink?: boolean;
   children: ReactNode;
 }
@@ -15,7 +15,8 @@ interface Props {
 export function LoginGate({ title, desc, allowSharedLink, children }: Props) {
   const auth = useSyncExternalStore(authStore.subscribe, authStore.getSnapshot, authStore.getServerSnapshot);
   // 공유 링크 표시(#z= 등)는 열자마자 주소에서 지워지므로 처음 값을 기억해 둔다
-  const [guest] = useState(() => Boolean(allowSharedLink) && typeof window !== "undefined" && /^#(z|t)=/.test(window.location.hash));
+  const [guest] = useState(() => Boolean(allowSharedLink) && typeof window !== "undefined"
+    && (/^#(z|t)=/.test(window.location.hash) || new URLSearchParams(window.location.search).has("v")));
   const [err, setErr] = useState("");
 
   if (!authEnabled) return <>{children}</>;

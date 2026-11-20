@@ -13,7 +13,9 @@ import { CollabDialog } from "@/components/trip/CollabDialog";
 import { ActivityPanel } from "@/components/trip/ActivityPanel";
 import { MyTrips, SyncBadge } from "@/components/trip/MyTrips";
 import { PublishDialog } from "@/components/board/PublishDialog";
+import { SharedTripView } from "@/components/trip/SharedTripView";
 import { authSettled, authStore } from "@/lib/supabase";
+import { getViewLink, makeViewLink, viewUrl } from "@/lib/trip-link";
 import {
   addDays, createTrip, dateParts, defaultTrip, nightsBetween, readSharedTrip, sampleTrip, shareUrl, withDatesUnset, type PlannerCountry,
 } from "@/lib/trip-model";
@@ -26,8 +28,24 @@ import type { Place, Trip } from "@/types/trip";
 
 const DEFAULT_COUNTRY = "south-korea";
 
-/** 내 여행: 여행 설정 · 일정표(지도) · 체크리스트. 일정은 브라우저에 자동 저장된다. */
+/** 내 여행. 보기 전용 링크(?v=코드)로 열었으면 그 일정을 읽기 전용으로 보여 준다 */
 export function TripPlanner({ countries }: { countries: PlannerCountry[] }) {
+  // 이 화면은 로그인 확인 뒤(브라우저)에만 그려지므로 처음 값을 주소에서 바로 읽는다
+  const [viewCode, setViewCode] = useState(() => (typeof window === "undefined" ? null : new URLSearchParams(window.location.search).get("v")));
+  if (viewCode) {
+    return (
+      <SharedTripView
+        code={viewCode}
+        countries={countries}
+        onDone={() => { history.replaceState(null, "", window.location.pathname); setViewCode(null); }}
+      />
+    );
+  }
+  return <PlannerMain countries={countries} />;
+}
+
+/** 여행 설정 · 일정표(지도) · 체크리스트. 일정은 브라우저에 자동 저장된다. */
+function PlannerMain({ countries }: { countries: PlannerCountry[] }) {
   const snapshot = useSyncExternalStore(tripStore.subscribe, tripStore.getSnapshot, tripStore.getServerSnapshot);
   const countryOf = useCallback((slug: string) => countries.find((c) => c.slug === slug), [countries]);
 
@@ -120,6 +138,16 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
     shareUrl(window.location.origin + BASE_PATH, trip).then((url) => { if (!cancelled) setLink({ trip, url }); }, () => {});
     return () => { cancelled = true; };
   }, [trip]);
+  // 저장된 일정의 보기 전용 링크 (짧은 주소). 켜져 있는지 미리 알아 둔다 (code: null = 꺼짐)
+  const cloudId = trip.cloud?.id ?? null;
+  const [viewLink, setViewLink] = useState<{ tripId: string; code: string | null } | null>(null);
+  useEffect(() => {
+    if (!cloudId) return;
+    let cancelled = false;
+    getViewLink(cloudId).then((code) => { if (!cancelled) setViewLink({ tripId: cloudId, code }); }, () => {});
+    return () => { cancelled = true; };
+  }, [cloudId]);
+  const viewCode = viewLink && viewLink.tripId === cloudId ? viewLink.code : undefined; // undefined = 아직 모름
   const toastTimer = useRef<number | undefined>(undefined);
   const safeDay = Math.min(day, trip.days.length - 1);
 
@@ -231,13 +259,32 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
     toast("위치를 지정했습니다");
   }
 
+  /**
+   * 링크 공유
+   * - DB에 저장된 일정: 보기 전용 링크(짧은 주소). 주인은 없으면 만들고, 멤버는 주인이 켜 둔 링크가 있을 때만
+   * - 그 밖(저장 전 · 링크 공유로 받은 일정 등): 일정 전체를 주소에 담은 링크
+   */
   async function share() {
-    const ready = link?.trip === trip ? link.url : null;
-    const url = ready ?? shareUrl(window.location.origin + BASE_PATH, trip);
+    const origin = window.location.origin;
+    let failed = "";
+    let url: string | Promise<string>;
+    let done = "공유 링크를 복사했습니다";
+    if (cloudId && (role === "owner" || viewCode)) {
+      void flushSave(); // 방금 고친 내용이 링크에 보이도록 기다리던 저장을 바로
+      url = viewCode
+        ? viewUrl(origin, viewCode)
+        : makeViewLink(cloudId).then(
+            (code) => { setViewLink({ tripId: cloudId, code }); return viewUrl(origin, code); },
+            (e: unknown) => { failed = e instanceof Error ? e.message : "링크를 만들지 못했어요"; throw e; },
+          );
+      done = "보기 링크를 복사했습니다 · 일정을 고치면 받은 사람에게도 반영돼요";
+    } else {
+      url = link?.trip === trip ? link.url : shareUrl(origin + BASE_PATH, trip);
+    }
     // 휴대폰: 기본 공유 창(카카오톡·문자 등). 컴퓨터는 공유 창보다 복사가 익숙하므로 복사한다.
-    if (ready && navigator.share && matchMedia("(pointer: coarse)").matches) {
+    if (typeof url === "string" && navigator.share && matchMedia("(pointer: coarse)").matches) {
       try {
-        await navigator.share({ title: `${trip.city || country.name} 여행 일정`, url: ready });
+        await navigator.share({ title: `${trip.city || country.name} 여행 일정`, url });
         return;
       } catch (e) {
         if ((e as DOMException).name === "AbortError") return; // 공유 창을 닫은 경우
@@ -248,15 +295,16 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
         await navigator.clipboard.writeText(url);
       } else {
         // 링크가 아직 준비 중이면 완성될 링크(Promise)를 바로 넘겨 '누른 순간'의 복사로 처리되게 한다 (사파리)
+        const pending = url;
         try {
-          await navigator.clipboard.write([new ClipboardItem({ "text/plain": url.then((u) => new Blob([u], { type: "text/plain" })) })]);
+          await navigator.clipboard.write([new ClipboardItem({ "text/plain": pending.then((u) => new Blob([u], { type: "text/plain" })) })]);
         } catch {
-          await navigator.clipboard.writeText(await url);
+          await navigator.clipboard.writeText(await pending);
         }
       }
-      toast("공유 링크를 복사했습니다");
+      toast(done);
     } catch {
-      toast("이 환경에서는 복사할 수 없습니다");
+      toast(failed || "이 환경에서는 복사할 수 없습니다");
     }
   }
 
@@ -334,6 +382,8 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
           onClose={closeCollab}
           onLeft={() => { setCollabOpen(false); tripStore.set(defaultTrip(country)); setDay(0); toast("일정에서 나왔어요"); }}
           toast={toast}
+          viewCode={viewCode}
+          onViewCode={(code) => setViewLink({ tripId: trip.cloud!.id, code })}
         />
       )}
 

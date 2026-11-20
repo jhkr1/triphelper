@@ -2,50 +2,22 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { UserAvatar } from "@/components/ui/UserAvatar";
 import { Comments } from "@/components/board/Comments";
-import { TripMap, dayColor } from "@/components/trip/TripMap";
-import { Leg, PlacePhoto } from "@/components/trip/Itinerary";
+import { TripMap } from "@/components/trip/TripMap";
+import { RouteDays } from "@/components/trip/RouteDays";
 import { flagUrl } from "@/lib/geo";
 import { authEnabled, authStore, enabledProviders, signIn } from "@/lib/supabase";
 import { LOADING, tripStore } from "@/lib/trip-store";
 import { flushSave } from "@/lib/trip-sync";
-import { dayLabel, type PlannerCountry } from "@/lib/trip-model";
+import type { PlannerCountry } from "@/lib/trip-model";
 import { deletePost, getPost, postDays, postToTrip, postUrl, setPostVisibility, VISIBILITY, type Post, type Visibility } from "@/lib/posts";
-import type { Place } from "@/types/trip";
 
 type State = { status: "loading" } | { status: "missing" } | { status: "error" } | { status: "done"; post: Post };
 
-const nightsText = (n: number) => (n ? `${n}박 ${n + 1}일` : "당일치기");
-
-/** 장소 한 곳 (읽기 전용) */
-function Stop({ p, n, color }: { p: Place; n: number; color: string }) {
-  return (
-    <li className="stop stop--ro" style={{ "--dc": color } as React.CSSProperties}>
-      <span className="stop__n" aria-hidden="true"><i>{n}</i></span>
-      <div className="stop__body">
-        <PlacePhoto place={p} />
-        <div className="stop__txt">
-          {p.time && <div className="stop__time">{p.time}</div>}
-          <div className="stop__name"><span>{p.name}</span>{p.category && <span className="tag">{p.category}</span>}</div>
-          {p.duration && <div className="tags"><span className="tag">{p.duration} 머묾</span></div>}
-          {p.memo && <p className="stop__memo stop__memo--ro">{p.memo}</p>}
-        </div>
-      </div>
-    </li>
-  );
-}
-
-function StayItem({ stay, label }: { stay: Place; label: string }) {
-  return (
-    <li className="stay stay--from">
-      <span className="stay__ic" aria-hidden="true"><Icon name="bed" /></span>
-      <div className="stay__body"><small>{label}</small><b>{stay.name}</b></div>
-    </li>
-  );
-}
+const nightsText =(n: number) => (n ? `${n}박 ${n + 1}일` : "당일치기");
 
 /** 게시글 보기: 지도 + 날짜별 동선. 링크 복사 · 내 일정으로 가져오기 · (글쓴이) 공개 범위 바꾸기 · 삭제 */
 export function PostView({ countries }: { countries: PlannerCountry[] }) {
@@ -186,33 +158,7 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
         <TripMap days={days} mapDay={mapDay} onMapDayChange={setMapDay} center={post.data.center} />
       </section>
 
-      <section className="post__days">
-        {days.map((d, i) => {
-          const prevStay = days[i - 1]?.stay;
-          const stay = i < days.length - 1 ? d.stay : undefined;
-          return (
-            <div className="card post__day" key={i}>
-              <h2><span style={{ background: dayColor(i) }} aria-hidden="true" />Day {i + 1}{post.data.start && <small>{dayLabel(post.data.start, i)}</small>}</h2>
-              {!d.places.length && !stay && !prevStay ? (
-                <p className="board__msg">이날은 비워 두었어요.</p>
-              ) : (
-                <ol className="tl" style={{ "--dc": dayColor(i) } as React.CSSProperties}>
-                  {prevStay && <StayItem stay={prevStay} label="숙소에서 출발" />}
-                  {prevStay && d.places[0] && <Leg from={prevStay} to={d.places[0]} countryCode={country?.countryCode ?? ""} />}
-                  {d.places.map((p, j) => (
-                    <Fragment key={p.id}>
-                      {j > 0 && <Leg from={d.places[j - 1]} to={p} countryCode={country?.countryCode ?? ""} />}
-                      <Stop p={p} n={j + 1} color={dayColor(i)} />
-                    </Fragment>
-                  ))}
-                  {stay && d.places.length > 0 && <Leg from={d.places[d.places.length - 1]} to={stay} countryCode={country?.countryCode ?? ""} />}
-                  {stay && <StayItem stay={stay} label={`Day ${i + 1} 밤 숙소`} />}
-                </ol>
-              )}
-            </div>
-          );
-        })}
-      </section>
+      <RouteDays days={days} start={post.data.start} countryCode={country?.countryCode ?? ""} />
 
       <Comments post={post} />
 

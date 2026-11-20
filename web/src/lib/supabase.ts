@@ -3,7 +3,7 @@ import type { SupabaseClient, User } from "@supabase/supabase-js";
 /*
  * Supabase (로그인 · 일정 저장 · 게시판). 브라우저에서 바로 부르는 정적 사이트 구조라 공개 키(publishable key)만 쓴다.
  * 권한은 DB의 행 단위 보안(RLS)이 막는다 → supabase/migrations/*.sql
- * 값은 web/.env.local (개발), Netlify 환경 변수 (배포)에 넣는다. 비어 있으면 로그인 기능만 숨기고 나머지는 그대로 동작.
+ * 값은 web/.env.local (개발), GitHub 저장소 Actions Variables (배포, .github/workflows/pages.yml)에 넣는다. 비어 있으면 로그인 기능만 숨기고 나머지는 그대로 동작.
  *
  * 라이브러리(압축 후 약 70KB)는 처음부터 싣지 않고 필요할 때 불러온다:
  * 저장된 로그인 정보가 있을 때 · 로그인 버튼을 누를 때 · 게시판처럼 DB가 필요한 화면에서.

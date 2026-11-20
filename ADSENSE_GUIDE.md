@@ -10,7 +10,7 @@
    - "시작하기" 클릭
 
 2. **웹사이트 정보 입력**
-   - 웹사이트 URL 입력 (배포된 Netlify URL)
+   - 웹사이트 URL 입력 (배포된 GitHub Pages 주소: https://jhkr1.github.io/triphelper/)
    - 국가/지역 선택
    - 결제 정보 입력
 

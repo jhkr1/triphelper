@@ -7,7 +7,7 @@
 
 **목적지 하나만 고르면, 여행 준비에 필요한 정보와 내 일정까지 한 곳에서**
 
-[![Live](https://img.shields.io/badge/Live-triphelper.kr-2563eb?logo=google-chrome&logoColor=white)](https://triphelper.kr)
+[![Live](https://img.shields.io/badge/Live-jhkr1.github.io%2Ftriphelper-2563eb?logo=google-chrome&logoColor=white)](https://jhkr1.github.io/triphelper/)
 [![Next.js](https://img.shields.io/badge/Next.js_16-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React_19-61DAFB?logo=react&logoColor=black)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -148,10 +148,12 @@
 ```
 triphelper/
 ├── README.md
-├── netlify.toml                 # Netlify 빌드 설정 (web/ 빌드 → web/out 배포)
+├── .github/workflows/pages.yml  # GitHub Pages 배포 (main에 push하면 자동)
+├── netlify.toml                 # 예전 Netlify 설정 (사용 안 함, 주석 처리)
 ├── docs/screenshots/            # README 스크린샷
+├── supabase/migrations/         # DB 변경 (RLS · 권한 · RPC)
 └── web/                         # Next.js 앱
-    ├── public/                  # 로고, robots.txt, ads.txt, _redirects
+    ├── public/                  # 로고, ads.txt, 지도 작업 파일
     ├── scripts/
     │   └── build-attractions.mjs   # 주요 관광지 데이터 생성 (위키백과)
     └── src/
@@ -203,7 +205,16 @@ cd web
 npm run build      # → web/out/ 에 정적 사이트 생성
 ```
 
-Netlify 배포 설정은 저장소 루트의 [`netlify.toml`](./netlify.toml)에 있습니다 (Base `web`, Build `npm run build`, Publish `out`). 이 파일이 Netlify 화면 설정보다 우선합니다.
+배포는 **GitHub Actions + GitHub Pages**로 합니다 ([`.github/workflows/pages.yml`](./.github/workflows/pages.yml)).
+`main`에 push하면 `web/`을 정적 사이트로 빌드해 https://jhkr1.github.io/triphelper/ 에 올립니다 (보통 몇 분 걸립니다).
+
+- 사이트 주소에 `/triphelper`가 붙으므로 빌드할 때 `BASE_PATH`를 넘깁니다 (워크플로가 저장소 이름으로 자동 설정).
+- 처음 한 번 저장소 Settings에서 준비합니다.
+  - **Pages → Build and deployment → Source**: GitHub Actions
+  - **Secrets and variables → Actions → Variables**: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_AUTH_PROVIDERS` (예: `kakao`). 모두 브라우저에 공개되는 값이라 Secrets가 아닌 Variables에 넣습니다.
+- 개발할 때는 같은 값을 `web/.env.local`에 넣습니다 (커밋하지 않음).
+
+> 예전에는 Netlify로 배포했습니다. [`netlify.toml`](./netlify.toml)은 참고용으로 주석 처리해 두었고, 지금은 쓰지 않습니다.
 
 ---
 

@@ -1,25 +1,28 @@
-# Netlify 빌드 설정 — Netlify 화면(UI)의 빌드 설정보다 이 파일이 우선한다.
-# Next.js 앱은 web/ 폴더에 있고, 정적 사이트로 빌드되어 web/out/ 에 만들어진다.
-[build]
-  base = "web"
-  command = "npm run build"
-  publish = "out"
-
-[build.environment]
-  # Next.js 16은 Node.js 20.9 이상 필요
-  NODE_VERSION = "22"
-  NEXT_TELEMETRY_DISABLED = "1"
-
-# 브라우저 캐시
-# - /_next/static/ 파일은 이름에 내용 해시가 들어 있어 내용이 바뀌면 이름도 바뀐다 → 1년 동안 다시 묻지 않고 쓴다
-# - HTML 등 나머지는 Netlify 기본값(매번 새 버전인지 확인)을 그대로 둔다
-[[headers]]
-  for = "/_next/static/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# 지도 그리기 작업 파일: 이름에 해시가 없어 하루만 (maplibre를 올리면 하루 안에 바뀐다)
-[[headers]]
-  for = "/maplibre-gl-worker.mjs"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
+# ※ 사용 안 함: 지금은 GitHub Actions + GitHub Pages로 배포한다 (.github/workflows/pages.yml).
+#   예전 Netlify 배포 설정을 참고용으로 주석 처리해 남겨 둔다.
+#
+# # Netlify 빌드 설정 — Netlify 화면(UI)의 빌드 설정보다 이 파일이 우선한다.
+# # Next.js 앱은 web/ 폴더에 있고, 정적 사이트로 빌드되어 web/out/ 에 만들어진다.
+# [build]
+#   base = "web"
+#   command = "npm run build"
+#   publish = "out"
+#
+# [build.environment]
+#   # Next.js 16은 Node.js 20.9 이상 필요
+#   NODE_VERSION = "22"
+#   NEXT_TELEMETRY_DISABLED = "1"
+#
+# # 브라우저 캐시
+# # - /_next/static/ 파일은 이름에 내용 해시가 들어 있어 내용이 바뀌면 이름도 바뀐다 → 1년 동안 다시 묻지 않고 쓴다
+# # - HTML 등 나머지는 Netlify 기본값(매번 새 버전인지 확인)을 그대로 둔다
+# [[headers]]
+#   for = "/_next/static/*"
+#   [headers.values]
+#     Cache-Control = "public, max-age=31536000, immutable"
+#
+# # 지도 그리기 작업 파일: 이름에 해시가 없어 하루만 (maplibre를 올리면 하루 안에 바뀐다)
+# [[headers]]
+#   for = "/maplibre-gl-worker.mjs"
+#   [headers.values]
+#     Cache-Control = "public, max-age=86400"

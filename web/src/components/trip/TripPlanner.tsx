@@ -7,7 +7,10 @@ import { Itinerary } from "@/components/trip/Itinerary";
 import { ChecklistPanel } from "@/components/trip/ChecklistPanel";
 import { TripSetup, type SetupResult } from "@/components/trip/TripSetup";
 import { LOADING, tripStore } from "@/lib/trip-store";
-import { startTripSync } from "@/lib/trip-sync";
+import { flushSave, loadTrip, startTripSync } from "@/lib/trip-sync";
+import { acceptInvite } from "@/lib/trip-collab";
+import { CollabDialog } from "@/components/trip/CollabDialog";
+import { ActivityPanel } from "@/components/trip/ActivityPanel";
 import { MyTrips, SyncBadge } from "@/components/trip/MyTrips";
 import { PublishDialog } from "@/components/board/PublishDialog";
 import { authStore } from "@/lib/supabase";
@@ -17,7 +20,7 @@ import {
 import { fetchExchange, formatRate } from "@/lib/exchange";
 import { fetchDailyForecast, type DailyForecast } from "@/lib/weather";
 import { flagUrl } from "@/lib/geo";
-import { SITE_URL } from "@/lib/site";
+import { BASE_PATH } from "@/lib/site";
 import type { LatLng } from "@/types/destination";
 import type { Place, Trip } from "@/types/trip";
 
@@ -32,6 +35,7 @@ export function TripPlanner({ countries }: { countries: PlannerCountry[] }) {
   // 공유 링크는 압축을 풀어야 해서 비동기로 읽는다. 개발 모드에서 effect가 두 번 돌아도 한 번만 처리한다.
   const opened = useRef(false);
   const ready = useRef(false); // 처음 열기 처리가 끝났는지
+  const [notice, setNotice] = useState("");
   useEffect(() => { startTripSync(); }, []); // 로그인했으면 DB에 자동 저장
   // 로그아웃 등으로 이 기기의 일정이 지워지면 기본 일정으로 다시 시작
   useEffect(() => {
@@ -42,6 +46,24 @@ export function TripPlanner({ countries }: { countries: PlannerCountry[] }) {
     opened.current = true;
     let cancelled = false;
     (async () => {
+      // 함께 짜기 초대 링크(?invite=): 멤버가 되고 그 일정을 연다 (이 화면은 로그인해야 열린다)
+      const invite = new URLSearchParams(window.location.search).get("invite");
+      const auth = authStore.getSnapshot();
+      if (invite && auth.status === "in") {
+        history.replaceState(null, "", window.location.pathname);
+        try {
+          const id = await acceptInvite(invite);
+          await flushSave();
+          const t = await loadTrip(id, auth.me.id);
+          if (cancelled) return;
+          tripStore.set(t);
+          setNotice(`${t.city || countryOf(t.country)?.name || ""} 여행에 함께하게 됐어요`);
+        } catch (e) {
+          setNotice(e instanceof Error ? e.message : "초대 링크를 열지 못했어요");
+        }
+        ready.current = true;
+        return;
+      }
       const shared = await readSharedTrip(window.location.hash, countryOf);
       if (cancelled) return;
       const wanted = new URLSearchParams(window.location.search).get("country");
@@ -68,10 +90,10 @@ export function TripPlanner({ countries }: { countries: PlannerCountry[] }) {
   if (snapshot === LOADING || snapshot === null) {
     return <div className="wrap"><p style={{ color: "var(--mute)" }}>일정을 불러오는 중…</p></div>;
   }
-  return <PlannerBody trip={snapshot} countries={countries} countryOf={countryOf} />;
+  return <PlannerBody trip={snapshot} countries={countries} countryOf={countryOf} notice={notice} />;
 }
 
-function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: PlannerCountry[]; countryOf: (s: string) => PlannerCountry | undefined }) {
+function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; countries: PlannerCountry[]; countryOf: (s: string) => PlannerCountry | undefined; notice: string }) {
   const country = countryOf(trip.country) ?? countries[0];
   const [tab, setTab] = useState<"plan" | "check">("plan");
   const [day, setDay] = useState(0);
@@ -79,15 +101,20 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
   const [setupOpen, setSetupOpen] = useState(false);
   const auth = useSyncExternalStore(authStore.subscribe, authStore.getSnapshot, authStore.getServerSnapshot);
   const [publishOpen, setPublishOpen] = useState(false);
+  const [collabOpen, setCollabOpen] = useState(false);
+  const closeCollab = useCallback(() => setCollabOpen(false), []);
+  // 함께 짜는 일정에서 나의 권한: 보기만이면 일정은 고칠 수 없다 (준비물은 내 것이라 고칠 수 있음)
+  const role = trip.cloud?.role ?? "owner";
+  const viewer = role === "viewer";
   const closePublish = useCallback(() => setPublishOpen(false), []);
   const [pickTarget, setPickTarget] = useState<{ day: number; id: string } | null>(null);
   const [toastMsg, setToastMsg] = useState<{ text: string; n: number } | null>(null);
-  // 공유 링크는 압축이 비동기라 일정이 바뀔 때마다 미리 만들어 둔다.
+  // 공유 링크는 압축이 비동기라 일정이 바뀔 때마다 미리 만들어 둔다. 주소는 지금 열린 사이트 기준 (로컬에서 만든 링크가 배포 사이트의 없는 주소로 가지 않도록)
   // 누르는 순간 바로 공유 창·복사를 열어야 휴대폰(특히 사파리)이 막지 않는다.
   const [link, setLink] = useState<{ trip: Trip; url: string } | null>(null);
   useEffect(() => {
     let cancelled = false;
-    shareUrl(SITE_URL, trip).then((url) => { if (!cancelled) setLink({ trip, url }); }, () => {});
+    shareUrl(window.location.origin + BASE_PATH, trip).then((url) => { if (!cancelled) setLink({ trip, url }); }, () => {});
     return () => { cancelled = true; };
   }, [trip]);
   const toastTimer = useRef<number | undefined>(undefined);
@@ -131,7 +158,10 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
     : null;
 
   /* 일정 바꾸기 */
-  const update = (fn: (t: Trip) => Trip) => tripStore.update(fn);
+  const update = (fn: (t: Trip) => Trip) => {
+    if (viewer) { toast("보기만 할 수 있는 일정이에요"); return; }
+    tripStore.update(fn);
+  };
   const updatePlaces = (fn: (places: Place[]) => Place[]) =>
     update((t) => ({ ...t, days: t.days.map((d, i) => (i === safeDay ? { ...d, places: fn(d.places) } : d)) }));
 
@@ -200,7 +230,7 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
 
   async function share() {
     const ready = link?.trip === trip ? link.url : null;
-    const url = ready ?? shareUrl(SITE_URL, trip);
+    const url = ready ?? shareUrl(window.location.origin + BASE_PATH, trip);
     // 휴대폰: 기본 공유 창(카카오톡·문자 등). 컴퓨터는 공유 창보다 복사가 익숙하므로 복사한다.
     if (ready && navigator.share && matchMedia("(pointer: coarse)").matches) {
       try {
@@ -234,7 +264,7 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
   const totalPlaces = trip.days.reduce((s, d) => s + d.places.length, 0);
 
   return (
-    <div className="wrap">
+    <div className={viewer ? "wrap is-viewer" : "wrap"}>
       <div className="hd">
         <div>
           <h1>
@@ -251,6 +281,8 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
             <p>{a.y}.{a.m}.{a.d} ({a.w}) – {b.m}.{b.d} ({b.w}) · {nights}박 {nights + 1}일</p>
           )}
           <SyncBadge />
+          {notice && <p className="collab-notice" role="status">{notice}</p>}
+          {viewer && <p className="viewer-note">보기만 할 수 있는 일정이에요. 준비물은 내 것만 따로 챙길 수 있어요.</p>}
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           <MyTrips
@@ -260,9 +292,22 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
             onNew={() => { tripStore.set(defaultTrip(country)); setDay(0); setMapDay("all"); setSetupOpen(true); }}
             toast={toast}
           />
-          <button className="btn edit-trip" type="button" aria-expanded={setupOpen} onClick={() => setSetupOpen((o) => !o)}>
-            여행 설정
-          </button>
+          {!viewer && (
+            <button className="btn edit-trip" type="button" aria-expanded={setupOpen} onClick={() => setSetupOpen((o) => !o)}>
+              여행 설정
+            </button>
+          )}
+          {auth.status === "in" && (
+            <button
+              className="btn"
+              type="button"
+              onClick={() => setCollabOpen(true)}
+              disabled={!trip.cloud}
+              title={!trip.cloud ? "장소를 담아 저장하면 함께 짤 수 있어요" : undefined}
+            >
+              {role === "owner" ? "함께 짜기" : "함께 짜는 사람"}
+            </button>
+          )}
           {auth.status === "in" && (
             <button
               className="btn"
@@ -279,6 +324,15 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
       </div>
 
       {publishOpen && <PublishDialog trip={trip} countryName={country.name} onClose={closePublish} />}
+      {collabOpen && trip.cloud && auth.status === "in" && (
+        <CollabDialog
+          trip={trip}
+          meId={auth.me.id}
+          onClose={closeCollab}
+          onLeft={() => { setCollabOpen(false); tripStore.set(defaultTrip(country)); setDay(0); toast("일정에서 나왔어요"); }}
+          toast={toast}
+        />
+      )}
 
       {setupOpen && <TripSetup trip={trip} countries={countries} onApply={applySetup} onCancel={() => setSetupOpen(false)} />}
 
@@ -334,12 +388,13 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
                 <div><span>등록한 장소</span><b>{totalPlaces}곳</b></div>
               </div>
             </div>
+            {trip.cloud?.shared && <ActivityPanel tripId={trip.cloud.id} />}
           </aside>
         </section>
       ) : (
         <ChecklistPanel
           checklist={trip.checklist}
-          onChange={(checklist) => update((t) => ({ ...t, checklist }))}
+          onChange={(checklist) => tripStore.update((t) => ({ ...t, checklist }))}
           countryName={country.name}
           rainyDay={rainyDay}
         />

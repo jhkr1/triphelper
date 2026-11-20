@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { authStore } from "@/lib/supabase";
+import { removeMember, ROLE_LABEL } from "@/lib/trip-collab";
 import { deleteTrip, flushSave, listMyTrips, loadTrip, syncStatusStore, type SyncStatus, type TripMeta } from "@/lib/trip-sync";
 import type { PlannerCountry } from "@/lib/trip-model";
 import type { Trip } from "@/types/trip";
@@ -86,16 +87,20 @@ export function MyTrips({ trip, countries, onOpened, onNew, toast }: Props) {
   }
 
   async function remove(t: TripMeta) {
+    if (!me) return;
     const name = t.title || `${countryName(t.country)} 여행`;
-    if (!confirm(`"${name}"을(를) 삭제할까요? 되돌릴 수 없습니다.`)) return;
+    const owner = t.role === "owner";
+    // 내 일정은 지우고, 함께 짜는 남의 일정에서는 나간다
+    if (!confirm(owner ? `"${name}"을(를) 삭제할까요? 되돌릴 수 없습니다. 함께 짜는 사람들에게서도 사라져요.`
+      : `"${name}"에서 나갈까요? 다시 들어오려면 새 초대 링크가 필요해요.`)) return;
     setBusy(t.id);
     try {
-      await deleteTrip(t.id);
+      if (owner) await deleteTrip(t.id); else await removeMember(t.id, me.id);
       setList((l) => l?.filter((x) => x.id !== t.id) ?? null);
-      if (t.id === trip.cloud?.id) onNew(); // 지금 보던 일정을 지웠으면 새 일정으로
-      toast(`"${name}"을(를) 삭제했어요`);
+      if (t.id === trip.cloud?.id) onNew(); // 지금 보던 일정이면 새 일정으로
+      toast(owner ? `"${name}"을(를) 삭제했어요` : `"${name}"에서 나왔어요`);
     } catch {
-      toast("삭제하지 못했어요");
+      toast(owner ? "삭제하지 못했어요" : "나가지 못했어요");
     } finally { setBusy(null); }
   }
 
@@ -125,13 +130,17 @@ export function MyTrips({ trip, countries, onOpened, onNew, toast }: Props) {
                 return (
                   <li key={t.id} className={current ? "is-current" : undefined}>
                     <button type="button" className="mytrips__open" onClick={() => openTrip(t.id)} disabled={busy === t.id} aria-current={current || undefined}>
-                      <b>{t.title || `${countryName(t.country)} 여행`}</b>
+                      <b>
+                        {t.title || `${countryName(t.country)} 여행`}
+                        {t.role !== "owner" && <i className="mytrips__with">{ROLE_LABEL[t.role]}</i>}
+                      </b>
                       <small>
                         {countryName(t.country)} · {t.nights ? `${t.nights}박 ${t.nights + 1}일` : "당일"} · {ago(t.updatedAt)} 수정
+                        {t.ownerName && ` · ${t.ownerName}님의 일정`}
                         {current && " · 지금 보는 중"}
                       </small>
                     </button>
-                    <button type="button" className="icon-btn" aria-label={`${t.title || "이 여행"} 삭제`} onClick={() => remove(t)} disabled={busy === t.id}>
+                    <button type="button" className="icon-btn" aria-label={`${t.title || "이 여행"} ${t.role === "owner" ? "삭제" : "에서 나가기"}`} onClick={() => remove(t)} disabled={busy === t.id}>
                       <Icon name="x" />
                     </button>
                   </li>

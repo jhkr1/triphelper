@@ -388,3 +388,43 @@
 .planner .chk__addform{display:flex;gap:8px;margin:8px 0 0 32px}
 .planner .chk__addform input{flex:1;min-width:0;border:1px solid var(--blue);box-shadow:0 0 0 3px #2563eb33;background:var(--bg);color:var(--ink);border-radius:12px;padding:10px 14px;font:inherit;font-size:.92rem;outline:0}
 .planner .chk__addform .btn{padding:8px 16px}
+
+/* 함께 짜기 */
+.planner .mytrips__with{margin-left:6px;font-style:normal;font-size:.7rem;font-weight:700;color:var(--blue);background:var(--badge-bg);border-radius:99px;padding:2px 7px;vertical-align:middle}
+.planner .collab-notice,.planner .viewer-note{margin:8px 0 0;padding:8px 12px;border-radius:10px;font-size:.85rem}
+.planner .collab-notice{background:var(--badge-bg);color:var(--blue);font-weight:600}
+.planner .viewer-note{background:var(--soft);color:var(--text2)}
+/* 보기만 하는 멤버: 일정을 고치는 버튼은 숨긴다 (일정 변경 자체도 막혀 있음) */
+.planner .is-viewer .add,.planner .is-viewer .stop .icon-btn,.planner .is-viewer .memo-btn,.planner .is-viewer .stay__add,
+.planner .is-viewer .stay__btn,.planner .is-viewer .stay .icon-btn,.planner .is-viewer .day--add,.planner .is-viewer .day-del,
+.planner .is-viewer .basket,.planner .is-viewer .sample-cta,.planner .is-viewer .bk__x{display:none}
+.planner .is-viewer .stop__body,.planner .is-viewer .stop__memo,.planner .is-viewer .tp__btn{pointer-events:none}
+.planner .is-viewer .stop__body .near-btn,.planner .is-viewer .stop__body a{pointer-events:auto}
+.planner .collab{display:grid;gap:18px}
+.planner .collab h3{display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:.95rem}
+.planner .collab h3 span{color:var(--blue)}
+.planner .collab__make{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.planner .collab__opt{display:grid;gap:3px;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 14px;font:inherit;cursor:pointer}
+.planner .collab__opt:hover{border-color:var(--blue)}
+.planner .collab__opt b{font-size:.92rem}
+.planner .collab__opt small{font-size:.78rem;color:var(--mute);line-height:1.45}
+.planner .collab__invites,.planner .collab__people{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.planner .collab__invites li{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 10px;border-radius:10px;background:var(--soft);font-size:.85rem}
+.planner .collab__invites li>span{margin-right:auto}
+.planner .collab__people li{display:flex;align-items:center;gap:10px;padding:6px 0}
+.planner .collab__name{display:flex;align-items:center;gap:6px;margin-right:auto;min-width:0}
+.planner .collab__name small{font-size:.7rem;color:var(--mute);border:1px solid var(--line);border-radius:99px;padding:1px 6px}
+.planner .collab__tag{font-size:.8rem;color:var(--mute)}
+.planner .collab__role select{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 10px;font:inherit;font-size:.82rem}
+.planner .collab__leave{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding-top:12px;border-top:1px solid var(--line);font-size:.85rem}
+.planner .collab .btn--sm{padding:6px 12px;font-size:.82rem}
+@media (max-width:480px){.planner .collab__make{grid-template-columns:1fr}}
+.planner .activity{display:grid;gap:10px}
+.planner .activity h3{margin:0}
+.planner .activity__msg{margin:0;font-size:.85rem;color:var(--mute);line-height:1.6}
+.planner .activity__list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.planner .activity__list li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;align-items:start}
+.planner .activity__list p{margin:0;font-size:.84rem;line-height:1.5;color:var(--text2);word-break:keep-all;overflow-wrap:anywhere}
+.planner .activity__list b{color:var(--ink)}
+.planner .activity__list time{display:block;font-size:.74rem;color:var(--mute)}
+.planner .activity__more{justify-self:start;border:0;background:none;color:var(--blue);font:inherit;font-size:.82rem;font-weight:600;padding:2px 0;cursor:pointer}

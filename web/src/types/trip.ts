@@ -55,11 +55,18 @@ export interface Trip {
 export interface TripCloud {
   /** DB의 일정 id */
   id: string;
-  /** 주인 (다른 계정으로 로그인하면 이 일정과 연결을 끊는다) */
+  /** 이 기기에서 로그인한 계정 (다른 계정으로 로그인하면 이 일정과 연결을 끊는다) */
   userId: string;
-  /** 마지막으로 DB에 저장된 시각 (다른 기기에서 고쳤는지 비교) */
+  /** 마지막으로 DB에 저장된 시각 (다른 기기·멤버가 고쳤는지 비교) */
   savedAt: string;
+  /** 이 일정에서 나의 권한. 없으면 주인 (예전에 저장된 일정) */
+  role?: TripRole;
+  /** 다른 사람과 함께 짜는 일정인지 (멤버가 한 명 이상) */
+  shared?: boolean;
 }
+
+/** owner: 주인 · editor: 함께 편집 · viewer: 보기만 */
+export type TripRole = "owner" | "editor" | "viewer";
 
 /** 가방 → 묶음 → 준비물 목록 */
 export interface Checklist {

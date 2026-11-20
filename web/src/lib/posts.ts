@@ -169,7 +169,7 @@ export async function publishPost(t: Trip, o: PublishOptions, existingId?: strin
   const row = { ...buildPost(t, o), covers: await pickCovers(t).catch(() => []) };
   const q = existingId
     ? (await db()).from("posts").update(row).eq("id", existingId).select("share_code").single()
-    : (await db()).from("posts").insert({ ...row, trip_id: t.cloud?.id ?? null }).select("share_code").single();
+    : (await db()).from("posts").insert({ ...row, trip_id: (t.cloud?.role ?? "owner") === "owner" ? t.cloud?.id ?? null : null }).select("share_code").single();
   const { data, error } = await q;
   if (error) throw new Error(message(error));
   return data.share_code;

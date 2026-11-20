@@ -14,7 +14,10 @@ const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
 export const authEnabled = Boolean(url && key);
 
-let client: Promise<SupabaseClient | null> | null = null;
+// 개발 서버에서 파일을 고치면 이 모듈이 다시 실행되는데, 그때 클라이언트를 새로 만들면
+// 로그인 클라이언트가 둘이 되어 서로의 로그인 잠금을 기다리다 DB 요청이 멈춘다 → 창마다 하나만 두고 다시 쓴다
+const shared = globalThis as typeof globalThis & { __thSupabase?: Promise<SupabaseClient | null> };
+let client: Promise<SupabaseClient | null> | null = shared.__thSupabase ?? null;
 /** 로그인 정보 없이 시작했다가 나중에 라이브러리를 받게 되면(게시판 등) 그때 로그인 상태 살피기를 붙인다 */
 let pendingListen: ((c: SupabaseClient | null) => void) | null = null;
 
@@ -25,6 +28,7 @@ export function getSupabase(): Promise<SupabaseClient | null> {
       ? import("@supabase/supabase-js").then(({ createClient }) =>
           createClient(url, key, { auth: { flowType: "pkce", detectSessionInUrl: true, persistSession: true } }))
       : Promise.resolve(null);
+    if (typeof window !== "undefined") shared.__thSupabase = client;
     client.then((c) => { const f = pendingListen; pendingListen = null; f?.(c); }, () => {});
   }
   return client;

@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import { DestinationView } from "@/components/destination/DestinationView";
 import { Footer, TopBar } from "@/components/layout/TopBar";
 import { getAllDestinations, getAttractions, getDestination, getPhrases } from "@/lib/destinations";
+import { og } from "@/lib/site";
 
-// 27개국 페이지를 빌드할 때 미리 만든다 (목록에 없는 주소는 404)
+// 나라 페이지를 빌드할 때 미리 만든다 (목록에 없는 주소는 404)
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: PageProps<"/destinations/[slu
     title,
     description,
     alternates: { canonical: `/destinations/${d.slug}/` },
-    openGraph: { title: `${title} | TripHelper`, description, url: `/destinations/${d.slug}/` },
+    openGraph: og({ title: `${title} | TripHelper`, description, url: `/destinations/${d.slug}/` }),
   };
 }
 

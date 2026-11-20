@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { AppProviders } from "@/components/providers/AppProviders";
-import { SITE_URL } from "@/lib/site";
+import { OG_IMAGE, og, SITE_URL } from "@/lib/site";
 import "./globals.css";
 const DESCRIPTION =
-  "TripHelper - 27개 국가 여행 정보 제공. 필수 매너, 기념품 추천, 현지 마트 추천템, 여행 필수템, 비자 정보, 필수 회화까지 한 곳에서 확인하세요. 한국어/영어 지원.";
+  "TripHelper - 29개국 여행 정보와 지도 위 일정 플래너. 필수 매너, 기념품, 현지 마트 추천템, 비자 정보, 필수 회화부터 날짜별 동선 짜기와 공유까지 한 곳에서.";
+const OG_DESCRIPTION = "29개국 여행 정보 · 지도 위 날짜별 일정 플래너 · 나라별 여행 동선 게시판";
 
 export const metadata: Metadata = {
   // 끝의 /까지 넣어야 /triphelper 같은 접두사가 상대 주소에 붙는다
@@ -17,17 +18,12 @@ export const metadata: Metadata = {
   authors: [{ name: "TripHelper" }],
   robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    url: SITE_URL,
-    siteName: "TripHelper",
-    title: "TripHelper - AI Powered Travel Concierge | 27개 국가 여행 가이드",
-    description: "27개 국가 여행 정보 제공. 필수 매너, 기념품 추천, 현지 마트 추천템, 여행 필수템, 비자 정보, 필수 회화까지 한 곳에서 확인하세요.",
-    images: [{ url: "/triphelper_image.png", width: 420, height: 180, alt: "TripHelper - 여행 준비를 위한 맞춤형 가이드" }],
-    locale: "ko_KR",
-    alternateLocale: ["en_US"],
-  },
-  twitter: { card: "summary_large_image", images: ["/triphelper_image.png"] },
+  openGraph: og({
+    url: "/",
+    title: "TripHelper · 여행 정보부터 일정·동선까지 한 곳에서",
+    description: OG_DESCRIPTION,
+  }),
+  twitter: { card: "summary_large_image", images: [OG_IMAGE.url] },
   other: { "google-adsense-account": "ca-pub-7884227538941923" },
 };
 
@@ -45,12 +41,12 @@ const jsonLd = [
     "@type": "WebApplication",
     name: "TripHelper",
     alternateName: "여행 도우미",
-    description: "27개 국가 여행 정보 제공. 필수 매너, 기념품 추천, 현지 마트 추천템, 여행 필수템, 비자 정보, 필수 회화까지 한 곳에서 확인하세요.",
+    description: DESCRIPTION,
     url: `${SITE_URL}/`,
     applicationCategory: "TravelApplication",
     operatingSystem: "Any",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    inLanguage: ["ko", "en"],
+    inLanguage: ["ko"],
   },
   {
     "@context": "https://schema.org",

@@ -3,6 +3,7 @@ import { Footer, TopBar } from "@/components/layout/TopBar";
 import { BoardList } from "@/components/board/BoardList";
 import { LoginGate } from "@/components/layout/LoginGate";
 import { getAllDestinations } from "@/lib/destinations";
+import { og } from "@/lib/site";
 import "../trip/planner.css";
 import "./board.css";
 
@@ -10,6 +11,11 @@ export const metadata: Metadata = {
   title: "여행 동선 게시판 · 나라별 여행 일정 모음",
   description: "다른 여행자들이 올린 나라별 여행 동선을 지도와 함께 보고, 마음에 드는 일정을 내 여행으로 가져와 고쳐 보세요.",
   alternates: { canonical: "/board/" },
+  openGraph: og({
+    title: "여행 동선 게시판 · TripHelper",
+    description: "다른 여행자들이 올린 나라별 여행 동선을 지도와 함께 보고, 내 일정으로 가져와 보세요.",
+    url: "/board/",
+  }),
   // 로그인해야 보는 화면이라 검색 결과에 넣지 않는다
   robots: { index: false, follow: true },
 };

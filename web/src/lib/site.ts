@@ -10,3 +10,18 @@ export const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "https://jhkr1
 export const SITE_URL = SITE_ORIGIN + BASE_PATH;
 /** public/ 폴더 파일 주소 (예: withBase("/maplibre-gl-worker.mjs")) */
 export const withBase = (path: string) => BASE_PATH + path;
+
+/**
+ * 카카오톡·메신저 링크 미리보기(og:image). 1200×630 (public/og-image.png)
+ * Next는 페이지에서 openGraph를 정하면 레이아웃의 openGraph를 통째로 바꾸므로, 페이지마다 og()로 이미지까지 넣는다.
+ * 주소는 metadataBase(SITE_URL/) 기준 상대 경로라 /triphelper가 자동으로 붙는다.
+ */
+export const OG_IMAGE = { url: "/og-image.png", width: 1200, height: 630, alt: "TripHelper - 여행 정보부터 일정·동선까지 한 곳에서" };
+
+export const og = (o: { title: string; description: string; url: string }) => ({
+  type: "website" as const,
+  siteName: "TripHelper",
+  locale: "ko_KR",
+  images: [OG_IMAGE],
+  ...o,
+});

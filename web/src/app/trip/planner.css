@@ -243,6 +243,9 @@
 .planner .day--drop{border-style:dashed}
 .planner .day--over{border-color:var(--blue);border-style:solid;background:var(--badge-bg);transform:scale(1.04)}
 .planner .day--over[aria-selected="true"]{background:var(--blue-d)}
+/* Day 탭 끌어서 날짜 순서 바꾸기: 원래 자리는 흐리게, 들고 있는 탭은 띄워서 */
+.planner .day--ghost{opacity:.35}
+.planner .day--lift{border-color:var(--blue);box-shadow:0 14px 40px #11182733;cursor:grabbing}
 .planner .drag-card{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--blue);border-radius:14px;background:var(--card);box-shadow:0 14px 40px #11182733;cursor:grabbing;font-size:.92rem;max-width:280px}
 .planner .drag-card .icon{color:var(--mute);flex:none}
 .planner .drag-card b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

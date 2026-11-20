@@ -5,7 +5,7 @@ import {
   DndContext, DragOverlay, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, pointerWithin, useDroppable, useSensor, useSensors,
   type CollisionDetection, type DragEndEvent, type DragOverEvent, type DragStartEvent,
 } from "@dnd-kit/core";
-import { SortableContext, arrayMove, rectSortingStrategy, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { SortableContext, arrayMove, horizontalListSortingStrategy, rectSortingStrategy, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { dayColor } from "@/components/trip/TripMap";
@@ -142,6 +142,10 @@ const TAB_PREFIX = "tab-";
 
 /** Day 탭 위를 먼저, 그다음 장소 카드, 마지막으로 빈 목록 영역 순으로 놓을 곳을 정한다 */
 const collision: CollisionDetection = (args) => {
+  // Day 탭을 끌 때는 탭끼리만 자리를 바꾼다
+  if (String(args.active.id).startsWith(TAB_PREFIX)) {
+    return closestCenter({ ...args, droppableContainers: args.droppableContainers.filter((c) => String(c.id).startsWith(TAB_PREFIX)) });
+  }
   const hits = pointerWithin(args);
   if (!hits.length) return closestCenter(args);
   const tab = hits.find((h) => String(h.id).startsWith(TAB_PREFIX));
@@ -151,11 +155,24 @@ const collision: CollisionDetection = (args) => {
   return closestCenter({ ...args, droppableContainers: args.droppableContainers.filter((c) => items.some((h) => h.id === c.id)) });
 };
 
-function DayTab({ i, start, selected, dragging, keyboard, onClick }: { i: number; start: string | null; selected: boolean; dragging: boolean; keyboard: boolean; onClick: () => void }) {
-  // 키보드로 옮길 때는 방향키가 Day 탭으로 튀지 않게 탭을 놓을 곳에서 뺀다
-  const { setNodeRef, isOver } = useDroppable({ id: `${TAB_PREFIX}${i}`, disabled: keyboard });
+/**
+ * Day 탭: 장소를 놓는 곳이면서, 탭 자체를 끌어 날짜 순서(그날 일정)를 바꿀 수 있다.
+ * 탭 끌기는 마우스·터치만 (키보드 Enter/Space는 그대로 탭 선택)
+ */
+function DayTab({ i, start, selected, dropping, keyboard, canMove, onClick }: {
+  i: number; start: string | null; selected: boolean; dropping: boolean; keyboard: boolean; canMove: boolean; onClick: () => void;
+}) {
+  // 키보드로 장소를 옮길 때는 방향키가 Day 탭으로 튀지 않게 탭을 놓을 곳에서 뺀다
+  const { setNodeRef, listeners, transform, transition, isDragging, isOver, active } = useSortable({
+    id: `${TAB_PREFIX}${i}`, disabled: { draggable: !canMove, droppable: keyboard },
+  });
+  const { onKeyDown: _, ...pointer } = listeners ?? {}; // eslint-disable-line @typescript-eslint/no-unused-vars
+  const placeOver = isOver && !String(active?.id ?? "").startsWith(TAB_PREFIX);
   return (
-    <button ref={setNodeRef} className={`day${dragging ? " day--drop" : ""}${isOver ? " day--over" : ""}`} role="tab" aria-selected={selected} onClick={onClick}>
+    <button ref={setNodeRef} {...pointer}
+      className={`day${dropping ? " day--drop" : ""}${placeOver ? " day--over" : ""}${isDragging ? " day--ghost" : ""}`}
+      style={{ transform: CSS.Translate.toString(transform), transition }}
+      role="tab" aria-selected={selected} onClick={onClick}>
       <b>Day {i + 1}</b>{start && <span>{dayLabel(start, i)}</span>}
     </button>
   );
@@ -417,7 +434,20 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
       : lists.basket.some((p) => p.id === id) ? "basket" : lists.day.some((p) => p.id === id) ? "day" : null;
   const dragged = drag ? [...basket, ...places].find((p) => p.id === drag.id) : undefined;
 
+  /* Day 탭 끌기: 날짜는 그대로, 그날의 장소들이 통째로 자리를 바꾼다. 숙소는 날짜(밤)에 남는다 */
+  const [tabDrag, setTabDrag] = useState<number | null>(null);
+  const tabIds = trip.days.map((_, i) => `${TAB_PREFIX}${i}`);
+
+  function moveDay(from: number, to: number) {
+    if (from === to) return;
+    const order = arrayMove(trip.days.map((_, i) => i), from, to);
+    updateTrip((t) => ({ ...t, days: t.days.map((d, i) => ({ ...d, places: t.days[order[i]].places })) }));
+    onDayChange(order.indexOf(day)); // 보고 있던 날의 일정을 따라간다
+    toast(`Day ${from + 1} 일정을 Day ${to + 1}로 옮겼습니다`);
+  }
+
   function onDragStart(e: DragStartEvent) {
+    if (String(e.active.id).startsWith(TAB_PREFIX)) { setTabDrag(Number(String(e.active.id).slice(TAB_PREFIX.length))); return; }
     setDrag({ id: String(e.active.id), basket, day: places, keyboard: e.activatorEvent instanceof KeyboardEvent });
   }
 
@@ -438,6 +468,11 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
   }
 
   function onDragEnd({ active, over }: DragEndEvent) {
+    if (tabDrag !== null) {
+      setTabDrag(null);
+      if (over && String(over.id).startsWith(TAB_PREFIX)) moveDay(tabDrag, Number(String(over.id).slice(TAB_PREFIX.length)));
+      return;
+    }
     const d = drag;
     setDrag(null);
     if (!d || !over) return;
@@ -493,12 +528,15 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
         onDragStart={onDragStart}
         onDragOver={onDragOver}
         onDragEnd={onDragEnd}
-        onDragCancel={() => setDrag(null)}
+        onDragCancel={() => { setDrag(null); setTabDrag(null); }}
       >
       <div className="days" role="tablist" aria-label="날짜">
-        {trip.days.map((_, i) => (
-          <DayTab key={i} i={i} start={trip.datesUnset ? null : trip.start} selected={i === day} dragging={Boolean(drag) && !drag?.keyboard} keyboard={Boolean(drag?.keyboard)} onClick={() => { setTimeOverride(null); onDayChange(i); }} />
-        ))}
+        <SortableContext items={tabIds} strategy={horizontalListSortingStrategy}>
+          {trip.days.map((_, i) => (
+            <DayTab key={i} i={i} start={trip.datesUnset ? null : trip.start} selected={i === day} dropping={Boolean(drag) && !drag?.keyboard} keyboard={Boolean(drag?.keyboard)}
+              canMove={trip.days.length > 1 && !drag} onClick={() => { setTimeOverride(null); onDayChange(i); }} />
+          ))}
+        </SortableContext>
         <button className="day day--add" type="button" onClick={onAddDay}>+ 날짜 추가</button>
       </div>
 
@@ -657,6 +695,11 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
       </DropZone>
 
       <DragOverlay dropAnimation={null}>
+        {tabDrag !== null && (
+          <div className="day day--lift">
+            <b>Day {tabDrag + 1}</b>{!trip.datesUnset && <span>{dayLabel(trip.start, tabDrag)}</span>}
+          </div>
+        )}
         {dragged && (
           <div className="drag-card">
             <Icon name="grip" />

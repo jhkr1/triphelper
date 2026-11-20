@@ -96,15 +96,39 @@ function jong(word: string): number {
 const eul = (w: string) => `${w}${jong(w) ? "을" : "를"}`;
 const ro = (w: string) => { const j = jong(w); return `${w}${j && j !== 8 ? "으로" : "로"}`; }; // 8 = ㄹ 받침
 
+/**
+ * 날짜별 장소 묶음이 그대로 자리만 바뀌었으면 (Day 탭 끌기) 가장 멀리 움직인 날을 돌려준다.
+ * 날짜 수가 같고, 지금의 각 날이 예전의 어느 날과 장소 구성이 똑같을 때만.
+ */
+function dayMove(base: Data, local: Data): { from: number; to: number } | null {
+  if (base.days.length !== local.days.length) return null;
+  const key = (d: Data["days"][number]) => d.places.map((p) => p.id).join(",");
+  const left = base.days.map(key);
+  const used = new Set<number>();
+  let best: { from: number; to: number } | null = null;
+  for (let to = 0; to < local.days.length; to++) {
+    const k = key(local.days[to]);
+    // 같은 자리가 맞으면 그 자리를 먼저 (빈 날끼리 엉뚱하게 짝짓지 않게)
+    const from = left[to] === k && !used.has(to) ? to : left.findIndex((x, j) => x === k && !used.has(j));
+    if (from < 0) return null;
+    used.add(from);
+    if (k !== "" && from !== to && (!best || Math.abs(from - to) > Math.abs(best.from - best.to))) best = { from, to };
+  }
+  return best;
+}
+
 /** 활동 기록에 남길 문장들: base → local 사이에 "내가" 바꾼 것 (많으면 앞의 몇 개만) */
 export function describeChanges(base: Data, local: Data, limit = 5): string[] {
   const b = spots(base), l = spots(local);
   const lines: string[] = [];
   const where = (s: Spot) => (s.day < 0 ? "여행지 바구니" : `${s.day + 1}일차`);
+  // Day 탭을 끌어 날짜 순서를 바꿨으면 장소마다 "옮겼어요" 대신 한 줄로
+  const moved = dayMove(base, local);
+  if (moved) lines.push(`${moved.from + 1}일차 일정을 ${ro(`${moved.to + 1}일차`)} 옮겼어요`);
   for (const [id, ls] of l) {
     const bs = b.get(id);
     if (!bs) lines.push(`${where(ls)}에 ${eul(ls.place.name)} 추가했어요`);
-    else if (ls.day !== bs.day) lines.push(`${eul(ls.place.name)} ${ro(where(ls))} 옮겼어요`);
+    else if (ls.day !== bs.day) { if (!moved) lines.push(`${eul(ls.place.name)} ${ro(where(ls))} 옮겼어요`); }
     else if ((ls.place.memo ?? "") !== (bs.place.memo ?? "")) lines.push(`${ls.place.name} 메모를 고쳤어요`);
     else if (ls.place.time !== bs.place.time) lines.push(`${ls.place.name} 시간을 ${ls.place.time}로 바꿨어요`);
   }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Icon } from "@/components/ui/Icon";
+import { UserAvatar } from "@/components/ui/UserAvatar";
 import { Comments } from "@/components/board/Comments";
 import { TripMap, dayColor } from "@/components/trip/TripMap";
 import { Leg, PlacePhoto } from "@/components/trip/Itinerary";
@@ -150,10 +151,7 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
         </p>
         {post.tags.length > 0 && <p className="post__tags">{post.tags.map((t) => <span key={t}>#{t}</span>)}</p>}
         <p className="post__by">
-          {post.avatar
-            // eslint-disable-next-line @next/next/no-img-element -- 소셜 계정 프로필 사진
-            ? <img src={post.avatar} alt="" referrerPolicy="no-referrer" />
-            : <span aria-hidden="true">{post.nickname.slice(0, 1)}</span>}
+          <UserAvatar id={post.userId} src={post.avatar} size={28} />
           <b>{post.nickname}</b>
         </p>
         {post.summary && <p className="post__summary">{post.summary}</p>}

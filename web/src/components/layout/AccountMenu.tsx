@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useApp } from "@/components/providers/AppProviders";
 import { Icon } from "@/components/ui/Icon";
+import { UserAvatar } from "@/components/ui/UserAvatar";
 import { authEnabled, authStore, enabledProviders, PROVIDERS, signIn, signOut, type ProviderId } from "@/lib/supabase";
 
 /** 소셜 로그인 버튼 모양 (각 회사 안내에 맞춘 색) */
@@ -63,10 +64,7 @@ export function AccountMenu() {
         onClick={() => { setError(""); setOpen((o) => !o); }}
       >
         {me ? (
-          me.avatar
-            // eslint-disable-next-line @next/next/no-img-element -- 소셜 계정 프로필 사진 (외부 주소)
-            ? <img className="acct__avatar" src={me.avatar} alt="" referrerPolicy="no-referrer" />
-            : <span className="acct__avatar acct__avatar--text" aria-hidden="true">{me.nickname.slice(0, 1)}</span>
+          <UserAvatar id={me.id} src={me.avatar} className="acct__avatar" />
         ) : (
           <Icon name="menu" />
         )}
@@ -79,10 +77,7 @@ export function AccountMenu() {
           {/* 계정 */}
           {me ? (
             <p className="acct__hello">
-              {me.avatar
-                // eslint-disable-next-line @next/next/no-img-element -- 소셜 계정 프로필 사진
-                ? <img className="acct__avatar" src={me.avatar} alt="" referrerPolicy="no-referrer" />
-                : <span className="acct__avatar acct__avatar--text" aria-hidden="true">{me.nickname.slice(0, 1)}</span>}
+              <UserAvatar id={me.id} src={me.avatar} className="acct__avatar" />
               <span><b>{me.nickname}</b>님</span>
             </p>
           ) : authEnabled && providers.length > 0 ? (

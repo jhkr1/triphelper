@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
+import { UserAvatar } from "@/components/ui/UserAvatar";
 import { PostThumb } from "@/components/board/RouteThumb";
 import { flagUrl } from "@/lib/geo";
 import { authEnabled } from "@/lib/supabase";
@@ -126,10 +127,7 @@ export function BoardList({ countries }: { countries: BoardCountry[] }) {
                       </span>
                       {p.tags.length > 0 && <span className="pcard__tags">{p.tags.map((t) => <i key={t}>#{t}</i>)}</span>}
                       <span className="pcard__by">
-                        {p.avatar
-                          // eslint-disable-next-line @next/next/no-img-element -- 소셜 계정 프로필 사진
-                          ? <img src={p.avatar} alt="" referrerPolicy="no-referrer" />
-                          : <span aria-hidden="true">{p.nickname.slice(0, 1)}</span>}
+                        <UserAvatar id={p.userId} src={p.avatar} size={20} />
                         {p.nickname} · {timeAgo(p.publishedAt)}
                         {p.commentCount > 0 && <em className="pcard__cmt" aria-label={`댓글 ${p.commentCount}개`}><Icon name="message" />{p.commentCount}</em>}
                       </span>

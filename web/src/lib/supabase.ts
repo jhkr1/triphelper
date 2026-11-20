@@ -40,8 +40,8 @@ export async function signIn(provider: ProviderId) {
     provider: (provider === "naver" ? "custom:naver" : provider) as "kakao",
     options: {
       redirectTo,
-      // 카카오 이메일은 비즈 앱만 받을 수 있어 닉네임·사진만 요청 (Supabase에서 'Allow users without an email' 켜기)
-      ...(provider === "kakao" ? { scopes: "profile_nickname profile_image" } : {}),
+      // 카카오에는 닉네임만 요청 (이메일은 비즈 앱 전용, 프로필 사진은 개인정보라 받지 않음)
+      ...(provider === "kakao" ? { scopes: "profile_nickname" } : {}),
     },
   });
   if (error) throw error;
@@ -73,11 +73,10 @@ function setSnapshot(next: AuthSnapshot) {
   listeners.forEach((l) => l());
 }
 
-/** 닉네임은 DB 프로필(가입할 때 정해진 무작위 "~한 여행자")에서, 사진이 없으면 소셜 계정 사진 */
+/** 닉네임·사진은 DB 프로필에서만 (소셜 계정 사진은 쓰지 않음, 없으면 기본 그림) */
 async function loadMe(u: User) {
   const { data } = await supabase!.from("profiles").select("nickname, avatar_url").eq("id", u.id).maybeSingle();
-  const m = u.user_metadata ?? {};
-  const avatar = data?.avatar_url ?? [m.avatar_url, m.picture].find((x) => typeof x === "string" && x);
+  const avatar = data?.avatar_url;
   setSnapshot({ status: "in", me: { id: u.id, nickname: data?.nickname ?? "여행자", ...(avatar ? { avatar } : {}) } });
 }
 

@@ -51,6 +51,7 @@ export interface PublishOptions {
 
 export interface PostSummary {
   shareCode: string;
+  userId: string;
   title: string;
   country: string;
   city: string;
@@ -184,7 +185,7 @@ export async function deletePost(id: string) {
 }
 
 type Row = {
-  share_code: string; title: string; country: string; city: string; nights: number; month: number | null; tags: string[];
+  share_code: string; user_id: string; title: string; country: string; city: string; nights: number; month: number | null; tags: string[];
   place_count: number; preview: [number, number][][]; covers: string[] | null; published_at: string; comment_count: number; profiles: { nickname: string; avatar_url: string | null } | null;
 };
 
@@ -202,7 +203,7 @@ export const PAGE_SIZE = 18;
 export async function listPosts(opts: { country?: string; nights?: NightFilter; before?: string }): Promise<PostSummary[]> {
   const f = NIGHT_FILTERS.find((x) => x.id === (opts.nights ?? "all"))!;
   let q = supabase!.from("posts")
-    .select("share_code, title, country, city, nights, month, tags, place_count, preview, covers, published_at, comment_count, profiles(nickname, avatar_url)")
+    .select("share_code, user_id, title, country, city, nights, month, tags, place_count, preview, covers, published_at, comment_count, profiles(nickname, avatar_url)")
     .eq("visibility", "public").gte("nights", f.min).lte("nights", f.max)
     .order("published_at", { ascending: false }).limit(PAGE_SIZE);
   if (opts.country) q = q.eq("country", opts.country);
@@ -210,7 +211,7 @@ export async function listPosts(opts: { country?: string; nights?: NightFilter; 
   const { data, error } = await q;
   if (error) throw error;
   return (data as unknown as Row[]).map((r) => ({
-    shareCode: r.share_code, title: r.title, country: r.country, city: r.city, nights: r.nights, month: r.month, tags: r.tags,
+    shareCode: r.share_code, userId: r.user_id, title: r.title, country: r.country, city: r.city, nights: r.nights, month: r.month, tags: r.tags,
     placeCount: r.place_count, preview: r.preview ?? [], covers: r.covers ?? [], publishedAt: r.published_at, commentCount: r.comment_count ?? 0,
     nickname: r.profiles?.nickname ?? "여행자", ...(r.profiles?.avatar_url ? { avatar: r.profiles.avatar_url } : {}),
   }));

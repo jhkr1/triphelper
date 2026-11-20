@@ -45,8 +45,7 @@
 .planner .pcard__tags{display:flex;flex-wrap:wrap;gap:4px}
 .planner .pcard__tags i{font-style:normal;font-size:.74rem;color:var(--blue);background:var(--badge-bg);border-radius:99px;padding:2px 8px}
 .planner .pcard__by{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:.78rem;color:var(--mute)}
-.planner .pcard__by img,.planner .pcard__by span{width:20px;height:20px;border-radius:50%;object-fit:cover;flex:none}
-.planner .pcard__by span{display:grid;place-items:center;background:var(--blue);color:#fff;font-size:.66rem;font-weight:700}
+.planner .pcard__by .uav{width:20px;height:20px}
 
 /* 글 보기 */
 .planner .post__back{display:inline-block;margin-bottom:14px;color:var(--mute);text-decoration:none;font-size:.88rem}
@@ -58,8 +57,7 @@
 .planner .post__tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
 .planner .post__tags span{font-size:.8rem;color:var(--blue);background:var(--badge-bg);border-radius:99px;padding:3px 10px}
 .planner .post__by{display:flex;align-items:center;gap:8px;margin:12px 0 0;font-size:.9rem}
-.planner .post__by img,.planner .post__by span{width:28px;height:28px;border-radius:50%;object-fit:cover}
-.planner .post__by span{display:grid;place-items:center;background:var(--blue);color:#fff;font-weight:700;font-size:.8rem}
+.planner .post__by .uav{width:28px;height:28px}
 .planner .post__summary{margin:14px 0 0;padding:14px 16px;border-radius:14px;background:var(--soft);white-space:pre-wrap;line-height:1.7;color:var(--text2)}
 .planner .post__acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .planner .post__visedit select{height:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:9px 12px;font:inherit;font-weight:600;font-size:.88rem}
@@ -129,8 +127,7 @@
 .planner .cmt__list{list-style:none;margin:0;padding:0;display:grid}
 .planner .cmt__item{display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px;padding:12px 0;border-top:1px solid var(--line)}
 .planner .cmt__item:first-child{border-top:0;padding-top:0}
-.planner .cmt__av{width:32px;height:32px;border-radius:50%;object-fit:cover}
-.planner .cmt__av--text{display:grid;place-items:center;background:var(--blue);color:#fff;font-weight:700;font-size:.85rem}
+.planner .cmt__av{width:32px;height:32px}
 .planner .cmt__main{display:grid;gap:4px;min-width:0}
 .planner .cmt__hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:0;font-size:.86rem}
 .planner .cmt__hd time,.planner .cmt__hd small{color:var(--mute);font-size:.8rem}

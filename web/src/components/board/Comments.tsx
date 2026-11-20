@@ -1,16 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent, type KeyboardEvent } from "react";
+import { UserAvatar } from "@/components/ui/UserAvatar";
 import { authEnabled, authStore, enabledProviders, PROVIDERS, signIn } from "@/lib/supabase";
 import { addComment, COMMENT_MAX, deleteComment, editComment, listComments, timeAgo, type Comment, type Post } from "@/lib/posts";
 
 type State = { s: "loading" } | { s: "error" } | { s: "done"; items: Comment[] };
 
-function Avatar({ c }: { c: { nickname: string; avatar?: string } }) {
-  return c.avatar
-    // eslint-disable-next-line @next/next/no-img-element -- 소셜 계정 프로필 사진
-    ? <img className="cmt__av" src={c.avatar} alt="" referrerPolicy="no-referrer" />
-    : <span className="cmt__av cmt__av--text" aria-hidden="true">{c.nickname.slice(0, 1)}</span>;
+function Avatar({ c }: { c: { userId: string; avatar?: string } }) {
+  return <UserAvatar id={c.userId} src={c.avatar} size={32} className="cmt__av" />;
 }
 
 /** 글자 입력칸 (Ctrl/⌘+Enter로 보내기). 글자 수가 많아지면 남은 수를 보여 준다 */
@@ -187,7 +185,7 @@ export function Comments({ post }: { post: Post }) {
 
       {me ? (
         <div className="cmt__write">
-          <Avatar c={me} />
+          <Avatar c={{ userId: me.id, avatar: me.avatar }} />
           <CommentBox value={draft} onChange={setDraft} onSubmit={send} busy={busy} label="댓글 쓰기" submitText="등록" />
         </div>
       ) : authEnabled && auth.status !== "loading" && provider ? (

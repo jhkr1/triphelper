@@ -11,7 +11,8 @@ import { Icon, type IconName } from "@/components/ui/Icon";
 import { dayColor } from "@/components/trip/TripMap";
 import { dayLabel, dateParts, forecastGap, newId, sortByTime, addDays, addHours, nextSlot, insertAt, setStay } from "@/lib/trip-model";
 import { TimePicker } from "@/components/trip/TimePicker";
-import { fetchNearby, getPhoto, isWikimediaImage, isConfident, searchPlace, type NearbyPlace, type Photo, type PlaceCandidate } from "@/lib/places";
+import { fetchNearby, isConfident, searchPlace, type NearbyPlace, type PlaceCandidate } from "@/lib/places";
+import { isWikimediaImage, knownPhoto, placePhoto, type Photo } from "@/lib/photos";
 import { directionsUrl, distanceMeters, formatDistance, walkingMinutes, WALKABLE_METERS } from "@/lib/geo";
 import { weatherIcon, type DailyForecast } from "@/lib/weather";
 import type { Place, Trip } from "@/types/trip";
@@ -38,32 +39,26 @@ interface Props {
 /* ───────── 사진 ───────── */
 
 export function PlacePhoto({ place }: { place: Place }) {
+  const key = `${place.wiki ?? ""}|${place.name}|${place.location?.lat ?? ""},${place.location?.lng ?? ""}|${place.image ?? ""}`;
   const [result, setResult] = useState<{ key: string; photo: Photo | null } | null>(null);
-  const key = place.wiki ?? "";
   useEffect(() => {
-    if (!key) return;
     let alive = true;
-    getPhoto(key).then((photo) => { if (alive) setResult({ key, photo }); });
+    placePhoto(place).then((photo) => { if (alive) setResult({ key, photo }); });
     return () => { alive = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- key가 장소의 사진 관련 값을 모두 담는다
   }, [key]);
 
-  if (isWikimediaImage(place.image) && !place.wiki) {
-    return (
-      <figure className="stop__ph">
-        {/* eslint-disable-next-line @next/next/no-img-element -- 위키미디어 외부 이미지 */}
-        <img src={place.image} alt="" loading="lazy" />
-        <figcaption>사진: 위키백과</figcaption>
-      </figure>
-    );
-  }
-  if (!key) return null;
-  if (result?.key !== key) return <div className="stop__ph stop__ph--loading" />;
-  if (!result.photo || !isWikimediaImage(result.photo.src)) return null;
+  // 이미 찾아 둔 사진은 바로 보여 준다 (불러오는 회색 칸 깜빡임 없이)
+  const photo = result?.key === key ? result.photo : knownPhoto(place);
+  if (photo === undefined) return place.location || place.wiki ? <div className="stop__ph stop__ph--loading" /> : null;
+  if (!photo || !isWikimediaImage(photo.src)) return null;
   return (
     <figure className="stop__ph">
       {/* eslint-disable-next-line @next/next/no-img-element -- 위키미디어 외부 이미지 */}
-      <img src={result.photo.src} alt={place.name} loading="lazy" />
-      <figcaption>사진: <a href={result.photo.page} target="_blank" rel="noopener noreferrer">위키백과</a></figcaption>
+      <img src={photo.src} alt={place.name} loading="lazy" />
+      <figcaption>
+        {photo.page ? <a href={photo.page} target="_blank" rel="noopener noreferrer">{photo.credit}</a> : photo.credit}
+      </figcaption>
     </figure>
   );
 }
@@ -255,8 +250,8 @@ function MemoEditor({ place, onSave, onClose }: { place: Place; onSave: (memo: s
 type StayChoices = { query: string; list: PlaceCandidate[] };
 
 /** 그날 밤 숙소 칸: 비었으면 검색, 있으면 이름·위치 지정·바꾸기·빼기 */
-function StayRow({ stay, dayNo, countryCode, center, onSet, onRemove, onPickRequest, toast }: {
-  stay?: Place; dayNo: number; countryCode: string; center: Trip["center"];
+function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onRemove, onPickRequest, toast }: {
+  stay?: Place; dayNo: number; countryCode: string; center: Trip["center"]; nearCity: boolean;
   onSet: (stay: Omit<Place, "id">) => void; onRemove: () => void; onPickRequest: (id: string) => void; toast: (msg: string) => void;
 }) {
   const [open, setOpen] = useState(false);
@@ -274,7 +269,7 @@ function StayRow({ stay, dayNo, countryCode, center, onSet, onRemove, onPickRequ
     const n = q.trim();
     if (!n) return;
     setBusy(true);
-    const results = await searchPlace(n, countryCode, center, "stay");
+    const results = await searchPlace(n, countryCode, center, "stay", nearCity);
     setBusy(false);
     if (isConfident(results)) {
       pick(results[0], n);
@@ -391,7 +386,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
     const n = name.trim();
     if (!n) return;
     setBusy(true);
-    const results = await searchPlace(n, countryCode, trip.center);
+    const results = await searchPlace(n, countryCode, trip.center, "place", Boolean(trip.city));
     setBusy(false);
     setName("");
     if (isConfident(results)) {
@@ -684,6 +679,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
             dayNo={day + 1}
             countryCode={countryCode}
             center={trip.center}
+            nearCity={Boolean(trip.city)}
             onSet={putStay}
             onRemove={() => updateTrip((t) => ({ ...t, days: t.days.map((d, i) => (i === day ? { places: d.places } : d)) }))}
             onPickRequest={onPickRequest}

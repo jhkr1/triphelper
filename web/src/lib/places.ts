@@ -40,7 +40,7 @@ function categoryOf(r: Pick<NominatimResult, "category" | "type">): PlaceCategor
   if (/^shop\/|mall|department_store|marketplace/.test(k)) return "쇼핑";
   if (/hotel|hostel|guest_house|apartment|motel|chalet/.test(k)) return "숙소";
   if (/aeroway|aerodrome/.test(k)) return "공항";
-  if (/railway|station|bus_station/.test(k)) return "교통";
+  if (/railway|station|bus_station|ferry_terminal|pier/.test(k)) return "교통";
   if (/tourism|historic|museum|attraction|viewpoint|park|place_of_worship|leisure|place\/(locality|square|quarter|neighbourhood)/.test(k)) return "명소";
   return "";
 }
@@ -51,7 +51,11 @@ async function searchMap(query: string, countryCode: string, center: LatLng): Pr
   const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&accept-language=ko&extratags=1&countrycodes=${countryCode}&viewbox=${viewbox}&q=${encodeURIComponent(query)}`;
   const r = await fetch(url, { headers: { Accept: "application/json" } });
   if (!r.ok) throw new Error(String(r.status));
-  const list = (await r.json()) as NominatimResult[];
+  const raw = (await r.json()) as NominatimResult[];
+  // "お台場海浜公園"을 찾았는데 같은 이름의 역이 먼저 나오는 경우: 역을 찾는 게 아니면 역·정류장은 뒤로
+  const wantsStation = /(駅|역|station)\s*$/i.test(query.trim());
+  const isStop = (x: NominatimResult) => x.category === "railway" || x.type === "bus_stop" || x.type === "station";
+  const list = wantsStation ? raw : [...raw.filter((x) => !isStop(x)), ...raw.filter(isStop)];
   return list.map((x) => {
     const category = categoryOf(x);
     // 사진: 지도 데이터에 연결된 위키백과 문서(예: "ja:道頓堀") → 없으면 입력한 이름으로 한국어 위키백과
@@ -114,9 +118,9 @@ interface PhotonFeature {
   };
 }
 
-async function searchPhoton(query: string, countryCode: string, center: LatLng, stay: boolean): Promise<PlaceCandidate[]> {
+async function searchPhoton(query: string, countryCode: string, center: LatLng, stay: boolean, tags: string[] = []): Promise<PlaceCandidate[]> {
   const params = new URLSearchParams({ q: query, limit: "8", lat: String(center.lat), lon: String(center.lng) });
-  if (stay) STAY_TAGS.forEach((t) => params.append("osm_tag", t));
+  (stay ? STAY_TAGS : tags).forEach((t) => params.append("osm_tag", t));
   const r = await fetch(`https://photon.komoot.io/api/?${params}`);
   if (!r.ok) throw new Error(String(r.status));
   const { features } = (await r.json()) as { features: PhotonFeature[] };
@@ -151,6 +155,17 @@ const STAY_WORDS: [string, string][] = Object.entries({
   웨스틴: "Westin", 리츠칼튼: "Ritz-Carlton", 포시즌스: "Four Seasons", 페닌슐라: "Peninsula", 만다린오리엔탈: "Mandarin Oriental", 샹그릴라: "Shangri-La",
   베스트웨스턴: "Best Western", 라마다: "Ramada", 롯데: "Lotte", 신라: "Shilla", 나인트리: "Nine Tree", 앰배서더: "Ambassador", 시티: "City", 그랜드: "Grand",
 }).sort((a, b) => b[0].length - a[0].length);
+
+/** 장소 종류 말 (단어 끝에 붙은 것만). 빈 값은 지운다 */
+const PLACE_WORDS: [string, string][] = Object.entries({
+  상점가: "", 상가: "", 거리: "", 골목: "", 선착장: "", 승선장: "", 나루터: "", 수상버스: "water bus", 유람선: "cruise", 시장: "market", 공원: "park", 신사: "shrine", 신궁: "shrine", 사원: "temple", 타워: "tower", 박물관: "museum", 미술관: "museum",
+}).sort((a, b) => b[0].length - a[0].length);
+
+/** 검색어에 이런 말이 있으면 그 종류의 장소만 찾는다 ("아사쿠사 수상버스 선착장" → 아사쿠사의 여객선 터미널) */
+const KIND_TAGS: [RegExp, string[]][] = [
+  [/선착장|승선장|나루터|수상\s*버스|유람선|페리/, ["amenity:ferry_terminal", "man_made:pier"]],
+];
+export const kindTags = (query: string) => KIND_TAGS.find(([re]) => re.test(query))?.[1] ?? [];
 
 // 한글 로마자 표기 (자모 → 소리)
 const INITIAL = ["g", "kk", "n", "d", "tt", "r", "m", "b", "pp", "s", "ss", "", "j", "jj", "ch", "k", "t", "p", "h"];
@@ -210,6 +225,8 @@ async function wikiEnglish(words: string[]): Promise<Record<string, string>> {
 export async function toLatin(query: string, countryCode: string): Promise<string | null> {
   if (!HANGUL.test(query)) return null;
   let s = query;
+  // 장소 종류를 뜻하는 일반 단어는 지도 이름과 잘 안 맞아 정리한다 ("나카미세 상점가" → "nakamise")
+  for (const [ko, en] of PLACE_WORDS) s = s.replace(new RegExp(`${[...ko].join("\\s*")}(?=\\s|$)`, "g"), ` ${en} `);
   for (const [ko, en] of STAY_WORDS) s = s.replace(new RegExp([...ko].join("\\s*"), "g"), ` ${en} `);
   const rest = [...new Set(s.match(/[가-힣]+/g) ?? [])];
   let dict: Record<string, string> = {};
@@ -226,14 +243,23 @@ function mergeCandidates(a: PlaceCandidate[], b: PlaceCandidate[]): PlaceCandida
   return out;
 }
 
+/** 도시를 정한 일정에서 이보다 먼 결과는 "이곳이 맞나요?" 확인을 거친다 (같은 이름의 다른 지역 방지) */
+const FAR_METERS = 50_000;
+
 /**
- * 장소 찾기. 관광지·식당: 지도 검색 → Photon → 위키백과
- * 숙소(stay): 지도 검색과 Photon(숙소만)을 함께 → 없고 한국어로 썼으면 영문으로 바꿔 다시 (이때는 맞는지 사용자 확인)
+ * 장소 찾기. 관광지·식당: 지도 검색 → Photon → 영문으로 바꿔 Photon → 위키백과
+ * 숙소(stay): 지도 검색과 Photon(숙소만)을 함께 → 없으면 영문으로 바꿔 다시
+ * nearCity: 도시를 정한 일정이면 true. 결과가 모두 도시에서 멀면 다른 방법으로도 찾아 가까운 곳을 앞에 둔다
+ *   (예: "나카미세 상점가" → 한국어 이름이 붙은 곳은 시즈오카 누마즈뿐. 영문 "nakamise"로 찾으면 아사쿠사)
  */
-export async function searchPlace(query: string, countryCode: string, center: LatLng, kind: "place" | "stay" = "place"): Promise<PlaceCandidate[]> {
+export async function searchPlace(
+  query: string, countryCode: string, center: LatLng, kind: "place" | "stay" = "place", nearCity = false,
+): Promise<PlaceCandidate[]> {
   const stay = kind === "stay";
   const nom = (q: string) => searchMap(q, countryCode, center).catch(() => [] as PlaceCandidate[]);
   const photon = (q: string) => searchPhoton(q, countryCode, center, stay).catch(() => [] as PlaceCandidate[]);
+  const far = (c: PlaceCandidate) => nearCity && distanceMeters(center, c.location) > FAR_METERS;
+  const noneNear = (list: PlaceCandidate[]) => !list.some((x) => !far(x));
 
   let results: PlaceCandidate[];
   if (stay) {
@@ -241,15 +267,23 @@ export async function searchPlace(query: string, countryCode: string, center: La
     results = mergeCandidates(a.filter((x) => x.category === "숙소"), b);
   } else {
     results = await nom(query);
-    if (!results.length) results = await photon(query);
+    if (noneNear(results)) results = mergeCandidates(results, await photon(query));
   }
-  if (!results.length) {
+  if (noneNear(results)) {
     const latin = await toLatin(query, countryCode).catch(() => null);
-    if (latin) results = (await photon(latin)).map((x) => ({ ...x, needsConfirm: true }));
+    if (latin) {
+      // 종류가 분명하면(선착장 등) 그 종류만 이름 앞부분으로 먼저 찾는다
+      const tags = stay ? [] : kindTags(query);
+      const typed = tags.length ? await searchPhoton(latin, countryCode, center, false, tags).catch(() => []) : [];
+      const more = typed.length ? typed : await photon(latin);
+      results = mergeCandidates(results, more.map((x) => ({ ...x, needsConfirm: true })));
+    }
   }
   if (!results.length && !stay) {
     try { results = await searchWikipedia(query); } catch { /* 위치 없이 추가 */ }
   }
+  // 도시 가까운 곳 먼저, 먼 곳은 확인을 거친다
+  results = [...results.filter((x) => !far(x)), ...results.filter(far).map((x) => ({ ...x, needsConfirm: true }))];
   return results.slice(0, 5);
 }
 
@@ -269,6 +303,21 @@ export interface CityResult {
   approxName?: string;
 }
 
+/** 위키데이터 항목의 좌표(P625)와 나라 코드(P17 → P297, 소문자) */
+async function wikidataPlace(qid: string): Promise<{ center?: LatLng; country?: string }> {
+  type Claims = Record<string, { mainsnak: { datavalue?: { value: unknown } } }[]>;
+  const get = (ids: string) => fetch(`https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&origin=*&props=claims&ids=${ids}`)
+    .then((r) => r.json() as Promise<{ entities?: Record<string, { claims?: Claims }> }>);
+  const claims = (await get(qid)).entities?.[qid]?.claims ?? {};
+  const coord = claims.P625?.[0]?.mainsnak.datavalue?.value as { latitude: number; longitude: number } | undefined;
+  const countryId = (claims.P17?.[0]?.mainsnak.datavalue?.value as { id?: string } | undefined)?.id;
+  const iso = countryId ? (await get(countryId)).entities?.[countryId]?.claims?.P297?.[0]?.mainsnak.datavalue?.value : undefined;
+  return {
+    ...(coord ? { center: { lat: coord.latitude, lng: coord.longitude } } : {}),
+    ...(typeof iso === "string" ? { country: iso.toLowerCase() } : {}),
+  };
+}
+
 /** 그 나라 안의 실제 도시인지 확인하고 중심 좌표를 받는다. 정확한 이름 → 위키백과(○○, ○○시) → 가장 비슷한 결과 순 */
 export async function findCity(query: string, countryCode: string): Promise<CityResult | null> {
   const nom = await fetch(
@@ -279,16 +328,20 @@ export async function findCity(query: string, countryCode: string): Promise<City
   const exact = places.find((r) => [f, `${f}시`, `${f}부`, `${f}도`, `${f}광역시`, `${f}특별시`].includes(flat(r.name ?? "")));
   if (exact) return { name: query, center: { lat: Number(exact.lat), lng: Number(exact.lon) } };
 
-  // "오사카"는 좌표 없는 문서라 "오사카시"도 함께 확인
+  // 위키백과 문서 → 위키데이터(좌표 · 나라). 지도 검색이 잠시 막혀도(요청 제한) 찾을 수 있다.
+  // "오사카"는 좌표 없는 문서라 "오사카시"도 함께, "도쿄"처럼 위키백과 좌표가 없으면 위키데이터 좌표로
   const wk = await fetch(
-    `https://ko.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=coordinates&titles=${encodeURIComponent(query)}|${encodeURIComponent(`${query}시`)}`,
-  ).then((r) => r.json() as Promise<{ query?: { pages?: Record<string, { coordinates?: { lat: number; lon: number }[] }> } }>).catch(() => null);
-  const page = Object.values(wk?.query?.pages ?? {}).find((p) => p.coordinates?.length);
-  if (page?.coordinates) {
-    const { lat, lon } = page.coordinates[0];
-    const rv = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=3&lat=${lat}&lon=${lon}`)
-      .then((r) => r.json() as Promise<{ address?: { country_code?: string } }>).catch(() => null);
-    if (rv?.address?.country_code === countryCode) return { name: query, center: { lat, lng: lon } };
+    `https://ko.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=coordinates|pageprops&ppprop=wikibase_item&titles=${encodeURIComponent(query)}|${encodeURIComponent(`${query}시`)}`,
+  ).then((r) => r.json() as Promise<{ query?: { pages?: Record<string, { title: string; coordinates?: { lat: number; lon: number }[]; pageprops?: { wikibase_item?: string } }> } }>).catch(() => null);
+  const pages = Object.values(wk?.query?.pages ?? {}).filter((p) => p.pageprops?.wikibase_item);
+  // 입력한 이름 그대로의 문서를 먼저
+  pages.sort((x, y) => Number(flat(y.title) === f) - Number(flat(x.title) === f));
+  for (const p of pages) {
+    const wd = await wikidataPlace(p.pageprops!.wikibase_item!).catch(() => null);
+    if (!wd || wd.country !== countryCode) continue;
+    const c = p.coordinates?.[0];
+    const center = c ? { lat: c.lat, lng: c.lon } : wd.center;
+    if (center) return { name: query, center };
   }
   const near = places[0];
   if (near) return { name: near.name ?? query, center: { lat: Number(near.lat), lng: Number(near.lon) }, approxName: near.name };
@@ -355,43 +408,5 @@ export async function fetchNearby(from: LatLng, exclude: Set<string>): Promise<N
     .map((x) => ({ name: x.name, wiki: x.wiki, image: x.image, location: x.location, meters: x.meters, kind: x.kind }));
 }
 
-/* ───────── 사진 ───────── */
-
-export interface Photo {
-  src: string;
-  page: string;
-}
-
-const PHOTO_KEY = "th-photos";
-const photoCache = new Map<string, Promise<Photo | null>>();
-
-export function isWikimediaImage(src: unknown): src is string {
-  return typeof src === "string" && /^https:\/\/(upload|thumb)\.wikimedia\.org\/[^\s"'<>\\]+$/u.test(src);
-}
-
-/** "도쿄 타워"는 한국어 위키백과에서, "ja:道頓堀"처럼 언어가 붙으면 그 언어 위키백과에서 대표 사진을 찾는다. 결과는 브라우저에 저장 */
-export function getPhoto(title: string): Promise<Photo | null> {
-  if (!photoCache.has(title)) {
-    let saved: Record<string, Photo | null> = {};
-    try { saved = JSON.parse(localStorage.getItem(PHOTO_KEY) || "{}"); } catch { /* ignore */ }
-    if (title in saved) {
-      photoCache.set(title, Promise.resolve(saved[title]));
-    } else {
-      const [, lang = "ko", name = title] = title.match(/^([a-z]{2,3}):(.+)$/) ?? [];
-      const request = fetch(summaryUrl(lang, name))
-        .then((r) => (r.ok ? (r.json() as Promise<WikiSummary>) : null))
-        .then((d) => {
-          const photo = d?.thumbnail?.source ? { src: d.thumbnail.source, page: d.content_urls?.desktop?.page ?? "" } : null;
-          try {
-            const all = JSON.parse(localStorage.getItem(PHOTO_KEY) || "{}");
-            all[title] = photo;
-            localStorage.setItem(PHOTO_KEY, JSON.stringify(all));
-          } catch { /* ignore */ }
-          return photo;
-        })
-        .catch(() => { photoCache.delete(title); return null; });
-      photoCache.set(title, request);
-    }
-  }
-  return photoCache.get(title)!;
-}
+/* 사진은 lib/photos.ts (placePhoto) */
+export { isWikimediaImage } from "@/lib/photos";

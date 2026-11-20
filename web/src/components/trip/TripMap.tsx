@@ -6,7 +6,7 @@ import type { GeoJSONSource, LngLatBounds as LngLatBoundsType, MapLibreMap, Mark
 import type { LatLng } from "@/types/destination";
 import type { Place, TripDay } from "@/types/trip";
 import { toLngLatTuple } from "@/lib/geo";
-import { getPhoto, isWikimediaImage } from "@/lib/places";
+import { isWikimediaImage, placePhoto } from "@/lib/photos";
 
 export const DAY_COLORS = ["#2563eb", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#0ea5e9"];
 export const dayColor = (i: number) => DAY_COLORS[i % DAY_COLORS.length];
@@ -142,10 +142,9 @@ export function TripMap({ days, mapDay, onMapDayChange, center, onPick }: Props)
         el.title = p.name;
         const info = `<b>${di + 1}일차 · ${n}. ${esc(p.name)}</b><br>${esc(p.time)}${p.duration ? ` · ${esc(p.duration)}` : ""}`;
         const popup = new lib.Popup({ offset: 16 }).setHTML(`<div class="pop">${info}</div>`);
-        const photoKey = p.wiki;
-        if (photoKey || p.image) {
+        if (p.wiki || p.image || p.location) {
           popup.on("open", async () => {
-            const src = p.image ?? (photoKey ? (await getPhoto(photoKey))?.src : undefined);
+            const src = (await placePhoto(p))?.src;
             if (isWikimediaImage(src)) popup.setHTML(`<div class="pop"><img src="${esc(src)}" alt="">${info}</div>`);
           });
         }

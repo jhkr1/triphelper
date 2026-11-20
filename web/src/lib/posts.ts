@@ -1,4 +1,4 @@
-import { getPhoto, isWikimediaImage } from "@/lib/places";
+import { isWikimediaImage, placePhoto } from "@/lib/photos";
 import { BASE_PATH } from "@/lib/site";
 import { db } from "@/lib/supabase";
 import { checklistFor, createTrip, dateParts, newId, nightsBetween, placeholderStart, addDays, type PlannerCountry } from "@/lib/trip-model";
@@ -157,8 +157,10 @@ export async function findMyPostForTrip(tripId: string): Promise<MyPostRef | nul
 
 /** 카드 대표 사진: 동선 순서대로 사진이 있는 장소에서 최대 3장 (숙소 제외) */
 export async function pickCovers(t: Trip): Promise<string[]> {
-  const places = t.days.flatMap((d) => d.places).filter((p) => p.wiki || p.image).slice(0, 8);
-  const srcs = await Promise.all(places.map((p) => (p.wiki ? getPhoto(p.wiki).then((x) => x?.src ?? p.image) : Promise.resolve(p.image))));
+  // 사진이 있을 만한 장소 앞에서부터 (식당·숙소는 사진이 엉뚱할 수 있어 뒤로)
+  const all = t.days.flatMap((d) => d.places).filter((p) => p.wiki || p.image || p.location);
+  const places = [...all.filter((p) => p.category !== "식당" && p.category !== "숙소"), ...all].filter((p, i, a) => a.indexOf(p) === i).slice(0, 8);
+  const srcs = await Promise.all(places.map((p) => placePhoto(p).then((x) => x?.src ?? p.image, () => p.image)));
   return [...new Set(srcs.filter((s): s is string => Boolean(s && s.length <= 500 && isWikimediaImage(s))))].slice(0, 3);
 }
 

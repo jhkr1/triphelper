@@ -77,12 +77,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
           crossOrigin=""
         />
-        {/* 애드센스는 next/script가 붙이는 data-nscript 속성을 거부하므로 일반 async 스크립트로 넣는다 */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7884227538941923"
-          crossOrigin="anonymous"
-        />
+        {/* 애드센스 스크립트는 지금 광고를 쓰지 않아 뺐다 (사이트 확인용 메타 태그와 ads.txt만 유지).
+            다시 쓸 때는 next/script 대신 일반 async 스크립트로 넣는다: data-nscript 속성을 거부함 */}
       </head>
       <body>
         <AppProviders>{children}</AppProviders>

@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(process.cwd()),
   },
+  // Windows 폴더를 Docker에 연결해 개발할 때는 파일 변경 알림이 오지 않아 폴링으로 감지한다.
+  // scripts/dev.sh가 NEXT_POLL=1로 켤 때만 (배포 빌드에는 영향 없음)
+  ...(process.env.NEXT_POLL === "1" ? { watchOptions: { pollIntervalMs: 1000 } } : {}),
 };
 
 export default nextConfig;

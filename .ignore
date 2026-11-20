@@ -1,0 +1,4 @@
+# 검색(rg·Grep)에서 빼는 큰 데이터 파일. git에는 그대로 있다.
+web/src/data/destinations.ts
+web/public/
+tmp/

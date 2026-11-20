@@ -16,6 +16,7 @@ npm-debug.log*
 # Environment variables
 .env
 .env.local
+supabase/.env
 
 # Build files (if using build tools in future)
 dist/

@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { AppProviders } from "@/components/providers/AppProviders";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
-
-const SITE_URL = "https://triphelper.kr";
 const DESCRIPTION =
   "TripHelper - 27개 국가 여행 정보 제공. 필수 매너, 기념품 추천, 현지 마트 추천템, 여행 필수템, 비자 정보, 필수 회화까지 한 곳에서 확인하세요. 한국어/영어 지원.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  // 끝의 /까지 넣어야 /triphelper 같은 접두사가 상대 주소에 붙는다
+  metadataBase: new URL(`${SITE_URL}/`),
   title: {
     default: "TripHelper - AI Powered Travel Concierge | 여행 도우미",
     template: "%s | TripHelper",

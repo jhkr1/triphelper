@@ -1,4 +1,5 @@
 import { getPhoto } from "@/lib/places";
+import { BASE_PATH } from "@/lib/site";
 import { db } from "@/lib/supabase";
 import { checklistFor, createTrip, dateParts, newId, nightsBetween, placeholderStart, addDays, type PlannerCountry } from "@/lib/trip-model";
 import type { LatLng } from "@/types/destination";
@@ -309,4 +310,4 @@ export function postToTrip(p: Post, country: PlannerCountry): Trip {
 }
 
 /** 게시판 주소 */
-export const postUrl = (origin: string, code: string) => `${origin}/board/post/?c=${encodeURIComponent(code)}`;
+export const postUrl = (origin: string, code: string) => `${origin}${BASE_PATH}/board/post/?c=${encodeURIComponent(code)}`;

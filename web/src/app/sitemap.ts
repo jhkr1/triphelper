@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
 import { getAllDestinations } from "@/lib/destinations";
+import { SITE_URL } from "@/lib/site";
 
 // 정적 출력에서도 빌드 시 sitemap.xml로 만들어진다
 export const dynamic = "force-static";
 
-const SITE_URL = "https://triphelper.kr";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

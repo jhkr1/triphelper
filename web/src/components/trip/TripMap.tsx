@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { withBase } from "@/lib/site";
 import type { GeoJSONSource, LngLatBounds as LngLatBoundsType, MapLibreMap, Marker as MarkerType } from "maplibre-gl";
 import type { LatLng } from "@/types/destination";
 import type { Place, TripDay } from "@/types/trip";
@@ -47,7 +48,7 @@ export function TripMap({ days, mapDay, onMapDayChange, center, onPick }: Props)
     import("maplibre-gl").then((lib) => {
       if (cancelled || !boxRef.current) return;
       // 번들 안에서는 worker 위치를 자동으로 찾지 못하므로, public/에 복사해 둔 파일을 지정 (package.json의 copy:maplibre-worker)
-      lib.setWorkerUrl("/maplibre-gl-worker.mjs");
+      lib.setWorkerUrl(withBase("/maplibre-gl-worker.mjs"));
       const map = new lib.Map({
         container: boxRef.current,
         style: "https://tiles.openfreemap.org/styles/positron",

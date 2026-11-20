@@ -17,10 +17,10 @@ import {
 import { fetchExchange, formatRate } from "@/lib/exchange";
 import { fetchDailyForecast, type DailyForecast } from "@/lib/weather";
 import { flagUrl } from "@/lib/geo";
+import { SITE_URL } from "@/lib/site";
 import type { LatLng } from "@/types/destination";
 import type { Place, Trip } from "@/types/trip";
 
-const SITE_URL = "https://triphelper.kr";
 const DEFAULT_COUNTRY = "south-korea";
 
 /** 내 여행: 여행 설정 · 일정표(지도) · 체크리스트. 일정은 브라우저에 자동 저장된다. */

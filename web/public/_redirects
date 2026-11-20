@@ -1,8 +1,0 @@
-# HTTP to HTTPS redirect
-http://triphelper.kr/* https://triphelper.kr/:splat 301!
-http://www.triphelper.kr/* https://triphelper.kr/:splat 301!
-https://www.triphelper.kr/* https://triphelper.kr/:splat 301!
-
-# Netlify app domain redirect (optional - for backup)
-https://triphelper.netlify.app/* https://triphelper.kr/:splat 301!
-

@@ -1,7 +1,14 @@
 import path from "node:path";
 import type { NextConfig } from "next";
 
+// GitHub Pages: 저장소 이름이 주소에 붙는다 (예: BASE_PATH=/triphelper). 로컬 개발은 비워 둔다.
+const basePath = process.env.BASE_PATH ?? "";
+const siteOrigin = process.env.SITE_ORIGIN ?? "https://jhkr1.github.io";
+
 const nextConfig: NextConfig = {
+  basePath,
+  // 브라우저 코드에서도 쓰도록 (lib/site.ts)
+  env: { NEXT_PUBLIC_BASE_PATH: basePath, NEXT_PUBLIC_SITE_ORIGIN: siteOrigin },
   // 서버 기능 없이 정적 파일(out/)로 배포한다. 정적 출력에서는 Cache Components('use cache')를 쓸 수 없어 끈다.
   output: "export",
   trailingSlash: true,

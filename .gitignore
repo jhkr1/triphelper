@@ -17,6 +17,7 @@ npm-debug.log*
 .env
 .env.local
 supabase/.env
+supabase/.temp/
 
 # Build files (if using build tools in future)
 dist/

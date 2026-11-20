@@ -1,4 +1,4 @@
-import { authStore, supabase, type AuthSnapshot } from "@/lib/supabase";
+import { authEnabled, authStore, db, type AuthSnapshot } from "@/lib/supabase";
 import { LOADING, tripStore } from "@/lib/trip-store";
 import { nightsBetween } from "@/lib/trip-model";
 import type { Trip } from "@/types/trip";
@@ -42,20 +42,20 @@ const metaOf = (r: { id: string; title: string; country: string; city: string; n
   ({ id: r.id, title: r.title, country: r.country, city: r.city, nights: r.nights, updatedAt: r.updated_at });
 
 export async function listMyTrips(userId: string): Promise<TripMeta[]> {
-  const { data, error } = await supabase!.from("trips")
+  const { data, error } = await (await db()).from("trips")
     .select("id, title, country, city, nights, updated_at").eq("user_id", userId).order("updated_at", { ascending: false });
   if (error) throw error;
   return (data ?? []).map(metaOf);
 }
 
 export async function loadTrip(id: string, userId: string): Promise<Trip> {
-  const { data, error } = await supabase!.from("trips").select("data, updated_at").eq("id", id).single();
+  const { data, error } = await (await db()).from("trips").select("data, updated_at").eq("id", id).single();
   if (error) throw error;
   return { ...(data.data as Trip), cloud: { id, userId, savedAt: data.updated_at } };
 }
 
 export async function deleteTrip(id: string) {
-  const { error } = await supabase!.from("trips").delete().eq("id", id);
+  const { error } = await (await db()).from("trips").delete().eq("id", id);
   if (error) throw error;
 }
 
@@ -68,8 +68,8 @@ async function writeTrip(t: Trip, userId: string): Promise<{ id: string; savedAt
     data: payload(t),
   };
   const q = t.cloud?.userId === userId
-    ? supabase!.from("trips").update(row).eq("id", t.cloud.id).select("id, updated_at").single()
-    : supabase!.from("trips").insert(row).select("id, updated_at").single();
+    ? (await db()).from("trips").update(row).eq("id", t.cloud.id).select("id, updated_at").single()
+    : (await db()).from("trips").insert(row).select("id, updated_at").single();
   const { data, error } = await q;
   if (error) throw error;
   return { id: data.id, savedAt: data.updated_at };
@@ -144,7 +144,7 @@ export async function flushSave() {
 async function pullIfNewer() {
   const t = currentTrip();
   if (!userId || !t?.cloud || t.cloud.userId !== userId) return;
-  const { data } = await supabase!.from("trips").select("data, updated_at").eq("id", t.cloud.id).maybeSingle();
+  const { data } = await (await db()).from("trips").select("data, updated_at").eq("id", t.cloud.id).maybeSingle();
   if (!data) { tripStore.set(payload(t) as Trip); return; } // DB에서 지워짐 → 연결만 끊고 이 기기 내용은 남김 (다시 저장하면 새 일정)
   if (data.updated_at > t.cloud.savedAt) {
     const fresh: Trip = { ...(data.data as Trip), cloud: { id: t.cloud.id, userId, savedAt: data.updated_at } };
@@ -178,7 +178,7 @@ function onAuth(a: AuthSnapshot) {
 
 /** 플래너가 열릴 때 한 번 호출 */
 export function startTripSync() {
-  if (started || !supabase) return;
+  if (started || !authEnabled) return;
   started = true;
   tripStore.subscribe(schedule);
   const check = () => onAuth(authStore.getSnapshot());

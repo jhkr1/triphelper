@@ -9,7 +9,7 @@ import { Comments } from "@/components/board/Comments";
 import { TripMap, dayColor } from "@/components/trip/TripMap";
 import { Leg, PlacePhoto } from "@/components/trip/Itinerary";
 import { flagUrl } from "@/lib/geo";
-import { authEnabled, authStore } from "@/lib/supabase";
+import { authEnabled, authStore, enabledProviders, signIn } from "@/lib/supabase";
 import { LOADING, tripStore } from "@/lib/trip-store";
 import { flushSave } from "@/lib/trip-sync";
 import { dayLabel, type PlannerCountry } from "@/lib/trip-model";
@@ -103,10 +103,16 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
 
   async function importTrip() {
     if (!country) return;
+    // 내 여행은 로그인해야 쓸 수 있다: 로그인한 뒤 이 글로 돌아오면 다시 누른다
+    if (!meId) {
+      const provider = enabledProviders()[0];
+      if (provider) signIn(provider).catch(() => toast("로그인 화면을 열지 못했어요"));
+      return;
+    }
     const cur = tripStore.getSnapshot();
     const t = cur && cur !== LOADING ? cur : null;
     const unsaved = t && !t.cloud && t.days.some((d) => d.places.length);
-    if (unsaved && !confirm("지금 '내 여행'에 있는 일정이 이 동선으로 바뀝니다. 로그인하지 않은 상태라 지금 일정은 지워져요. 계속할까요?")) return;
+    if (unsaved && !confirm("지금 '내 여행'에 있는 저장되지 않은 일정이 이 동선으로 바뀝니다. 계속할까요?")) return;
     await flushSave(); // 저장된 일정은 '내 여행 목록'에 남는다
     tripStore.set(postToTrip(post!, country));
     router.push("/trip/");
@@ -157,7 +163,7 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
         {post.summary && <p className="post__summary">{post.summary}</p>}
 
         <div className="post__acts">
-          <button className="btn btn--pri" type="button" onClick={importTrip} disabled={!country}>내 일정으로 가져오기</button>
+          <button className="btn btn--pri" type="button" onClick={importTrip} disabled={!country}>{meId ? "내 일정으로 가져오기" : "로그인하고 내 일정으로 가져오기"}</button>
           <button className="btn" type="button" onClick={copyLink}><Icon name="link" />링크 복사</button>
           {mine && (
             <>

@@ -1,5 +1,5 @@
 import { getPhoto } from "@/lib/places";
-import { supabase } from "@/lib/supabase";
+import { db } from "@/lib/supabase";
 import { checklistFor, createTrip, dateParts, newId, nightsBetween, placeholderStart, addDays, type PlannerCountry } from "@/lib/trip-model";
 import type { LatLng } from "@/types/destination";
 import type { Place, Trip, TripDay } from "@/types/trip";
@@ -148,7 +148,7 @@ const message = (e: unknown) => {
 };
 
 export async function findMyPostForTrip(tripId: string): Promise<MyPostRef | null> {
-  const { data, error } = await supabase!.from("posts")
+  const { data, error } = await (await db()).from("posts")
     .select("id, share_code, title, summary, tags, visibility").eq("trip_id", tripId).order("updated_at", { ascending: false }).limit(1).maybeSingle();
   if (error) throw error;
   return data ? { id: data.id, shareCode: data.share_code, title: data.title, summary: data.summary, tags: data.tags, visibility: data.visibility } : null;
@@ -167,20 +167,20 @@ export async function pickCovers(t: Trip): Promise<string[]> {
 export async function publishPost(t: Trip, o: PublishOptions, existingId?: string): Promise<string> {
   const row = { ...buildPost(t, o), covers: await pickCovers(t).catch(() => []) };
   const q = existingId
-    ? supabase!.from("posts").update(row).eq("id", existingId).select("share_code").single()
-    : supabase!.from("posts").insert({ ...row, trip_id: t.cloud?.id ?? null }).select("share_code").single();
+    ? (await db()).from("posts").update(row).eq("id", existingId).select("share_code").single()
+    : (await db()).from("posts").insert({ ...row, trip_id: t.cloud?.id ?? null }).select("share_code").single();
   const { data, error } = await q;
   if (error) throw new Error(message(error));
   return data.share_code;
 }
 
 export async function setPostVisibility(id: string, visibility: Visibility) {
-  const { error } = await supabase!.from("posts").update({ visibility }).eq("id", id);
+  const { error } = await (await db()).from("posts").update({ visibility }).eq("id", id);
   if (error) throw new Error(message(error));
 }
 
 export async function deletePost(id: string) {
-  const { error } = await supabase!.from("posts").delete().eq("id", id);
+  const { error } = await (await db()).from("posts").delete().eq("id", id);
   if (error) throw new Error(message(error));
 }
 
@@ -202,7 +202,7 @@ export const PAGE_SIZE = 18;
 /** 게시판 목록 (전체 공개 글만, 최신순). before: 이전 페이지 마지막 글의 게시 시각 */
 export async function listPosts(opts: { country?: string; nights?: NightFilter; before?: string }): Promise<PostSummary[]> {
   const f = NIGHT_FILTERS.find((x) => x.id === (opts.nights ?? "all"))!;
-  let q = supabase!.from("posts")
+  let q = (await db()).from("posts")
     .select("share_code, user_id, title, country, city, nights, month, tags, place_count, preview, covers, published_at, comment_count, profiles(nickname, avatar_url)")
     .eq("visibility", "public").gte("nights", f.min).lte("nights", f.max)
     .order("published_at", { ascending: false }).limit(PAGE_SIZE);
@@ -219,7 +219,7 @@ export async function listPosts(opts: { country?: string; nights?: NightFilter; 
 
 /** 공유 코드로 글 한 건 (전체 공개·링크 공유, 또는 내 글). 없거나 볼 수 없으면 null */
 export async function getPost(code: string): Promise<Post | null> {
-  const { data, error } = await supabase!.rpc("get_post", { code });
+  const { data, error } = await (await db()).rpc("get_post", { code });
   if (error) throw error;
   const r = (data as Record<string, unknown>[] | null)?.[0];
   if (!r) return null;
@@ -266,7 +266,7 @@ const commentMessage = (e: unknown) => {
 
 /** 공유 코드로 글의 댓글 (오래된 순) */
 export async function listComments(code: string): Promise<Comment[]> {
-  const { data, error } = await supabase!.rpc("get_comments", { code });
+  const { data, error } = await (await db()).rpc("get_comments", { code });
   if (error) throw error;
   return ((data as Record<string, unknown>[] | null) ?? []).map((r) => ({
     id: r.id as string, userId: r.user_id as string, body: r.body as string, createdAt: r.created_at as string,
@@ -276,19 +276,19 @@ export async function listComments(code: string): Promise<Comment[]> {
 }
 
 export async function addComment(postId: string, body: string): Promise<{ id: string; createdAt: string }> {
-  const { data, error } = await supabase!.from("comments").insert({ post_id: postId, body: body.trim() }).select("id, created_at").single();
+  const { data, error } = await (await db()).from("comments").insert({ post_id: postId, body: body.trim() }).select("id, created_at").single();
   if (error) throw new Error(commentMessage(error));
   return { id: data.id, createdAt: data.created_at };
 }
 
 export async function editComment(id: string, body: string): Promise<string> {
-  const { data, error } = await supabase!.from("comments").update({ body: body.trim() }).eq("id", id).select("edited_at").single();
+  const { data, error } = await (await db()).from("comments").update({ body: body.trim() }).eq("id", id).select("edited_at").single();
   if (error) throw new Error(commentMessage(error));
   return data.edited_at;
 }
 
 export async function deleteComment(id: string) {
-  const { error } = await supabase!.from("comments").delete().eq("id", id);
+  const { error } = await (await db()).from("comments").delete().eq("id", id);
   if (error) throw new Error(commentMessage(error));
 }
 

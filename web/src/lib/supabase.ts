@@ -1,19 +1,50 @@
-import { createClient, type SupabaseClient, type User } from "@supabase/supabase-js";
+import type { SupabaseClient, User } from "@supabase/supabase-js";
 
 /*
  * Supabase (로그인 · 일정 저장 · 게시판). 브라우저에서 바로 부르는 정적 사이트 구조라 공개 키(publishable key)만 쓴다.
  * 권한은 DB의 행 단위 보안(RLS)이 막는다 → supabase/migrations/*.sql
  * 값은 web/.env.local (개발), Netlify 환경 변수 (배포)에 넣는다. 비어 있으면 로그인 기능만 숨기고 나머지는 그대로 동작.
+ *
+ * 라이브러리(압축 후 약 70KB)는 처음부터 싣지 않고 필요할 때 불러온다:
+ * 저장된 로그인 정보가 있을 때 · 로그인 버튼을 누를 때 · 게시판처럼 DB가 필요한 화면에서.
+ * 로그인한 적 없는 방문자는 메인·나라 페이지에서 받지 않는다.
  */
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-export const supabase: SupabaseClient | null =
-  url && key && typeof window !== "undefined"
-    ? createClient(url, key, { auth: { flowType: "pkce", detectSessionInUrl: true, persistSession: true } })
-    : null;
-
 export const authEnabled = Boolean(url && key);
+
+let client: Promise<SupabaseClient | null> | null = null;
+/** 로그인 정보 없이 시작했다가 나중에 라이브러리를 받게 되면(게시판 등) 그때 로그인 상태 살피기를 붙인다 */
+let pendingListen: ((c: SupabaseClient | null) => void) | null = null;
+
+/** Supabase 클라이언트 (처음 부를 때 라이브러리를 받는다). 설정이 없으면 null */
+export function getSupabase(): Promise<SupabaseClient | null> {
+  if (!client) {
+    client = url && key && typeof window !== "undefined"
+      ? import("@supabase/supabase-js").then(({ createClient }) =>
+          createClient(url, key, { auth: { flowType: "pkce", detectSessionInUrl: true, persistSession: true } }))
+      : Promise.resolve(null);
+    client.then((c) => { const f = pendingListen; pendingListen = null; f?.(c); }, () => {});
+  }
+  return client;
+}
+
+/** DB를 쓰는 함수용: 설정이 없으면 오류 */
+export async function db(): Promise<SupabaseClient> {
+  const c = await getSupabase();
+  if (!c) throw new Error("로그인 기능이 꺼져 있어요");
+  return c;
+}
+
+/** supabase-js가 로그인 정보를 저장하는 이름 (sb-<프로젝트>-auth-token) */
+const STORAGE_KEY = url ? `sb-${new URL(url).hostname.split(".")[0]}-auth-token` : "";
+
+/** 이 브라우저에 로그인 정보가 남아 있거나, 소셜 로그인에서 막 돌아온 참인지 (라이브러리 없이 확인) */
+function mayBeSignedIn() {
+  if (new URLSearchParams(window.location.search).has("code")) return true;
+  try { return Boolean(localStorage.getItem(STORAGE_KEY)); } catch { return false; }
+}
 
 /* ───────── 로그인 방식 ───────── */
 
@@ -32,6 +63,7 @@ export const enabledProviders = (): ProviderId[] =>
 
 /** 소셜 로그인 화면으로 이동. 돌아오면 지금 페이지로 온다 */
 export async function signIn(provider: ProviderId) {
+  const supabase = await getSupabase();
   if (!supabase) return;
   // 글 보기(?c=코드)처럼 주소의 검색어가 있어야 하는 화면으로 돌아오도록 함께 넘긴다 (#은 빼고)
   const redirectTo = window.location.origin + window.location.pathname + window.location.search;
@@ -48,7 +80,7 @@ export async function signIn(provider: ProviderId) {
 }
 
 export async function signOut() {
-  await supabase?.auth.signOut();
+  await (await getSupabase())?.auth.signOut();
 }
 
 /* ───────── 로그인 상태 (React에서 useSyncExternalStore로 읽음) ───────── */
@@ -75,7 +107,7 @@ function setSnapshot(next: AuthSnapshot) {
 
 /** 닉네임·사진은 DB 프로필에서만 (소셜 계정 사진은 쓰지 않음, 없으면 기본 그림) */
 async function loadMe(u: User) {
-  const { data } = await supabase!.from("profiles").select("nickname, avatar_url").eq("id", u.id).maybeSingle();
+  const { data } = await (await db()).from("profiles").select("nickname, avatar_url").eq("id", u.id).maybeSingle();
   const avatar = data?.avatar_url;
   setSnapshot({ status: "in", me: { id: u.id, nickname: data?.nickname ?? "여행자", ...(avatar ? { avatar } : {}) } });
 }
@@ -83,8 +115,13 @@ async function loadMe(u: User) {
 function start() {
   if (started) return;
   started = true;
-  if (!supabase) { snapshot = OUT; return; }
-  supabase.auth.onAuthStateChange((event, session) => {
+  if (!authEnabled || typeof window === "undefined") { snapshot = OUT; return; }
+  // 로그인한 적이 없으면 라이브러리를 받지 않고 바로 '로그아웃 상태'
+  // (다른 화면이 DB를 쓰려고 라이브러리를 받으면 그때 로그인 상태를 이어서 살핀다)
+  if (!mayBeSignedIn()) snapshot = OUT;
+  const listen = (supabase: SupabaseClient | null) => {
+    if (!supabase) { setSnapshot(OUT); return; }
+    supabase.auth.onAuthStateChange((event, session) => {
     if (!session?.user) setSnapshot(OUT);
     // 이 콜백 안에서 바로 DB를 부르면 인증 잠금과 엉켜 멈출 수 있어(Supabase 안내) 다음 차례로 미룬다
     else if (snapshot.status !== "in" || snapshot.me.id !== session.user.id) {
@@ -97,8 +134,13 @@ function start() {
       u.searchParams.delete("code");
       history.replaceState(null, "", u.pathname + u.search + u.hash);
     }
-  });
+    });
+  };
+  if (snapshot !== OUT) getSupabase().then(listen, () => setSnapshot(OUT));
+  else if (client) client.then(listen, () => {});
+  else pendingListen = listen;
 }
+
 
 export const authStore = {
   subscribe(onChange: () => void) {

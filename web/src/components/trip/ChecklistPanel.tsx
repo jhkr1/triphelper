@@ -116,7 +116,7 @@ function GroupTitle({ name, count, taken, onRename, onRemove }: { name: string; 
   return (
     <div className="grp__hd">
       <button type="button" className="grp__name" onClick={() => { setDraft(name); setEditing(true); }} aria-label={`${name} 카테고리 이름 바꾸기`}>
-        <h4>{name}</h4><Icon name="note" />
+        <h4>{name}</h4>
       </button>
       <button
         type="button"

@@ -184,7 +184,7 @@ export function DestinationView({ destination: d, phrases, attractions, no, tota
           )}
         </dl>
         <Link className="dest-cta reveal" href={`/trip/?country=${d.slug}`}>
-          <Icon name="calendar" />{t("trip.planHere", { country: en ? d.nameEn : d.name })}
+          {t("trip.planHere", { country: en ? d.nameEn : d.name })}
         </Link>
         <div className="ed__body">
           <nav className="toc" aria-label="chapters">

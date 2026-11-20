@@ -48,7 +48,7 @@ export function AttractionsSection({ attractions, country }: Props) {
                 {a.city && <p className="attr__city"><Icon name="pin" />{a.city}</p>}
                 {lang === "ko" && a.summary && <p className="attr__summary">{a.summary}</p>}
                 <button type="button" className={added ? "attr__add attr__add--done" : "attr__add"} onClick={() => add(a)} disabled={added}>
-                  {added ? t("attractions.added") : <><Icon name="calendar" />{t("attractions.add")}</>}
+                  {added ? t("attractions.added") : t("attractions.add")}
                 </button>
               </div>
             </article>

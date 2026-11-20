@@ -1,6 +1,10 @@
 import type { SVGProps } from "react";
+import { TripIcon, type TripIconName } from "@/components/ui/TripIcon";
 
-/** 선 아이콘 (Lucide 기반, MIT). 이모지 대신 사용한다. */
+/**
+ * 아이콘. 사이트 전용 그림(TripIcon)이 있는 이름은 그것을 쓰고, 나머지는 선 아이콘(Lucide 기반, MIT).
+ * 링크는 기존 그림을 유지한다.
+ */
 const PATHS = {
   x: <><path d="M18 6 6 18" /><path d="m6 6 12 12" /></>,
   copy: <><rect width="14" height="14" x="8" y="8" rx="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></>,
@@ -33,6 +37,9 @@ const PATHS = {
   chevronDown: <path d="m6 9 6 6 6-6" />,
   bed: <><path d="M2 4v16" /><path d="M2 8h18a2 2 0 0 1 2 2v10" /><path d="M2 17h20" /><path d="M6 8v9" /></>,
   note: <><path d="M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8Z" /><path d="M15 3v4a2 2 0 0 0 2 2h4" /></>,
+  message: <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />,
+  pencil: <><path d="M21.17 6.81a2.83 2.83 0 0 0-4-4L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5Z" /><path d="m15 5 4 4" /></>,
+  trash: <><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /></>,
   minus: <path d="M5 12h14" />,
   grip: <><circle cx="9" cy="6" r="1" /><circle cx="9" cy="12" r="1" /><circle cx="9" cy="18" r="1" /><circle cx="15" cy="6" r="1" /><circle cx="15" cy="12" r="1" /><circle cx="15" cy="18" r="1" /></>,
 } as const;
@@ -45,7 +52,21 @@ interface IconProps extends Omit<SVGProps<SVGSVGElement>, "name"> {
   size?: number | string;
 }
 
+const NEXT: Partial<Record<IconName, TripIconName>> = {
+  pin: "place", bed: "stay", note: "memo", message: "comment",
+  sun: "sun", cloud: "cloud", cloudSun: "cloudSun", rain: "rain", snow: "snow", storm: "storm", fog: "fog", moon: "moon",
+  grip: "grip", x: "close", plus: "plus", minus: "minus", trash: "trash", chevronDown: "chevronDown", copy: "copy", menu: "menu",
+};
+
+/** 날씨 그림은 날씨 색으로 (ticon--sun 등) */
+const WEATHER = new Set<IconName>(["sun", "cloud", "cloudSun", "rain", "snow", "storm", "fog"]);
+
 export function Icon({ name, size = "1em", className, ...rest }: IconProps) {
+  const next = NEXT[name];
+  if (next) {
+    const cls = ["icon", WEATHER.has(name) ? `ticon--${name}` : "", className ?? ""].filter(Boolean).join(" ");
+    return <TripIcon name={next} size={size} className={cls} {...rest} />;
+  }
   return (
     <svg
       viewBox="0 0 24 24"

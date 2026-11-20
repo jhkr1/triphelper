@@ -28,7 +28,8 @@
 .planner .daybar b{font-weight:700}
 .planner .daybar .sep{color:var(--badge-bd)}
 .planner .tl{list-style:none;margin:0;padding:0;position:relative}
-.planner .tl::before{content:"";position:absolute;left:23px;top:10px;bottom:10px;width:2px;background:var(--line)}
+/* 장소를 잇는 세로선: 그날 색 점선 (지도의 동선과 같은 표현) */
+.planner .tl::before{content:"";position:absolute;left:23px;top:10px;bottom:10px;width:2px;background:repeating-linear-gradient(to bottom,var(--dc,var(--line)) 0 5px,transparent 5px 10px);opacity:.55}
 .planner .tl--empty::before{display:none} /* 장소가 없으면 이을 선도 없다 (안내 문구를 가로지르지 않게) */
 .planner .stop{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;padding:10px 0}
 .planner .stop__n{width:48px;height:48px;display:grid;place-items:center;z-index:1}
@@ -122,7 +123,7 @@
 .planner .btn .icon{width:16px;height:16px}
 .planner .tag{display:inline-flex;align-items:center;gap:4px}
 .planner .daybar .wx{display:inline-flex;align-items:center;gap:8px}
-.planner .daybar .wx .icon{width:20px;height:20px;color:var(--blue)}
+.planner .daybar .wx .icon{width:20px;height:20px}
 .planner .rec h4{display:flex;align-items:center;gap:8px}
 .planner .rec h4 .icon{width:18px;height:18px;color:var(--blue)}
 .planner .nc__img .icon{width:28px;height:28px;color:var(--mute);stroke-width:1.6}
@@ -158,7 +159,7 @@
 .planner{background:var(--soft);min-height:100svh}
 .planner .icon{flex:none}
 .planner .btn .icon{width:16px;height:16px}
-.planner .daybar .wx .icon{width:20px;height:20px;color:var(--blue)}
+.planner .daybar .wx .icon{width:20px;height:20px}
 .planner .empty-trip{padding:28px 0;color:var(--mute);text-align:center;list-style:none;word-break:keep-all}
 .planner .sample-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:-8px 0 22px;padding:14px 16px;border:1px dashed var(--badge-bd);background:var(--badge-bg);border-radius:16px;font-size:.88rem;color:var(--text2)}
 
@@ -263,7 +264,7 @@
 /* 숙소 */
 .planner .stay{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:10px 0;list-style:none}
 .planner .stay__ic{width:48px;display:grid;place-items:center;z-index:1}
-.planner .stay__ic .icon,.planner .stay__ic svg{width:28px;height:28px;padding:6px;box-sizing:border-box;border-radius:8px;background:#7c3aed;color:#fff;box-shadow:0 0 0 5px var(--card)}
+.planner .stay__ic .icon,.planner .stay__ic svg{width:28px;height:28px;border-radius:9px;background:var(--card);color:#7c3aed;box-shadow:0 0 0 4px var(--card)}
 .planner .stay__body{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0;padding:10px 14px;border-radius:14px;border:1px solid #ddd6fe;background:#f5f3ff}
 .planner .stay__body small{font-size:.72rem;font-weight:700;color:#6d28d9;letter-spacing:.02em}
 .planner .stay__body b{font-size:.98rem;word-break:break-word}
@@ -334,8 +335,8 @@
 
 /* 저장 상태 · 내 여행 목록 */
 .planner .sync{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:.78rem;color:var(--mute)}
-.planner .sync .icon{width:14px;height:14px}
-.planner .sync--saved .icon{color:#10b981}
+.planner .sync__dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.7}
+.planner .sync--saved .sync__dot{background:#10b981;opacity:1}
 .planner .sync--error{color:#dc2626}
 .planner .mytrips{position:relative}
 .planner .mytrips__panel{position:absolute;right:0;top:calc(100% + 8px);z-index:40;width:min(360px,calc(100vw - 32px));max-height:min(460px,70vh);overflow:auto;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:0 12px 32px #0002}
@@ -366,8 +367,8 @@
 .planner .grp__hd{display:flex;align-items:center;gap:4px;margin:0 0 8px;min-height:28px}
 .planner .grp__hd h4{margin:0}
 .planner .grp__name{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:2px 6px 2px 0;border-radius:6px;cursor:pointer;color:var(--mute)}
-.planner .grp__name .icon{width:13px;height:13px;opacity:0;transition:opacity .15s}
-.planner .grp__name:hover .icon,.planner .grp__name:focus-visible .icon{opacity:1}
+.planner .grp__name h4{text-decoration:underline dotted transparent;text-underline-offset:4px;transition:text-decoration-color .15s}
+.planner .grp__name:hover h4,.planner .grp__name:focus-visible h4{text-decoration-color:currentColor}
 .planner .grp__name:hover h4{color:var(--ink)}
 .planner .grp__del{margin-left:auto;border:0;background:none;color:var(--mute);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;opacity:.5}
 .planner .grp__del:hover{opacity:1;background:var(--soft);color:#dc2626}

@@ -22,7 +22,8 @@ interface Props {
   onPick?: (p: LatLng) => void;
 }
 
-const BED_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>';
+// 숙소 = 둥근 네모 + 초승달 (아이콘 stay와 같은 모양)
+const BED_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14.5 3a9 9 0 1 0 6.6 15.1A7.3 7.3 0 0 1 14.5 3Z"/></svg>';
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 

@@ -245,7 +245,7 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
           {trip.datesUnset ? (
             <p>
               날짜 미정 · {nights}박 {nights + 1}일
-              <button type="button" className="date-cta" onClick={openSetup}><Icon name="calendar" />날짜 정하기</button>
+              <button type="button" className="date-cta" onClick={openSetup}>날짜 정하기</button>
             </p>
           ) : (
             <p>{a.y}.{a.m}.{a.d} ({a.w}) – {b.m}.{b.d} ({b.w}) · {nights}박 {nights + 1}일</p>
@@ -261,7 +261,7 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
             toast={toast}
           />
           <button className="btn edit-trip" type="button" aria-expanded={setupOpen} onClick={() => setSetupOpen((o) => !o)}>
-            <Icon name="calendar" />여행 설정
+            여행 설정
           </button>
           {auth.status === "in" && (
             <button
@@ -271,7 +271,7 @@ function PlannerBody({ trip, countries, countryOf }: { trip: Trip; countries: Pl
               disabled={totalPlaces === 0}
               title={totalPlaces === 0 ? "장소를 담으면 올릴 수 있어요" : undefined}
             >
-              <Icon name="landmark" />게시판에 올리기
+              게시판에 올리기
             </button>
           )}
           <button className="btn btn--pri" type="button" onClick={share}><Icon name="link" />링크 공유</button>

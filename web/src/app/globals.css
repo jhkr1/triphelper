@@ -276,7 +276,7 @@ a{color:inherit}
 .crumb{display:inline-flex;align-items:center;gap:6px;margin:0 0 22px;color:var(--mute);text-decoration:none;font-size:.88rem;font-weight:600}
 .crumb:hover{color:var(--blue)}
 .speak{position:absolute;right:12px;top:12px}
-.weather-icon-large .icon,.forecast-card__icon .icon{color:var(--blue)}
+/* 날씨 아이콘은 .ticon--* 날씨 색을 쓴다 */
 .back{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
 .not-found{min-height:70svh;display:grid;place-content:center;text-align:center;gap:14px;padding:120px 16px}
 .not-found h1{margin:0}
@@ -355,3 +355,9 @@ button.acct__row:hover{background:var(--soft)}
   .top__nav{display:none}
   .acct__nav{display:block}
 }
+
+/* 사이트 전용 아이콘: 날씨는 날씨 색으로 */
+.ticon--sun{color:#f59e0b}
+.ticon--cloud,.ticon--cloudSun,.ticon--fog{color:#94a3b8}
+.ticon--rain,.ticon--storm{color:#3b82f6}
+.ticon--snow{color:#7dd3fc}

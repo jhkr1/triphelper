@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Icon } from "@/components/ui/Icon";
+import { Comments } from "@/components/board/Comments";
 import { TripMap, dayColor } from "@/components/trip/TripMap";
 import { Leg, PlacePhoto } from "@/components/trip/Itinerary";
 import { flagUrl } from "@/lib/geo";
@@ -28,7 +29,7 @@ function Stop({ p, n, color }: { p: Place; n: number; color: string }) {
         <div className="stop__txt">
           {p.time && <div className="stop__time">{p.time}</div>}
           <div className="stop__name"><span>{p.name}</span>{p.category && <span className="tag">{p.category}</span>}</div>
-          {p.duration && <div className="tags"><span className="tag"><Icon name="clock" />{p.duration}</span></div>}
+          {p.duration && <div className="tags"><span className="tag">{p.duration} 머묾</span></div>}
           {p.memo && <p className="stop__memo stop__memo--ro">{p.memo}</p>}
         </div>
       </div>
@@ -57,7 +58,7 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
   const toastTimer = useRef<number | undefined>(undefined);
   const toast = (m: string) => { setToastMsg(m); window.clearTimeout(toastTimer.current); toastTimer.current = window.setTimeout(() => setToastMsg(""), 2200); };
 
-  // 로그인 상태가 정해진 뒤 불러온다 (내 글이면 '나만 보기'도 보여야 하므로)
+  // 로그인 상태가 정해진 뒤 불러온다 (내 글이면 고치기·삭제 버튼이 보여야 하므로)
   useEffect(() => {
     if (auth.status === "loading" && authEnabled) return;
     const code = new URLSearchParams(window.location.search).get("c") ?? "";
@@ -86,7 +87,7 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
     return (
       <div className="board__empty">
         <Icon name="pin" />
-        <p><b>글을 찾을 수 없어요.</b><br />삭제되었거나, 글쓴이가 &lsquo;나만 보기&rsquo;로 바꾼 글일 수 있어요.</p>
+        <p><b>글을 찾을 수 없어요.</b><br />글쓴이가 삭제했거나 주소가 잘못되었을 수 있어요.</p>
         <Link className="btn btn--pri" href="/board/">게시판으로</Link>
       </div>
     );
@@ -95,7 +96,7 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
   async function copyLink() {
     try {
       await navigator.clipboard.writeText(postUrl(window.location.origin, post!.shareCode));
-      toast(post!.visibility === "private" ? "링크를 복사했어요 (지금은 나만 볼 수 있는 글이에요)" : "링크를 복사했어요");
+      toast("링크를 복사했어요");
     } catch { toast("이 환경에서는 복사할 수 없어요"); }
   }
 
@@ -158,7 +159,7 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
         {post.summary && <p className="post__summary">{post.summary}</p>}
 
         <div className="post__acts">
-          <button className="btn btn--pri" type="button" onClick={importTrip} disabled={!country}><Icon name="plus" />내 일정으로 가져오기</button>
+          <button className="btn btn--pri" type="button" onClick={importTrip} disabled={!country}>내 일정으로 가져오기</button>
           <button className="btn" type="button" onClick={copyLink}><Icon name="link" />링크 복사</button>
           {mine && (
             <>
@@ -168,7 +169,7 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
                   {VISIBILITY.map((v) => <option key={v.id} value={v.id}>{v.label}</option>)}
                 </select>
               </label>
-              <button className="btn post__del" type="button" onClick={remove} disabled={busy}><Icon name="x" />삭제</button>
+              <button className="btn post__del" type="button" onClick={remove} disabled={busy}>삭제</button>
             </>
           )}
         </div>
@@ -189,7 +190,7 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
               {!d.places.length && !stay && !prevStay ? (
                 <p className="board__msg">이날은 비워 두었어요.</p>
               ) : (
-                <ol className="tl">
+                <ol className="tl" style={{ "--dc": dayColor(i) } as React.CSSProperties}>
                   {prevStay && <StayItem stay={prevStay} label="숙소에서 출발" />}
                   {prevStay && d.places[0] && <Leg from={prevStay} to={d.places[0]} countryCode={country?.countryCode ?? ""} />}
                   {d.places.map((p, j) => (
@@ -206,6 +207,8 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
           );
         })}
       </section>
+
+      <Comments post={post} />
 
       <div className={toastMsg ? "toast on" : "toast"} role="status" aria-live="polite">{toastMsg}</div>
     </div>

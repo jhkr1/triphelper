@@ -33,7 +33,8 @@ export const enabledProviders = (): ProviderId[] =>
 /** 소셜 로그인 화면으로 이동. 돌아오면 지금 페이지로 온다 */
 export async function signIn(provider: ProviderId) {
   if (!supabase) return;
-  const redirectTo = window.location.origin + window.location.pathname;
+  // 글 보기(?c=코드)처럼 주소의 검색어가 있어야 하는 화면으로 돌아오도록 함께 넘긴다 (#은 빼고)
+  const redirectTo = window.location.origin + window.location.pathname + window.location.search;
   const { error } = await supabase.auth.signInWithOAuth({
     // 네이버는 Supabase 기본 제공이 아니라 직접 등록한 공급자(custom:naver)
     provider: (provider === "naver" ? "custom:naver" : provider) as "kakao",

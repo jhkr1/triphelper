@@ -31,7 +31,7 @@ export function SyncBadge() {
     saved: s.state === "saved" ? `저장됨 · ${ago(s.at)}` : "",
     error: s.state === "error" ? s.message : "",
   }[s.state];
-  return <span className={`sync sync--${s.state}`} role="status" aria-live="polite"><Icon name="cloud" />{text}</span>;
+  return <span className={`sync sync--${s.state}`} role="status" aria-live="polite"><i className="sync__dot" aria-hidden="true" />{text}</span>;
 }
 
 interface Props {
@@ -102,7 +102,7 @@ export function MyTrips({ trip, countries, onOpened, onNew, toast }: Props) {
   return (
     <div className="mytrips" ref={boxRef}>
       <button className="btn" type="button" aria-expanded={open} onClick={() => { if (!open) refresh(); setOpen(!open); }}>
-        <Icon name="bag" />내 여행 목록
+        내 여행 목록
       </button>
       {open && (
         <div className="mytrips__panel" role="dialog" aria-label="내 여행 목록">

@@ -3,23 +3,14 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
-import { RouteThumb } from "@/components/board/RouteThumb";
+import { PostThumb } from "@/components/board/RouteThumb";
 import { flagUrl } from "@/lib/geo";
 import { authEnabled } from "@/lib/supabase";
-import { listPosts, NIGHT_FILTERS, PAGE_SIZE, type NightFilter, type PostSummary } from "@/lib/posts";
+import { listPosts, NIGHT_FILTERS, PAGE_SIZE, timeAgo, type NightFilter, type PostSummary } from "@/lib/posts";
 
 export interface BoardCountry { slug: string; name: string; countryCode: string }
 
 const nightsText = (n: number) => (n ? `${n}박 ${n + 1}일` : "당일치기");
-const ago = (iso: string) => {
-  const d = (Date.now() - Date.parse(iso)) / 86400000;
-  if (d < 1) return "오늘";
-  if (d < 2) return "어제";
-  if (d < 30) return `${Math.floor(d)}일 전`;
-  const t = new Date(iso);
-  return `${t.getFullYear()}.${t.getMonth() + 1}.${t.getDate()}`;
-};
-
 type State = { status: "loading" } | { status: "error" } | { status: "done"; items: PostSummary[]; more: boolean };
 
 /** 나라별 여행 동선 게시판 (전체 공개 글, 최신순). 필터는 주소(?country=&nights=)에 남겨 공유·뒤로 가기가 되게 */
@@ -79,7 +70,7 @@ export function BoardList({ countries }: { countries: BoardCountry[] }) {
           <h1>{current ? `${current.name} 여행 동선` : "여행 동선 게시판"}</h1>
           <p>다른 여행자의 동선을 보고, 마음에 들면 내 일정으로 가져와 고쳐 보세요.</p>
         </div>
-        <Link className="btn btn--pri" href="/trip/"><Icon name="plus" />내 동선 올리기</Link>
+        <Link className="btn btn--pri" href="/trip/">내 동선 올리기</Link>
       </div>
 
       <div className="board__filters">
@@ -123,7 +114,7 @@ export function BoardList({ countries }: { countries: BoardCountry[] }) {
               return (
                 <li key={p.shareCode}>
                   <Link className="pcard" href={`/board/post/?c=${encodeURIComponent(p.shareCode)}`}>
-                    <RouteThumb preview={p.preview} label={p.title} />
+                    <PostThumb covers={p.covers} preview={p.preview} label={p.title} />
                     <div className="pcard__body">
                       <b className="pcard__title">{p.title}</b>
                       <span className="pcard__meta">
@@ -139,7 +130,8 @@ export function BoardList({ countries }: { countries: BoardCountry[] }) {
                           // eslint-disable-next-line @next/next/no-img-element -- 소셜 계정 프로필 사진
                           ? <img src={p.avatar} alt="" referrerPolicy="no-referrer" />
                           : <span aria-hidden="true">{p.nickname.slice(0, 1)}</span>}
-                        {p.nickname} · {ago(p.publishedAt)}
+                        {p.nickname} · {timeAgo(p.publishedAt)}
+                        {p.commentCount > 0 && <em className="pcard__cmt" aria-label={`댓글 ${p.commentCount}개`}><Icon name="message" />{p.commentCount}</em>}
                       </span>
                     </div>
                   </Link>

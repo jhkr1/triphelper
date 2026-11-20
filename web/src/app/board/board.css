@@ -26,7 +26,18 @@
 .planner .pcard--skel{height:300px;background:linear-gradient(90deg,var(--line),var(--soft),var(--line));background-size:200% 100%;animation:shimmer 1.2s infinite;border:0}
 .planner .rthumb{display:block;width:100%;height:auto}
 .planner .rthumb__bg{fill:var(--soft)}
-.planner .rthumb__empty{fill:none;stroke:var(--line);stroke-width:3}
+.planner .rthumb__dot{fill:var(--line)}
+.planner .rthumb__empty{fill:none;stroke:var(--mute);stroke-width:2.5}
+.planner .rthumb__mini{fill:var(--card);opacity:.92}
+/* 카드 머리: 사진 1장 · 2장(반반) · 3장(큰 1 + 작은 2) */
+.planner .pthumb{position:relative;aspect-ratio:320/168;overflow:hidden;background:var(--soft);display:grid;gap:2px}
+.planner .pthumb>.rthumb{height:100%}
+.planner .pthumb img{width:100%;height:100%;object-fit:cover;display:block;min-height:0}
+.planner .pthumb--2{grid-template-columns:1fr 1fr}
+.planner .pthumb--3{grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr}
+.planner .pthumb--3 img:first-child{grid-row:span 2}
+.planner .pthumb .rthumb--mini{position:absolute;right:8px;bottom:8px;width:96px;height:auto;border-radius:10px;box-shadow:0 4px 12px #0003}
+.planner a.btn{text-decoration:none}
 .planner .pcard__body{display:grid;gap:6px;padding:14px 16px 16px}
 .planner .pcard__title{font-size:1.02rem;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .planner .pcard__meta{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--mute)}
@@ -55,7 +66,6 @@
 .planner .post__del:hover{border-color:#dc2626;color:#dc2626}
 .planner .post__hint{margin:8px 2px 0;font-size:.8rem;color:var(--mute)}
 .planner .post__vis{display:inline-block;font-size:.75rem;font-weight:700;border-radius:99px;padding:3px 10px;background:#fef3c7;color:#92400e}
-.planner .post__vis--private{background:var(--soft);color:var(--text2)}
 .planner .post__map{margin-bottom:18px}
 .planner .post__days{display:grid;gap:16px}
 .planner .post__day h2{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-size:1.05rem}
@@ -107,3 +117,41 @@
 .planner .pub__done p{margin:0}
 .planner .pub__link{display:flex;gap:8px}
 .planner .pub__link input{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:10px 12px;font:inherit;font-size:.85rem}
+
+/* 댓글 */
+.planner .pcard__cmt{display:inline-flex;align-items:center;gap:3px;margin-left:auto;font-style:normal}
+.planner .pcard__by .pcard__cmt .icon{width:13px;height:13px}
+.planner .cmt{margin-top:16px;display:grid;gap:14px}
+.planner .cmt h2{display:flex;align-items:center;gap:8px;margin:0;font-size:1.05rem}
+.planner .cmt h2>span{color:var(--blue)}
+.planner .cmt__msg{margin:0;color:var(--mute);font-size:.9rem}
+.planner .cmt__err{margin:0;color:#dc2626;font-size:.85rem}
+.planner .cmt__list{list-style:none;margin:0;padding:0;display:grid}
+.planner .cmt__item{display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px;padding:12px 0;border-top:1px solid var(--line)}
+.planner .cmt__item:first-child{border-top:0;padding-top:0}
+.planner .cmt__av{width:32px;height:32px;border-radius:50%;object-fit:cover}
+.planner .cmt__av--text{display:grid;place-items:center;background:var(--blue);color:#fff;font-weight:700;font-size:.85rem}
+.planner .cmt__main{display:grid;gap:4px;min-width:0}
+.planner .cmt__hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:0;font-size:.86rem}
+.planner .cmt__hd time,.planner .cmt__hd small{color:var(--mute);font-size:.8rem}
+.planner .cmt__badge{font-size:.7rem;font-weight:700;color:var(--blue);background:var(--badge-bg);border-radius:99px;padding:1px 7px}
+.planner .cmt__body{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65;color:var(--text2)}
+.planner .cmt__acts{display:flex;gap:4px;margin:0}
+.planner .cmt__acts button{display:inline-flex;align-items:center;gap:4px;border:0;background:none;color:var(--mute);font-size:.78rem;padding:4px 6px;margin-left:-6px;border-radius:8px}
+.planner .cmt__acts button:hover{color:var(--blue);background:var(--soft)}
+.planner .cmt__acts button+button{margin-left:0}
+.planner .cmt__confirm{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:2px 0 0;font-size:.85rem}
+.planner .cmt__confirm span{margin-right:4px}
+.planner .cmt .btn--sm{padding:6px 12px;font-size:.82rem}
+.planner .cmt .cmt__danger{border-color:#dc2626;color:#dc2626}
+.planner .cmt .cmt__danger:hover{background:#dc2626;color:#fff}
+.planner .cmt__write{display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px;padding-top:14px;border-top:1px solid var(--line)}
+.planner .cmt__form{display:grid;gap:8px}
+.planner .cmt__form textarea{width:100%;min-height:64px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:10px 12px;font:inherit;font-size:.95rem;line-height:1.6;resize:none;outline:0;box-sizing:border-box}
+.planner .cmt__form textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2563eb33}
+.planner .cmt__formbar{display:flex;align-items:center;gap:8px}
+.planner .cmt__formbar small{margin-right:auto;color:var(--mute);font-size:.76rem}
+.planner .cmt__login{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-radius:14px;background:var(--soft)}
+.planner .cmt__login p{margin:0;color:var(--text2);font-size:.9rem}
+.planner .cmt__login .acct__sso{width:auto;height:40px;padding:0 18px}
+@media (hover:none){.planner .cmt__formbar small{visibility:hidden}}

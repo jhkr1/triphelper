@@ -125,7 +125,6 @@ export function Leg({ from, to, countryCode, hidden = false }: { from: Place; to
     <li className={hidden ? "leg leg--hidden" : "leg"} aria-label={`${from.name}에서 ${to.name}까지`} aria-hidden={hidden || undefined}>
       <span className="leg__line" aria-hidden="true" />
       <span className="leg__info">
-        <Icon name={walk ? "walk" : "transit"} />
         {walk ? `도보 약 ${walkingMinutes(meters)}분 · ${formatDistance(meters)}` : `약 ${formatDistance(meters)}`}
         <a href={directionsUrl(a, b, countryCode, walk ? "walk" : "transit")} target="_blank" rel="noopener noreferrer" title={`${appName}에서 길찾기`}>
           {walk ? "길찾기" : "대중교통 길찾기"}<span className="sr-only"> ({appName}, 새 창)</span>
@@ -291,7 +290,7 @@ function StayRow({ stay, dayNo, countryCode, center, onSet, onRemove, onPickRequ
     return (
       <li className="stay stay--empty">
         <button type="button" className="stay__add" onClick={() => setOpen(true)}>
-          <Icon name="bed" />Day {dayNo} 밤 숙소 추가
+          <Icon name="plus" />Day {dayNo} 밤 숙소 추가
         </button>
       </li>
     );
@@ -509,10 +508,10 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
         ) : (
           trip.datesUnset ? (
             <button type="button" className="wx wx--cta" onClick={onOpenSetup}>
-              <Icon name="calendar" />날짜를 정하면 날씨 예보를 보여 드려요<span className="wx__go">날짜 정하기 ›</span>
+              날짜를 정하면 날씨 예보를 보여 드려요<span className="wx__go">날짜 정하기 ›</span>
             </button>
           ) : (
-            <span className="wx muted"><Icon name="calendar" />{(() => {
+            <span className="wx muted">{(() => {
               const gap = forecastGap(addDays(trip.start, day));
               if (gap.kind === "past") return "지난 날짜는 날씨 예보가 없어요";
               if (gap.kind === "soon") return "날씨 예보를 불러오는 중…";
@@ -524,13 +523,13 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
         <span className="sep">|</span>
         <span>환율 {rateText}</span>
         <button type="button" className="day-del" disabled={trip.days.length < 2} onClick={() => onRemoveDay(day)}>
-          <Icon name="x" />이 날 삭제
+          이 날 삭제
         </button>
       </div>
 
       <DropZone zone="basket" className="basket">
         <div className="basket__hd">
-          <b><Icon name="bag" />여행지 바구니</b>
+          <b>여행지 바구니</b>
           {view.basket.length > 0 && <span className="basket__n">{view.basket.length}</span>}
           <small>
             {drag && !basket.some((p) => p.id === drag.id) ? "여기에 놓으면 일정에서 빼서 보관합니다"
@@ -557,7 +556,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
 
       <DropZone zone="day" className="tl-zone">
       <SortableContext items={view.day.map((p) => p.id)} strategy={verticalListSortingStrategy}>
-      <ol className={view.day.length === 0 ? "tl tl--empty" : "tl"}>
+      <ol className={view.day.length === 0 ? "tl tl--empty" : "tl"} style={{ "--dc": dayColor(day) } as React.CSSProperties}>
         {prevStay && (
           <li className="stay stay--from">
             <span className="stay__ic" aria-hidden="true"><Icon name="bed" /></span>
@@ -592,7 +591,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
                     {p.category && <span className="tag">{p.category}</span>}
                   </div>
                   <div className="tags">
-                    {p.duration && <span className="tag"><Icon name="clock" />{p.duration}</span>}
+                    {p.duration && <span className="tag">{p.duration} 머묾</span>}
                     {!p.location && (
                       <button type="button" className="tag tag--warn" onClick={() => onPickRequest(p.id)}>
                         <Icon name="pin" />위치 미지정 · 지도에서 지정

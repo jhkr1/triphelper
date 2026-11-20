@@ -1,3 +1,4 @@
+import { getPhoto } from "@/lib/places";
 import { supabase } from "@/lib/supabase";
 import { checklistFor, createTrip, dateParts, newId, nightsBetween, placeholderStart, addDays, type PlannerCountry } from "@/lib/trip-model";
 import type { LatLng } from "@/types/destination";
@@ -6,16 +7,15 @@ import type { Place, Trip, TripDay } from "@/types/trip";
 /*
  * 게시판: 일정의 사본을 게시글로 올린다.
  * - 메모·숙소·날짜는 올리는 사람이 고른 만큼만 사본에 넣는다 (예약번호·묵는 곳·여행 날짜가 남에게 보이지 않게)
- * - 공개 범위: public(게시판 + 링크) · unlisted(링크를 가진 사람만) · private(나만)
+ * - 공개 범위: public(게시판 + 링크) · unlisted(링크를 가진 사람만). 나만 보는 일정은 '내 여행'에 있으니 따로 두지 않는다
  * - 글 한 건은 공유 코드로 get_post()를 불러 읽는다 (링크 공유 글은 표에서 목록으로 읽을 수 없음)
  */
 
-export type Visibility = "public" | "unlisted" | "private";
+export type Visibility = "public" | "unlisted";
 
 export const VISIBILITY: { id: Visibility; label: string; desc: string }[] = [
   { id: "public", label: "전체 공개", desc: "게시판 목록에 보이고, 누구나 볼 수 있어요" },
   { id: "unlisted", label: "링크 공유", desc: "목록에는 안 보이고, 링크를 받은 사람만 볼 수 있어요" },
-  { id: "private", label: "나만 보기", desc: "나만 볼 수 있어요" },
 ];
 
 export const TAGS = ["혼자", "친구", "커플", "가족", "아이와", "부모님과", "첫 여행", "맛집", "쇼핑", "자연", "역사·문화", "가성비", "뚜벅이", "렌터카"];
@@ -59,12 +59,15 @@ export interface PostSummary {
   tags: string[];
   placeCount: number;
   preview: [number, number][][];
+  /** 카드 대표 사진 (위키미디어, 최대 3장) */
+  covers: string[];
   publishedAt: string;
+  commentCount: number;
   nickname: string;
   avatar?: string;
 }
 
-export interface Post extends Omit<PostSummary, "preview" | "publishedAt"> {
+export interface Post extends Omit<PostSummary, "preview" | "covers" | "publishedAt"> {
   id: string;
   userId: string;
   summary: string;
@@ -150,9 +153,18 @@ export async function findMyPostForTrip(tripId: string): Promise<MyPostRef | nul
   return data ? { id: data.id, shareCode: data.share_code, title: data.title, summary: data.summary, tags: data.tags, visibility: data.visibility } : null;
 }
 
+const COVER_RE = /^https:\/\/(upload|thumb)\.wikimedia\.org\/[^\s"'<>]+$/;
+
+/** 카드 대표 사진: 동선 순서대로 사진이 있는 장소에서 최대 3장 (숙소 제외) */
+export async function pickCovers(t: Trip): Promise<string[]> {
+  const places = t.days.flatMap((d) => d.places).filter((p) => p.wiki || p.image).slice(0, 8);
+  const srcs = await Promise.all(places.map((p) => (p.wiki ? getPhoto(p.wiki).then((x) => x?.src ?? p.image) : Promise.resolve(p.image))));
+  return [...new Set(srcs.filter((s): s is string => Boolean(s && s.length <= 500 && COVER_RE.test(s))))].slice(0, 3);
+}
+
 /** 올리기 (existingId가 있으면 그 글을 새 내용으로 고친다). 공유 코드를 돌려준다 */
 export async function publishPost(t: Trip, o: PublishOptions, existingId?: string): Promise<string> {
-  const row = buildPost(t, o);
+  const row = { ...buildPost(t, o), covers: await pickCovers(t).catch(() => []) };
   const q = existingId
     ? supabase!.from("posts").update(row).eq("id", existingId).select("share_code").single()
     : supabase!.from("posts").insert({ ...row, trip_id: t.cloud?.id ?? null }).select("share_code").single();
@@ -173,7 +185,7 @@ export async function deletePost(id: string) {
 
 type Row = {
   share_code: string; title: string; country: string; city: string; nights: number; month: number | null; tags: string[];
-  place_count: number; preview: [number, number][][]; published_at: string; profiles: { nickname: string; avatar_url: string | null } | null;
+  place_count: number; preview: [number, number][][]; covers: string[] | null; published_at: string; comment_count: number; profiles: { nickname: string; avatar_url: string | null } | null;
 };
 
 export const NIGHT_FILTERS = [
@@ -190,7 +202,7 @@ export const PAGE_SIZE = 18;
 export async function listPosts(opts: { country?: string; nights?: NightFilter; before?: string }): Promise<PostSummary[]> {
   const f = NIGHT_FILTERS.find((x) => x.id === (opts.nights ?? "all"))!;
   let q = supabase!.from("posts")
-    .select("share_code, title, country, city, nights, month, tags, place_count, preview, published_at, profiles(nickname, avatar_url)")
+    .select("share_code, title, country, city, nights, month, tags, place_count, preview, covers, published_at, comment_count, profiles(nickname, avatar_url)")
     .eq("visibility", "public").gte("nights", f.min).lte("nights", f.max)
     .order("published_at", { ascending: false }).limit(PAGE_SIZE);
   if (opts.country) q = q.eq("country", opts.country);
@@ -199,7 +211,7 @@ export async function listPosts(opts: { country?: string; nights?: NightFilter; 
   if (error) throw error;
   return (data as unknown as Row[]).map((r) => ({
     shareCode: r.share_code, title: r.title, country: r.country, city: r.city, nights: r.nights, month: r.month, tags: r.tags,
-    placeCount: r.place_count, preview: r.preview ?? [], publishedAt: r.published_at,
+    placeCount: r.place_count, preview: r.preview ?? [], covers: r.covers ?? [], publishedAt: r.published_at, commentCount: r.comment_count ?? 0,
     nickname: r.profiles?.nickname ?? "여행자", ...(r.profiles?.avatar_url ? { avatar: r.profiles.avatar_url } : {}),
   }));
 }
@@ -214,9 +226,69 @@ export async function getPost(code: string): Promise<Post | null> {
     id: r.id as string, shareCode: r.share_code as string, userId: r.user_id as string, title: r.title as string, summary: r.summary as string,
     country: r.country as string, city: r.city as string, nights: r.nights as number, month: (r.month as number | null) ?? null,
     tags: (r.tags as string[]) ?? [], placeCount: r.place_count as number, data: r.data as PostData, visibility: r.visibility as Visibility,
-    publishedAt: (r.published_at as string | null) ?? null, updatedAt: r.updated_at as string,
+    publishedAt: (r.published_at as string | null) ?? null, updatedAt: r.updated_at as string, commentCount: (r.comment_count as number) ?? 0,
     nickname: (r.nickname as string) ?? "여행자", ...(r.avatar_url ? { avatar: r.avatar_url as string } : {}),
   };
+}
+
+/** '방금 · 5분 전 · 3시간 전 · 어제 · 12일 전 · 2026.11.3' */
+export function timeAgo(iso: string) {
+  const min = (Date.now() - Date.parse(iso)) / 60000;
+  if (min < 1) return "방금";
+  if (min < 60) return `${Math.floor(min)}분 전`;
+  if (min < 60 * 24) return `${Math.floor(min / 60)}시간 전`;
+  const d = min / 1440;
+  if (d < 2) return "어제";
+  if (d < 30) return `${Math.floor(d)}일 전`;
+  const t = new Date(iso);
+  return `${t.getFullYear()}.${t.getMonth() + 1}.${t.getDate()}`;
+}
+
+/* ───────── 댓글 ───────── */
+
+export const COMMENT_MAX = 1000;
+
+export interface Comment {
+  id: string;
+  userId: string;
+  body: string;
+  createdAt: string;
+  editedAt: string | null;
+  nickname: string;
+  avatar?: string;
+}
+
+const commentMessage = (e: unknown) => {
+  const m = e && typeof e === "object" && "message" in e ? String((e as { message: unknown }).message) : String(e);
+  return /너무 빨리|오늘 쓸 수|더 이상/.test(m) ? m : "잠시 뒤 다시 시도해 주세요.";
+};
+
+/** 공유 코드로 글의 댓글 (오래된 순) */
+export async function listComments(code: string): Promise<Comment[]> {
+  const { data, error } = await supabase!.rpc("get_comments", { code });
+  if (error) throw error;
+  return ((data as Record<string, unknown>[] | null) ?? []).map((r) => ({
+    id: r.id as string, userId: r.user_id as string, body: r.body as string, createdAt: r.created_at as string,
+    editedAt: (r.edited_at as string | null) ?? null, nickname: (r.nickname as string) ?? "여행자",
+    ...(r.avatar_url ? { avatar: r.avatar_url as string } : {}),
+  }));
+}
+
+export async function addComment(postId: string, body: string): Promise<{ id: string; createdAt: string }> {
+  const { data, error } = await supabase!.from("comments").insert({ post_id: postId, body: body.trim() }).select("id, created_at").single();
+  if (error) throw new Error(commentMessage(error));
+  return { id: data.id, createdAt: data.created_at };
+}
+
+export async function editComment(id: string, body: string): Promise<string> {
+  const { data, error } = await supabase!.from("comments").update({ body: body.trim() }).eq("id", id).select("edited_at").single();
+  if (error) throw new Error(commentMessage(error));
+  return data.edited_at;
+}
+
+export async function deleteComment(id: string) {
+  const { error } = await supabase!.from("comments").delete().eq("id", id);
+  if (error) throw new Error(commentMessage(error));
 }
 
 /* ───────── 보기 · 가져오기 ───────── */

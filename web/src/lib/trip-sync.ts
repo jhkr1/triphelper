@@ -1,8 +1,8 @@
-import type { RealtimeChannel } from "@supabase/supabase-js";
-import { authEnabled, authStore, db, type AuthSnapshot } from "@/lib/supabase";
+import type { RealtimeChannel, SupabaseClient } from "@supabase/supabase-js";
+import { authEnabled, authStore, db, dbForAccount, type AuthSnapshot } from "@/lib/supabase";
 import { LOADING, tripStore } from "@/lib/trip-store";
 import { describeChanges, mergeTrips, stableJson } from "@/lib/trip-merge";
-import { nightsBetween } from "@/lib/trip-model";
+import { checklistFor, nightsBetween, type PlannerCountry } from "@/lib/trip-model";
 import type { Checklist, Trip, TripRole } from "@/types/trip";
 
 /*
@@ -15,7 +15,7 @@ import type { Checklist, Trip, TripRole } from "@/types/trip";
  * 함께 짜는 일정
  * - 저장은 "마지막으로 맞춘 뒤 아무도 안 고쳤을 때만" 한다. 그사이 누가 저장했으면 장소 단위로 합친 뒤 다시 저장
  * - 다른 사람이 저장하면 실시간으로 알림을 받아 합친다
- * - 준비물은 사람마다 따로: 주인 것은 일정 안, 멤버 것은 trip_members.checklist
+ * - 준비물은 사람마다 따로: 본인만 읽을 수 있는 trip_checklists에 저장
  * - 보기만 하는 멤버는 일정을 저장하지 않는다 (준비물만)
  * - 저장할 때 "누가 무엇을 했는지" 활동 기록을 남긴다
  */
@@ -75,27 +75,20 @@ export async function listMyTrips(me: string): Promise<TripMeta[]> {
   });
 }
 
-/** 멤버의 첫 준비물: 주인의 목록을 빈 체크 상태로 */
-const blankChecklist = (c: Checklist | undefined): Checklist => ({ bags: c?.bags ?? {}, done: [] });
+const TRIP_FIELDS = "data, updated_at, user_id, trip_checklists(checklist)";
 
-export async function loadTrip(id: string, me: string): Promise<Trip> {
+export async function loadTrip(id: string, me: string, countries: PlannerCountry[]): Promise<Trip> {
   const sb = await db();
-  const { data, error } = await sb.from("trips").select("data, updated_at, user_id").eq("id", id).single();
+  const { data, error } = await sb.from("trips").select(TRIP_FIELDS)
+    .eq("id", id).eq("trip_checklists.user_id", me).single();
   if (error) throw error;
   const remote = data.data as Data;
-  let role: TripRole = "owner";
-  let checklist = remote.checklist;
-  let shared = false;
-  if (data.user_id === me) {
-    const { count } = await sb.from("trip_members").select("user_id", { count: "exact", head: true }).eq("trip_id", id);
-    shared = (count ?? 0) > 0;
-  } else {
-    const { data: m } = await sb.from("trip_members").select("role, checklist").eq("trip_id", id).eq("user_id", me).maybeSingle();
-    role = (m?.role as TripRole) ?? "viewer";
-    checklist = (m?.checklist as Checklist | null) ?? blankChecklist(remote.checklist);
-    shared = true;
-  }
-  const trip: Trip = { ...remote, checklist, cloud: { id, userId: me, savedAt: data.updated_at, role, shared } };
+  const access = await accessOf(id, data.user_id, me);
+  const country = countries.find((entry) => entry.slug === remote.country);
+  const checklist = data.trip_checklists[0]?.checklist as Checklist | undefined;
+  if (me !== userId) throw new Error("계정이 변경됐어요.");
+  const trip: Trip = { ...remote, checklist: checklist ?? (country ? checklistFor(country) : { bags: {}, done: [] }),
+    cloud: { id, userId: me, savedAt: data.updated_at, ...access } };
   adopt(trip);
   return trip;
 }
@@ -140,7 +133,8 @@ function adopt(t: Trip) {
 
 /** 지금 일정에 저장할 것이 남았는지 */
 function dirty(t: Trip): boolean {
-  if (!t.cloud || t.cloud.userId !== userId) return true;
+  if (!t.cloud) return true;
+  if (t.cloud.userId !== userId) return false;
   // DB와 맞춘 기준을 아직 모르면(새로 고침 직후) pull이 받아 올 때까지 기다린다 (바뀐 것 없이 다시 저장하지 않게)
   if (base?.id !== t.cloud.id) return false;
   const role = roleOf(t);
@@ -168,25 +162,27 @@ async function saveNow() {
   window.clearTimeout(timer);
   timer = undefined;
   const t = currentTrip();
-  if (!userId || !t) return;
+  const account = userId;
+  if (!account || !t || (t.cloud && t.cloud.userId !== account)) return;
   if (!t.cloud && !hasContent(t)) { setStatus({ state: "idle" }); return; }
   if (!dirty(t)) { if (t.cloud) setStatus({ state: "saved", at: t.cloud.savedAt }); return; }
   setStatus({ state: "saving" });
   try {
-    const sb = await db();
-    // 처음 저장: 새 일정 (다른 계정의 일정이었으면 onAuth에서 연결을 끊어 둠)
-    if (!t.cloud || t.cloud.userId !== userId) {
+    const sb = await dbForAccount(account);
+    if (account !== userId) return;
+    if (!t.cloud) {
       const { data, error } = await sb.from("trips").insert(rowOf(t)).select("id, updated_at").single();
       if (error) throw error;
-      finish(t, { ...t, cloud: { id: data.id, userId, savedAt: data.updated_at, role: "owner", shared: false } });
+      finish(t, { ...t, cloud: { id: data.id, userId: account, savedAt: data.updated_at, role: "owner", shared: false } });
       return;
     }
     const role = roleOf(t);
     const id = t.cloud.id;
     // 멤버의 준비물은 따로
     if (role !== "owner" && checklistKey(t) !== savedChecklist) {
-      const { error } = await sb.from("trip_members").update({ checklist: t.checklist }).eq("trip_id", id).eq("user_id", userId);
+      const { error } = await sb.from("trip_checklists").upsert({ trip_id: id, user_id: account, checklist: t.checklist });
       if (error) throw error;
+      if (account !== userId) return;
       savedChecklist = checklistKey(t);
     }
     const owner = role === "owner";
@@ -201,20 +197,23 @@ async function saveNow() {
       const { data, error } = await sb.from("trips").update(rowOf(local)).eq("id", id).eq("updated_at", local.cloud!.savedAt)
         .select("updated_at").maybeSingle();
       if (error) throw error;
+      if (account !== userId) return;
       if (data) {
         const saved: Trip = { ...local, cloud: { ...local.cloud!, savedAt: data.updated_at } };
         finish(t, saved);
-        if (saved.cloud!.shared && before) logActivity(id, describeChanges(before, payload(t)));
+        if (saved.cloud!.shared && before) logActivity(sb, id, describeChanges(before, payload(t)));
         return;
       }
       const remote = await sb.from("trips").select("data, updated_at").eq("id", id).maybeSingle();
       if (remote.error) throw remote.error;
       if (!remote.data) throw new Error("gone");
-      local = mergeInto(local, remote.data.data as Data, remote.data.updated_at);
+      if (account !== userId) return;
+      local = mergeInto(local, { ...remote.data.data, checklist: local.checklist } as Data, remote.data.updated_at);
       base = { id, data: remote.data.data as Data };
     }
     throw new Error("conflict");
   } catch (e) {
+    if (account !== userId) return;
     const message = e instanceof Error ? e.message : String(e);
     setStatus({
       state: "error",
@@ -227,6 +226,7 @@ async function saveNow() {
 
 /** 저장 끝: 그사이 다른 일정으로 바뀌지 않았으면 연결 정보와 합친 내용을 반영 */
 function finish(original: Trip, saved: Trip) {
+  if (saved.cloud?.userId !== userId) return;
   adopt(saved);
   const now = currentTrip();
   if (now && (now === original || (now.cloud?.id ?? null) === (original.cloud?.id ?? null))) {
@@ -238,9 +238,9 @@ function finish(original: Trip, saved: Trip) {
   if (after && dirty(after)) schedule();
 }
 
-async function logActivity(tripId: string, lines: string[]) {
+async function logActivity(sb: SupabaseClient, tripId: string, lines: string[]) {
   if (!lines.length) return;
-  try { await (await db()).from("trip_activity").insert(lines.map((text) => ({ trip_id: tripId, text }))); } catch { /* 기록은 실패해도 저장에는 영향 없음 */ }
+  try { await sb.from("trip_activity").insert(lines.map((text) => ({ trip_id: tripId, text }))); } catch { /* 기록은 실패해도 저장에는 영향 없음 */ }
 }
 
 function schedule() {
@@ -251,13 +251,16 @@ function schedule() {
   if (!dirty(t)) return;
   setStatus({ state: "pending" });
   window.clearTimeout(timer);
-  timer = window.setTimeout(() => { running = saveNow().finally(() => { running = null; }); }, DEBOUNCE_MS);
+  timer = window.setTimeout(() => { void flushSave(); }, DEBOUNCE_MS);
 }
 
 /** 기다리는 저장이 있으면 지금 저장하고 끝날 때까지 기다린다 (다른 일정을 열기 전 등) */
 export async function flushSave() {
-  if (timer !== undefined) await saveNow();
-  else if (running) await running;
+  while (running) await running;
+  if (timer !== undefined) {
+    running = saveNow().finally(() => { running = null; });
+    await running;
+  }
 }
 
 /** 함께 짜기를 시작했을 때(초대 링크를 만들었을 때) 지금 일정에 표시 */
@@ -267,13 +270,13 @@ export function markShared() {
 }
 
 /** 이 일정에서 나의 권한과 함께 짜는 중인지 (주인이 권한을 바꾸거나 멤버가 들고 날 수 있다) */
-async function accessOf(tripId: string, ownerId: string): Promise<{ role: TripRole; shared: boolean }> {
+async function accessOf(tripId: string, ownerId: string, me: string): Promise<{ role: TripRole; shared: boolean }> {
   const sb = await db();
-  if (ownerId === userId) {
+  if (ownerId === me) {
     const { count } = await sb.from("trip_members").select("user_id", { count: "exact", head: true }).eq("trip_id", tripId);
     return { role: "owner", shared: (count ?? 0) > 0 };
   }
-  const { data } = await sb.from("trip_members").select("role").eq("trip_id", tripId).eq("user_id", userId!).maybeSingle();
+  const { data } = await sb.from("trip_members").select("role").eq("trip_id", tripId).eq("user_id", me).maybeSingle();
   return { role: (data?.role as TripRole) ?? "viewer", shared: true };
 }
 
@@ -282,15 +285,19 @@ async function pull() {
   const t = currentTrip();
   if (!userId || !t?.cloud || t.cloud.userId !== userId) return;
   if (running) await running;
-  const { data } = await (await db()).from("trips").select("data, updated_at, user_id").eq("id", t.cloud.id).maybeSingle();
+  const { data, error } = await (await db()).from("trips").select(TRIP_FIELDS)
+    .eq("id", t.cloud.id).eq("trip_checklists.user_id", t.cloud.userId).maybeSingle();
+  if (error) throw error;
+  if (userId !== t.cloud.userId) return;
   const found = currentTrip();
   if (!found?.cloud || found.cloud.id !== t.cloud.id) return;
-  if (!data) { tripStore.set(payload(found) as Trip); return; } // 지워졌거나 멤버에서 빠짐 → 연결만 끊고 이 기기 내용은 남김
-  const access = await accessOf(found.cloud.id, data.user_id).catch(() => null);
+  if (!data) { tripStore.clear(); return; }
+  const access = await accessOf(found.cloud.id, data.user_id, userId).catch(() => null);
+  if (userId !== found.cloud.userId || currentTrip() !== found) return;
   const changed = access && (access.role !== roleOf(found) || access.shared !== Boolean(found.cloud.shared));
   const now: Trip & { cloud: NonNullable<Trip["cloud"]> } = changed ? { ...found, cloud: { ...found.cloud, ...access } } : { ...found, cloud: found.cloud };
   if (changed) tripStore.set(now);
-  const remote = data.data as Data;
+  const remote: Data = { ...data.data, checklist: data.trip_checklists[0]?.checklist ?? now.checklist };
   if (data.updated_at === now.cloud.savedAt) {
     // 마지막 저장 그대로: DB 내용이 합치는 기준 (내 준비물은 그대로)
     if (base?.id !== now.cloud.id) adopt({ ...remote, checklist: now.checklist, cloud: now.cloud });
@@ -343,17 +350,15 @@ function onAuth(a: AuthSnapshot) {
   userId = next;
   base = null;
   savedChecklist = "";
+  window.clearTimeout(timer);
+  timer = undefined;
+  window.clearTimeout(pullTimer);
+  if (prev && !next) tripStore.clear(prev);
   if (!next) {
-    window.clearTimeout(timer);
     setStatus({ state: "off" });
     watch(null).catch(() => {});
-    // 로그아웃: 이 기기의 내 일정은 지운다 (화면은 기본 일정으로 다시 시작)
-    if (prev && currentTrip()?.cloud?.userId === prev) tripStore.clear();
     return;
   }
-  const t = currentTrip();
-  // 다른 계정의 일정이 남아 있으면 연결을 끊고 새 일정으로 저장되게 한다
-  if (t?.cloud && t.cloud.userId !== next) tripStore.set(payload(t) as Trip);
   pull().catch(() => {}).finally(onTripChange);
 }
 

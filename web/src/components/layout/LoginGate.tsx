@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore, type ReactNode } from "react";
+import { Fragment, useState, useSyncExternalStore, type ReactNode } from "react";
 import { authEnabled, authStore, enabledProviders, PROVIDERS, signIn } from "@/lib/supabase";
 
 interface Props {
@@ -21,7 +21,7 @@ export function LoginGate({ title, desc, allowSharedLink, children }: Props) {
   if (!authEnabled) return <>{children}</>;
   // 첫 화면(서버에서 만든 HTML과 맞춰야 함)은 로그인 상태를 모르니 '불러오는 중'
   if (auth.status === "loading") return <p className="gate__wait">불러오는 중…</p>;
-  if (auth.status === "in" || guest) return <>{children}</>;
+  if (auth.status === "in" || guest) return <Fragment key={auth.status === "in" ? auth.me.id : "guest"}>{children}</Fragment>;
 
   const providers = PROVIDERS.filter((p) => enabledProviders().includes(p.id));
   return (

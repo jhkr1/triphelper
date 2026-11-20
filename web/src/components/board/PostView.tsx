@@ -114,6 +114,8 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
     const unsaved = t && !t.cloud && t.days.some((d) => d.places.length);
     if (unsaved && !confirm("지금 '내 여행'에 있는 저장되지 않은 일정이 이 동선으로 바뀝니다. 계속할까요?")) return;
     await flushSave(); // 저장된 일정은 '내 여행 목록'에 남는다
+    const active = authStore.getSnapshot();
+    if (active.status !== "in" || active.me.id !== meId) return;
     tripStore.set(postToTrip(post!, country));
     router.push("/trip/");
   }

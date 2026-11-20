@@ -365,6 +365,10 @@ export interface Photo {
 const PHOTO_KEY = "th-photos";
 const photoCache = new Map<string, Promise<Photo | null>>();
 
+export function isWikimediaImage(src: unknown): src is string {
+  return typeof src === "string" && /^https:\/\/(upload|thumb)\.wikimedia\.org\/[^\s"'<>\\]+$/u.test(src);
+}
+
 /** "도쿄 타워"는 한국어 위키백과에서, "ja:道頓堀"처럼 언어가 붙으면 그 언어 위키백과에서 대표 사진을 찾는다. 결과는 브라우저에 저장 */
 export function getPhoto(title: string): Promise<Photo | null> {
   if (!photoCache.has(title)) {

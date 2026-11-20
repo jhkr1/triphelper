@@ -54,7 +54,7 @@ export function TripPlanner({ countries }: { countries: PlannerCountry[] }) {
         try {
           const id = await acceptInvite(invite);
           await flushSave();
-          const t = await loadTrip(id, auth.me.id);
+          const t = await loadTrip(id, auth.me.id, countries);
           if (cancelled) return;
           tripStore.set(t);
           setNotice(`${t.city || countryOf(t.country)?.name || ""} 여행에 함께하게 됐어요`);

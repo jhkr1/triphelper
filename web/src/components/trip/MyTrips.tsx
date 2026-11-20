@@ -79,7 +79,7 @@ export function MyTrips({ trip, countries, onOpened, onNew, toast }: Props) {
     setBusy(id);
     try {
       await flushSave();
-      onOpened(await loadTrip(id, me.id));
+      onOpened(await loadTrip(id, me.id, countries));
       setOpen(false);
     } catch {
       toast("일정을 불러오지 못했어요. 잠시 뒤 다시 시도해 주세요.");

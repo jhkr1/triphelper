@@ -1,4 +1,4 @@
-import { getPhoto } from "@/lib/places";
+import { getPhoto, isWikimediaImage } from "@/lib/places";
 import { BASE_PATH } from "@/lib/site";
 import { db } from "@/lib/supabase";
 import { checklistFor, createTrip, dateParts, newId, nightsBetween, placeholderStart, addDays, type PlannerCountry } from "@/lib/trip-model";
@@ -100,7 +100,7 @@ function toPostPlace(p: Place, withMemo: boolean): PostPlace {
     ...(p.duration ? { duration: p.duration } : {}),
     ...(p.location ? { location: { lat: round5(p.location.lat), lng: round5(p.location.lng) } } : {}),
     ...(p.wiki ? { wiki: p.wiki } : {}),
-    ...(p.image ? { image: p.image } : {}),
+    ...(isWikimediaImage(p.image) ? { image: p.image } : {}),
     ...(withMemo && p.memo?.trim() ? { memo: p.memo.trim().slice(0, 500) } : {}),
   };
 }
@@ -155,13 +155,11 @@ export async function findMyPostForTrip(tripId: string): Promise<MyPostRef | nul
   return data ? { id: data.id, shareCode: data.share_code, title: data.title, summary: data.summary, tags: data.tags, visibility: data.visibility } : null;
 }
 
-const COVER_RE = /^https:\/\/(upload|thumb)\.wikimedia\.org\/[^\s"'<>]+$/;
-
 /** 카드 대표 사진: 동선 순서대로 사진이 있는 장소에서 최대 3장 (숙소 제외) */
 export async function pickCovers(t: Trip): Promise<string[]> {
   const places = t.days.flatMap((d) => d.places).filter((p) => p.wiki || p.image).slice(0, 8);
   const srcs = await Promise.all(places.map((p) => (p.wiki ? getPhoto(p.wiki).then((x) => x?.src ?? p.image) : Promise.resolve(p.image))));
-  return [...new Set(srcs.filter((s): s is string => Boolean(s && s.length <= 500 && COVER_RE.test(s))))].slice(0, 3);
+  return [...new Set(srcs.filter((s): s is string => Boolean(s && s.length <= 500 && isWikimediaImage(s))))].slice(0, 3);
 }
 
 /** 올리기 (existingId가 있으면 그 글을 새 내용으로 고친다). 공유 코드를 돌려준다 */

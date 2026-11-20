@@ -6,7 +6,7 @@ import type { GeoJSONSource, LngLatBounds as LngLatBoundsType, MapLibreMap, Mark
 import type { LatLng } from "@/types/destination";
 import type { Place, TripDay } from "@/types/trip";
 import { toLngLatTuple } from "@/lib/geo";
-import { getPhoto } from "@/lib/places";
+import { getPhoto, isWikimediaImage } from "@/lib/places";
 
 export const DAY_COLORS = ["#2563eb", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#0ea5e9"];
 export const dayColor = (i: number) => DAY_COLORS[i % DAY_COLORS.length];
@@ -146,7 +146,7 @@ export function TripMap({ days, mapDay, onMapDayChange, center, onPick }: Props)
         if (photoKey || p.image) {
           popup.on("open", async () => {
             const src = p.image ?? (photoKey ? (await getPhoto(photoKey))?.src : undefined);
-            if (src) popup.setHTML(`<div class="pop"><img src="${esc(src)}" alt="">${info}</div>`);
+            if (isWikimediaImage(src)) popup.setHTML(`<div class="pop"><img src="${esc(src)}" alt="">${info}</div>`);
           });
         }
         markersRef.current.push(new lib.Marker({ element: el }).setLngLat(toLngLatTuple(p.location!)).setPopup(popup).addTo(map));

@@ -37,6 +37,14 @@ export async function db(): Promise<SupabaseClient> {
   return c;
 }
 
+/** Keep every write in a pending save on the session that started it. */
+export async function dbForAccount(account: string) {
+  const { data: { session } } = await (await db()).auth.getSession();
+  if (!url || !key || session?.user.id !== account) throw new Error("계정이 변경됐어요.");
+  const { createClient } = await import("@supabase/supabase-js");
+  return createClient(url, key, { accessToken: async () => session.access_token });
+}
+
 /** supabase-js가 로그인 정보를 저장하는 이름 (sb-<프로젝트>-auth-token) */
 const STORAGE_KEY = url ? `sb-${new URL(url).hostname.split(".")[0]}-auth-token` : "";
 
@@ -108,6 +116,7 @@ function setSnapshot(next: AuthSnapshot) {
 /** 닉네임·사진은 DB 프로필에서만 (소셜 계정 사진은 쓰지 않음, 없으면 기본 그림) */
 async function loadMe(u: User) {
   const { data } = await (await db()).from("profiles").select("nickname, avatar_url").eq("id", u.id).maybeSingle();
+  if (snapshot.status !== "in" || snapshot.me.id !== u.id) return;
   const avatar = data?.avatar_url;
   setSnapshot({ status: "in", me: { id: u.id, nickname: data?.nickname ?? "여행자", ...(avatar ? { avatar } : {}) } });
 }
@@ -126,7 +135,8 @@ function start() {
     // 이 콜백 안에서 바로 DB를 부르면 인증 잠금과 엉켜 멈출 수 있어(Supabase 안내) 다음 차례로 미룬다
     else if (snapshot.status !== "in" || snapshot.me.id !== session.user.id) {
       const user = session.user;
-      setTimeout(() => { loadMe(user).catch(() => setSnapshot({ status: "in", me: { id: user.id, nickname: "여행자" } })); }, 0);
+      setSnapshot({ status: "in", me: { id: user.id, nickname: "여행자" } });
+      setTimeout(() => { loadMe(user).catch(() => {}); }, 0);
     }
     // 소셜 로그인에서 돌아온 주소의 ?code= 를 지운다
     if (event === "SIGNED_IN" && new URLSearchParams(window.location.search).has("code")) {

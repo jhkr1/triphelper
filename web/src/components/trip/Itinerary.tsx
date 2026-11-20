@@ -11,7 +11,7 @@ import { Icon, type IconName } from "@/components/ui/Icon";
 import { dayColor } from "@/components/trip/TripMap";
 import { dayLabel, dateParts, forecastGap, newId, sortByTime, addDays, addHours, nextSlot, insertAt, setStay } from "@/lib/trip-model";
 import { TimePicker } from "@/components/trip/TimePicker";
-import { fetchNearby, getPhoto, isConfident, searchPlace, type NearbyPlace, type Photo, type PlaceCandidate } from "@/lib/places";
+import { fetchNearby, getPhoto, isWikimediaImage, isConfident, searchPlace, type NearbyPlace, type Photo, type PlaceCandidate } from "@/lib/places";
 import { directionsUrl, distanceMeters, formatDistance, walkingMinutes, WALKABLE_METERS } from "@/lib/geo";
 import { weatherIcon, type DailyForecast } from "@/lib/weather";
 import type { Place, Trip } from "@/types/trip";
@@ -47,7 +47,7 @@ export function PlacePhoto({ place }: { place: Place }) {
     return () => { alive = false; };
   }, [key]);
 
-  if (place.image && !place.wiki) {
+  if (isWikimediaImage(place.image) && !place.wiki) {
     return (
       <figure className="stop__ph">
         {/* eslint-disable-next-line @next/next/no-img-element -- 위키미디어 외부 이미지 */}
@@ -58,7 +58,7 @@ export function PlacePhoto({ place }: { place: Place }) {
   }
   if (!key) return null;
   if (result?.key !== key) return <div className="stop__ph stop__ph--loading" />;
-  if (!result.photo) return null;
+  if (!result.photo || !isWikimediaImage(result.photo.src)) return null;
   return (
     <figure className="stop__ph">
       {/* eslint-disable-next-line @next/next/no-img-element -- 위키미디어 외부 이미지 */}

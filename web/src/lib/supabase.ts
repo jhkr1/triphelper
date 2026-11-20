@@ -165,3 +165,19 @@ export const authStore = {
   getSnapshot: (): AuthSnapshot => snapshot,
   getServerSnapshot: (): AuthSnapshot => LOADING,
 };
+
+/**
+ * 로그인 상태가 정해질 때까지 기다린다 (라이브러리를 받는 동안은 "loading").
+ * 일정 저장 칸이 계정마다 달라서, 확인 전에 일정을 넣으면 비로그인 칸에 들어갔다가 사라진다.
+ * 네트워크가 느려도 화면이 멈추지 않게 timeoutMs가 지나면 그때 상태를 돌려준다.
+ */
+export function authSettled(timeoutMs = 8000): Promise<AuthSnapshot> {
+  start();
+  if (snapshot.status !== "loading") return Promise.resolve(snapshot);
+  return new Promise((resolve) => {
+    const done = () => { listeners.delete(check); window.clearTimeout(timer); resolve(snapshot); };
+    const check = () => { if (snapshot.status !== "loading") done(); };
+    const timer = window.setTimeout(done, timeoutMs);
+    listeners.add(check);
+  });
+}

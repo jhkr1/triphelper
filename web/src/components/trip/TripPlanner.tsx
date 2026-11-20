@@ -13,7 +13,7 @@ import { CollabDialog } from "@/components/trip/CollabDialog";
 import { ActivityPanel } from "@/components/trip/ActivityPanel";
 import { MyTrips, SyncBadge } from "@/components/trip/MyTrips";
 import { PublishDialog } from "@/components/board/PublishDialog";
-import { authStore } from "@/lib/supabase";
+import { authSettled, authStore } from "@/lib/supabase";
 import {
   addDays, createTrip, dateParts, defaultTrip, nightsBetween, readSharedTrip, sampleTrip, shareUrl, withDatesUnset, type PlannerCountry,
 } from "@/lib/trip-model";
@@ -46,9 +46,12 @@ export function TripPlanner({ countries }: { countries: PlannerCountry[] }) {
     opened.current = true;
     let cancelled = false;
     (async () => {
+      // 일정 저장 칸이 계정마다 달라서 로그인 확인이 끝난 뒤에 연다
+      // (먼저 넣으면 비로그인 칸에 들어갔다가, 로그인이 확인되는 순간 내 계정 칸의 일정이나 기본 일정으로 바뀐다)
+      const auth = await authSettled();
+      if (cancelled) return;
       // 함께 짜기 초대 링크(?invite=): 멤버가 되고 그 일정을 연다 (이 화면은 로그인해야 열린다)
       const invite = new URLSearchParams(window.location.search).get("invite");
-      const auth = authStore.getSnapshot();
       if (invite && auth.status === "in") {
         history.replaceState(null, "", window.location.pathname);
         try {

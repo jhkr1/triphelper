@@ -55,7 +55,8 @@ button{font:inherit;cursor:pointer;color:inherit}
 
 /* 첫 화면 */
 /* 넓은 화면에서도 글과 지구본이 한 덩어리로 모이도록 내용 폭을 1280px로 묶고 가운데 둔다 */
-.stage{position:relative;min-height:min(100svh,900px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:center;gap:clamp(32px,6vw,96px);
+/* 화면 높이에서 푸터(약 78px)를 뺀 만큼 채우고 내용은 세로 가운데: 큰 화면에서도 위로 몰리지 않게 */
+.stage{position:relative;min-height:max(640px,calc(100svh - 78px));display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:center;gap:clamp(32px,6vw,96px);
   padding:136px max(clamp(16px,5vw,72px),calc((100% - 1280px) / 2)) 40px;overflow:hidden; /* 위 여백을 넉넉히: 내용이 화면 위로 붙어 보이지 않게 */
   background:radial-gradient(900px 620px at 72% 48%,var(--glow) 0%,transparent 62%),var(--bg)}
 .stage__copy{position:relative;z-index:2;max-width:540px}

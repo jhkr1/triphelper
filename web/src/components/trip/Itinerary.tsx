@@ -15,6 +15,7 @@ import { fetchNearby, isConfident, searchPlace, type NearbyPlace, type PlaceCand
 import { isWikimediaImage, knownPhoto, placePhoto, type Photo } from "@/lib/photos";
 import { directionsUrl, distanceMeters, formatDistance, walkingMinutes, WALKABLE_METERS } from "@/lib/geo";
 import { weatherIcon, type DailyForecast } from "@/lib/weather";
+import { canReorder, nearestOrder, type RouteOrder } from "@/lib/route-order";
 import type { Place, Trip } from "@/types/trip";
 
 interface Props {
@@ -505,6 +506,26 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
     updateTrip((t) => ({ ...t, basket: finalBasket, days: t.days.map((x, i) => (i === day ? { ...x, places: finalDay } : x)) }));
   }
 
+  /* 가까운 순으로 정리: 바로 바꾸지 않고 미리 보여 준 뒤 [적용]으로 확정 (함께 짜는 일정이면 모두의 일정이 바뀌므로) */
+  const [tidy, setTidy] = useState<{ day: number; sig: string; result: RouteOrder } | null>(null);
+  const placesSig = (list: Place[]) => list.map((p) => `${p.id}@${p.time}@${p.location?.lat ?? ""},${p.location?.lng ?? ""}`).join("|");
+  // 다른 날로 가거나 그사이 일정이 바뀌면(다른 사람이 고친 경우 포함) 미리보기는 사라진다
+  const tidyNow = tidy && tidy.day === day && tidy.sig === placesSig(places) ? tidy.result : null;
+
+  function previewTidy() {
+    const r = nearestOrder(places, prevStay?.location, stay?.location);
+    if (!r) { setTidy(null); toast("이미 가까운 순서입니다"); return; }
+    setTidy({ day, sig: placesSig(places), result: r });
+  }
+
+  function applyTidy() {
+    if (!tidy || !tidyNow) return;
+    const { sig, result } = tidy;
+    updatePlaces((list) => (placesSig(list) === sig ? result.places : list));
+    setTidy(null);
+    toast(`가까운 순으로 정리했습니다 · 총 이동 ${formatDistance(result.after)}`);
+  }
+
   /** 여행지 바구니 항목을 이 날 마지막에 넣기 (끌기 어려울 때) */
   function placeFromBasket(p: Place) {
     updateTrip((t) => ({
@@ -555,10 +576,38 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
         )}
         <span className="sep">|</span>
         <span>환율 {rateText}</span>
+        {canReorder(places) && (
+          <button type="button" className="tidy-btn" aria-expanded={Boolean(tidyNow)} onClick={() => (tidyNow ? setTidy(null) : previewTidy())}>
+            가까운 순으로 정리
+          </button>
+        )}
         <button type="button" className="day-del" disabled={trip.days.length < 2} onClick={() => onRemoveDay(day)}>
           이 날 삭제
         </button>
       </div>
+
+      {tidyNow && (
+        <section className="tidy" aria-label="가까운 순으로 정리 미리보기">
+          <p className="tidy__hd">
+            총 이동 <s>{formatDistance(tidyNow.before)}</s> → <b>{formatDistance(tidyNow.after)}</b>
+          </p>
+          <ol className="tidy__list">
+            {tidyNow.places.map((p, i) => (
+              <li key={p.id} className={p.id !== places[i]?.id ? "is-moved" : undefined}>
+                <span className="tidy__t">{p.time || "--:--"}</span>{p.name}
+              </li>
+            ))}
+          </ol>
+          <p className="tidy__note">
+            {prevStay || stay ? "숙소까지 포함한 " : ""}직선거리 기준이라 실제 이동 거리와 다를 수 있어요.
+            식당·공항·교통 일정과 위치가 없는 장소는 자리를 지킵니다.
+          </p>
+          <div className="tidy__acts">
+            <button type="button" className="btn" onClick={() => setTidy(null)}>취소</button>
+            <button type="button" className="btn btn--pri" onClick={applyTidy}>적용</button>
+          </div>
+        </section>
+      )}
 
       <DropZone zone="basket" className="basket">
         <div className="basket__hd">

@@ -148,6 +148,19 @@
 .planner .day-del{margin-left:auto;display:inline-flex;align-items:center;gap:4px;border:1px solid transparent;background:transparent;color:var(--mute);border-radius:99px;padding:5px 10px;font-size:.8rem;font-weight:600}
 .planner .day-del:hover:not([disabled]){border-color:#fecaca;background:#fef2f2;color:#dc2626}
 .planner .day-del[disabled]{opacity:.4;cursor:not-allowed}
+/* 가까운 순으로 정리 */
+.planner .tidy-btn{margin-left:auto;border:1px solid var(--badge-bd);background:var(--card);color:var(--ink);border-radius:99px;padding:5px 12px;font-size:.8rem;font-weight:600}
+.planner .tidy-btn:hover,.planner .tidy-btn[aria-expanded="true"]{border-color:var(--blue);color:var(--blue)}
+.planner .tidy-btn+.day-del{margin-left:0}
+.planner .tidy{margin:-6px 0 18px;border:1px solid var(--badge-bd);background:var(--badge-bg);border-radius:16px;padding:14px 16px}
+.planner .tidy__hd{margin:0 0 10px;font-size:.95rem}
+.planner .tidy__hd s{color:var(--mute)}
+.planner .tidy__hd b{color:var(--blue);font-weight:800}
+.planner .tidy__list{margin:0;padding:0 0 0 22px;display:grid;gap:4px;font-size:.88rem}
+.planner .tidy__list li.is-moved{font-weight:700}
+.planner .tidy__t{display:inline-block;min-width:48px;color:var(--mute);font-variant-numeric:tabular-nums;font-weight:500}
+.planner .tidy__note{margin:10px 0 0;font-size:.78rem;color:var(--mute);word-break:keep-all}
+.planner .tidy__acts{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
 .planner .edit-trip[aria-expanded="true"]{border-color:var(--blue);color:var(--blue)}
 @media (max-width:700px){.planner .setup__grid{grid-template-columns:1fr 1fr}}
 .planner .grid>*{min-width:0} /* Day 탭·공유 링크 같은 가로 스크롤 요소가 열 폭을 밀어내지 않게 */

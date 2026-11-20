@@ -1,8 +1,10 @@
 "use client";
 
-import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useSyncExternalStore, type ReactNode } from "react";
+// DARK MODE OFF: 다크 모드를 켜면 아래 두 줄을 이것으로 바꾼다
+// import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useSyncExternalStore, type ReactNode } from "react";
+// import { createLocalSetting } from "@/lib/local-setting";
+import { createContext, useContext, useMemo, type ReactNode } from "react";
 import { translate, type Lang, type MessageKey } from "@/i18n/messages";
-import { createLocalSetting } from "@/lib/local-setting";
 
 export type Theme = "light" | "dark";
 
@@ -18,7 +20,10 @@ const AppContext = createContext<AppContextValue | null>(null);
 
 // 한국어 전용 사이트: 예전에 English를 골라 저장해 둔 사람도 한국어로 보인다
 const LANG: Lang = "ko";
-const themeSetting = createLocalSetting<Theme>("theme", "light", ["light", "dark"]);
+// DARK MODE OFF — 다크 모드는 꺼 둠 (2026-11-20): 지도 가독성과 파란 강조색이 어두운 바탕과 맞지 않아서. 다시 켜려면 'DARK MODE OFF' 주석을 찾아 푼다.
+// const themeSetting = createLocalSetting<Theme>("theme", "light", ["light", "dark"]);
+const THEME: Theme = "light";
+const noop = () => {};
 
 /**
  * 테마(라이트/다크)와 문구(t)를 앱 전체에 제공한다. 언어는 한국어로 고정.
@@ -26,14 +31,17 @@ const themeSetting = createLocalSetting<Theme>("theme", "light", ["light", "dark
  * (테마는 layout의 인라인 스크립트가 그리기 전에 먼저 적용해 깜빡임을 막는다)
  */
 export function AppProviders({ children }: { children: ReactNode }) {
-  const theme = useSyncExternalStore(themeSetting.subscribe, themeSetting.getSnapshot, themeSetting.getServerSnapshot);
-
-  // 개발 모드(Strict Mode)에서 다시 마운트될 때도 테마 속성을 유지
-  useLayoutEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
-  const toggleTheme = useCallback(() => themeSetting.set(themeSetting.getSnapshot() === "dark" ? "light" : "dark"), []);
+  // DARK MODE OFF: 늘 밝은 모드. 다크 모드를 켜면 아래 주석을 풀고 이 두 줄을 지운다
+  const theme = THEME;
+  const toggleTheme = noop;
+  // const theme = useSyncExternalStore(themeSetting.subscribe, themeSetting.getSnapshot, themeSetting.getServerSnapshot);
+  //
+  // // 개발 모드(Strict Mode)에서 다시 마운트될 때도 테마 속성을 유지
+  // useLayoutEffect(() => {
+  //   document.documentElement.setAttribute("data-theme", theme);
+  // }, [theme]);
+  //
+  // const toggleTheme = useCallback(() => themeSetting.set(themeSetting.getSnapshot() === "dark" ? "light" : "dark"), []);
 
   const value = useMemo<AppContextValue>(
     () => ({ lang: LANG, t: (key, params) => translate(LANG, key, params), theme, toggleTheme }),

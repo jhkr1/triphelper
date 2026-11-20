@@ -31,7 +31,8 @@ function ProviderMark({ id }: { id: ProviderId }) {
  * 계정 · (휴대폰에서는) 주 메뉴 · 다크 모드 · 로그아웃이 한곳에 나온다.
  */
 export function AccountMenu() {
-  const { t, theme, toggleTheme } = useApp();
+  // DARK MODE OFF: 다크 모드를 켜면 theme, toggleTheme도 꺼낸다
+  const { t } = useApp();
   const pathname = usePathname();
   const auth = useSyncExternalStore(authStore.subscribe, authStore.getSnapshot, authStore.getServerSnapshot);
   const [open, setOpen] = useState(false);
@@ -50,7 +51,7 @@ export function AccountMenu() {
 
   const providers = PROVIDERS.filter((p) => enabledProviders().includes(p.id));
   const me = auth.status === "in" ? auth.me : null;
-  const dark = theme === "dark";
+  // const dark = theme === "dark"; // DARK MODE OFF
   const menuLabel = me ? "내 계정과 설정" : "로그인과 설정";
 
   return (
@@ -108,14 +109,15 @@ export function AccountMenu() {
             </Link>
           </nav>
 
-          {/* 설정 */}
+          {/* DARK MODE OFF: 다크 모드 스위치. 다크 모드를 켜면 되살린다
           <div className="acct__settings">
-            <button type="button" className="acct__row" role="switch" aria-checked={dark} onClick={toggleTheme}>
-              <Icon name={dark ? "moon" : "sun"} />
-              <span>{t("controls.darkMode")}</span>
-              <i className="acct__switch" aria-hidden="true" />
-            </button>
+          <button type="button" className="acct__row" role="switch" aria-checked={dark} onClick={toggleTheme}>
+          <Icon name={dark ? "moon" : "sun"} />
+          <span>{t("controls.darkMode")}</span>
+          <i className="acct__switch" aria-hidden="true" />
+          </button>
           </div>
+          */}
 
           {me && (
             <button type="button" className="acct__item acct__logout" onClick={async () => { await signOut(); setOpen(false); }}>

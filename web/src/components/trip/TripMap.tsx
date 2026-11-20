@@ -26,6 +26,12 @@ interface Props {
 // 숙소 = 둥근 네모 + 초승달 (아이콘 stay와 같은 모양)
 const BED_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14.5 3a9 9 0 1 0 6.6 15.1A7.3 7.3 0 0 1 14.5 3Z"/></svg>';
 
+// 지도 스타일: 사이트 테마(밝게·어둡게)를 따라간다 (OpenFreeMap, 무료)
+const MAP_STYLE = { light: "https://tiles.openfreemap.org/styles/positron", dark: "https://tiles.openfreemap.org/styles/dark" };
+// DARK MODE OFF: 늘 밝은 지도. 다크 모드를 켜면 아래 주석 줄로 바꾼다
+const mapStyle = () => MAP_STYLE.light;
+// const mapStyle = () => (document.documentElement.dataset.theme === "dark" ? MAP_STYLE.dark : MAP_STYLE.light);
+
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
 /**
@@ -36,7 +42,9 @@ export function TripMap({ days, mapDay, onMapDayChange, center, onPick }: Props)
   const boxRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<{ lib: MapLib; map: MapLibreMap } | null>(null);
   const markersRef = useRef<MarkerType[]>([]);
-  const [ready, setReady] = useState(false);
+  // 지도 스타일을 (다시) 불러올 때마다 1씩 늘어난다. 테마를 바꾸면 스타일이 바뀌며 경로 선이 지워져 다시 그려야 한다
+  const [styleRev, setStyleRev] = useState(0);
+  const ready = styleRev > 0;
   const [failed, setFailed] = useState(false);
   const pickRef = useRef(onPick);
   useLayoutEffect(() => { pickRef.current = onPick; });
@@ -49,20 +57,26 @@ export function TripMap({ days, mapDay, onMapDayChange, center, onPick }: Props)
       if (cancelled || !boxRef.current) return;
       // 번들 안에서는 worker 위치를 자동으로 찾지 못하므로, public/에 복사해 둔 파일을 지정 (package.json의 copy:maplibre-worker)
       lib.setWorkerUrl(withBase("/maplibre-gl-worker.mjs"));
+      let currentStyle = mapStyle();
       const map = new lib.Map({
         container: boxRef.current,
-        style: "https://tiles.openfreemap.org/styles/positron",
+        style: currentStyle,
         center: toLngLatTuple(initialCenter.current),
         zoom: 10,
         scrollZoom: true, // 마우스 휠로 확대/축소
       });
       map.addControl(new lib.NavigationControl({ showCompass: false }), "bottom-right");
-      map.on("load", () => {
+      map.on("style.load", () => {
         // 지명 레이어를 "한국어 이름 → 없으면 현지 이름" 순으로 (도로 번호 같은 레이어는 그대로)
         for (const layer of map.getStyle().layers) {
           const tf = layer.type === "symbol" ? layer.layout?.["text-field"] : undefined;
           if (tf && JSON.stringify(tf).includes("name")) {
             map.setLayoutProperty(layer.id, "text-field", ["coalesce", ["get", "name:ko"], ["get", "name"]]);
+            // 어두운 지도의 기본 지명은 너무 흐려서 밝게 (사이트 다크 모드 바탕색으로 테두리)
+            if (currentStyle === MAP_STYLE.dark) {
+              map.setPaintProperty(layer.id, "text-color", "#b9bcc2");
+              map.setPaintProperty(layer.id, "text-halo-color", "#121314");
+            }
           }
         }
         map.addSource("route", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
@@ -70,8 +84,17 @@ export function TripMap({ days, mapDay, onMapDayChange, center, onPick }: Props)
           id: "route", type: "line", source: "route",
           paint: { "line-color": ["get", "color"], "line-width": 3, "line-opacity": 0.75, "line-dasharray": [2, 2] },
         });
-        if (!cancelled) setReady(true);
+        if (!cancelled) setStyleRev((n) => n + 1);
       });
+      // 다크 모드를 켜고 끄면 지도도 바꾼다
+      const themeWatch = new MutationObserver(() => {
+        const next = mapStyle();
+        if (cancelled || next === currentStyle) return;
+        currentStyle = next;
+        map.setStyle(next);
+      });
+      themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      map.once("remove", () => themeWatch.disconnect());
       map.on("click", (e) => {
         const pick = pickRef.current;
         if (pick) pick({ lat: e.lngLat.lat, lng: e.lngLat.lng });
@@ -152,7 +175,7 @@ export function TripMap({ days, mapDay, onMapDayChange, center, onPick }: Props)
     });
     map.getSource<GeoJSONSource>("route")?.setData({ type: "FeatureCollection", features: lines });
     if (!bounds.isEmpty()) map.fitBounds(bounds, { padding: 70, maxZoom: 14, duration: 600 });
-  }, [ready, days, mapDay]);
+  }, [ready, styleRev, days, mapDay]);
 
   // 여행지(도시)가 바뀌면 그 위치로
   useEffect(() => {

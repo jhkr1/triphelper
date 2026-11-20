@@ -10,19 +10,31 @@
   --pin:#ef4444; --pin-ring:#ffffff; --label-halo:#ffffff;
   --plane-wing:#ffffff; --plane-keel:#a9c6f7; --plane-fold:#2563eb; --plane-edge:#7fa6e6; --plane-shadow:#1d4ed833; --trail:#8fb0e8;
   --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
+  /* 숙소(밤): 보라. 진한 색(--stay)은 아이콘·지도 표시, 옅은 색은 숙소 칸 바탕 */
+  --stay:#7c3aed; --stay-ink:#6d28d9; --stay-bg:#f5f3ff; --stay-bd:#ddd6fe; --stay-dash:#c4b5fd;
+  /* 흰 글씨를 올리는 강조 바탕 (다크 모드의 --blue는 글자용으로 밝아서 흰 글씨가 묻힌다) */
+  --accent-solid:#2563eb;
   color-scheme:light;
+  accent-color:#2563eb;
 }
+/* DARK MODE OFF: 지금은 data-theme="dark"가 붙지 않아 아래 다크 모드 색은 쓰이지 않는다. 남겨 둔 것 (다크 모드는 꺼 둠 (2026-11-20): 지도 가독성과 파란 강조색이 어두운 바탕과 맞지 않아서. 다시 켜려면 'DARK MODE OFF' 주석을 찾아 푼다.) */
 :root[data-theme="dark"]{
-  --bg:#0b1220; --soft:#0f172a; --card:#111b2e; --line:#1f2a44;
-  --ink:#f1f5f9; --text2:#cbd5e1; --text3:#a8b4c8; --mute:#94a3b8;
-  --blue:#60a5fa; --blue-d:#3b82f6; --btn:#2563eb; --sky:#38bdf8;
-  --glow:#12264d; --badge-bg:#10203f; --badge-bd:#23407a;
-  --shadow:0 10px 30px #0008; --shadow-sm:0 6px 20px #0006;
+  /* 중성 그래파이트: 푸른 기 없는 짙은 회색. 파란 강조색과 날짜별 색이 또렷하게 뜬다 */
+  --bg:#121314; --soft:#161719; --card:#1b1c1e; --line:#2c2e31;
+  --ink:#f2f2f3; --text2:#d4d5d8; --text3:#b4b6ba; --mute:#9b9ea4;
+  --blue:#6aa6ff; --blue-d:#3b82f6; --btn:#2563eb; --sky:#38bdf8;
+  --glow:#1a2233; --badge-bg:#18202e; --badge-bd:#2a3a58;
+  --shadow:0 10px 30px #0009; --shadow-sm:0 6px 20px #0007;
+  /* 지구본: 바다는 밤의 지구처럼 푸르게, 땅은 무채색 */
   --ocean1:#24478a; --ocean2:#17306a; --ocean3:#0c1c43;
-  --land:#223350; --land-stroke:#3b5380; --dest:#7c8aa5; --dest-stroke:#b4bfd3; --rim:#4b78c9; --grat:#8fb4ff;
-  --pin-ring:#0b1220; --label-halo:#0b1220;
+  --land:#2a2d33; --land-stroke:#464a53; --dest:#8a8f99; --dest-stroke:#c2c6cd; --rim:#4b78c9; --grat:#8fb4ff;
+  --pin-ring:#121314; --label-halo:#121314;
   --plane-wing:#eef4ff; --plane-keel:#6f9cf0; --plane-fold:#1d4ed8; --plane-edge:#c7d9ff; --plane-shadow:#0009; --trail:#4b78c9;
+  /* 어두운 바탕에서는 진한 보라가 묻혀 한 단계 밝은 보라, 숙소 칸 바탕은 카드색에 보라를 살짝 */
+  --stay:#a78bfa; --stay-ink:#c4b5fd; --stay-bg:#211e2b; --stay-bd:#3d3653; --stay-dash:#5e5288;
+  --accent-solid:#2563eb;
   color-scheme:dark;
+  accent-color:#3b82f6;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}

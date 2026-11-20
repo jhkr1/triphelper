@@ -35,7 +35,8 @@ export const viewport: Viewport = {
   themeColor: "#2563eb",
 };
 
-// 저장된 테마를 그리기 전에 적용해 다크 모드 깜빡임을 막는다
+// DARK MODE OFF: 저장된 테마를 그리기 전에 적용해 다크 모드 깜빡임을 막던 스크립트 (다크 모드를 켜면 head의 <script>와 함께 되살린다)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
 
 const jsonLd = [
@@ -70,7 +71,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="ko" data-theme="light" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* 인라인 스크립트는 브라우저에서 내용이 비어 보여 hydration 경고가 나므로 suppressHydrationWarning (Next.js 문서 방식) */}
-        <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* DARK MODE OFF: <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: themeScript }} /> */}
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="" />
         <link
           rel="stylesheet"

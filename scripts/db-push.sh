@@ -11,7 +11,7 @@ cd "$(dirname "$0")/.."
 [ -f supabase/.env ] || { echo "supabase/.env 에 SUPABASE_DB_URL 을 넣어 주세요"; exit 1; }
 . ./supabase/.env
 [ -n "$SUPABASE_DB_URL" ] || { echo "SUPABASE_DB_URL 이 비어 있어요"; exit 1; }
-run() { MSYS_NO_PATHCONV=1 docker exec -w /app triphelper-dev npx --yes supabase "$@"; }
+run() { MSYS_NO_PATHCONV=1 docker exec -w /app triphelper-dev npx --yes supabase@2 "$@"; }
 if [ "$1" = "--repair" ]; then
   versions=$(ls supabase/migrations | sed -n 's/^\([0-9]\{14\}\)_.*\.sql$/\1/p' | tr '\n' ' ')
   run migration repair --status applied $versions --db-url "$SUPABASE_DB_URL"

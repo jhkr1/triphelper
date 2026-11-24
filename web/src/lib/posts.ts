@@ -343,5 +343,43 @@ export function postToTrip(p: Post, country: PlannerCountry): Trip {
   return { ...base, datesUnset: true, days: postDays(p.data), checklist: checklistFor(country) };
 }
 
+/* ───────── 추천 동선 (빈 일정 시작하기) ───────── */
+
+/** 운영 계정 'TripHelper'. 나라별 추천 동선을 올린 계정 (로그인 수단 없음, web/scripts/seed-board-posts.mjs) */
+export const OPERATOR_ID = "7d1f0c3e-5a2b-4c8e-9f10-0a7e5b1c2d3e";
+
+/** 이 나라의 추천 동선 (운영 계정의 가장 최근 전체 공개 글). 없으면 null */
+export async function findStarterPost(country: string): Promise<Post | null> {
+  const { data, error } = await (await db()).from("posts")
+    .select("share_code").eq("user_id", OPERATOR_ID).eq("country", country).eq("visibility", "public")
+    .order("published_at", { ascending: false }).limit(1);
+  if (error) throw error;
+  const code = (data as { share_code: string }[] | null)?.[0]?.share_code;
+  return code ? getPost(code) : null;
+}
+
+/**
+ * 비어 있는 일정에 추천 동선을 채운다 (도시도 동선의 도시로). 일정 이름·날짜·저장 연결·바구니·체크리스트는 그대로 둔다.
+ * 동선이 더 길면 날짜를 늘리고(가는 날은 그대로), 일정이 더 길면 남는 날은 비워 둔다. 이미 정한 숙소는 남긴다.
+ */
+export function fillTripFromPost(t: Trip, p: Post): Trip {
+  const route = postDays(p.data);
+  const n = Math.max(route.length, t.days.length);
+  const days: TripDay[] = Array.from({ length: n }, (_, i) => {
+    const stay = t.days[i]?.stay ?? route[i]?.stay;
+    return { places: route[i]?.places ?? [], ...(stay ? { stay } : {}) };
+  });
+  // 마지막 날은 밤이 없다
+  const { stay: _, ...last } = days[n - 1]; // eslint-disable-line @typescript-eslint/no-unused-vars
+  days[n - 1] = last;
+  return {
+    ...t,
+    // 장소가 하나도 없던 일정이라 도시를 동선에 맞춰도 잃는 것이 없다 (지도 시작 위치·장소 검색 범위도 함께)
+    ...(p.data.city ? { city: p.data.city, center: p.data.center } : {}),
+    end: addDays(t.start, n - 1),
+    days,
+  };
+}
+
 /** 게시판 주소 */
 export const postUrl = (origin: string, code: string) => `${origin}${BASE_PATH}/board/post/?c=${encodeURIComponent(code)}`;

@@ -476,3 +476,31 @@
 .planner .activity__list b{color:var(--ink)}
 .planner .activity__list time{display:block;font-size:.74rem;color:var(--mute)}
 .planner .activity__more{justify-self:start;border:0;background:none;color:var(--blue);font:inherit;font-size:.82rem;font-weight:600;padding:2px 0;cursor:pointer}
+
+/* 빈 일정: 추천 동선으로 시작 (StarterRoute) */
+.planner .starter{margin:-8px 0 22px;padding:22px;border-radius:18px;background:var(--badge-bg);border:1px solid var(--badge-bd);display:grid;gap:16px}
+.planner .starter__hd h2{margin:0 0 6px;font-size:1.2rem;font-weight:800;letter-spacing:-.01em}
+.planner .starter__hd p{margin:0;font-size:.94rem;line-height:1.6;color:var(--text2)}
+.planner .starter__card{display:flex;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.planner .starter__covers{flex:1 1 240px;min-height:200px;display:grid;gap:2px;background:var(--card)}
+.planner .starter__covers img{display:block;width:100%;height:100%;object-fit:cover;background:var(--line)}
+.planner .starter__covers--2{grid-template-columns:1fr 1fr}
+.planner .starter__covers--3{grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr}
+.planner .starter__covers--3 img:first-child{grid-row:1/3}
+.planner .starter__body{flex:999 1 320px;min-width:0;padding:20px 22px;display:grid;gap:12px;align-content:start}
+.planner .starter__meta{font-size:.82rem;color:var(--text3)}
+.planner .starter__body h3{margin:-6px 0 0;font-size:1.1rem;line-height:1.4;font-weight:800}
+.planner .starter__days{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:.9rem}
+.planner .starter__days li{display:flex;align-items:center;gap:10px;min-width:0}
+.planner .starter__dot{flex:none;width:8px;height:8px;border-radius:50%}
+.planner .starter__days b{flex:none;width:44px}
+.planner .starter__route{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2)}
+.planner .starter__note{margin:0;font-size:.82rem;line-height:1.5;color:var(--text3)}
+.planner .starter__acts{display:flex;flex-wrap:wrap;gap:8px}
+.planner .starter__skip{margin:0;font-size:.88rem;color:var(--text3)}
+.planner .starter__skip button{border:0;background:none;padding:0;font:inherit;color:var(--text2);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+@media (max-width:560px){.planner .starter{padding:16px}.planner .starter__covers{min-height:150px}.planner .starter__acts .btn{flex:1 1 100%;justify-content:center}}
+
+/* 버튼이 있는 알림 (되돌리기) */
+.planner .toast--act.on{pointer-events:auto;display:flex;align-items:center;gap:14px;padding:8px 8px 8px 18px}
+.planner .toast--act button{border:0;border-radius:99px;background:var(--bg);color:var(--ink);font:700 .85rem var(--sans);padding:8px 14px;cursor:pointer}

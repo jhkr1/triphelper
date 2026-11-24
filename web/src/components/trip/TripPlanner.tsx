@@ -25,6 +25,11 @@ import { flagUrl } from "@/lib/geo";
 import { BASE_PATH } from "@/lib/site";
 import type { LatLng } from "@/types/destination";
 import type { Place, Trip } from "@/types/trip";
+import { StarterRoute } from "@/components/trip/StarterRoute";
+import { fillTripFromPost, type Post } from "@/lib/posts";
+
+/** 알림 안의 버튼 (예: 되돌리기) */
+interface ToastAction { label: string; run: () => void }
 
 const DEFAULT_COUNTRY = "south-korea";
 
@@ -168,7 +173,7 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
   const viewer = role === "viewer";
   const closePublish = useCallback(() => setPublishOpen(false), []);
   const [pickTarget, setPickTarget] = useState<{ day: number; id: string } | null>(null);
-  const [toastMsg, setToastMsg] = useState<{ text: string; n: number } | null>(null);
+  const [toastMsg, setToastMsg] = useState<{ text: string; n: number; action?: ToastAction } | null>(null);
   // 공유 링크는 압축이 비동기라 일정이 바뀔 때마다 미리 만들어 둔다. 주소는 지금 열린 사이트 기준 (로컬에서 만든 링크가 배포 사이트의 없는 주소로 가지 않도록)
   // 누르는 순간 바로 공유 창·복사를 열어야 휴대폰(특히 사파리)이 막지 않는다.
   const [link, setLink] = useState<{ trip: Trip; url: string } | null>(null);
@@ -190,10 +195,11 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
   const toastTimer = useRef<number | undefined>(undefined);
   const safeDay = Math.min(day, trip.days.length - 1);
 
-  const toast = useCallback((text: string) => {
-    setToastMsg((t) => ({ text, n: (t?.n ?? 0) + 1 }));
+  // action: 알림 안의 버튼 (되돌리기 등). 누를 시간을 주려고 더 오래 보인다
+  const toast = useCallback((text: string, action?: ToastAction) => {
+    setToastMsg((t) => ({ text, n: (t?.n ?? 0) + 1, ...(action ? { action } : {}) }));
     window.clearTimeout(toastTimer.current);
-    toastTimer.current = window.setTimeout(() => setToastMsg(null), 2000);
+    toastTimer.current = window.setTimeout(() => setToastMsg(null), action ? 8000 : 2000);
   }, []);
   useEffect(() => () => window.clearTimeout(toastTimer.current), []);
 
@@ -353,6 +359,34 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
   const nights = nightsBetween(trip.start, trip.end);
   const totalPlaces = trip.days.reduce((s, d) => s + d.places.length, 0);
 
+  // 추천 동선이 없는 나라의 빈 일정: 쓰는 법을 보여 주는 예시 일정(도쿄)
+  const japan = countryOf("japan");
+  const sampleCta = japan ? (
+    <div className="sample-cta">
+      <span>어떻게 쓰는지 보고 싶다면 예시 일정(도쿄 3박 4일)을 불러와 보세요.</span>
+      <button className="btn" type="button" onClick={() => { tripStore.set(sampleTrip(japan)); setDay(0); setMapDay("all"); }}>
+        예시 일정 보기
+      </button>
+    </div>
+  ) : null;
+
+  /** 빈 일정에 추천 동선 채우기 (되돌리기는 채우기 전 일정으로) */
+  function startFromPost(p: Post) {
+    const before = trip;
+    update((t) => fillTripFromPost(t, p));
+    setDay(0);
+    setMapDay("all");
+    toast(`추천 동선 ${p.placeCount}곳을 넣었어요`, {
+      label: "되돌리기",
+      // 저장 연결(cloud)은 지금 것을 두고 내용만 되돌린다 (그사이 저장된 시각이 바뀌었을 수 있다)
+      run: () => {
+        update((t) => ({ ...t, city: before.city, center: before.center, end: before.end, days: before.days }));
+        setDay(0);
+        setMapDay("all");
+      },
+    });
+  }
+
   return (
     <div className={viewer ? "wrap is-viewer" : "wrap"}>
       <div className="hd">
@@ -434,13 +468,9 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
 
       {setupOpen && <TripSetup trip={trip} countries={countries} onApply={applySetup} onCancel={() => setSetupOpen(false)} />}
 
-      {totalPlaces === 0 && !setupOpen && countryOf("japan") && (
-        <div className="sample-cta">
-          <span>어떻게 쓰는지 보고 싶다면 예시 일정(도쿄 3박 4일)을 불러와 보세요.</span>
-          <button className="btn" type="button" onClick={() => { tripStore.set(sampleTrip(countryOf("japan")!)); setDay(0); setMapDay("all"); }}>
-            예시 일정 보기
-          </button>
-        </div>
+      {/* 빈 일정: 그 나라 추천 동선이 있으면 그걸로 시작하게, 없으면 예시 일정 안내 */}
+      {totalPlaces === 0 && !setupOpen && !viewer && (
+        <StarterRoute trip={trip} countryName={country.name} onApply={startFromPost} fallback={sampleCta} />
       )}
 
       <div className="seg" role="tablist" aria-label="내 여행">
@@ -497,7 +527,12 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
         />
       )}
 
-      <div className={toastMsg ? "toast on" : "toast"} role="status" aria-live="polite">{toastMsg?.text}</div>
+      <div className={`toast${toastMsg ? " on" : ""}${toastMsg?.action ? " toast--act" : ""}`} role="status" aria-live="polite">
+        {toastMsg?.text}
+        {toastMsg?.action && (
+          <button type="button" onClick={() => { toastMsg.action!.run(); setToastMsg(null); }}>{toastMsg.action.label}</button>
+        )}
+      </div>
     </div>
   );
 }

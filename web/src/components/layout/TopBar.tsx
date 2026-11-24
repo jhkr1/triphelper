@@ -49,6 +49,7 @@ export function Footer() {
   return (
     <footer className="foot footer">
       <p>{t("footer.text")}</p>
+      <p className="foot__links"><Link href="/privacy/">개인정보처리방침</Link></p>
     </footer>
   );
 }

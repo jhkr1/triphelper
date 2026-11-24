@@ -8,6 +8,8 @@ export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "https://jhkr1.github.io";
 /** 끝에 / 없음. 예: https://jhkr1.github.io/triphelper */
 export const SITE_URL = SITE_ORIGIN + BASE_PATH;
+/** 개인정보 보호책임자·문의 이메일 (개인정보처리방침에 공개됨). 비어 있으면 '준비 중'으로 보인다 */
+export const CONTACT_EMAIL = "";
 /** public/ 폴더 파일 주소 (예: withBase("/maplibre-gl-worker.mjs")) */
 export const withBase = (path: string) => BASE_PATH + path;
 

@@ -95,6 +95,7 @@ export function AccountMenu() {
                   <ProviderMark id={p.id} />{p.label}로 계속하기
                 </button>
               ))}
+              <p className="acct__note">로그인하면 <Link href="/privacy/" onClick={() => setOpen(false)}>개인정보처리방침</Link>에 따라 정보를 처리해요.</p>
               {error && <p className="acct__err" role="alert">{error}</p>}
             </div>
           ) : null}

@@ -247,6 +247,10 @@ h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-sp
 .back:hover{background:var(--btn);border-color:var(--btn);color:#fff}
 .foot{background:var(--bg);border-top:1px solid var(--line);color:var(--mute);text-align:center;padding:28px 16px;font-size:.82rem}
 .foot p{margin:0}
+.foot__links{margin-top:8px!important}
+.foot__links a{color:var(--text2);font-weight:700;text-decoration:none}
+.foot__links a:hover{text-decoration:underline}
+.gate small a,.acct__note a{color:inherit;text-decoration:underline}
 
 /* 등장 연출 */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}
@@ -332,6 +336,7 @@ a{color:inherit}
 .acct__sso:focus-visible,.acct__item:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .acct__item{width:100%;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 12px;font:inherit;font-size:.9rem;cursor:pointer}
 .acct__item:hover{border-color:var(--blue);color:var(--blue)}
+.acct__note{margin:0;font-size:.75rem;color:var(--mute);word-break:keep-all}
 .acct__err{margin:0;font-size:.8rem;color:#dc2626}
 @media (max-width:560px){.acct__name{max-width:5em}}
 

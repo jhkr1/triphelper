@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Fragment, useState, useSyncExternalStore, type ReactNode } from "react";
 import { authEnabled, authStore, enabledProviders, PROVIDERS, signIn } from "@/lib/supabase";
 
@@ -43,6 +44,7 @@ export function LoginGate({ title, desc, allowSharedLink, children }: Props) {
       </div>
       {err && <p className="gate__err" role="alert">{err}</p>}
       <small>친구에게 받은 일정·게시글 링크는 로그인 없이 볼 수 있어요.</small>
+      <small>로그인하면 <Link href="/privacy/">개인정보처리방침</Link>에 따라 정보를 처리해요.</small>
     </section>
   );
 }

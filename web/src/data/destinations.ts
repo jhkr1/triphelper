@@ -7934,6 +7934,323 @@ export const destinations: Destination[] = [
       "drivingSide": "left"
     },
     "reviewedAt": "2026-11-19"
+  },
+  {
+    "slug": "guam",
+    "countryCode": "gu",
+    "isoNumeric": null,
+    "center": { "lat": 13.44, "lng": 144.79 },
+    "name": "괌",
+    "nameEn": "Guam",
+    "keywords": ["괌", "guam", "투몬", "tumon", "미국령 괌"],
+    "flag": "🇬🇺",
+    "languageCode": "en-US",
+    "summary": "에메랄드빛 바다와 쇼핑을 가까이서 즐기는 미국령 휴양지 괌 여행 가이드.",
+    "summaryEn": "Guide for traveling to Guam, a US island resort close to Korea with clear seas and shopping.",
+    "currency": { "code": "USD", "name": "미국 달러", "nameEn": "US Dollar", "symbol": "$" },
+    "manners": [
+      { "title": "팁 문화", "description": "미국식 팁 문화가 있습니다. 식당에서는 보통 음식값의 10~15%를 팁으로 주는데, 계산서에 봉사료(service charge)가 이미 붙어 있으면 따로 주지 않아도 됩니다. 호텔 객실 청소나 짐을 들어 준 직원에게도 1~2달러 정도를 줍니다." },
+      { "title": "차모로 문화 존중", "description": "괌의 원주민인 차모로족의 문화와 유적(라테 스톤 등)을 소중히 여깁니다. 유적 위에 올라가거나 돌을 가져가지 마세요." },
+      { "title": "해변 안전", "description": "산호초 바깥쪽은 물살이 갑자기 세지는 곳이 있습니다. 안전요원이 있는 해변을 이용하고, 경고 깃발과 안내판을 꼭 확인하세요. 산호와 바다 생물은 만지지 않는 것이 예의이자 안전입니다." },
+      { "title": "운전 예절", "description": "차는 오른쪽으로 다니고 제한속도가 낮은 편(시내 대부분 시속 35마일 이하)입니다. 스쿨버스가 정지 신호를 켜면 양방향 차량 모두 멈춰야 합니다." }
+    ],
+    "souvenirs": [
+      { "title": "차모로 공예품", "description": "라테 스톤 모양 장식품, 코코넛·조개로 만든 공예품이 괌다운 기념품입니다. 차모로 빌리지 야시장이나 기념품 가게에서 살 수 있습니다." },
+      { "title": "아웃렛 의류", "description": "괌 프리미어 아웃렛(GPO) 등에서 미국 브랜드 의류·신발을 할인된 가격에 살 수 있습니다." },
+      { "title": "영양제·화장품", "description": "미국 브랜드 영양제와 화장품을 약국과 대형 마트에서 쉽게 찾을 수 있습니다. 면세 한도는 귀국 전에 확인하세요." },
+      { "title": "괌 기념 소품", "description": "괌 로고가 들어간 티셔츠, 마그넷, 에코백은 부담 없는 선물로 좋습니다." }
+    ],
+    "market": [
+      { "title": "ABC 스토어", "description": "투몬 호텔가 곳곳에 있는 편의점형 상점으로 음료, 간식, 선크림, 기념품을 한 번에 살 수 있습니다." },
+      { "title": "대형 마트", "description": "현지 대형 마트에서는 물, 과일, 간식, 미국 과자를 호텔 근처보다 저렴하게 살 수 있습니다. 렌터카가 있으면 들르기 좋습니다." },
+      { "title": "약국", "description": "진통제, 소화제, 멀미약 같은 일반의약품을 처방전 없이 살 수 있습니다. 평소 먹는 약은 한국에서 챙겨 가세요." },
+      { "title": "판매세", "description": "괌에는 물건값에 따로 붙는 판매세가 없어 표시된 가격대로 계산하는 경우가 대부분입니다." }
+    ],
+    "essentials": [
+      { "title": "전기 어댑터", "description": "괌은 미국과 같은 A·B 타입 콘센트(110V, 60Hz)를 씁니다. 11자 모양 플러그 어댑터가 필요하고, 220V 전용 기기는 변압기가 있어야 합니다." },
+      { "title": "렌터카", "description": "대중교통이 많지 않아 렌터카나 쇼핑몰 셔틀버스를 주로 이용합니다. 렌터카를 빌릴 계획이면 국제운전면허증과 한국 운전면허증을 함께 챙기세요." },
+      { "title": "자외선 차단", "description": "햇볕이 매우 강합니다. 선크림, 모자, 선글라스, 래시가드를 준비하세요." },
+      { "title": "여행자 보험", "description": "미국령이라 병원비가 매우 비쌉니다. 의료비를 넉넉히 보장하는 여행자 보험을 꼭 들어 두세요." },
+      { "title": "여행경보 확인", "description": "출발 전 외교부 해외안전여행 누리집(0404.go.kr)에서 최신 여행경보와 안전 정보를 확인하세요." },
+      { "title": "여행하기 좋은 시기", "description": "건기인 12월~6월이 날씨가 가장 좋습니다. 7월~11월은 우기이자 태풍이 오는 시기라 일정에 여유를 두고 기상 예보를 확인하세요." }
+    ],
+    "visa": [
+      { "title": "비자 없이 45일", "description": "한국인은 괌·북마리아나 제도 비자면제 프로그램으로 관광 목적이면 비자 없이 최대 45일까지 머물 수 있고, 이때는 미국 ESTA가 없어도 됩니다. 45일보다 오래 머물거나 미국 본토를 함께 들르면 ESTA(최대 90일)나 비자가 필요합니다. 여권은 체류 기간 이상 유효해야 하고 돌아가는 항공권이 있어야 합니다. 입국 조건은 바뀔 수 있으니 출발 전 항공사와 주한미국대사관 안내를 확인하세요." }
+    ],
+    "visaEn": [
+      { "title": "45 Days Without a Visa", "description": "Korean tourists can stay up to 45 days without a visa under the Guam-CNMI Visa Waiver Program, with no ESTA required. Longer stays or trips that include the US mainland need an ESTA (up to 90 days) or a visa. Check the latest rules with your airline before departure." }
+    ],
+    "cities": [
+      { "name": "Tumon", "nameKo": "투몬" },
+      { "name": "Hagatna", "nameKo": "하갓냐" },
+      { "name": "Tamuning", "nameKo": "타무닝" }
+    ],
+    "phraseSet": "english",
+    "profile": {
+      "capital": "Hagåtña",
+      "capitalKo": "하갓냐",
+      "region": "Oceania · Micronesia",
+      "regionKo": "오세아니아 · 미크로네시아",
+      "population": 154000,
+      "languages": ["English", "Chamorro"],
+      "languagesKo": ["영어", "차모로어"],
+      "drivingSide": "right"
+    },
+    "reviewedAt": "2026-11-24"
+  },
+  {
+    "slug": "mongolia",
+    "countryCode": "mn",
+    "isoNumeric": 496,
+    "center": { "lat": 47.92, "lng": 106.92 },
+    "name": "몽골",
+    "nameEn": "Mongolia",
+    "keywords": ["몽골", "mongolia", "울란바토르", "ulaanbaatar", "테를지", "고비"],
+    "flag": "🇲🇳",
+    "languageCode": "mn-MN",
+    "summary": "끝없는 초원과 게르, 별이 쏟아지는 밤하늘을 만나는 몽골 여행 가이드.",
+    "summaryEn": "Guide for traveling to Mongolia, with endless steppe, ger camps and starry skies.",
+    "currency": { "code": "MNT", "name": "몽골 투그릭", "nameEn": "Mongolian Tögrög", "symbol": "₮" },
+    "manners": [
+      { "title": "게르 예절", "description": "게르에 들어갈 때 문턱을 밟지 말고, 안에서는 시계 방향으로 움직입니다. 가운데 기둥에 기대거나 그 사이를 지나가지 않는 것이 예의입니다." },
+      { "title": "음식 받기", "description": "차나 음식을 권하면 오른손이나 두 손으로 받고, 조금이라도 맛보는 것이 좋습니다. 거절할 때도 살짝 입에 대는 시늉을 하면 예의 바르게 여깁니다." },
+      { "title": "어워(돌무더기)", "description": "길가의 어워(오보)는 신성한 곳입니다. 지나갈 때는 시계 방향으로 세 바퀴 돌며 돌을 하나 올리는 풍습이 있고, 돌이나 장식을 가져가면 안 됩니다." },
+      { "title": "사진 촬영", "description": "유목민 가족이나 승려를 찍을 때는 먼저 허락을 구하세요. 사원 안은 촬영 요금을 따로 받거나 촬영을 금지하는 곳이 있습니다." }
+    ],
+    "souvenirs": [
+      { "title": "캐시미어", "description": "몽골은 캐시미어 산지로 유명합니다. 울란바토르의 브랜드 매장에서 스웨터, 머플러, 양말을 품질 좋게 살 수 있습니다." },
+      { "title": "몽골 보드카", "description": "몽골 보드카는 선물로 인기가 많습니다. 주류는 면세 한도(1인 2병, 합계 2L·400달러 이하)를 넘지 않게 사세요." },
+      { "title": "펠트 공예품", "description": "양털 펠트로 만든 게르 모형, 실내화, 인형은 가볍고 몽골다운 기념품입니다." },
+      { "title": "마두금 기념품", "description": "말머리 장식이 달린 전통 현악기 마두금의 작은 모형이 기념품으로 많이 팔립니다." }
+    ],
+    "market": [
+      { "title": "국영 백화점", "description": "울란바토르 시내의 국영 백화점(State Department Store) 위층에 기념품·캐시미어 매장이 모여 있어 한 번에 둘러보기 좋습니다." },
+      { "title": "한국 편의점·마트", "description": "울란바토르에는 한국 편의점과 대형 마트가 많아 익숙한 간식과 생필품을 쉽게 살 수 있습니다." },
+      { "title": "약국", "description": "시내 약국에서 기본 상비약을 살 수 있지만 시외로 나가면 구하기 어렵습니다. 멀미약, 지사제, 진통제는 한국에서 챙겨 가세요." },
+      { "title": "현금과 카드", "description": "울란바토르에서는 카드 결제가 잘 되지만 게르 캠프나 시골 상점은 현금만 받는 곳이 많습니다. 시외로 나가기 전에 투그릭 현금을 준비하세요." }
+    ],
+    "essentials": [
+      { "title": "전기 어댑터", "description": "몽골은 C·E 타입 콘센트(230V, 50Hz)를 씁니다. 한국 플러그가 대부분 그대로 들어갑니다. 게르 캠프는 전기 사용 시간이 정해져 있는 곳이 있어 보조배터리를 챙기세요." },
+      { "title": "옷차림", "description": "여름에도 일교차가 매우 커서 밤에는 쌀쌀합니다. 바람막이와 얇은 패딩, 긴바지를 준비하세요. 초원에서는 햇볕이 강해 선크림과 모자가 필요합니다." },
+      { "title": "이동 시간", "description": "도시 사이 거리가 멀고 비포장길이 많아 생각보다 이동이 오래 걸립니다. 시외 일정은 기사가 딸린 투어 차량을 이용하는 것이 일반적입니다." },
+      { "title": "여행자 보험", "description": "시외에서는 병원이 멀고 의료 시설이 부족합니다. 응급 이송까지 보장하는 여행자 보험을 권합니다." },
+      { "title": "여행경보 확인", "description": "출발 전 외교부 해외안전여행 누리집(0404.go.kr)에서 최신 여행경보와 안전 정보를 확인하세요." },
+      { "title": "여행하기 좋은 시기", "description": "6월~8월이 가장 여행하기 좋습니다. 7월 중순에는 전통 축제 나담이 열려 붐비니 숙소를 일찍 예약하세요. 겨울은 영하 30도 아래로 내려가는 날이 많습니다." }
+    ],
+    "visa": [
+      { "title": "무비자 입국 (한시 시행)", "description": "한국인은 관광 목적으로 최대 90일간 비자 없이 입국할 수 있습니다. 다만 이 비자 면제는 한시 조치로 2026년 12월 31일까지로 안내되어 있어, 그 뒤 여행이라면 연장 여부를 주몽골 대한민국 대사관이나 항공사에서 꼭 확인하세요. 여권은 입국일 기준 6개월 이상 남아 있어야 합니다." }
+    ],
+    "visaEn": [
+      { "title": "Visa-Free Entry (Temporary)", "description": "Korean tourists can enter visa-free for up to 90 days. The waiver is a temporary measure announced to run until 31 December 2026, so check whether it has been extended before later trips. Your passport must be valid for at least six months on arrival." }
+    ],
+    "cities": [
+      { "name": "Ulaanbaatar", "nameKo": "울란바토르" },
+      { "name": "Kharkhorin", "nameKo": "하르허린" },
+      { "name": "Dalanzadgad", "nameKo": "달란자드가드" }
+    ],
+    "phraseSet": "mongolian",
+    "profile": {
+      "capital": "Ulaanbaatar",
+      "capitalKo": "울란바토르",
+      "region": "Asia · Eastern Asia",
+      "regionKo": "아시아 · 동아시아",
+      "population": 3500000,
+      "languages": ["Mongolian"],
+      "languagesKo": ["몽골어"],
+      "drivingSide": "right"
+    },
+    "reviewedAt": "2026-11-24"
+  },
+  {
+    "slug": "czech-republic",
+    "countryCode": "cz",
+    "isoNumeric": 203,
+    "center": { "lat": 50.08, "lng": 14.42 },
+    "name": "체코",
+    "nameEn": "Czech Republic",
+    "keywords": ["체코", "czech", "czechia", "체코 공화국", "프라하", "prague", "체스키크룸로프"],
+    "flag": "🇨🇿",
+    "languageCode": "cs-CZ",
+    "summary": "동화 같은 붉은 지붕과 중세 골목을 걷는 프라하·체코 여행 가이드.",
+    "summaryEn": "Guide for traveling to the Czech Republic, with Prague's red rooftops and medieval lanes.",
+    "currency": { "code": "CZK", "name": "체코 코루나", "nameEn": "Czech Koruna", "symbol": "Kč" },
+    "manners": [
+      { "title": "팁 문화", "description": "식당에서는 서비스가 만족스러우면 음식값의 10% 안팎을 팁으로 줍니다. 계산할 때 직원에게 팁을 포함한 금액을 말하면 됩니다. 계산서에 봉사료가 이미 붙어 있는지 먼저 확인하세요." },
+      { "title": "인사", "description": "가게나 식당에 들어갈 때 '도브리 덴(안녕하세요)', 나올 때 '나 스흘레다노우(안녕히 계세요)'라고 인사하면 친절하게 맞아 줍니다." },
+      { "title": "대중교통 표", "description": "프라하 트램·지하철 표는 처음 탈 때 개찰기에 찍어(유효화) 시간을 시작해야 합니다. 앱으로 산 표는 탑승 전에 활성화하세요. 검표원이 불시에 검사하며 벌금이 큽니다." },
+      { "title": "소지품 주의", "description": "카를교, 구시가 광장, 붐비는 트램에서는 소매치기를 조심하세요. 가방은 앞으로 메고 휴대폰을 테이블 위에 두지 마세요." }
+    ],
+    "souvenirs": [
+      { "title": "보헤미안 크리스털", "description": "체코는 유리·크리스털 공예로 유명합니다. 잔, 화병, 장식품을 전문 매장에서 사면 품질 보증서를 받을 수 있습니다." },
+      { "title": "마리오네트 인형", "description": "체코 전통 인형극에서 쓰는 마리오네트가 대표 기념품입니다. 손으로 만든 제품은 값이 꽤 나가니 매장을 비교해 보세요." },
+      { "title": "맥주 화장품", "description": "맥주 효모를 넣은 샴푸·비누 같은 체코 브랜드 화장품이 선물로 인기입니다." },
+      { "title": "온천 웨하스", "description": "카를로비바리 온천 지역의 동그란 웨하스(오플라트키)는 가볍고 달콤한 간식 선물입니다." }
+    ],
+    "market": [
+      { "title": "슈퍼마켓", "description": "알베르트(Albert), 빌라(Billa), 리들(Lidl) 같은 슈퍼마켓에서 체코 맥주, 초콜릿, 과자를 저렴하게 살 수 있습니다." },
+      { "title": "드러그스토어", "description": "dm 같은 드러그스토어에서 유럽 화장품, 비타민, 생활용품을 살 수 있습니다." },
+      { "title": "약국", "description": "약국(Lékárna)에서 기본 상비약을 살 수 있습니다. 녹색 십자 간판을 찾으세요." },
+      { "title": "환전 주의", "description": "관광지 환전소는 '수수료 없음'이라고 써 놓고 환율이 나쁜 곳이 많습니다. 카드 결제나 은행 ATM을 이용하고, 카드 결제 때 원화가 아닌 코루나로 결제하세요." }
+    ],
+    "essentials": [
+      { "title": "전기 어댑터", "description": "체코는 E 타입 콘센트(230V, 50Hz)를 씁니다. 대부분의 한국 플러그가 들어가지만 접지 핀 모양 때문에 안 맞는 경우가 있어 멀티 어댑터를 챙기면 안심입니다." },
+      { "title": "대중교통 앱", "description": "프라하 대중교통 표는 공식 앱(PID Lítačka)으로 살 수 있어 편리합니다. 24시간·72시간 표가 있어 여행 일정에 맞춰 고르세요." },
+      { "title": "편한 신발", "description": "구시가와 성 주변은 돌길과 오르막이 많습니다. 쿠션 좋은 운동화를 신으세요." },
+      { "title": "여행자 보험", "description": "쉥겐 지역 여행에는 의료비를 보장하는 여행자 보험을 권합니다." },
+      { "title": "여행경보 확인", "description": "출발 전 외교부 해외안전여행 누리집(0404.go.kr)에서 최신 여행경보와 안전 정보를 확인하세요." },
+      { "title": "여행하기 좋은 시기", "description": "5월~9월이 날씨가 좋고 해가 깁니다. 12월에는 크리스마스 마켓이 열려 겨울 여행으로도 인기가 많습니다." }
+    ],
+    "visa": [
+      { "title": "무비자 입국 (쉥겐 90일)", "description": "한국인은 관광 목적으로 쉥겐 지역 전체에서 180일 중 최대 90일까지 비자 없이 머물 수 있습니다. 여권은 쉥겐 지역을 떠나는 날로부터 3개월 이상 남아 있어야 하고 발급된 지 10년이 지나지 않아야 합니다. 유럽 출입국 시스템(EES)으로 입국 때 지문과 얼굴 사진을 등록할 수 있고, 사전 여행 허가(ETIAS)는 시행 전이므로 출발 전 시행 여부를 확인하세요." }
+    ],
+    "visaEn": [
+      { "title": "Visa-Free Entry (Schengen 90 Days)", "description": "Korean tourists can stay visa-free in the Schengen Area for up to 90 days within any 180-day period. Your passport must be valid for three months beyond departure and issued within the last ten years. ETIAS has not started yet; check its status before you travel." }
+    ],
+    "cities": [
+      { "name": "Prague", "nameKo": "프라하" },
+      { "name": "Cesky Krumlov", "nameKo": "체스키크룸로프" },
+      { "name": "Brno", "nameKo": "브르노" },
+      { "name": "Karlovy Vary", "nameKo": "카를로비바리" }
+    ],
+    "phraseSet": "czech",
+    "profile": {
+      "capital": "Prague",
+      "capitalKo": "프라하",
+      "region": "Europe · Central Europe",
+      "regionKo": "유럽 · 중앙유럽",
+      "population": 10900000,
+      "languages": ["Czech"],
+      "languagesKo": ["체코어"],
+      "drivingSide": "right"
+    },
+    "reviewedAt": "2026-11-24"
+  },
+  {
+    "slug": "united-arab-emirates",
+    "countryCode": "ae",
+    "isoNumeric": 784,
+    "center": { "lat": 25.2, "lng": 55.27 },
+    "name": "아랍에미리트",
+    "nameEn": "United Arab Emirates",
+    "keywords": ["아랍에미리트", "uae", "united arab emirates", "두바이", "dubai", "아부다비", "abu dhabi"],
+    "flag": "🇦🇪",
+    "languageCode": "ar-AE",
+    "summary": "사막 위 초고층 빌딩과 전통 시장이 공존하는 두바이·아부다비 여행 가이드.",
+    "summaryEn": "Guide for traveling to the UAE, where desert skyscrapers meet traditional souks in Dubai and Abu Dhabi.",
+    "currency": { "code": "AED", "name": "아랍에미리트 디르함", "nameEn": "UAE Dirham", "symbol": "AED" },
+    "manners": [
+      { "title": "옷차림", "description": "쇼핑몰이나 관공서 같은 공공장소에서는 어깨와 무릎을 가리는 옷이 무난합니다. 모스크에 들어갈 때는 팔다리를 가리고, 여성은 머리카락도 가려야 합니다." },
+      { "title": "공공장소 예절", "description": "공공장소에서 지나친 애정 표현, 큰 소리 다툼, 무례한 손짓은 처벌받을 수 있습니다. 술은 허가받은 호텔·식당 등에서만 마시고 길에서 취한 모습을 보이지 마세요." },
+      { "title": "사진 촬영", "description": "현지인, 특히 여성을 허락 없이 찍지 마세요. 정부 건물이나 군사 시설은 촬영이 금지된 곳이 있습니다." },
+      { "title": "라마단", "description": "라마단 기간에는 해가 떠 있는 동안 공공장소에서 먹고 마시는 것을 삼가는 것이 예의입니다. 식당 운영 시간이 바뀌니 미리 확인하세요." }
+    ],
+    "souvenirs": [
+      { "title": "대추야자(데이츠)", "description": "견과류나 초콜릿을 넣은 고급 대추야자는 중동을 대표하는 선물입니다. 선물용 상자로 예쁘게 포장해 팝니다." },
+      { "title": "아랍 향수", "description": "우드(침향) 향이 짙은 아랍 전통 향수와 향(바쿠르)이 인기입니다. 향수 시장(수크)에서 원하는 향을 시향해 보고 고를 수 있습니다." },
+      { "title": "낙타 우유 초콜릿", "description": "낙타 우유로 만든 초콜릿은 두바이에서만 볼 수 있는 이색 기념품입니다." },
+      { "title": "금 장신구", "description": "두바이 골드 수크에서는 무게와 순도에 따라 값을 매기는 금 장신구를 살 수 있습니다. 가격 흥정이 가능합니다." }
+    ],
+    "market": [
+      { "title": "대형 마트", "description": "까르푸(Carrefour), 룰루(Lulu) 같은 대형 마트에서 대추야자, 향신료, 아랍 과자를 저렴하게 살 수 있습니다." },
+      { "title": "쇼핑몰", "description": "두바이 몰, 몰 오브 더 에미리츠 같은 대형 쇼핑몰은 쇼핑뿐 아니라 더위를 피하는 실내 관광지 역할도 합니다." },
+      { "title": "약국과 상비약", "description": "일부 감기약·진통제 성분은 반입이 제한됩니다. 처방약을 가져갈 때는 영문 처방전을 챙기고, 반입 가능 여부를 미리 확인하세요." },
+      { "title": "부가세 환급", "description": "물건값에 부가세(5%)가 붙으며, 관광객은 등록된 매장에서 산 물건의 부가세를 출국할 때 환급받을 수 있습니다. 구매 시 여권을 보여 주세요." }
+    ],
+    "essentials": [
+      { "title": "전기 어댑터", "description": "아랍에미리트는 G 타입 콘센트(230V, 50Hz, 영국식 3핀)를 씁니다. 한국 플러그는 들어가지 않으니 어댑터가 필요합니다." },
+      { "title": "교통카드", "description": "두바이 지하철·버스는 놀(Nol) 카드로 탑니다. 지하철에는 여성·어린이 전용 칸과 프리미엄 칸이 있어 일반석 표로 타면 벌금을 낼 수 있습니다." },
+      { "title": "더위 대비", "description": "여름(6월~9월)에는 낮 기온이 40도를 훌쩍 넘습니다. 야외 일정은 아침이나 해 질 녘에 잡고 물을 자주 마시세요. 실내는 냉방이 강해 얇은 겉옷이 필요합니다." },
+      { "title": "여행자 보험", "description": "의료비가 비싼 편이라 의료비를 넉넉히 보장하는 여행자 보험을 권합니다." },
+      { "title": "여행경보 확인", "description": "중동 정세에 따라 안전 상황이 바뀔 수 있습니다. 출발 전 외교부 해외안전여행 누리집(0404.go.kr)에서 최신 여행경보와 안전 정보를 확인하세요." },
+      { "title": "여행하기 좋은 시기", "description": "11월~3월이 덥지 않아 여행하기 가장 좋습니다. 주말은 토·일요일이고, 금요일 낮에는 예배 시간 때문에 문을 늦게 여는 곳이 있습니다." }
+    ],
+    "visa": [
+      { "title": "무비자 입국", "description": "한국인은 관광 목적으로 최대 90일간 비자 없이 입국할 수 있습니다. 여권은 입국일 기준 6개월 이상 남아 있어야 합니다. 입국 조건은 바뀔 수 있으니 출발 전 항공사나 주한 아랍에미리트 대사관 안내를 확인하세요." }
+    ],
+    "visaEn": [
+      { "title": "Visa-Free Entry", "description": "Korean tourists can enter the UAE visa-free for up to 90 days. Your passport must be valid for at least six months on arrival. Check the latest rules with your airline before departure." }
+    ],
+    "cities": [
+      { "name": "Dubai", "nameKo": "두바이" },
+      { "name": "Abu Dhabi", "nameKo": "아부다비" },
+      { "name": "Sharjah", "nameKo": "샤르자" }
+    ],
+    "phraseSet": "arabic",
+    "profile": {
+      "capital": "Abu Dhabi",
+      "capitalKo": "아부다비",
+      "region": "Asia · Western Asia",
+      "regionKo": "아시아 · 서아시아",
+      "population": 10700000,
+      "languages": ["Arabic", "English"],
+      "languagesKo": ["아랍어", "영어"],
+      "drivingSide": "right"
+    },
+    "reviewedAt": "2026-11-24"
+  },
+  {
+    "slug": "laos",
+    "countryCode": "la",
+    "isoNumeric": 418,
+    "center": { "lat": 19.89, "lng": 102.14 },
+    "name": "라오스",
+    "nameEn": "Laos",
+    "keywords": ["라오스", "laos", "루앙프라방", "luang prabang", "방비엥", "vang vieng", "비엔티안", "vientiane"],
+    "flag": "🇱🇦",
+    "languageCode": "lo-LA",
+    "summary": "느린 메콩강과 사원의 아침, 방비엥의 자연을 즐기는 라오스 여행 가이드.",
+    "summaryEn": "Guide for traveling to Laos, with the slow Mekong, temple mornings and Vang Vieng's nature.",
+    "currency": { "code": "LAK", "name": "라오스 낍", "nameEn": "Lao Kip", "symbol": "₭" },
+    "manners": [
+      { "title": "탁밧(새벽 탁발) 예절", "description": "루앙프라방의 새벽 탁발 행렬은 신앙 의식입니다. 멀리서 조용히 보고, 플래시를 터뜨리거나 승려 앞을 가로막지 마세요. 공양에 참여할 때는 무릎을 꿇거나 앉아서 하고, 어깨와 무릎을 가리는 옷을 입습니다." },
+      { "title": "사원 예절", "description": "사원에 들어갈 때는 신발과 모자를 벗고 어깨와 무릎을 가립니다. 여성은 승려의 몸에 닿거나 물건을 직접 건네지 않는 것이 예의입니다." },
+      { "title": "머리와 발", "description": "머리는 신성하게 여겨 다른 사람, 특히 아이의 머리를 쓰다듬지 않습니다. 발로 사람이나 불상을 가리키지 마세요." },
+      { "title": "인사", "description": "두 손을 가슴 앞에 모으고 '싸바이디'라고 인사합니다. 화를 내거나 큰 소리를 내는 것은 무례하게 여깁니다." }
+    ],
+    "souvenirs": [
+      { "title": "라오 커피", "description": "남부 볼라벤 고원에서 나는 라오스 커피가 선물로 인기입니다. 원두와 분쇄 커피 모두 팝니다." },
+      { "title": "실크·직물", "description": "손으로 짠 라오스 실크 스카프와 전통 치마(신)는 품질 좋은 기념품입니다. 루앙프라방 야시장과 공방에서 살 수 있습니다." },
+      { "title": "몽족 자수 공예", "description": "산악 소수민족인 몽족이 만든 자수 파우치와 가방은 색감이 화려해 선물로 좋습니다." },
+      { "title": "말린 과일·과자", "description": "말린 망고, 바나나 칩 같은 가벼운 간식이 부담 없는 선물입니다." }
+    ],
+    "market": [
+      { "title": "야시장", "description": "루앙프라방과 비엔티안의 야시장에서 공예품, 직물, 간식을 구경하고 흥정하며 살 수 있습니다." },
+      { "title": "편의점·마트", "description": "비엔티안과 관광지에는 편의점과 소형 마트가 있어 물, 간식, 세면도구를 쉽게 살 수 있습니다." },
+      { "title": "약국", "description": "도시 약국에서 기본 상비약을 살 수 있지만 지방에서는 구하기 어렵습니다. 지사제, 해열제, 모기 기피제는 한국에서 챙겨 가세요." },
+      { "title": "현금 준비", "description": "카드를 받지 않는 곳이 많아 현금(낍)이 필요합니다. 큰 도시에는 ATM이 있지만 지방에서는 찾기 어려우니 미리 넉넉히 뽑아 두세요." }
+    ],
+    "essentials": [
+      { "title": "전기 어댑터", "description": "라오스는 230V, 50Hz이며 A·B·C·E·F 타입 콘센트가 섞여 있습니다. 한국 플러그가 들어가는 곳이 많지만 멀티 어댑터를 챙기면 안심입니다." },
+      { "title": "라오스-중국 철도", "description": "비엔티안·방비엥·루앙프라방은 고속 열차로 이어져 이동이 편해졌습니다. 표는 여권 정보로 사며 성수기에는 일찍 매진되니 미리 예매하세요." },
+      { "title": "모기·위생", "description": "모기 기피제와 긴 옷을 준비하고, 물은 생수를 사서 드세요." },
+      { "title": "여행자 보험", "description": "의료 시설이 부족해 큰 병원은 태국 등 이웃 나라로 이송하기도 합니다. 응급 이송까지 보장하는 여행자 보험을 권합니다." },
+      { "title": "여행경보 확인", "description": "북부 보께오주의 골든트라이앵글 경제특구는 외교부가 여행금지 지역으로 지정한 적이 있는 곳입니다. 출발 전 외교부 해외안전여행 누리집(0404.go.kr)에서 최신 여행경보를 꼭 확인하세요." },
+      { "title": "여행하기 좋은 시기", "description": "건기인 11월~2월이 선선하고 비가 적어 가장 여행하기 좋습니다. 3월~5월은 매우 덥고, 6월~10월은 우기입니다." }
+    ],
+    "visa": [
+      { "title": "무비자 입국", "description": "한국인은 관광 목적으로 최대 30일간 비자 없이 입국할 수 있습니다. 여권은 입국일 기준 6개월 이상 남아 있어야 합니다. 30일보다 오래 머물려면 비자가 필요하니 출발 전 주한 라오스 대사관이나 항공사 안내를 확인하세요." }
+    ],
+    "visaEn": [
+      { "title": "Visa-Free Entry", "description": "Korean tourists can enter Laos visa-free for up to 30 days. Your passport must be valid for at least six months on arrival. Longer stays need a visa." }
+    ],
+    "cities": [
+      { "name": "Luang Prabang", "nameKo": "루앙프라방" },
+      { "name": "Vientiane", "nameKo": "비엔티안" },
+      { "name": "Vang Vieng", "nameKo": "방비엥" },
+      { "name": "Pakse", "nameKo": "팍세" }
+    ],
+    "phraseSet": "lao",
+    "profile": {
+      "capital": "Vientiane",
+      "capitalKo": "비엔티안",
+      "region": "Asia · South-Eastern Asia",
+      "regionKo": "아시아 · 동남아시아",
+      "population": 7700000,
+      "languages": ["Lao"],
+      "languagesKo": ["라오어"],
+      "drivingSide": "right"
+    },
+    "reviewedAt": "2026-11-24"
   }
 ];
 

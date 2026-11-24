@@ -2844,5 +2844,459 @@ export const attractions: Record<string, Attraction[]> = {
       "city": "웰링턴",
       "summary": "뉴질랜드 테 파파 통가레와 박물관은 뉴질랜드의 국립박물관으로, 웰링턴 케이블 스트리트에 위치하고 있다."
     }
+  ],
+  "guam": [
+    {
+      "name": "투몬 만",
+      "nameEn": "Tumon Bay",
+      "wiki": "en:Tumon Bay",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tumon_Bay.JPG?width=480",
+      "location": {
+        "lat": 13.5139,
+        "lng": 144.79302
+      },
+      "city": "투몬",
+      "summary": ""
+    },
+    {
+      "name": "사랑의 절벽",
+      "nameEn": "Two Lovers Point",
+      "wiki": "en:Two Lovers Point",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Two_Lovers_Point_from_Tumon_Bay.JPG/500px-Two_Lovers_Point_from_Tumon_Bay.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 13.53499,
+        "lng": 144.80245
+      },
+      "city": "투몬",
+      "summary": ""
+    },
+    {
+      "name": "리티디안 포인트",
+      "nameEn": "Guam National Wildlife Refuge",
+      "wiki": "en:Guam National Wildlife Refuge",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Ritidian_Beach_-_Guam_NWR.jpg/500px-Ritidian_Beach_-_Guam_NWR.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 13.65056,
+        "lng": 144.86056
+      },
+      "city": "투몬",
+      "summary": ""
+    },
+    {
+      "name": "솔레다드 요새",
+      "nameEn": "Fort Nuestra Señora de la Soledad",
+      "wiki": "en:Fort Nuestra Señora de la Soledad",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Fort_Nuestra_Se%C3%B1ora_de_la_Soled%C3%A5d_-_Umatac%2C_Guam_-_DSC00948.JPG/500px-Fort_Nuestra_Se%C3%B1ora_de_la_Soled%C3%A5d_-_Umatac%2C_Guam_-_DSC00948.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 13.29333,
+        "lng": 144.6575
+      },
+      "city": "하갓냐",
+      "summary": ""
+    },
+    {
+      "name": "하갓냐 대성당",
+      "nameEn": "Dulce Nombre de Maria Cathedral Basilica",
+      "wiki": "en:Dulce Nombre de Maria Cathedral Basilica",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/Dulce_Nombre_de_Maria_Cathedral_Basilica.JPG/500px-Dulce_Nombre_de_Maria_Cathedral_Basilica.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 13.4743,
+        "lng": 144.7524
+      },
+      "city": "하갓냐",
+      "summary": ""
+    },
+    {
+      "name": "스페인 광장",
+      "nameEn": "Plaza de España (Hagåtña)",
+      "wiki": "en:Plaza de España (Hagåtña)",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/70/Chocolate_House_in_Hagatna.JPG/500px-Chocolate_House_in_Hagatna.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 13.47383,
+        "lng": 144.75153
+      },
+      "city": "하갓냐",
+      "summary": ""
+    },
+    {
+      "name": "태평양 전쟁 국립 역사 공원",
+      "nameEn": "War in the Pacific National Historical Park",
+      "wiki": "태평양 전쟁 국립 역사 공원",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/View_of_Asan_Park_%28cropped%29.jpg/500px-View_of_Asan_Park_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 13.42251,
+        "lng": 144.67566
+      },
+      "city": "하갓냐",
+      "summary": "태평양 전쟁 국립 역사 공원은 미국 괌 영토의 여러 부대로 이루어진 보호 지역으로, 제2차 세계 대전 태평양 전구에 참여한…"
+    },
+    {
+      "name": "괌 박물관",
+      "nameEn": "Guam Museum",
+      "wiki": "괌 박물관",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Another_shot_of_the_Guam_Museum_%2849332191502%29.jpg/500px-Another_shot_of_the_Guam_Museum_%2849332191502%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 13.4752,
+        "lng": 144.7517
+      },
+      "city": "하갓냐",
+      "summary": "괌 박물관은 마이크로네시아의 미국 영토 미국 괌의 역사에 초점을 둔 박물관이다."
+    }
+  ],
+  "mongolia": [
+    {
+      "name": "수흐바타르 광장",
+      "nameEn": "Sükhbaatar Square",
+      "wiki": "수흐바타르 광장",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Chinggis_Square.jpg/500px-Chinggis_Square.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 47.91889,
+        "lng": 106.9175
+      },
+      "city": "울란바토르",
+      "summary": "수흐바타르 광장은 몽골의 수도 울란바타르의 중앙 광장이다."
+    },
+    {
+      "name": "간단 사원",
+      "nameEn": "Gandantegchinlen Monastery",
+      "wiki": "간단 사원",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/Gandantegchinlen_Monastery_%282024%29.jpg/500px-Gandantegchinlen_Monastery_%282024%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 47.92306,
+        "lng": 106.895
+      },
+      "city": "울란바토르",
+      "summary": "간단 사원은 몽골의 수도인 울란바타르에 위치하고 있는 사원이다."
+    },
+    {
+      "name": "칭기즈 칸 기마상",
+      "nameEn": "Equestrian statue of Genghis Khan",
+      "wiki": "칭기즈 칸 기마상",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Genghis_Khan_Equestrian_Statue%2C_photo_by_Vaiz_Ha.jpg/500px-Genghis_Khan_Equestrian_Statue%2C_photo_by_Vaiz_Ha.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 47.80806,
+        "lng": 107.52975
+      },
+      "city": "울란바토르",
+      "summary": "칭기즈 칸 기마상은 말을 탄 칭기즈 칸의 모습을 형상화한 높이 40 미터 규모 스테인레스강 기마상이다."
+    },
+    {
+      "name": "고르히-테를지 국립공원",
+      "nameEn": "Gorkhi-Terelj National Park",
+      "wiki": "고르히-테를지 국립공원",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Gorkhi-Terelj_National_Park.jpg/500px-Gorkhi-Terelj_National_Park.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 48.1502,
+        "lng": 107.57601
+      },
+      "city": "울란바토르",
+      "summary": "몽골의 국립공원"
+    },
+    {
+      "name": "에르덴 조 사원",
+      "nameEn": "Erdene Zuu Monastery",
+      "wiki": "에르덴 조 사원",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/%C5%9Awi%C4%85tynia_Zachodnia_w_klasztorze_Erdene_Dzuu_01.jpg/500px-%C5%9Awi%C4%85tynia_Zachodnia_w_klasztorze_Erdene_Dzuu_01.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 47.20167,
+        "lng": 102.84333
+      },
+      "city": "하르허린",
+      "summary": ""
+    },
+    {
+      "name": "후브스굴호",
+      "nameEn": "Lake Khövsgöl",
+      "wiki": "후브스굴호",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/ISS067-E-879_-_View_of_Earth.jpg/500px-ISS067-E-879_-_View_of_Earth.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 51.1,
+        "lng": 100.5
+      },
+      "city": "",
+      "summary": ""
+    },
+    {
+      "name": "홍고린 엘스 사구",
+      "nameEn": "Khongoryn Els",
+      "wiki": "en:Khongoryn Els",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Khongoryn_Els_04.jpg/500px-Khongoryn_Els_04.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 43.5,
+        "lng": 103.16667
+      },
+      "city": "",
+      "summary": ""
+    }
+  ],
+  "czech-republic": [
+    {
+      "name": "프라하성",
+      "nameEn": "Prague Castle",
+      "wiki": "프라하성",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Karl%C5%AFv_most_Praha%2C_Star%C3%A9_M%C4%9Bsto_20170810_007.jpg/500px-Karl%C5%AFv_most_Praha%2C_Star%C3%A9_M%C4%9Bsto_20170810_007.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 50.09,
+        "lng": 14.4
+      },
+      "city": "프라하",
+      "summary": "프라하성은 체코의 수도인 프라하에 블타바 강의 서쪽 언덕에 자리 잡고 있는 성으로 프라하의 초기 역사부터 존재해 왔으며 프…"
+    },
+    {
+      "name": "카를교",
+      "nameEn": "Charles Bridge",
+      "wiki": "카를교",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/Prague_07-2016_view_from_Lesser_Town_Tower_of_Charles_Bridge_img3.jpg/500px-Prague_07-2016_view_from_Lesser_Town_Tower_of_Charles_Bridge_img3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 50.08639,
+        "lng": 14.41194
+      },
+      "city": "프라하",
+      "summary": "카렐교는 체코 프라하 블타바강 위에 있는 다리이다."
+    },
+    {
+      "name": "구시가 광장",
+      "nameEn": "Old Town Square",
+      "wiki": "구시가 광장 (프라하)",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Prague_07-2016_View_from_Old_Town_Hall_Tower_img3.jpg/500px-Prague_07-2016_View_from_Old_Town_Hall_Tower_img3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 50.0875,
+        "lng": 14.4214
+      },
+      "city": "프라하",
+      "summary": "구시가 광장은 체코 프라하 스타레메스토에 있는 광장이다."
+    },
+    {
+      "name": "프라하 천문시계",
+      "nameEn": "Prague astronomical clock",
+      "wiki": "프라하 천문시계",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Astronomical_Clock_%288341899828%29.jpg/500px-Astronomical_Clock_%288341899828%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 50.08701,
+        "lng": 14.42092
+      },
+      "city": "프라하",
+      "summary": "체코 프라하에 있는 천문시계"
+    },
+    {
+      "name": "성 비투스 대성당",
+      "nameEn": "St. Vitus Cathedral",
+      "wiki": "성 비투스 대성당",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/PragueCathedral03.jpg/500px-PragueCathedral03.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 50.09083,
+        "lng": 14.40056
+      },
+      "city": "프라하",
+      "summary": "성 비투스 대성당은 체코의 수도 프라하의 대주교좌로 프라하 성 안에 위치하고 있으며 고딕 양식의 뛰어난 전범으로 꼽히는, …"
+    },
+    {
+      "name": "체스키크룸로프성",
+      "nameEn": "Český Krumlov Castle",
+      "wiki": "체스키크룸로프성",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/%C4%8Cesk%C3%BD_Krumlov%2C_z%C3%A1mek_cel%C3%BD_z_vyhl%C3%ADdky.jpg/500px-%C4%8Cesk%C3%BD_Krumlov%2C_z%C3%A1mek_cel%C3%BD_z_vyhl%C3%ADdky.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 48.8125,
+        "lng": 14.31528
+      },
+      "city": "체스키크룸로프",
+      "summary": "체스키크룸로프성은 체코 남보헤미아주 체스키크룸로프에 있는 성이다."
+    },
+    {
+      "name": "카를슈테인 성",
+      "nameEn": "Karlštejn",
+      "wiki": "en:Karlštejn",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Burg_Karlstein_-_Karl%C5%A1tejn_-_panoramio.jpg/500px-Burg_Karlstein_-_Karl%C5%A1tejn_-_panoramio.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 49.93944,
+        "lng": 14.18806
+      },
+      "city": "프라하",
+      "summary": ""
+    },
+    {
+      "name": "세들레츠 납골당",
+      "nameEn": "Sedlec Ossuary",
+      "wiki": "세들레츠 납골당",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Kostnice_Sedlec.JPG/500px-Kostnice_Sedlec.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 49.96194,
+        "lng": 15.28833
+      },
+      "city": "",
+      "summary": "세들레츠 납골당은 체코의 수도 프라하에서 동쪽으로 약 70km 정도에 떨어진 도시 쿠트나호라 세들레츠에 있는 가톨릭 성당의…"
+    }
+  ],
+  "united-arab-emirates": [
+    {
+      "name": "부르즈 할리파",
+      "nameEn": "Burj Khalifa",
+      "wiki": "부르즈 할리파",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Burj_Khalifa_%28worlds_tallest_building%29_and_the_Dubai_skyline_%2825781049892%29.jpg/500px-Burj_Khalifa_%28worlds_tallest_building%29_and_the_Dubai_skyline_%2825781049892%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 25.1972,
+        "lng": 55.2742
+      },
+      "city": "두바이",
+      "summary": "아랍에미리트 두바이의 마천루, 세계에서 가장 높은 타워"
+    },
+    {
+      "name": "셰이크 자이드 모스크",
+      "nameEn": "Sheikh Zayed Grand Mosque",
+      "wiki": "셰이크 자이드 모스크",
+      "image": "https://thumb.wikimedia.org/wikipedia/en/thumb/7/7d/Sheikh_Zayed_Mosque_view.jpg/500px-Sheikh_Zayed_Mosque_view.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 24.412,
+        "lng": 54.474
+      },
+      "city": "아부다비",
+      "summary": "2007년 완공된 아부다비의 모스크"
+    },
+    {
+      "name": "팜 주메이라",
+      "nameEn": "Palm Jumeirah",
+      "wiki": "팜 주메이라",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Artificial_Archipelagos%2C_Dubai%2C_United_Arab_Emirates_ISS022-E-024940_lrg_%28cropped%29.jpg/500px-Artificial_Archipelagos%2C_Dubai%2C_United_Arab_Emirates_ISS022-E-024940_lrg_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 25.11806,
+        "lng": 55.13333
+      },
+      "city": "두바이",
+      "summary": "팜 주메이라는 아랍에미리트 두바이 정부 소유의 기업 나킬이 만든 페르시아만의 인공 섬으로, 두바이 시가지의 서쪽의 주메이라…"
+    },
+    {
+      "name": "부르즈 알 아랍",
+      "nameEn": "Burj Al Arab",
+      "wiki": "부르즈 알 아랍",
+      "image": "https://thumb.wikimedia.org/wikipedia/en/thumb/2/2a/Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg/500px-Burj_Al_Arab%2C_Dubai%2C_by_Joi_Ito_Dec2007.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 25.14139,
+        "lng": 55.18528
+      },
+      "city": "두바이",
+      "summary": "아랍에미리트 두바이의 호텔"
+    },
+    {
+      "name": "루브르 아부다비",
+      "nameEn": "Louvre Abu Dhabi",
+      "wiki": "루브르 아부다비",
+      "image": "https://thumb.wikimedia.org/wikipedia/en/thumb/5/55/LouvreAD_exterior.jpg/500px-LouvreAD_exterior.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 24.533,
+        "lng": 54.40001
+      },
+      "city": "아부다비",
+      "summary": "루브르 아부다비는 아랍에미리트 아부다비 사디야트섬에 위치한 미술관이다."
+    },
+    {
+      "name": "미래 박물관",
+      "nameEn": "Museum of the Future",
+      "wiki": "en:Museum of the Future",
+      "image": "https://thumb.wikimedia.org/wikipedia/en/thumb/8/8c/Museum_of_the_future%2C_Dubai.jpeg/500px-Museum_of_the_future%2C_Dubai.jpeg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 25.21912,
+        "lng": 55.2821
+      },
+      "city": "두바이",
+      "summary": ""
+    },
+    {
+      "name": "두바이 크리크",
+      "nameEn": "Dubai Creek",
+      "wiki": "두바이 크리크",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/The_view_of_Dubai_Creek.jpg/500px-The_view_of_Dubai_Creek.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 25.25583,
+        "lng": 55.31667
+      },
+      "city": "샤르자",
+      "summary": "두바이 크리크는 아랍에미리트 두바이에 있는 개울이다."
+    }
+  ],
+  "laos": [
+    {
+      "name": "꽝시 폭포",
+      "nameEn": "Kuang Si Falls",
+      "wiki": "en:Kuang Si Falls",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/The_river_of_Kuang_si_waterfalls.jpg/500px-The_river_of_Kuang_si_waterfalls.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 19.74917,
+        "lng": 101.99167
+      },
+      "city": "루앙프라방",
+      "summary": ""
+    },
+    {
+      "name": "씨앙텅 사원",
+      "nameEn": "Wat Xieng Thong",
+      "wiki": "씨앙텅 사원",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Temple_Wat_Xieng_Thong_-_Luang_Prabang_-_Laos.jpg/500px-Temple_Wat_Xieng_Thong_-_Luang_Prabang_-_Laos.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 19.8975,
+        "lng": 102.14306
+      },
+      "city": "루앙프라방",
+      "summary": "라오스 루앙파방에 있는 불교 사원"
+    },
+    {
+      "name": "파탓루앙",
+      "nameEn": "Pha That Luang",
+      "wiki": "파탓루앙",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Pha_That_Luang%2C_July_2023.jpg/500px-Pha_That_Luang%2C_July_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 17.97617,
+        "lng": 102.63425
+      },
+      "city": "비엔티안",
+      "summary": "파탓루앙은 라오스 비엔티안에 위치한 불교 사원이다."
+    },
+    {
+      "name": "빠뚜싸이",
+      "nameEn": "Patuxai",
+      "wiki": "en:Patuxai",
+      "image": "https://thumb.wikimedia.org/wikipedia/en/thumb/2/28/Vientiane_-_Patuxai_-_0003.jpg/500px-Vientiane_-_Patuxai_-_0003.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 17.97056,
+        "lng": 102.61861
+      },
+      "city": "비엔티안",
+      "summary": ""
+    },
+    {
+      "name": "방비엥",
+      "nameEn": "Vang Vieng",
+      "wiki": "방비엥",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/VientianeProvince_VangVieng9_tango7174.jpg/500px-VientianeProvince_VangVieng9_tango7174.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 18.92667,
+        "lng": 102.44944
+      },
+      "city": "방비엥",
+      "summary": "왕위앙은 라오스 비엔티안주의 도시로 인구는 약 25,000명이다."
+    },
+    {
+      "name": "단지평원",
+      "nameEn": "Plain of Jars",
+      "wiki": "단지평원",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Plainofjars_2.jpg/500px-Plainofjars_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 19.4311,
+        "lng": 103.1525
+      },
+      "city": "",
+      "summary": "단지평원은 라오스 중부 씨엥쿠앙 주, 안남산맥의 북단에 위치한 씨엥쿠앙 평원에 많은 돌 항아리가 흩어져 묻혀있는 역사 문화…"
+    },
+    {
+      "name": "왓푸",
+      "nameEn": "Vat Phou",
+      "wiki": "왓푸",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Champasak%2C_Laos%2C_Wat_Poo_03.jpg/500px-Champasak%2C_Laos%2C_Wat_Poo_03.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 14.84833,
+        "lng": 105.82222
+      },
+      "city": "팍세",
+      "summary": "왓푸는 라오스 남부에 위치한 크메르족의 힌두교 사원 유적지이다."
+    }
   ]
 };

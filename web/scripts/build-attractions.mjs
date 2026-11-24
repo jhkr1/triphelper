@@ -42,7 +42,12 @@ const CURATED = {
   malaysia: ["Petronas Towers", "Batu Caves", "Merdeka Square, Kuala Lumpur", "Kuala Lumpur Tower", "George Town, Penang", "Malacca City", "Langkawi", "Mount Kinabalu"],
   russia: ["Red Square", "Saint Basil's Cathedral", "Moscow Kremlin", "Bolshoi Theatre", "Hermitage Museum", "Peterhof Palace", "Church of the Savior on Spilled Blood", "Lake Baikal"],
   "new-zealand": ["Milford Sound", "Hobbiton Movie Set", "Waitomo Glowworm Caves", "Sky Tower (Auckland)", "Lake Tekapo", "Aoraki / Mount Cook", "Tongariro Alpine Crossing", "Museum of New Zealand Te Papa Tongarewa"],
-  indonesia: ["Borobudur", "Prambanan", "Tanah Lot", "Uluwatu Temple", "Ubud", "Mount Bromo", "Komodo National Park", "National Monument (Indonesia)"],
+  guam: ["Tumon Bay", "Two Lovers Point", "Ritidian Point", "Fort Nuestra Señora de la Soledad", "Dulce Nombre de Maria Cathedral Basilica", "Plaza de España (Hagåtña)", "War in the Pacific National Historical Park", "Guam Museum"],
+  mongolia: ["Sükhbaatar Square", "Gandantegchinlen Monastery", "Chinggis Khaan Equestrian Statue", "Gorkhi-Terelj National Park", "Erdene Zuu Monastery", "Khövsgöl Lake", "Khongoryn Els", "Bogd Khan Palace Museum"],
+  "czech-republic": ["Prague Castle", "Charles Bridge", "Old Town Square", "Prague astronomical clock", "St. Vitus Cathedral", "Český Krumlov Castle", "Karlštejn", "Sedlec Ossuary"],
+  "united-arab-emirates": ["Burj Khalifa", "Sheikh Zayed Grand Mosque", "Palm Jumeirah", "Burj Al Arab", "Louvre Abu Dhabi", "Museum of the Future", "Al Fahidi Historical Neighbourhood", "Dubai Creek"],
+  laos: ["Kuang Si Falls", "Wat Xieng Thong", "Mount Phousi", "Pha That Luang", "Patuxai", "Vang Vieng", "Plain of Jars", "Wat Phou"],
+  indonesia: ["Borobudur","Prambanan", "Tanah Lot", "Uluwatu Temple", "Ubud", "Mount Bromo", "Komodo National Park", "National Monument (Indonesia)"],
 };
 
 /** 한국어 문서가 없거나 문서 제목이 어색한 곳의 화면용 한국어 이름 (영어 문서 제목 → 표기) */
@@ -71,6 +76,19 @@ const DISPLAY_NAMES = {
   "Waitomo Glowworm Cave": "와이토모 반딧불이 동굴",
   "Waitomo Glowworm Caves": "와이토모 반딧불이 동굴",
   "Tongariro Alpine Crossing": "통가리로 알파인 크로싱",
+  "Tumon Bay": "투몬 만",
+  "Two Lovers Point": "사랑의 절벽",
+  "Ritidian Point": "리티디안 포인트",
+  "Guam National Wildlife Refuge": "리티디안 포인트",
+  "Fort Nuestra Señora de la Soledad": "솔레다드 요새",
+  "Dulce Nombre de Maria Cathedral Basilica": "하갓냐 대성당",
+  "Plaza de España (Hagåtña)": "스페인 광장",
+  "Khongoryn Els": "홍고린 엘스 사구",
+  "Karlštejn": "카를슈테인 성",
+  "Karlštejn Castle": "카를슈테인 성",
+  "Museum of the Future": "미래 박물관",
+  "Kuang Si Falls": "꽝시 폭포",
+  "Patuxai": "빠뚜싸이",
 };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

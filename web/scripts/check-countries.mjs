@@ -53,13 +53,14 @@ for (const d of destinations) {
   if (!d.cities?.length) err(s, "도시(cities)가 없습니다 (날씨에 필요)");
   d.cities?.forEach((city, i) => { if (isBlank(city.name) || isBlank(city.nameKo)) err(s, `cities[${i}]의 이름이 비어 있습니다`); });
 
-  // 정보 섹션: 한국어는 필수, 영어는 같은 개수여야 자연스럽다
+  // 정보 섹션: 한국어는 필수, 영어판이 있으면 같은 개수여야 자연스럽다
   // (필수템 중 상품 링크 항목은 설명이 없고 영어판에 없을 수 있어 설명 있는 항목만 센다)
   for (const key of ["manners", "souvenirs", "market", "essentials", "visa"]) {
     const ko = (d[key] ?? []).filter((x) => x.description !== undefined);
     const en = (d[`${key}En`] ?? []).filter((x) => x.description !== undefined);
     if (!ko.length) err(s, `${key}가 비어 있습니다`);
-    if (!en.length) (key === "visa" ? err : warn)(s, `${key}En(영어)이 비어 있습니다`);
+    // 화면은 한국어만 쓴다 (언어 전환 없음): 영어판이 아예 없는 건 괜찮고, visaEn만 필수 (타입에서 필수인 칸)
+    if (!en.length) { if (key === "visa") err(s, `${key}En(영어)이 비어 있습니다`); }
     else if (ko.length !== en.length) warn(s, `${key} 한국어 ${ko.length}개 / 영어 ${en.length}개로 개수가 다릅니다`);
     for (const item of [...(d[key] ?? []), ...(d[`${key}En`] ?? [])]) {
       if (isBlank(item.title)) err(s, `${key} 항목 제목이 비어 있습니다`);

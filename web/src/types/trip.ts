@@ -31,6 +31,8 @@ export interface Trip {
   country: string;
   /** 화면에 보일 도시 이름. 비어 있으면 나라 전체 */
   city: string;
+  /** 사용자가 붙인 여행 이름. 없으면 "도시(나라) 여행" (tripName) */
+  title?: string;
   /** 도시 중심 (장소 검색 범위·지도 시작 위치) */
   center: LatLng;
   /** YYYY-MM-DD */

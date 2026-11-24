@@ -107,7 +107,7 @@ function toPostPlace(p: Place, withMemo: boolean): PostPlace {
 
 export const defaultTitle = (t: Trip, countryName: string) => {
   const n = nightsBetween(t.start, t.end);
-  return `${t.city || countryName} ${n ? `${n}박 ${n + 1}일` : "당일치기"}`;
+  return t.title?.trim() || `${t.city || countryName} ${n ? `${n}박 ${n + 1}일` : "당일치기"}`;
 };
 
 export const placeCount = (t: Trip) => t.days.reduce((s, d) => s + d.places.length, 0);

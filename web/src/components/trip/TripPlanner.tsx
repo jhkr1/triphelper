@@ -17,7 +17,7 @@ import { SharedTripView } from "@/components/trip/SharedTripView";
 import { authSettled, authStore } from "@/lib/supabase";
 import { getViewLink, makeViewLink, viewUrl } from "@/lib/trip-link";
 import {
-  addDays, createTrip, dateParts, defaultTrip, nightsBetween, readSharedTrip, sampleTrip, shareUrl, withDatesUnset, type PlannerCountry,
+  addDays, createTrip, dateParts, defaultTrip, nightsBetween, readSharedTrip, sampleTrip, shareUrl, tripName, TRIP_TITLE_MAX, withDatesUnset, type PlannerCountry,
 } from "@/lib/trip-model";
 import { fetchExchange, formatRate } from "@/lib/exchange";
 import { fetchDailyForecast, type DailyForecast } from "@/lib/weather";
@@ -78,7 +78,7 @@ function PlannerMain({ countries }: { countries: PlannerCountry[] }) {
           const t = await loadTrip(id, auth.me.id, countries);
           if (cancelled) return;
           tripStore.set(t);
-          setNotice(`${t.city || countryOf(t.country)?.name || ""} 여행에 함께하게 됐어요`);
+          setNotice(`${tripName(t, countryOf(t.country)?.name ?? "")}에 함께하게 됐어요`);
         } catch (e) {
           setNotice(e instanceof Error ? e.message : "초대 링크를 열지 못했어요");
         }
@@ -112,6 +112,45 @@ function PlannerMain({ countries }: { countries: PlannerCountry[] }) {
     return <div className="wrap"><p style={{ color: "var(--mute)" }}>일정을 불러오는 중…</p></div>;
   }
   return <PlannerBody trip={snapshot} countries={countries} countryOf={countryOf} notice={notice} />;
+}
+
+/**
+ * 여행 이름: 누르면 그 자리에서 고친다 (Enter·칸 밖 누르기: 저장, Esc: 취소).
+ * 비우거나 기본 이름과 같게 하면 붙인 이름을 지워 "도시 여행"으로 돌아간다.
+ */
+function TripTitle({ name, auto, canEdit, onRename }: { name: string; auto: string; canEdit: boolean; onRename: (title: string) => void }) {
+  const [draft, setDraft] = useState<string | null>(null); // null: 고치는 중이 아님
+  if (!canEdit) return <span className="trip-name">{name}</span>;
+  if (draft === null) {
+    return (
+      <button type="button" className="trip-name trip-name--btn" onClick={() => setDraft(name)} aria-label={`여행 이름 바꾸기: ${name}`}>
+        {name}
+      </button>
+    );
+  }
+  const save = () => {
+    const to = draft.trim();
+    setDraft(null);
+    if ((to || auto) === name) return;
+    onRename(to === auto ? "" : to);
+  };
+  return (
+    <input
+      autoFocus
+      className="trip-name__in"
+      value={draft}
+      maxLength={TRIP_TITLE_MAX}
+      placeholder={auto}
+      aria-label="여행 이름 (비우면 기본 이름)"
+      onFocus={(e) => e.currentTarget.select()}
+      onChange={(e) => setDraft(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") { e.preventDefault(); save(); }
+        if (e.key === "Escape") setDraft(null);
+      }}
+      onBlur={save}
+    />
+  );
 }
 
 function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; countries: PlannerCountry[]; countryOf: (s: string) => PlannerCountry | undefined; notice: string }) {
@@ -284,7 +323,7 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
     // 휴대폰: 기본 공유 창(카카오톡·문자 등). 컴퓨터는 공유 창보다 복사가 익숙하므로 복사한다.
     if (typeof url === "string" && navigator.share && matchMedia("(pointer: coarse)").matches) {
       try {
-        await navigator.share({ title: `${trip.city || country.name} 여행 일정`, url });
+        await navigator.share({ title: `${tripName(trip, country.name)} 일정`, url });
         return;
       } catch (e) {
         if ((e as DOMException).name === "AbortError") return; // 공유 창을 닫은 경우
@@ -321,7 +360,15 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
           <h1>
             {/* eslint-disable-next-line @next/next/no-img-element -- 작은 외부 국기 이미지 */}
             <img className="fl" style={{ height: ".7em" }} src={flagUrl(country.countryCode)} alt="" />
-            {trip.city || country.name} 여행
+            <TripTitle
+              name={tripName(trip, country.name)}
+              auto={tripName({ city: trip.city }, country.name)}
+              canEdit={!viewer}
+              onRename={(title) => {
+                update((t) => ({ ...t, title: title || undefined }));
+                toast(title ? "여행 이름을 바꿨어요" : "여행 이름을 기본 이름으로 되돌렸어요");
+              }}
+            />
           </h1>
           {trip.datesUnset ? (
             <p>
@@ -339,7 +386,7 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
           <MyTrips
             trip={trip}
             countries={countries}
-            onOpened={(t) => { tripStore.set(t); setDay(0); setMapDay("all"); setSetupOpen(false); toast(`${t.city || countryOf(t.country)?.name || ""} 여행을 열었어요`); }}
+            onOpened={(t) => { tripStore.set(t); setDay(0); setMapDay("all"); setSetupOpen(false); toast(`${tripName(t, countryOf(t.country)?.name ?? "")}을(를) 열었어요`); }}
             onNew={() => { tripStore.set(defaultTrip(country)); setDay(0); setMapDay("all"); setSetupOpen(true); }}
             toast={toast}
           />

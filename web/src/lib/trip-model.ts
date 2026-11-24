@@ -39,6 +39,12 @@ export function addDays(iso: string, n: number): string {
   return d.toISOString().slice(0, 10);
 }
 
+/** 여행 이름 최대 길이 (DB trips.title은 60자까지) */
+export const TRIP_TITLE_MAX = 40;
+
+/** 화면에 보일 여행 이름: 붙인 이름이 없으면 "도시(없으면 나라) 여행" */
+export const tripName = (t: Pick<Trip, "title" | "city">, countryName: string) => t.title?.trim() || `${t.city || countryName} 여행`;
+
 export const nightsBetween = (start: string, end: string) =>
   Math.round((Date.parse(`${end}T00:00:00Z`) - Date.parse(`${start}T00:00:00Z`)) / 864e5);
 
@@ -214,7 +220,7 @@ type CompactPlace = [
   time: string, name: string, category: PlaceCategory, lat?: number | null, lng?: number | null, wiki?: string | 1 | null, image?: string | null, memo?: string | null,
 ];
 /** st: 날짜별 숙소 (없는 날은 0). 예전 링크에는 없다 */
-interface CompactTrip { v: 2; c: string; ci: string; ce: [number, number]; s: string; e: string; d: CompactPlace[][]; b?: CompactPlace[]; u?: 1; st?: (CompactPlace | 0)[] }
+interface CompactTrip { v: 2; c: string; ci: string; ce: [number, number]; s: string; e: string; d: CompactPlace[][]; b?: CompactPlace[]; u?: 1; st?: (CompactPlace | 0)[]; ti?: string }
 
 const bytesToBase64Url = (bytes: Uint8Array) => {
   let bin = "";
@@ -254,6 +260,7 @@ export async function shareUrl(siteUrl: string, trip: Trip): Promise<string> {
     d: trip.days.map((day) => day.places.map(toCompact)),
     ...(trip.basket?.length ? { b: trip.basket.map(toCompact) } : {}),
     ...(trip.datesUnset ? { u: 1 as const } : {}),
+    ...(trip.title?.trim() ? { ti: trip.title.trim() } : {}),
     ...(trip.days.some((d) => d.stay) ? { st: trip.days.map((d) => (d.stay ? toCompact(d.stay) : 0 as const)) } : {}),
   };
   const packed = await pipeBytes(new TextEncoder().encode(JSON.stringify(data)), new CompressionStream("deflate-raw"));
@@ -261,10 +268,11 @@ export async function shareUrl(siteUrl: string, trip: Trip): Promise<string> {
 }
 
 function toTrip(
-  s: { c: string; ci: string; ce: [number, number]; s: string; e: string; u?: 1 }, days: Place[][], basket: Place[], country: PlannerCountry, stays: (Place | undefined)[] = [],
+  s: { c: string; ci: string; ce: [number, number]; s: string; e: string; u?: 1; ti?: string }, days: Place[][], basket: Place[], country: PlannerCountry, stays: (Place | undefined)[] = [],
 ): Trip {
   return {
     ...(s.u === 1 ? { datesUnset: true as const } : {}),
+    ...(typeof s.ti === "string" && s.ti.trim() ? { title: s.ti.trim().slice(0, TRIP_TITLE_MAX) } : {}),
     country: s.c, city: s.ci, center: { lat: s.ce[0], lng: s.ce[1] }, start: s.s, end: s.e,
     days: days.map((places, i) => (stays[i] ? { places, stay: stays[i] } : { places })),
     ...(basket.length ? { basket } : {}),

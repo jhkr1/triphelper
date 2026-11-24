@@ -78,6 +78,7 @@ export function mergeTrips(base: Data, local: Data, remote: Data): Data {
     ...remote,
     country: pick("country", base, local, remote),
     city: pick("city", base, local, remote),
+    title: pick("title", base, local, remote),
     center: pick("center", base, local, remote),
     start: pick("start", base, local, remote),
     end: pick("end", base, local, remote),
@@ -140,6 +141,7 @@ export function describeChanges(base: Data, local: Data, limit = 5): string[] {
   });
   if (local.days.length !== base.days.length) lines.push(`여행 기간을 ${local.days.length}일로 바꿨어요`);
   else if (local.start !== base.start && !local.datesUnset) lines.push("여행 날짜를 바꿨어요");
+  if ((local.title ?? "") !== (base.title ?? "")) lines.push(local.title ? `여행 이름을 ${ro(local.title)} 바꿨어요` : "여행 이름을 기본 이름으로 되돌렸어요");
   if (local.city !== base.city) lines.push(`도시를 ${ro(local.city || "나라 전체")} 바꿨어요`);
   return lines.slice(0, limit).map((s) => s.slice(0, 120));
 }

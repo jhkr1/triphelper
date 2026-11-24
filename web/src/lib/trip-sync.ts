@@ -144,7 +144,7 @@ function dirty(t: Trip): boolean {
 }
 
 const rowOf = (t: Trip) => ({
-  title: t.city ? `${t.city} 여행` : "",
+  title: (t.title?.trim() || (t.city ? `${t.city} 여행` : "")).slice(0, 60),
   country: t.country,
   city: t.city,
   nights: Math.max(0, Math.min(29, nightsBetween(t.start, t.end))),

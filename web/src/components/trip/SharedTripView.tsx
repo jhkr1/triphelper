@@ -9,7 +9,7 @@ import { flagUrl } from "@/lib/geo";
 import { authStore, enabledProviders, signIn } from "@/lib/supabase";
 import { LOADING, tripStore } from "@/lib/trip-store";
 import { flushSave } from "@/lib/trip-sync";
-import { checklistFor, nightsBetween, type PlannerCountry } from "@/lib/trip-model";
+import { checklistFor, nightsBetween, tripName, type PlannerCountry } from "@/lib/trip-model";
 import { getSharedTrip, viewUrl, type SharedTrip } from "@/lib/trip-link";
 import { timeAgo } from "@/lib/posts";
 
@@ -92,7 +92,7 @@ export function SharedTripView({ code, countries, onDone }: { code: string; coun
     <div className="wrap"><div className="post">
       <header className="post__hd">
         <span className="post__vis post__vis--unlisted">보기 전용</span>
-        <h1>{trip.city || country?.name || ""} 여행</h1>
+        <h1>{tripName(trip, country?.name ?? "")}</h1>
         <p className="post__meta">
           {country && (
             // eslint-disable-next-line @next/next/no-img-element -- 작은 외부 국기 이미지

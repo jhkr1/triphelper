@@ -263,6 +263,18 @@
 .planner .drag-card .icon{color:var(--mute);flex:none}
 .planner .drag-card b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .planner .leg--hidden{visibility:hidden}
+/* 휴대폰으로 끄는 동안: 일정 카드를 '시간 + 이름' 한 줄로 접어 한 화면에 모이게 (Itinerary FoldScroll) */
+.planner .tl--fold .stop{padding:3px 0}
+.planner .tl--fold .stop__body{flex-direction:row;align-items:center;padding:8px 12px}
+.planner .tl--fold .stop__txt{display:flex;align-items:baseline;gap:8px}
+.planner .tl--fold .stop__time{flex:none}
+.planner .tl--fold .stop__name{margin:0;flex-wrap:nowrap;min-width:0;font-size:.95rem}
+.planner .tl--fold .stop__name>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.planner .tl--fold :is(.stop__ph,.stop__name .tag,.tags,.stop__memo,.stop__acts,.memo-edit,.stop .icon-btn,.near,.leg){display:none}
+/* 놓은 뒤 펼쳐지면 옮긴 카드를 잠깐 강조 */
+.planner .stop.is-dropped .stop__body{animation:dropped 1.2s ease-out}
+@keyframes dropped{from{box-shadow:0 0 0 3px var(--blue)}to{box-shadow:0 0 0 3px transparent}}
+@media (prefers-reduced-motion:reduce){.planner .stop.is-dropped .stop__body{animation-duration:.01s}}
 .planner .basket__list:empty{min-height:40px;border-radius:12px;background:var(--soft)} /* 끄는 동안 여행지 바구니가 비어도 높이 유지 */
 
 /* 메모 */

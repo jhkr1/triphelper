@@ -1,9 +1,9 @@
 "use client";
 
-import { Fragment, useEffect, useState, type FormEvent } from "react";
+import { Fragment, useEffect, useLayoutEffect, useRef, useState, type FormEvent, type RefObject } from "react";
 import {
-  DndContext, DragOverlay, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, pointerWithin, useDroppable, useSensor, useSensors,
-  type CollisionDetection, type DragEndEvent, type DragOverEvent, type DragStartEvent,
+  DndContext, DragOverlay, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, pointerWithin, useDndContext, useDroppable, useSensor, useSensors,
+  type CollisionDetection, type Modifier, type DragEndEvent, type DragOverEvent, type DragStartEvent,
 } from "@dnd-kit/core";
 import { SortableContext, arrayMove, horizontalListSortingStrategy, rectSortingStrategy, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -151,6 +151,13 @@ const collision: CollisionDetection = (args) => {
   return closestCenter({ ...args, droppableContainers: args.droppableContainers.filter((c) => items.some((h) => h.id === c.id)) });
 };
 
+/** 휴대폰으로 끌 때: 끌리는 카드를 손가락 높이에 맞춘다 (일정이 접히면서 카드 자리가 바뀌어도 손가락 밑에 있게) */
+const followFinger: Modifier = ({ activatorEvent, draggingNodeRect, transform }) => {
+  const t = typeof TouchEvent !== "undefined" && activatorEvent instanceof TouchEvent ? activatorEvent.touches[0] : undefined;
+  if (!t || !draggingNodeRect) return transform;
+  return { ...transform, y: transform.y + t.clientY - (draggingNodeRect.top + draggingNodeRect.height / 2) };
+};
+
 /**
  * Day 탭: 장소를 놓는 곳이면서, 탭 자체를 끌어 날짜 순서(그날 일정)를 바꿀 수 있다.
  * 탭 끌기는 마우스·터치만 (키보드 Enter/Space는 그대로 탭 선택)
@@ -203,13 +210,58 @@ function SortableStop({ id, n, color, children }: { id: string; n: number; color
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id });
   const { onKeyDown, ...pointer } = (listeners ?? {}) as Record<string, (e: unknown) => void>;
   return (
-    <li ref={setNodeRef} className={isDragging ? "stop is-ghost" : "stop"} style={{ "--dc": color, transform: CSS.Translate.toString(transform), transition } as React.CSSProperties}>
+    <li ref={setNodeRef} data-stop={id} className={isDragging ? "stop is-ghost" : "stop"} style={{ "--dc": color, transform: CSS.Translate.toString(transform), transition } as React.CSSProperties}>
       <button ref={setActivatorNodeRef} type="button" className="stop__n" {...attributes} onKeyDown={onKeyDown} aria-label={`${n}번째 장소 · 스페이스로 들어서 방향키로 옮기기`}>
         <i>{n}</i>
       </button>
       {children(pointer)}
     </li>
   );
+}
+
+/** 집을 때 손가락 높이, 놓을 때 끌던 카드의 높이 (화면 기준 px) */
+interface FoldAnchor { id: string; y: number; dropY?: number }
+
+/**
+ * 휴대폰으로 끄는 동안에는 그날 일정을 한 줄짜리로 접는다 (멀리 끌지 않아도 되게).
+ * 접을 때: 집은 카드가 손가락 밑에 오게 스크롤을 맞추고, 놓을 자리 계산을 위해 위치를 다시 잰다.
+ *   (끌리는 카드(DragOverlay)는 접힌 뒤의 카드 자리에서 출발하므로 접힌 카드에 맞추면 둘 다 손가락 밑에 온다)
+ * 펼 때: 옮긴 카드가 손을 뗀 자리 근처에 보이게 맞추고 잠깐 강조한다.
+ */
+function FoldScroll({ folded, listRef, anchor }: { folded: boolean; listRef: RefObject<HTMLOListElement | null>; anchor: RefObject<FoldAnchor | null> }) {
+  const { measureDroppableContainers } = useDndContext();
+  const was = useRef(false);
+  useLayoutEffect(() => {
+    if (folded === was.current) return;
+    was.current = folded;
+    const a = anchor.current;
+    const find = () => (a ? Array.from(listRef.current?.querySelectorAll<HTMLElement>("[data-stop]") ?? []).find((n) => n.dataset.stop === a.id) : undefined);
+    // html이 부드러운 스크롤이라 바로 옮기게 지정한다. 높이가 크게 바뀌는 동안은 브라우저의 스크롤 고정(scroll anchoring)도 끈다
+    const root = document.documentElement;
+    const jump = (dy: number) => window.scrollBy({ top: dy, behavior: "instant" });
+    if (folded) {
+      root.style.overflowAnchor = "none";
+      const el = find();
+      if (el && a) { const r = el.getBoundingClientRect(); jump(r.top + r.height / 2 - a.y); }
+      measureDroppableContainers([]);
+      return;
+    }
+    // 끌기가 끝나며 자리 옮김·변형이 풀린 다음 프레임에 잰다
+    const raf = requestAnimationFrame(() => {
+      root.style.overflowAnchor = "";
+      const el = find();
+      if (!el || !a) return;
+      const t = getComputedStyle(el).transform; // 제자리로 돌아가는 움직임 중이면 그만큼 빼고 잰다
+      const top = el.getBoundingClientRect().top - (t && t !== "none" ? new DOMMatrix(t).m42 : 0);
+      jump(top - Math.max(72, (a.dropY ?? a.y) - 40));
+      el.classList.remove("is-dropped");
+      void el.offsetWidth; // 연달아 옮겨도 강조가 다시 보이게
+      el.classList.add("is-dropped");
+      el.addEventListener("animationend", () => el.classList.remove("is-dropped"), { once: true });
+    });
+    return () => { cancelAnimationFrame(raf); root.style.overflowAnchor = ""; };
+  }, [folded, listRef, anchor, measureDroppableContainers]);
+  return null;
 }
 
 /* ───────── 메모 ───────── */
@@ -418,8 +470,15 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
   }
 
   /* 끌어서 옮기기: 끄는 동안에는 화면용 사본(drag)을 움직이고, 놓을 때 한 번에 저장한다 */
-  const [drag, setDrag] = useState<{ id: string; basket: Place[]; day: Place[]; keyboard?: boolean } | null>(null);
+  const [drag, setDrag] = useState<{ id: string; basket: Place[]; day: Place[]; keyboard?: boolean; touch?: boolean } | null>(null);
   const view = { basket: drag?.basket ?? basket, day: drag?.day ?? places };
+  // 휴대폰(터치)으로 끄는 동안에는 일정을 한 줄로 접는다 (FoldScroll)
+  const folded = Boolean(drag?.touch);
+  const listRef = useRef<HTMLOListElement>(null);
+  const foldAnchor = useRef<FoldAnchor | null>(null);
+  const rememberDrop = (r: { top: number; height: number } | null | undefined) => {
+    if (foldAnchor.current && r) foldAnchor.current.dropY = r.top + r.height / 2;
+  };
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
     useSensor(TouchSensor, { activationConstraint: { delay: 220, tolerance: 6 } }), // 휴대폰: 길게 누르면 집기 (그냥 밀면 스크롤)
@@ -444,7 +503,10 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
 
   function onDragStart(e: DragStartEvent) {
     if (String(e.active.id).startsWith(TAB_PREFIX)) { setTabDrag(Number(String(e.active.id).slice(TAB_PREFIX.length))); return; }
-    setDrag({ id: String(e.active.id), basket, day: places, keyboard: e.activatorEvent instanceof KeyboardEvent });
+    const finger = typeof TouchEvent !== "undefined" && e.activatorEvent instanceof TouchEvent ? e.activatorEvent.touches[0] : undefined;
+    const touch = Boolean(finger);
+    foldAnchor.current = finger ? { id: String(e.active.id), y: finger.clientY } : null;
+    setDrag({ id: String(e.active.id), basket, day: places, keyboard: e.activatorEvent instanceof KeyboardEvent, touch });
   }
 
   // 다른 목록 위로 넘어가면 그 자리로 미리 옮겨서 보여 준다
@@ -470,6 +532,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
       return;
     }
     const d = drag;
+    rememberDrop(active.rect.current.translated);
     setDrag(null);
     if (!d || !over) return;
     const id = String(active.id), overId = String(over.id);
@@ -541,11 +604,13 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
       <DndContext
         sensors={sensors}
         collisionDetection={collision}
+        modifiers={folded ? [followFinger] : undefined}
         onDragStart={onDragStart}
         onDragOver={onDragOver}
         onDragEnd={onDragEnd}
-        onDragCancel={() => { setDrag(null); setTabDrag(null); }}
+        onDragCancel={(e) => { rememberDrop(e.active.rect.current.translated); setDrag(null); setTabDrag(null); }}
       >
+      <FoldScroll folded={folded} listRef={listRef} anchor={foldAnchor} />
       <div className="days" role="tablist" aria-label="날짜">
         <SortableContext items={tabIds} strategy={horizontalListSortingStrategy}>
           {trip.days.map((_, i) => (
@@ -638,7 +703,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
 
       <DropZone zone="day" className="tl-zone">
       <SortableContext items={view.day.map((p) => p.id)} strategy={verticalListSortingStrategy}>
-      <ol className={view.day.length === 0 ? "tl tl--empty" : "tl"} style={{ "--dc": dayColor(day) } as React.CSSProperties}>
+      <ol ref={listRef} className={`tl${view.day.length === 0 ? " tl--empty" : ""}${folded ? " tl--fold" : ""}`} style={{ "--dc": dayColor(day) } as React.CSSProperties}>
         {prevStay && (
           <li className="stay stay--from">
             <span className="stay__ic" aria-hidden="true"><Icon name="bed" /></span>

@@ -356,7 +356,15 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
   return (
     <div className={viewer ? "wrap is-viewer" : "wrap"}>
       <div className="hd">
-        <div>
+        <div className="hd__main">
+          {/* 어떤 여행을 보는지 고르기: 제목 바로 위 */}
+          <MyTrips
+            trip={trip}
+            countries={countries}
+            onOpened={(t) => { tripStore.set(t); setDay(0); setMapDay("all"); setSetupOpen(false); toast(`${tripName(t, countryOf(t.country)?.name ?? "")}을(를) 열었어요`); }}
+            onNew={() => { tripStore.set(defaultTrip(country)); setDay(0); setMapDay("all"); setSetupOpen(true); }}
+            toast={toast}
+          />
           <h1>
             {/* eslint-disable-next-line @next/next/no-img-element -- 작은 외부 국기 이미지 */}
             <img className="fl" style={{ height: ".7em" }} src={flagUrl(country.countryCode)} alt="" />
@@ -370,34 +378,24 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
               }}
             />
           </h1>
-          {trip.datesUnset ? (
-            <p>
-              날짜 미정 · {nights}박 {nights + 1}일
+          {/* 이 여행의 날짜·도시 고치기: 날짜 줄 끝 */}
+          <p className="hd__meta">
+            {trip.datesUnset ? <>날짜 미정 · {nights}박 {nights + 1}일</> : <>{a.y}.{a.m}.{a.d} ({a.w}) – {b.m}.{b.d} ({b.w}) · {nights}박 {nights + 1}일</>}
+            {trip.datesUnset && !viewer ? (
               <button type="button" className="date-cta" onClick={openSetup}>날짜 정하기</button>
-            </p>
-          ) : (
-            <p>{a.y}.{a.m}.{a.d} ({a.w}) – {b.m}.{b.d} ({b.w}) · {nights}박 {nights + 1}일</p>
-          )}
+            ) : !viewer && (
+              <button type="button" className="hd__set" aria-expanded={setupOpen} onClick={() => setSetupOpen((o) => !o)}>여행 설정</button>
+            )}
+          </p>
           <SyncBadge />
           {notice && <p className="collab-notice" role="status">{notice}</p>}
           {viewer && <p className="viewer-note">보기만 할 수 있는 일정이에요. 준비물은 내 것만 따로 챙길 수 있어요.</p>}
         </div>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <MyTrips
-            trip={trip}
-            countries={countries}
-            onOpened={(t) => { tripStore.set(t); setDay(0); setMapDay("all"); setSetupOpen(false); toast(`${tripName(t, countryOf(t.country)?.name ?? "")}을(를) 열었어요`); }}
-            onNew={() => { tripStore.set(defaultTrip(country)); setDay(0); setMapDay("all"); setSetupOpen(true); }}
-            toast={toast}
-          />
-          {!viewer && (
-            <button className="btn edit-trip" type="button" aria-expanded={setupOpen} onClick={() => setSetupOpen((o) => !o)}>
-              여행 설정
-            </button>
-          )}
+        {/* 다른 사람에게 보여 주기: 링크 공유만 진하게 */}
+        <div className="hd__share" role="group" aria-label="공유">
           {auth.status === "in" && (
             <button
-              className="btn"
+              className="btn btn--quiet"
               type="button"
               onClick={() => setCollabOpen(true)}
               disabled={!trip.cloud}
@@ -408,7 +406,7 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
           )}
           {auth.status === "in" && (
             <button
-              className="btn"
+              className="btn btn--quiet"
               type="button"
               onClick={() => setPublishOpen(true)}
               disabled={totalPlaces === 0}

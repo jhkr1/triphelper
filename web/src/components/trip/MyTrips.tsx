@@ -121,7 +121,7 @@ export function MyTrips({ trip, countries, onOpened, onNew, toast }: Props) {
 
   return (
     <div className="mytrips" ref={boxRef}>
-      <button className="btn" type="button" aria-expanded={open} onClick={() => { if (!open) refresh(); setOpen(!open); }}>
+      <button className="trip-switch" type="button" aria-expanded={open} onClick={() => { if (!open) refresh(); setOpen(!open); }}>
         내 여행 목록
       </button>
       {open && (

@@ -3,6 +3,25 @@
 .planner .hd{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
 .planner .hd h1{font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 6px;display:flex;align-items:center;gap:12px}
 .planner .hd p{margin:0;color:var(--mute)}
+/* 헤더: 왼쪽은 여행(고르기 · 이름 · 날짜와 설정), 오른쪽은 공유. 진한 버튼은 링크 공유 하나 */
+.planner .hd{--tonal:color-mix(in srgb,var(--line) 60%,transparent)} /* 보조 버튼 바탕: 밝을 때·어두울 때 모두 배경과 구분되게 */
+.planner .hd__main{min-width:0}
+.planner .trip-switch{display:inline-flex;align-items:center;margin:0 0 10px;padding:6px 12px;border:1px solid transparent;border-radius:99px;background:var(--tonal);color:var(--text2);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer}
+.planner .trip-switch:hover,.planner .trip-switch[aria-expanded="true"]{border-color:var(--blue);color:var(--blue)}
+.planner .hd__meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.planner .hd__meta .date-cta{margin-left:0}
+.planner .hd__set{border:0;background:none;padding:0;color:var(--text2);font:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;cursor:pointer}
+.planner .hd__set:hover,.planner .hd__set[aria-expanded="true"]{color:var(--blue);text-decoration-color:currentColor}
+.planner .hd__share{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+/* 보조 버튼: 테두리 없이 옅은 바탕만 (버튼인 줄은 알아보되 링크 공유보다 약하게) */
+.planner .btn.btn--quiet{border-color:transparent;background:var(--tonal)}
+.planner .btn.btn--quiet:hover{border-color:var(--blue);color:var(--blue)}
+.planner .btn.btn--quiet:disabled{opacity:.45;border-color:transparent;color:inherit;cursor:not-allowed}
+@media (max-width:560px){
+  .planner .hd__share{width:100%}
+  .planner .hd__share .btn--pri{margin-left:auto}
+  .planner .hd__share .btn{padding:9px 12px}
+}
 /* 여행 이름: 눌러서 고치기 (점선 밑줄로 고칠 수 있음을 보인다) */
 .planner .trip-name{min-width:0;overflow-wrap:anywhere}
 .planner .trip-name--btn{border:0;background:none;padding:0;font:inherit;color:inherit;text-align:left;cursor:text;text-decoration:underline dotted var(--line);text-decoration-thickness:2px;text-underline-offset:8px}
@@ -89,7 +108,7 @@
 .planner .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:99px;font-size:.9rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:30}
 .planner .toast.on{opacity:1;transform:translate(-50%,0)}
 /* 지도 */
-.planner .mapcard{grid-column:1/-1;padding:0;overflow:hidden;position:relative}
+.planner .mapcard{grid-column:1/-1;padding:0;overflow:hidden;position:relative;isolation:isolate} /* 지도 안의 칩·조작 버튼(z-index)이 모달 위로 올라오지 않게 */
 .planner .trip-map{height:clamp(320px,48vh,460px);background:var(--soft)}
 .planner .mapchips{position:absolute;left:14px;top:14px;z-index:500;display:flex;gap:6px;flex-wrap:wrap}
 .planner .mapchips button{border:0;border-radius:99px;padding:7px 14px;font-weight:700;font-size:.82rem;background:#ffffffe6;color:#374151;box-shadow:0 2px 8px #0002}
@@ -166,7 +185,6 @@
 .planner .tidy__t{display:inline-block;min-width:48px;color:var(--mute);font-variant-numeric:tabular-nums;font-weight:500}
 .planner .tidy__note{margin:10px 0 0;font-size:.78rem;color:var(--mute);word-break:keep-all}
 .planner .tidy__acts{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
-.planner .edit-trip[aria-expanded="true"]{border-color:var(--blue);color:var(--blue)}
 @media (max-width:700px){.planner .setup__grid{grid-template-columns:1fr 1fr}}
 .planner .grid>*{min-width:0} /* Day 탭·공유 링크 같은 가로 스크롤 요소가 열 폭을 밀어내지 않게 */
 @media (max-width:900px){.planner .grid{grid-template-columns:minmax(0,1fr)}.planner .side{position:static}}
@@ -369,7 +387,7 @@
 .planner .sync--saved .sync__dot{background:#10b981;opacity:1}
 .planner .sync--error{color:#dc2626}
 .planner .mytrips{position:relative}
-.planner .mytrips__panel{position:absolute;right:0;top:calc(100% + 8px);z-index:40;width:min(360px,calc(100vw - 32px));max-height:min(460px,70vh);overflow:auto;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:0 12px 32px #0002}
+.planner .mytrips__panel{position:absolute;left:0;top:calc(100% + 8px);z-index:40;width:min(360px,calc(100vw - 32px));max-height:min(460px,70vh);overflow:auto;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:0 12px 32px #0002}
 .planner .mytrips__hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .planner .mytrips__new{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--badge-bd);background:var(--badge-bg);color:var(--blue);border-radius:99px;padding:5px 12px;font-size:.8rem;font-weight:700}
 .planner .mytrips__new .icon{width:14px;height:14px}
@@ -382,7 +400,6 @@
 .planner .mytrips__open b{font-size:.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .planner .mytrips__open small{font-size:.76rem;color:var(--mute)}
 .planner .mytrips__list .icon-btn{margin-top:0;flex:none}
-@media (max-width:560px){.planner .mytrips__panel{right:auto;left:0}}
 
 /* 체크리스트: 카테고리 편집 · 끌어서 옮기기 */
 .planner .chk li{display:flex;align-items:center;gap:4px}

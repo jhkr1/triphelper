@@ -7,17 +7,20 @@ import { UserAvatar } from "@/components/ui/UserAvatar";
 import { PostThumb } from "@/components/board/RouteThumb";
 import { flagUrl } from "@/lib/geo";
 import { authEnabled } from "@/lib/supabase";
-import { listPosts, NIGHT_FILTERS, PAGE_SIZE, timeAgo, type NightFilter, type PostSummary } from "@/lib/posts";
+import { listPosts, listSavedPosts, NIGHT_FILTERS, PAGE_SIZE, timeAgo, type NightFilter, type PostSummary, type SavedPost } from "@/lib/posts";
 
 export interface BoardCountry { slug: string; name: string; countryCode: string }
 
 const nightsText = (n: number) => (n ? `${n}박 ${n + 1}일` : "당일치기");
-type State = { status: "loading" } | { status: "error" } | { status: "done"; items: PostSummary[]; more: boolean };
+type State = { status: "loading" } | { status: "error" } | { status: "done"; items: (PostSummary | SavedPost)[]; more: boolean };
+/** all: 전체 공개 글 · saved: 내가 저장한 글 */
+type Tab = "all" | "saved";
 
-/** 나라별 여행 동선 게시판 (전체 공개 글, 최신순). 필터는 주소(?country=&nights=)에 남겨 공유·뒤로 가기가 되게 */
+/** 나라별 여행 동선 게시판 (전체 공개 글, 최신순) + 내가 저장한 동선. 필터·탭은 주소(?country=&nights=, ?tab=saved)에 남겨 공유·뒤로 가기가 되게 */
 export function BoardList({ countries }: { countries: BoardCountry[] }) {
   const [country, setCountry] = useState<string>("");
   const [nights, setNights] = useState<NightFilter>("all");
+  const [tab, setTab] = useState<Tab>("all");
   const [ready, setReady] = useState(false);
   const [state, setState] = useState<State>({ status: "loading" });
   const [loadingMore, setLoadingMore] = useState(false);
@@ -32,49 +35,61 @@ export function BoardList({ countries }: { countries: BoardCountry[] }) {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (countries.some((x) => x.slug === c)) setCountry(c);
     if (n && NIGHT_FILTERS.some((x) => x.id === n)) setNights(n);
+    if (q.get("tab") === "saved") setTab("saved");
     setReady(true);
   }, [countries]);
 
   const load = useCallback(async (before?: string) => {
-    const items = await listPosts({ country: country || undefined, nights, before });
+    const items = tab === "saved" ? await listSavedPosts(before) : await listPosts({ country: country || undefined, nights, before });
     return { items, more: items.length === PAGE_SIZE };
-  }, [country, nights]);
+  }, [tab, country, nights]);
 
   useEffect(() => {
     if (!ready || !authEnabled) return;
     let alive = true;
     const q = new URLSearchParams();
-    if (country) q.set("country", country);
-    if (nights !== "all") q.set("nights", nights);
+    if (tab === "saved") q.set("tab", "saved");
+    else {
+      if (country) q.set("country", country);
+      if (nights !== "all") q.set("nights", nights);
+    }
     history.replaceState(null, "", `${window.location.pathname}${q.size ? `?${q}` : ""}`);
     load().then((r) => { if (alive) setState({ status: "done", ...r }); }, () => { if (alive) setState({ status: "error" }); });
     return () => { alive = false; };
-  }, [ready, country, nights, load]);
+  }, [ready, tab, country, nights, load]);
 
   async function more() {
     if (state.status !== "done") return;
     setLoadingMore(true);
     try {
-      const r = await load(state.items.at(-1)?.publishedAt);
+      const last = state.items.at(-1);
+      const r = await load(last && ("savedAt" in last ? last.savedAt : last.publishedAt));
       setState({ status: "done", items: [...state.items, ...r.items], more: r.more });
     } finally { setLoadingMore(false); }
   }
 
   const pick = (c: string) => { setState({ status: "loading" }); setCountry(c); };
   const pickNights = (n: NightFilter) => { setState({ status: "loading" }); setNights(n); };
-  const current = countryOf(country);
+  const pickTab = (t: Tab) => { if (t !== tab) { setState({ status: "loading" }); setTab(t); } };
+  const saved = tab === "saved";
+  const current = saved ? undefined : countryOf(country);
 
   return (
     <div className="board">
       <div className="board__hd">
         <div>
-          <h1>{current ? `${current.name} 여행 동선` : "여행 동선 게시판"}</h1>
+          <h1>{saved ? "저장한 동선" : current ? `${current.name} 여행 동선` : "여행 동선 게시판"}</h1>
           <p>다른 여행자의 동선을 보고, 마음에 들면 내 일정으로 가져와 고쳐 보세요.</p>
         </div>
         <Link className="btn btn--pri" href="/trip/">내 동선 올리기</Link>
       </div>
 
-      <div className="board__filters">
+      <div className="board__tabs" role="group" aria-label="목록">
+        <button type="button" aria-pressed={!saved} onClick={() => pickTab("all")}>모든 동선</button>
+        <button type="button" aria-pressed={saved} onClick={() => pickTab("saved")}>저장한 동선</button>
+      </div>
+
+      {!saved && <div className="board__filters">
         <label className="board__country">
           <span className="sr-only">나라</span>
           {current && (
@@ -91,7 +106,7 @@ export function BoardList({ countries }: { countries: BoardCountry[] }) {
             <button key={f.id} type="button" aria-pressed={nights === f.id} onClick={() => pickNights(f.id)}>{f.label}</button>
           ))}
         </div>
-      </div>
+      </div>}
 
       {!authEnabled ? (
         <p className="board__msg">게시판을 준비하고 있어요.</p>
@@ -101,6 +116,12 @@ export function BoardList({ countries }: { countries: BoardCountry[] }) {
         </div>
       ) : state.status === "error" ? (
         <p className="board__msg">목록을 불러오지 못했어요. 잠시 뒤 다시 시도해 주세요.</p>
+      ) : !state.items.length && saved ? (
+        <div className="board__empty">
+          <Icon name="bookmark" />
+          <p><b>아직 저장한 동선이 없어요.</b><br />마음에 드는 글에서 &lsquo;저장&rsquo;을 누르면 여기에 모여요.</p>
+          <button className="btn btn--pri" type="button" onClick={() => pickTab("all")}>모든 동선 보기</button>
+        </div>
       ) : !state.items.length ? (
         <div className="board__empty">
           <Icon name="pin" />
@@ -129,7 +150,12 @@ export function BoardList({ countries }: { countries: BoardCountry[] }) {
                       <span className="pcard__by">
                         <UserAvatar id={p.userId} src={p.avatar} size={20} />
                         {p.nickname} · {timeAgo(p.publishedAt)}
-                        {p.commentCount > 0 && <em className="pcard__cmt" aria-label={`댓글 ${p.commentCount}개`}><Icon name="message" />{p.commentCount}</em>}
+                        {(p.saveCount > 0 || p.commentCount > 0) && (
+                          <span className="pcard__counts">
+                            {p.saveCount > 0 && <em className="pcard__cmt" aria-label={`저장 ${p.saveCount}명`}><Icon name="bookmark" />{p.saveCount}</em>}
+                            {p.commentCount > 0 && <em className="pcard__cmt" aria-label={`댓글 ${p.commentCount}개`}><Icon name="message" />{p.commentCount}</em>}
+                          </span>
+                        )}
                       </span>
                     </div>
                   </Link>

@@ -13,13 +13,13 @@ import { authEnabled, authStore, enabledProviders, signIn } from "@/lib/supabase
 import { LOADING, tripStore } from "@/lib/trip-store";
 import { flushSave } from "@/lib/trip-sync";
 import type { PlannerCountry } from "@/lib/trip-model";
-import { deletePost, getPost, postDays, postToTrip, postUrl, setPostVisibility, VISIBILITY, type Post, type Visibility } from "@/lib/posts";
+import { deletePost, getPost, postDays, postToTrip, postUrl, setPostSaved, setPostVisibility, VISIBILITY, type Post, type Visibility } from "@/lib/posts";
 
 type State = { status: "loading" } | { status: "missing" } | { status: "error" } | { status: "done"; post: Post };
 
 const nightsText =(n: number) => (n ? `${n}박 ${n + 1}일` : "당일치기");
 
-/** 게시글 보기: 지도 + 날짜별 동선. 링크 복사 · 내 일정으로 가져오기 · (글쓴이) 공개 범위 바꾸기 · 삭제 */
+/** 게시글 보기: 지도 + 날짜별 동선. 링크 복사 · 내 일정으로 가져오기 · (남의 글) 저장 · (글쓴이) 공개 범위 바꾸기 · 삭제 */
 export function PostView({ countries }: { countries: PlannerCountry[] }) {
   const router = useRouter();
   const auth = useSyncExternalStore(authStore.subscribe, authStore.getSnapshot, authStore.getServerSnapshot);
@@ -28,6 +28,7 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
   const [mapDay, setMapDay] = useState<"all" | number>("all");
   const [toastMsg, setToastMsg] = useState("");
   const [busy, setBusy] = useState(false);
+  const [saving, setSaving] = useState(false);
   const toastTimer = useRef<number | undefined>(undefined);
   const toast = (m: string) => { setToastMsg(m); window.clearTimeout(toastTimer.current); toastTimer.current = window.setTimeout(() => setToastMsg(""), 2200); };
 
@@ -92,6 +93,23 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
     router.push("/trip/");
   }
 
+  async function toggleSave() {
+    // 로그인한 뒤 이 글로 돌아오면 다시 누른다
+    if (!meId) {
+      const provider = enabledProviders()[0];
+      if (provider) signIn(provider).catch(() => toast("로그인 화면을 열지 못했어요"));
+      return;
+    }
+    const p = post!;
+    const next = !p.saved;
+    setSaving(true);
+    try {
+      await setPostSaved(p.id, next);
+      setState({ status: "done", post: { ...p, saved: next, saveCount: Math.max(0, p.saveCount + (next ? 1 : -1)) } });
+      toast(next ? "저장했어요 · 게시판의 '저장한 동선'에서 다시 볼 수 있어요" : "저장을 취소했어요");
+    } catch (e) { toast(e instanceof Error ? e.message : "저장하지 못했어요"); } finally { setSaving(false); }
+  }
+
   async function changeVisibility(v: Visibility) {
     setBusy(true);
     try {
@@ -138,6 +156,12 @@ export function PostView({ countries }: { countries: PlannerCountry[] }) {
 
         <div className="post__acts">
           <button className="btn btn--pri" type="button" onClick={importTrip} disabled={!country}>{meId ? "내 일정으로 가져오기" : "로그인하고 내 일정으로 가져오기"}</button>
+          {!mine && (
+            <button className="btn post__save" type="button" onClick={toggleSave} disabled={saving} aria-pressed={meId ? post.saved : undefined}>
+              {!meId ? "로그인하고 저장" : post.saved ? "저장됨" : "저장"}
+              {post.saveCount > 0 && <span className="post__savecnt" aria-label={`${post.saveCount}명이 저장`}>{post.saveCount}</span>}
+            </button>
+          )}
           <button className="btn" type="button" onClick={copyLink}><Icon name="link" />링크 복사</button>
           {mine && (
             <>

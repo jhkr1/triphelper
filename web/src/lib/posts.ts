@@ -65,6 +65,8 @@ export interface PostSummary {
   covers: string[];
   publishedAt: string;
   commentCount: number;
+  /** 이 글을 저장한 사람 수 */
+  saveCount: number;
   nickname: string;
   avatar?: string;
 }
@@ -77,6 +79,8 @@ export interface Post extends Omit<PostSummary, "preview" | "covers" | "publishe
   visibility: Visibility;
   publishedAt: string | null;
   updatedAt: string;
+  /** 내가 저장한 글인지 (로그인하지 않았으면 false) */
+  saved: boolean;
 }
 
 /** 내 일정에서 이미 올린 글 (다시 올리면 이 글을 고친다) */
@@ -187,7 +191,7 @@ export async function deletePost(id: string) {
 
 type Row = {
   share_code: string; user_id: string; title: string; country: string; city: string; nights: number; month: number | null; tags: string[];
-  place_count: number; preview: [number, number][][]; covers: string[] | null; published_at: string; comment_count: number; profiles: { nickname: string; avatar_url: string | null } | null;
+  place_count: number; preview: [number, number][][]; covers: string[] | null; published_at: string; comment_count: number; save_count: number; profiles: { nickname: string; avatar_url: string | null } | null;
 };
 
 export const NIGHT_FILTERS = [
@@ -204,18 +208,47 @@ export const PAGE_SIZE = 18;
 export async function listPosts(opts: { country?: string; nights?: NightFilter; before?: string }): Promise<PostSummary[]> {
   const f = NIGHT_FILTERS.find((x) => x.id === (opts.nights ?? "all"))!;
   let q = (await db()).from("posts")
-    .select("share_code, user_id, title, country, city, nights, month, tags, place_count, preview, covers, published_at, comment_count, profiles(nickname, avatar_url)")
+    .select("share_code, user_id, title, country, city, nights, month, tags, place_count, preview, covers, published_at, comment_count, save_count, profiles!posts_user_id_fkey(nickname, avatar_url)")
     .eq("visibility", "public").gte("nights", f.min).lte("nights", f.max)
     .order("published_at", { ascending: false }).limit(PAGE_SIZE);
   if (opts.country) q = q.eq("country", opts.country);
   if (opts.before) q = q.lt("published_at", opts.before);
   const { data, error } = await q;
   if (error) throw error;
-  return (data as unknown as Row[]).map((r) => ({
-    shareCode: r.share_code, userId: r.user_id, title: r.title, country: r.country, city: r.city, nights: r.nights, month: r.month, tags: r.tags,
-    placeCount: r.place_count, preview: r.preview ?? [], covers: r.covers ?? [], publishedAt: r.published_at, commentCount: r.comment_count ?? 0,
-    nickname: r.profiles?.nickname ?? "여행자", ...(r.profiles?.avatar_url ? { avatar: r.profiles.avatar_url } : {}),
+  return (data as unknown as Row[]).map(toSummary);
+}
+
+const toSummary = (r: Row): PostSummary => ({
+  shareCode: r.share_code, userId: r.user_id, title: r.title, country: r.country, city: r.city, nights: r.nights, month: r.month, tags: r.tags,
+  placeCount: r.place_count, preview: r.preview ?? [], covers: r.covers ?? [], publishedAt: r.published_at, commentCount: r.comment_count ?? 0,
+  saveCount: r.save_count ?? 0, nickname: r.profiles?.nickname ?? "여행자", ...(r.profiles?.avatar_url ? { avatar: r.profiles.avatar_url } : {}),
+});
+
+/* ───────── 저장(북마크) ───────── */
+
+export interface SavedPost extends PostSummary {
+  /** 내가 저장한 시각 (다음 페이지 기준) */
+  savedAt: string;
+}
+
+/** 내가 저장한 글 (저장한 순서, 최신 먼저). before: 이전 페이지 마지막 글을 저장한 시각 */
+export async function listSavedPosts(before?: string): Promise<SavedPost[]> {
+  const { data, error } = await (await db()).rpc("my_saved_posts", { before: before ?? null, size: PAGE_SIZE });
+  if (error) throw error;
+  type SavedRow = Omit<Row, "profiles"> & { nickname: string | null; avatar_url: string | null; saved_at: string };
+  return ((data ?? []) as SavedRow[]).map((r) => ({
+    ...toSummary({ ...r, profiles: { nickname: r.nickname ?? "여행자", avatar_url: r.avatar_url } }),
+    savedAt: r.saved_at,
   }));
+}
+
+/** 글 저장 · 저장 취소. 이미 저장했거나 이미 지운 경우도 성공으로 본다 */
+export async function setPostSaved(postId: string, saved: boolean) {
+  const c = await db();
+  const { error } = saved
+    ? await c.from("post_saves").insert({ post_id: postId })
+    : await c.from("post_saves").delete().eq("post_id", postId);
+  if (error && error.code !== "23505") throw error;
 }
 
 /** 공유 코드로 글 한 건 (전체 공개·링크 공유, 또는 내 글). 없거나 볼 수 없으면 null */
@@ -229,6 +262,7 @@ export async function getPost(code: string): Promise<Post | null> {
     country: r.country as string, city: r.city as string, nights: r.nights as number, month: (r.month as number | null) ?? null,
     tags: (r.tags as string[]) ?? [], placeCount: r.place_count as number, data: r.data as PostData, visibility: r.visibility as Visibility,
     publishedAt: (r.published_at as string | null) ?? null, updatedAt: r.updated_at as string, commentCount: (r.comment_count as number) ?? 0,
+    saveCount: (r.save_count as number) ?? 0, saved: Boolean(r.saved),
     nickname: (r.nickname as string) ?? "여행자", ...(r.avatar_url ? { avatar: r.avatar_url as string } : {}),
   };
 }

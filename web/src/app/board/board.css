@@ -60,6 +60,15 @@
 .planner .post__by .uav{width:28px;height:28px}
 .planner .post__summary{margin:14px 0 0;padding:14px 16px;border-radius:14px;background:var(--soft);white-space:pre-wrap;line-height:1.7;color:var(--text2)}
 .planner .post__acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.planner .post__save[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:color-mix(in srgb,var(--blue) 8%,var(--card))}
+.planner .post__savecnt{margin-left:6px;font-weight:500;color:var(--mute);font-variant-numeric:tabular-nums}
+.planner .post__save[aria-pressed="true"] .post__savecnt{color:inherit}
+.planner .board__tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--line)}
+.planner .board__tabs button{border:0;background:none;padding:10px 4px;margin-right:16px;font-size:.95rem;font-weight:600;color:var(--mute);border-bottom:2px solid transparent;margin-bottom:-1px}
+.planner .board__tabs button:hover{color:var(--ink)}
+.planner .board__tabs button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.planner .pcard__counts{display:inline-flex;gap:8px;margin-left:auto}
+.planner .pcard__counts .pcard__cmt{margin-left:0}
 .planner .post__visedit select{height:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:9px 12px;font:inherit;font-weight:600;font-size:.88rem}
 .planner .post__del:hover{border-color:#dc2626;color:#dc2626}
 .planner .post__hint{margin:8px 2px 0;font-size:.8rem;color:var(--mute)}

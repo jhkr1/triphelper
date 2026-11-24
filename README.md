@@ -162,7 +162,6 @@
 triphelper/
 ├── README.md
 ├── .github/workflows/pages.yml  # GitHub Pages 배포 (main에 push하면 자동)
-├── netlify.toml                 # 예전 Netlify 설정 (사용 안 함, 주석 처리)
 ├── docs/screenshots/            # README 스크린샷
 ├── supabase/migrations/         # DB 변경 (RLS · 권한 · RPC)
 └── web/                         # Next.js 앱
@@ -212,6 +211,15 @@ docker run -it --rm -p 3000:3000 -v "$PWD/web:/app" -w /app node:26-alpine \
 
 > Windows 폴더를 Docker에 연결하면 파일 변경이 자동 감지되지 않을 수 있습니다. 코드를 고친 뒤 개발 서버를 다시 시작하세요.
 
+### 검사 · 테스트
+
+```bash
+cd web
+npm test           # 단위 테스트 (Vitest: 일정 합치기·게시글 만들기·날짜 계산 등)
+npx tsc --noEmit   # 타입 검사
+npm run lint
+```
+
 ### 빌드 · 배포
 
 ```bash
@@ -227,8 +235,6 @@ npm run build      # → web/out/ 에 정적 사이트 생성
   - **Pages → Build and deployment → Source**: GitHub Actions
   - **Secrets and variables → Actions → Variables**: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_AUTH_PROVIDERS` (예: `kakao`). 모두 브라우저에 공개되는 값이라 Secrets가 아닌 Variables에 넣습니다.
 - 개발할 때는 같은 값을 `web/.env.local`에 넣습니다 (커밋하지 않음).
-
-> 예전에는 Netlify로 배포했습니다. [`netlify.toml`](./netlify.toml)은 참고용으로 주석 처리해 두었고, 지금은 쓰지 않습니다.
 
 ---
 

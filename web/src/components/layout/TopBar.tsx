@@ -45,10 +45,10 @@ export function TopBar({ solid = false }: { solid?: boolean }) {
 }
 
 export function Footer() {
-  const { t } = useApp();
   return (
     <footer className="foot footer">
-      <p>{t("footer.text")}</p>
+      {/* 연도는 빌드할 때 정해진다 (해가 바뀐 직후 열면 브라우저 연도와 다를 수 있어 경고를 끈다) */}
+      <p suppressHydrationWarning>© {new Date().getFullYear()} TripHelper. 여행의 모든 순간을 함께합니다.</p>
       <p className="foot__links"><Link href="/privacy/">개인정보처리방침</Link></p>
     </footer>
   );

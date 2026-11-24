@@ -44,7 +44,7 @@ export function RouteDays({ days, start, countryCode }: { days: TripDay[]; start
         const stay = i < days.length - 1 ? d.stay : undefined;
         return (
           <div className="card post__day" key={i}>
-            <h2><span style={{ background: dayColor(i) }} aria-hidden="true" />Day {i + 1}{start && <small>{dayLabel(start, i)}</small>}</h2>
+            <h2><span style={{ background: dayColor(i) }} aria-hidden="true" />{i + 1}일차{start && <small>{dayLabel(start, i)}</small>}</h2>
             {!d.places.length && !stay && !prevStay ? (
               <p className="board__msg">이날은 비워 두었어요.</p>
             ) : (
@@ -58,7 +58,7 @@ export function RouteDays({ days, start, countryCode }: { days: TripDay[]; start
                   </Fragment>
                 ))}
                 {stay && d.places.length > 0 && <Leg from={d.places[d.places.length - 1]} to={stay} countryCode={countryCode} />}
-                {stay && <StayItem stay={stay} label={`Day ${i + 1} 밤 숙소`} />}
+                {stay && <StayItem stay={stay} label={`${i + 1}일차 밤 숙소`} />}
               </ol>
             )}
           </div>

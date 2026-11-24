@@ -463,7 +463,6 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
             day={safeDay}
             onDayChange={(i) => { setDay(i); if (mapDay !== "all") setMapDay(i); }}
             forecast={byDate}
-            rateText={rateText}
             onAddDay={addDay}
             onRemoveDay={removeDay}
             updatePlaces={updatePlaces}

@@ -24,7 +24,6 @@ interface Props {
   day: number;
   onDayChange: (i: number) => void;
   forecast: Record<string, DailyForecast>;
-  rateText: string;
   onAddDay: () => void;
   onRemoveDay: (i: number) => void;
   /** 선택한 날의 장소 목록 바꾸기 */
@@ -176,7 +175,7 @@ function DayTab({ i, start, selected, dropping, keyboard, canMove, onClick }: {
       className={`day${dropping ? " day--drop" : ""}${placeOver ? " day--over" : ""}${isDragging ? " day--ghost" : ""}`}
       style={{ transform: CSS.Translate.toString(transform), transition }}
       role="tab" aria-selected={selected} onClick={onClick}>
-      <b>Day {i + 1}</b>{start && <span>{dayLabel(start, i)}</span>}
+      <b>{i + 1}일차</b>{start && <span>{dayLabel(start, i)}</span>}
     </button>
   );
 }
@@ -199,7 +198,7 @@ function BasketItem({ place, dayNo, onPlace, onRemove }: { place: Place; dayNo: 
     >
       <Icon name="grip" className="bk__grip" />
       <span className="bk__name">{place.name}</span>
-      <button type="button" className="bk__btn" onClick={onPlace} aria-label={`${place.name}을(를) Day ${dayNo} 마지막에 넣기`}>+ Day {dayNo}</button>
+      <button type="button" className="bk__btn" onClick={onPlace} aria-label={`${place.name}을(를) ${dayNo}일차 마지막에 넣기`}>+ {dayNo}일차</button>
       <button type="button" className="bk__x" onClick={onRemove} aria-label={`${place.name} 여행지 바구니에서 빼기`}><Icon name="x" /></button>
     </li>
   );
@@ -339,14 +338,14 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onRemove, 
       <li className="stay">
         <span className="stay__ic" aria-hidden="true"><Icon name="bed" /></span>
         <div className="stay__body">
-          <small>Day {dayNo} 밤 숙소</small>
+          <small>{dayNo}일차 밤 숙소</small>
           <b>{stay.name}</b>
           {!stay.location && (
             <button type="button" className="tag tag--warn" onClick={() => onPickRequest(stay.id)}><Icon name="pin" />위치 미지정 · 지도에서 지정</button>
           )}
         </div>
         <button type="button" className="stay__btn" onClick={() => { setQ(""); setOpen(true); }}>바꾸기</button>
-        <button className="icon-btn" type="button" aria-label={`Day ${dayNo} 숙소 빼기`} onClick={onRemove}><Icon name="x" /></button>
+        <button className="icon-btn" type="button" aria-label={`${dayNo}일차 숙소 빼기`} onClick={onRemove}><Icon name="x" /></button>
       </li>
     );
   }
@@ -355,7 +354,7 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onRemove, 
     return (
       <li className="stay stay--empty">
         <button type="button" className="stay__add" onClick={() => setOpen(true)}>
-          <Icon name="plus" />Day {dayNo} 밤 숙소 추가
+          <Icon name="plus" />{dayNo}일차 밤 숙소 추가
         </button>
       </li>
     );
@@ -370,7 +369,7 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onRemove, 
           value={q}
           onChange={(e) => { setQ(e.target.value); setChoices(null); }}
           placeholder="숙소 이름 (예: 도요코인 신주쿠, Hilton Tokyo)"
-          aria-label={`Day ${dayNo} 밤 숙소 이름`}
+          aria-label={`${dayNo}일차 밤 숙소 이름`}
           autoComplete="off"
         />
         <button className="btn btn--pri" type="submit" disabled={busy}>{busy ? "찾는 중…" : "찾기"}</button>
@@ -396,7 +395,7 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onRemove, 
 
 /* ───────── 일정표 ───────── */
 
-export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateText, onAddDay, onRemoveDay, updatePlaces, updateTrip, onPickRequest, onOpenSetup, toast }: Props) {
+export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAddDay, onRemoveDay, updatePlaces, updateTrip, onPickRequest, onOpenSetup, toast }: Props) {
   const places = trip.days[day]?.places ?? [];
   const basket = trip.basket ?? [];
   const w = forecast[addDays(trip.start, day)];
@@ -415,7 +414,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
   function putStay(s: Omit<Place, "id">) {
     let filled = 0;
     updateTrip((t) => { const r = setStay(t, day, s); filled = r.filled; return r.trip; });
-    if (filled) toast(`Day ${day + 2}${filled > 1 ? `~${day + 1 + filled}` : ""} 밤도 같은 숙소로 넣었습니다`);
+    if (filled) toast(`${day + 2}${filled > 1 ? `~${day + 1 + filled}` : ""}일차 밤도 같은 숙소로 넣었습니다`);
   }
 
   // 장소 추가
@@ -498,7 +497,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
     const order = arrayMove(trip.days.map((_, i) => i), from, to);
     updateTrip((t) => ({ ...t, days: t.days.map((d, i) => ({ ...d, places: t.days[order[i]].places })) }));
     onDayChange(order.indexOf(day)); // 보고 있던 날의 일정을 따라간다
-    toast(`Day ${from + 1} 일정을 Day ${to + 1}로 옮겼습니다`);
+    toast(`${from + 1}일차 일정을 ${to + 1}일차로 옮겼습니다`);
   }
 
   function onDragStart(e: DragStartEvent) {
@@ -551,7 +550,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
           return i === target ? { ...x, places: insertAt(rest, { ...item, time: "" }, rest.length) } : i === day ? { ...x, places: rest } : x;
         }),
       }));
-      toast(`${item.name}을(를) Day ${target + 1}로 옮겼습니다`);
+      toast(`${item.name}을(를) ${target + 1}일차로 옮겼습니다`);
       return;
     }
 
@@ -596,7 +595,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
       basket: (t.basket ?? []).filter((x) => x.id !== p.id),
       days: t.days.map((x, i) => (i === day ? { ...x, places: insertAt(x.places, { ...p, time: "" }, x.places.length) } : x)),
     }));
-    toast(`${p.name}을(를) Day ${day + 1}에 넣었습니다`);
+    toast(`${p.name}을(를) ${day + 1}일차에 넣었습니다`);
   }
 
   return (
@@ -639,8 +638,6 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
             })()}</span>
           )
         )}
-        <span className="sep">|</span>
-        <span>환율 {rateText}</span>
         {canReorder(places) && (
           <button type="button" className="tidy-btn" aria-expanded={Boolean(tidyNow)} onClick={() => (tidyNow ? setTidy(null) : previewTidy())}>
             가까운 순으로 정리
@@ -807,7 +804,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, rateT
       <DragOverlay dropAnimation={null}>
         {tabDrag !== null && (
           <div className="day day--lift">
-            <b>Day {tabDrag + 1}</b>{!trip.datesUnset && <span>{dayLabel(trip.start, tabDrag)}</span>}
+            <b>{tabDrag + 1}일차</b>{!trip.datesUnset && <span>{dayLabel(trip.start, tabDrag)}</span>}
           </div>
         )}
         {dragged && (

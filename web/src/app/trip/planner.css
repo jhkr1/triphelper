@@ -50,7 +50,6 @@
 .planner .day[aria-selected="true"] span{color:#dbe7ff}
 .planner .daybar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:14px 16px;border-radius:14px;background:var(--badge-bg);border:1px solid var(--badge-bd);margin-bottom:18px;font-size:.9rem}
 .planner .daybar b{font-weight:700}
-.planner .daybar .sep{color:var(--badge-bd)}
 .planner .tl{list-style:none;margin:0;padding:0;position:relative}
 /* 장소를 잇는 세로선: 그날 색 점선 (지도의 동선과 같은 표현) */
 .planner .tl::before{content:"";position:absolute;left:23px;top:10px;bottom:10px;width:2px;background:repeating-linear-gradient(to bottom,var(--dc,var(--line)) 0 5px,transparent 5px 10px);opacity:.55}
@@ -189,8 +188,7 @@
 .planner .grid>*{min-width:0} /* Day 탭·공유 링크 같은 가로 스크롤 요소가 열 폭을 밀어내지 않게 */
 @media (max-width:900px){.planner .grid{grid-template-columns:minmax(0,1fr)}.planner .side{position:static}}
 @media (max-width:560px){.planner .stop__body{flex-direction:column-reverse}.planner .stop__ph,.planner .stop__ph img,.planner .stop__ph--loading{width:100%}.planner .stop__ph img{height:150px}}
-@media (max-width:560px){.planner .stop{grid-template-columns:36px minmax(0,1fr) auto}.planner .stop__n{width:36px}.planner .tl::before{left:17px}.planner .add{grid-template-columns:1fr}
-  .planner .daybar .sep{display:none} /* 좁은 화면에서는 날씨·환율이 줄바꿈되어 구분선만 끝에 남는다 */}
+@media (max-width:560px){.planner .stop{grid-template-columns:36px minmax(0,1fr) auto}.planner .stop__n{width:36px}.planner .tl::before{left:17px}.planner .add{grid-template-columns:1fr}}
 
 .planner{background:var(--soft);min-height:100svh}
 .planner .icon{flex:none}

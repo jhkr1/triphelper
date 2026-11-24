@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "
 import { Icon } from "@/components/ui/Icon";
 import { authStore } from "@/lib/supabase";
 import { removeMember, ROLE_LABEL } from "@/lib/trip-collab";
-import { deleteTrip, flushSave, listMyTrips, loadTrip, syncStatusStore, type SyncStatus, type TripMeta } from "@/lib/trip-sync";
+import { deleteTrip, duplicateTrip, flushSave, listMyTrips, loadTrip, syncStatusStore, type SyncStatus, type TripMeta } from "@/lib/trip-sync";
 import type { PlannerCountry } from "@/lib/trip-model";
 import type { Trip } from "@/types/trip";
 
@@ -43,7 +43,7 @@ interface Props {
   toast: (msg: string) => void;
 }
 
-/** 내 여행 목록: 로그인했을 때만. 열기 · 새로 만들기 · 지우기 */
+/** 내 여행 목록: 로그인했을 때만. 열기 · 새로 만들기 · 복제 · 지우기 */
 export function MyTrips({ trip, countries, onOpened, onNew, toast }: Props) {
   const auth = useSyncExternalStore(authStore.subscribe, authStore.getSnapshot, authStore.getServerSnapshot);
   const me = auth.status === "in" ? auth.me : null;
@@ -83,6 +83,21 @@ export function MyTrips({ trip, countries, onOpened, onNew, toast }: Props) {
       setOpen(false);
     } catch {
       toast("일정을 불러오지 못했어요. 잠시 뒤 다시 시도해 주세요.");
+    } finally { setBusy(null); }
+  }
+
+  /** 복제: 사본을 내 새 일정으로 저장하고 바로 연다 */
+  async function duplicate(t: TripMeta) {
+    if (!me) return;
+    setBusy(t.id);
+    try {
+      const copy = await duplicateTrip(t.id, me.id, countries);
+      onOpened(copy);
+      setOpen(false);
+      toast("사본을 만들어 열었어요 · 원래 일정은 그대로예요");
+    } catch (e) {
+      const message = (e as { message?: string } | null)?.message ?? "";
+      toast(/100개/.test(message) ? "일정은 100개까지 저장할 수 있어요. 안 쓰는 일정을 지운 뒤 다시 해 주세요." : "복제하지 못했어요. 잠시 뒤 다시 시도해 주세요.");
     } finally { setBusy(null); }
   }
 
@@ -139,6 +154,9 @@ export function MyTrips({ trip, countries, onOpened, onNew, toast }: Props) {
                         {t.ownerName && ` · ${t.ownerName}님의 일정`}
                         {current && " · 지금 보는 중"}
                       </small>
+                    </button>
+                    <button type="button" className="icon-btn" aria-label={`${t.title || "이 여행"} 복제`} title="복제" onClick={() => duplicate(t)} disabled={busy === t.id}>
+                      <Icon name="copy" />
                     </button>
                     <button type="button" className="icon-btn" aria-label={`${t.title || "이 여행"} ${t.role === "owner" ? "삭제" : "에서 나가기"}`} onClick={() => remove(t)} disabled={busy === t.id}>
                       <Icon name="x" />

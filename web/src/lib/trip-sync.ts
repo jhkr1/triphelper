@@ -2,7 +2,7 @@ import type { RealtimeChannel, SupabaseClient } from "@supabase/supabase-js";
 import { authEnabled, authStore, db, dbForAccount, type AuthSnapshot } from "@/lib/supabase";
 import { LOADING, tripStore } from "@/lib/trip-store";
 import { describeChanges, mergeTrips, stableJson } from "@/lib/trip-merge";
-import { checklistFor, nightsBetween, type PlannerCountry } from "@/lib/trip-model";
+import { checklistFor, nightsBetween, tripName, TRIP_TITLE_MAX, type PlannerCountry } from "@/lib/trip-model";
 import type { Checklist, Trip, TripRole } from "@/types/trip";
 
 /*
@@ -89,6 +89,33 @@ export async function loadTrip(id: string, me: string, countries: PlannerCountry
   if (me !== userId) throw new Error("계정이 변경됐어요.");
   const trip: Trip = { ...remote, checklist: checklist ?? (country ? checklistFor(country) : { bags: {}, done: [] }),
     cloud: { id, userId: me, savedAt: data.updated_at, ...access } };
+  adopt(trip);
+  return trip;
+}
+
+/**
+ * 일정 복제: 같은 내용을 내 새 일정으로 바로 저장해서 돌려준다 (남의 함께 짜는 일정도 내 것으로).
+ * 함께 짜는 사람·보기 링크·게시글·활동 기록은 따라가지 않고, 준비물은 내 것만 복사한다.
+ */
+export async function duplicateTrip(id: string, me: string, countries: PlannerCountry[]): Promise<Trip> {
+  await flushSave(); // 지금 고치던 내용까지 복사되게
+  const sb = await db();
+  const { data, error } = await sb.from("trips").select(TRIP_FIELDS)
+    .eq("id", id).eq("trip_checklists.user_id", me).single();
+  if (error) throw error;
+  const remote = data.data as Data;
+  const country = countries.find((entry) => entry.slug === remote.country);
+  const checklist = data.trip_checklists[0]?.checklist as Checklist | undefined;
+  const suffix = " (사본)";
+  const copy: Data = {
+    ...remote,
+    title: `${tripName(remote, country?.name ?? "").slice(0, TRIP_TITLE_MAX - suffix.length)}${suffix}`,
+    checklist: checklist ?? (country ? checklistFor(country) : { bags: {}, done: [] }),
+  };
+  if (me !== userId) throw new Error("계정이 변경됐어요.");
+  const saved = await sb.from("trips").insert(rowOf(copy)).select("id, updated_at").single();
+  if (saved.error) throw saved.error;
+  const trip: Trip = { ...copy, cloud: { id: saved.data.id, userId: me, savedAt: saved.data.updated_at, role: "owner", shared: false } };
   adopt(trip);
   return trip;
 }

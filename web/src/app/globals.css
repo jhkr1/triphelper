@@ -6,8 +6,9 @@
   --glow:#eaf2ff; --badge-bg:#f0f6ff; --badge-bd:#dbe7ff;
   --shadow:0 10px 30px #1118271a; --shadow-sm:0 6px 20px #11182710;
   --ocean1:#e0edff; --ocean2:#cfe2ff; --ocean3:#b4d0fa;
-  --land:#ffffff; --land-stroke:#b6cdf3; --dest:#d1d5db; --dest-stroke:#9ca3af; --rim:#93b8ef; --grat:#ffffff;
-  --pin:#ef4444; --pin-ring:#ffffff; --label-halo:#ffffff;
+  /* 땅: 지원하지 않는 나라는 흐리게(--land-off), 지원하는 나라는 밝게(--land), 고른 나라는 파랗게(--land-sel) */
+  --land-off:#dfe4ec; --land-off-stroke:#c7cfdb; --land:#ffffff; --land-stroke:#7fa3e6; --land-hover:#dbe8ff;
+  --land-sel:#2563eb; --land-sel-stroke:#1d4ed8; --rim:#93b8ef; --grat:#ffffff; --label-halo:#ffffff;
   --plane-wing:#ffffff; --plane-keel:#a9c6f7; --plane-fold:#2563eb; --plane-edge:#7fa6e6; --plane-shadow:#1d4ed833; --trail:#8fb0e8;
   --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
   /* 숙소(밤): 보라. 진한 색(--stay)은 아이콘·지도 표시, 옅은 색은 숙소 칸 바탕 */
@@ -27,8 +28,8 @@
   --shadow:0 10px 30px #0009; --shadow-sm:0 6px 20px #0007;
   /* 지구본: 바다는 밤의 지구처럼 푸르게, 땅은 무채색 */
   --ocean1:#24478a; --ocean2:#17306a; --ocean3:#0c1c43;
-  --land:#2a2d33; --land-stroke:#464a53; --dest:#8a8f99; --dest-stroke:#c2c6cd; --rim:#4b78c9; --grat:#8fb4ff;
-  --pin-ring:#121314; --label-halo:#121314;
+  --land-off:#22252b; --land-off-stroke:#343841; --land:#5d6b86; --land-stroke:#93a9d4; --land-hover:#7488ad;
+  --land-sel:#6aa6ff; --land-sel-stroke:#cfe0ff; --rim:#4b78c9; --grat:#8fb4ff; --label-halo:#121314;
   --plane-wing:#eef4ff; --plane-keel:#6f9cf0; --plane-fold:#1d4ed8; --plane-edge:#c7d9ff; --plane-shadow:#0009; --trail:#4b78c9;
   /* 어두운 바탕에서는 진한 보라가 묻혀 한 단계 밝은 보라, 숙소 칸 바탕은 카드색에 보라를 살짝 */
   --stay:#a78bfa; --stay-ink:#c4b5fd; --stay-bg:#211e2b; --stay-bd:#3d3653; --stay-dash:#5e5288;
@@ -118,19 +119,27 @@ h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-sp
 .ocean-stop--1{stop-color:var(--ocean1)}.ocean-stop--2{stop-color:var(--ocean2)}.ocean-stop--3{stop-color:var(--ocean3)}
 .sphere{fill:url(#ocean)}
 .grat{fill:none;stroke:var(--grat);stroke-opacity:.45;stroke-width:.6}
-.land{fill:var(--land);stroke:var(--land-stroke);stroke-width:.5}
-.land--dest{fill:var(--dest);fill-opacity:1;stroke:var(--dest-stroke)}
+/* 지구본 땅: 점을 늘어놓는 대신 지원하는 나라를 칠한다 (점이 많으면 어지럽다) */
+.land{fill:var(--land-off);stroke:var(--land-off-stroke);stroke-width:.5}
+.land.on{fill:var(--land);stroke:var(--land-stroke);stroke-width:.8;cursor:pointer;transition:fill .15s}
+.land.on:hover,.land.on.hover{fill:var(--land-hover)}
+.land.on.sel{fill:var(--land-sel);stroke:var(--land-sel-stroke);stroke-width:1}
 .rim{fill:none;stroke:var(--rim);stroke-opacity:.6;stroke-width:1.5}
+/* 나라마다 이름표 자리 하나 (키보드로 고르는 단추 역할도 한다).
+   지도에 모양이 있는 나라(.pin--area)는 땅을 누르므로 점을 그리지 않고, 키보드 초점일 때만 고리를 보인다.
+   지도에 모양이 없는 작은 곳(홍콩·싱가포르 등)만 작은 점을 그린다. 지도를 못 불러오면 모두 점으로 보인다 */
 .pin{cursor:pointer}
-.pin .dot{fill:var(--blue);stroke:var(--pin-ring);stroke-width:2;transition:r .2s,fill .2s}
-.pin .pulse{fill:var(--blue);opacity:.35;transform-box:fill-box;transform-origin:center;animation:pulse 2.6s ease-out infinite}
+.pin:focus{outline:none}
+.pin .dot{fill:var(--land);stroke:var(--land-stroke);stroke-width:1.6;transition:fill .15s}
+.pin:hover .dot,.pin.hover .dot{fill:var(--land-hover)}
+.pin.active .dot{fill:var(--land-sel);stroke:var(--land-sel-stroke)}
+.pin .ring{fill:none;stroke:var(--blue);stroke-width:2;opacity:0}
+.pin:focus-visible .ring{opacity:1}
 .pin .hit{fill:transparent}
+.has-land .pin--area{pointer-events:none}
+.has-land .pin--area .dot{display:none}
 .pin text{font:700 15px var(--sans);fill:var(--ink);stroke:var(--label-halo);stroke-width:4px;paint-order:stroke;opacity:0;transition:opacity .15s;pointer-events:none}
-.pin:hover text,.pin:focus-visible text,.pin.active text{opacity:1}
-.pin:hover .dot{r:7}
-.pin.active .dot{fill:var(--pin);r:8}
-.pin.active .pulse{fill:var(--pin)}
-@keyframes pulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(3);opacity:0}}
+.pin:hover text,.pin.hover text,.pin:focus-visible text,.pin.active text{opacity:1}
 
 /* 결과 */
 .paper{background:var(--soft);color:var(--ink);padding:clamp(48px,8vw,110px) clamp(16px,5vw,72px) 80px;position:relative;border-top:1px solid var(--line)}
@@ -274,7 +283,6 @@ h1{font:800 clamp(2.2rem,4.6vw,3.6rem)/1.2 var(--sans);margin:0 0 16px;letter-sp
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .pin .pulse{animation:none}
   .plane__art{animation:none}
   .chip-groups{animation:none}
   .reveal{opacity:1;transform:none;transition:none}

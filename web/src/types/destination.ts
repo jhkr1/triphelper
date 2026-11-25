@@ -82,7 +82,7 @@ export interface Destination {
   countryCode: string;
   /** ISO 3166-1 숫자 코드. 지구본에서 나라 영역 강조에 사용. 홍콩·싱가포르는 지도 데이터가 없어 null */
   isoNumeric: number | null;
-  /** 지구본 핀 위치 */
+  /** 지구본 이름표·회전 중심 위치 */
   center: LatLng;
   name: string;
   nameEn: string;

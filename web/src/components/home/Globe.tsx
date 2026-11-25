@@ -5,7 +5,7 @@ import * as d3 from "d3";
 // selection.transition()/interrupt()는 이 모듈이 불러와질 때 덧붙는다. 번들러가 빼지 않도록 명시적으로 불러온다.
 import "d3-transition";
 import { feature } from "topojson-client";
-import type { FeatureCollection, Geometry } from "geojson";
+import type { Feature, FeatureCollection, Geometry } from "geojson";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import type { DestinationSummary } from "@/lib/destinations";
 import { toLngLatTuple } from "@/lib/geo";
@@ -29,7 +29,7 @@ const MIN_ZOOM = 1;
 const MAX_ZOOM = 5;
 
 /**
- * D3 직교 투영 지구본. 드래그로 회전, 핀 클릭/Enter로 선택.
+ * D3 직교 투영 지구본. 드래그로 회전, 지원하는 나라 땅(작은 곳은 점) 클릭 또는 Tab·Enter로 선택.
  * D3가 SVG를 직접 다루므로 React는 <svg> 자리만 만들고, 그리기는 effect 안에서 한다.
  */
 export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLabel, zoomOutLabel, onZoom }: GlobeProps) {
@@ -59,23 +59,32 @@ export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLa
     grad.append("stop").attr("offset", "1").attr("class", "ocean-stop--3");
     svg.append("path").attr("class", "sphere");
     svg.append("path").attr("class", "grat");
-    svg.append("path").attr("class", "land");
-    svg.append("path").attr("class", "land land--dest");
+    // 나라 땅: 지원하는 나라(.on)를 밝게 칠하고, 그 땅을 누르면 고른다 (나라마다 점을 찍으면 어지러워서)
+    const countryLayer = svg.append("g").attr("class", "countries");
     svg.append("path").attr("class", "rim");
     const graticule = d3.geoGraticule10();
-    let land: FeatureCollection<Geometry, { name: string }> | null = null;
+    let countries: d3.Selection<SVGPathElement, Feature<Geometry, { name: string }>, SVGGElement, unknown> | null = null;
     let interacted = false;
+    // 마우스를 올렸거나 키보드 초점이 있는 나라 (땅과 이름표를 함께 강조)
+    let hoverSlug: string | null = null;
+    const byIso = new Map(list.filter((d) => d.isoNumeric != null).map((d) => [d.isoNumeric!, d]));
+    const setHover = (slug: string | null) => { hoverSlug = slug; draw(); };
 
+    // 나라마다 이름표 자리 하나. 키보드로 고르는 단추 역할도 한다.
+    // 지도에 모양이 있는 나라(.pin--area)는 점을 그리지 않고(CSS), 모양이 없는 작은 곳만 작은 점을 그린다
     const pins = svg.append("g").selectAll<SVGGElement, DestinationSummary>("g.pin").data(list, (d) => d.slug).join("g")
-      .attr("class", "pin").attr("tabindex", 0).attr("role", "button")
+      .attr("class", (d) => (d.isoNumeric == null ? "pin" : "pin pin--area")).attr("tabindex", 0).attr("role", "button")
       .on("click", (_, d) => latest.current.onSelect(d))
       .on("keydown", (e: KeyboardEvent, d) => {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); latest.current.onSelect(d); }
-      });
-    pins.append("circle").attr("class", "pulse").attr("r", 5);
-    pins.append("circle").attr("class", "dot").attr("r", 5);
+      })
+      .on("focus", (_, d) => setHover(d.slug))
+      .on("blur", () => setHover(null));
+    pins.append("circle").attr("class", "ring").attr("r", 8);
+    pins.append("circle").attr("class", "dot").attr("r", 4);
     pins.append("circle").attr("class", "hit").attr("r", 13);
-    pins.append("text").attr("x", 12).attr("y", 5);
+    // 땅 위 이름은 나라 가운데에, 작은 점의 이름은 점 오른쪽에
+    pins.append("text").attr("text-anchor", (d) => (d.isoNumeric == null ? "start" : "middle")).attr("x", (d) => (d.isoNumeric == null ? 10 : 0)).attr("y", 5);
 
     function draw() {
       const { activeSlug: activeNow, labelOf: label } = latest.current;
@@ -85,11 +94,12 @@ export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLa
       svg.select(".sphere").attr("d", path({ type: "Sphere" }));
       svg.select(".grat").attr("d", path(graticule));
       svg.select(".rim").attr("d", path({ type: "Sphere" }));
-      if (land) {
-        svg.select(".land:not(.land--dest)").attr("d", path(land));
-        // 선택한 나라 하나만 회색으로 강조
-        const feats = active?.isoNumeric == null ? [] : land.features.filter((f) => Number(f.id) === active.isoNumeric);
-        svg.select(".land--dest").attr("d", path({ type: "FeatureCollection", features: feats }));
+      if (countries) {
+        countries.attr("d", path)
+          .classed("sel", (f) => Number(f.id) === active?.isoNumeric)
+          .classed("hover", (f) => hoverSlug != null && byIso.get(Number(f.id))?.slug === hoverSlug);
+        // 고른 나라의 테두리가 이웃 나라에 가리지 않게 맨 위로
+        countries.filter(".sel").raise();
       }
       pins.each(function (d) {
         const lngLat = toLngLatTuple(d.center);
@@ -100,7 +110,7 @@ export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLa
         if (p) g.attr("transform", `translate(${p[0]},${p[1]})`).attr("aria-label", label(d));
         g.select("text").text(label(d));
       });
-      pins.classed("active", (d) => d.slug === activeNow);
+      pins.classed("active", (d) => d.slug === activeNow).classed("hover", (d) => d.slug === hoverSlug);
       pins.filter(".active").raise();
     }
 
@@ -178,9 +188,16 @@ export function Globe({ list, activeSlug, labelOf, onSelect, ariaLabel, zoomInLa
     import("world-atlas/countries-110m.json").then((mod) => {
       if (cancelled) return;
       const topo = (mod.default ?? mod) as unknown as Topology<{ countries: GeometryCollection<{ name: string }> }>;
-      land = feature(topo, topo.objects.countries) as FeatureCollection<Geometry, { name: string }>;
+      const land = feature(topo, topo.objects.countries) as FeatureCollection<Geometry, { name: string }>;
+      countries = countryLayer.selectAll<SVGPathElement, Feature<Geometry, { name: string }>>("path").data(land.features).join("path")
+        .attr("class", (f) => (byIso.has(Number(f.id)) ? "land on" : "land"))
+        .on("click", (_, f) => { const d = byIso.get(Number(f.id)); if (d) latest.current.onSelect(d); })
+        .on("mouseenter", (_, f) => { const d = byIso.get(Number(f.id)); if (d) setHover(d.slug); })
+        .on("mouseleave", () => setHover(null));
+      // 땅을 누를 수 있게 됐으니 나라 이름표의 점은 감춘다 (못 불러오면 점으로 남아 계속 고를 수 있다)
+      svg.classed("has-land", true);
       draw();
-    }).catch(() => { /* 지도 경계 없이도 핀과 검색은 동작 */ });
+    }).catch(() => { /* 지도 경계 없이도 점과 검색은 동작 */ });
 
     draw();
     api.current = { draw, rotateTo, zoomBy };

@@ -7975,10 +7975,10 @@ export const destinations: Destination[] = [
       { "title": "여행하기 좋은 시기", "description": "건기인 12월~6월이 날씨가 가장 좋습니다. 7월~11월은 우기이자 태풍이 오는 시기라 일정에 여유를 두고 기상 예보를 확인하세요." }
     ],
     "visa": [
-      { "title": "비자 없이 45일", "description": "한국인은 괌·북마리아나 제도 비자면제 프로그램으로 관광 목적이면 비자 없이 최대 45일까지 머물 수 있고, 이때는 미국 ESTA가 없어도 됩니다. 45일보다 오래 머물거나 미국 본토를 함께 들르면 ESTA(최대 90일)나 비자가 필요합니다. 여권은 체류 기간 이상 유효해야 하고 돌아가는 항공권이 있어야 합니다. 입국 조건은 바뀔 수 있으니 출발 전 항공사와 주한미국대사관 안내를 확인하세요." }
+      { "title": "비자 없이 45일", "description": "한국인은 괌·북마리아나 제도 비자면제 프로그램으로 관광 목적이면 비자 없이 최대 45일까지 머물 수 있습니다. 2024년 11월부터는 이 제도로 입국하려면 출발 전에 공식 사이트(g-cnmi-eta.cbp.dhs.gov)에서 전자여행허가(G-CNMI ETA)를 받아야 합니다. 수수료는 없고, 출발 일주일쯤 전에 신청해 두면 안전합니다. 유료 대행 사이트에 주의하세요. 유효한 미국 ESTA가 있으면 ESTA로 입국해도 됩니다(최대 90일). 45일보다 오래 머물거나 미국 본토를 함께 들르면 ESTA나 비자가 필요합니다. 여권은 체류 기간 이상 유효해야 하고 돌아가는 항공권이 있어야 합니다. 입국 조건은 바뀔 수 있으니 출발 전 항공사와 주한미국대사관 안내를 확인하세요." }
     ],
     "visaEn": [
-      { "title": "45 Days Without a Visa", "description": "Korean tourists can stay up to 45 days without a visa under the Guam-CNMI Visa Waiver Program, with no ESTA required. Longer stays or trips that include the US mainland need an ESTA (up to 90 days) or a visa. Check the latest rules with your airline before departure." }
+      { "title": "45 Days Without a Visa", "description": "Korean tourists can stay up to 45 days without a visa under the Guam-CNMI Visa Waiver Program. Since November 2024 you must get a free G-CNMI Electronic Travel Authorization (ETA) at g-cnmi-eta.cbp.dhs.gov before departure; apply about a week ahead. Travelers with a valid ESTA may enter with it instead (up to 90 days). Longer stays or trips that include the US mainland need an ESTA or a visa. Check the latest rules with your airline before departure." }
     ],
     "cities": [
       { "name": "Tumon", "nameKo": "투몬" },
@@ -8251,6 +8251,260 @@ export const destinations: Destination[] = [
       "drivingSide": "right"
     },
     "reviewedAt": "2026-11-24"
+  },
+  {
+    "slug": "macau",
+    "countryCode": "mo",
+    "isoNumeric": null,
+    "center": { "lat": 22.19, "lng": 113.54 },
+    "name": "마카오",
+    "nameEn": "Macau",
+    "keywords": ["마카오", "macau", "macao", "코타이", "cotai", "타이파", "taipa", "마카오 특별행정구"],
+    "flag": "🇲🇴",
+    "languageCode": "zh-HK",
+    "summary": "포르투갈풍 옛 거리와 화려한 리조트가 함께 있는 마카오 여행 가이드.",
+    "summaryEn": "Guide for traveling to Macau, where Portuguese-style old streets meet glittering resorts.",
+    "currency": { "code": "MOP", "name": "마카오 파타카", "nameEn": "Macanese Pataca", "symbol": "MOP$" },
+    "manners": [
+      { "title": "팁 문화", "description": "호텔과 식당 대부분은 계산서에 10% 봉사료를 붙이므로 따로 팁을 주지 않아도 됩니다. 서비스가 좋았다면 잔돈을 남기는 정도면 충분합니다." },
+      { "title": "카지노 예절", "description": "카지노는 만 21세 이상만 들어갈 수 있고 여권 등 신분증을 확인합니다. 카지노 안에서는 사진·동영상 촬영이 금지되어 있습니다." },
+      { "title": "금연 구역", "description": "식당, 쇼핑몰, 버스 정류장 등 실내외 공공장소 대부분이 금연 구역이며 어기면 벌금을 냅니다. 지정된 흡연 구역만 이용하세요." },
+      { "title": "성당·사원 예절", "description": "성당과 사원에서는 조용히 하고, 미사나 예불 중에는 촬영을 삼가세요. 향을 피우는 사원에서는 불씨에 옷이 닿지 않게 조심하세요." }
+    ],
+    "souvenirs": [
+      { "title": "아몬드 쿠키", "description": "마카오를 대표하는 간식 선물입니다. 세나도 광장과 성 바울 성당 유적으로 가는 길에 과자점이 모여 있어 시식해 보고 살 수 있습니다." },
+      { "title": "에그롤·땅콩 과자", "description": "바삭한 에그롤과 땅콩 캔디도 가볍고 오래 두고 먹을 수 있어 선물로 좋습니다." },
+      { "title": "포르투갈 식품", "description": "포르투갈산 와인, 정어리 통조림, 올리브유를 파는 가게가 있어 마카오다운 선물을 고를 수 있습니다." },
+      { "title": "육포는 주의", "description": "골목마다 육포 가게가 있지만 고기가 들어간 가공품은 한국으로 가져올 수 없습니다. 현지에서 맛보는 것으로 만족하세요." }
+    ],
+    "market": [
+      { "title": "편의점", "description": "세븐일레븐, 서클K 같은 편의점이 곳곳에 있어 음료, 간식, 교통카드 충전을 해결할 수 있습니다." },
+      { "title": "슈퍼마켓", "description": "산 미우(San Miu), 로열(Royal) 같은 슈퍼마켓에서 과자와 차, 포르투갈 식품을 호텔보다 저렴하게 살 수 있습니다." },
+      { "title": "약국", "description": "약국(藥房)에서 진통제, 소화제 같은 일반의약품을 살 수 있습니다. 평소 먹는 약은 한국에서 챙겨 가세요." },
+      { "title": "홍콩 달러 사용", "description": "홍콩 달러를 대부분 1:1로 받지만 거스름돈은 파타카로 주는 경우가 많습니다. 파타카는 홍콩에서 쓰기 어려우니 남지 않게 쓰세요. 카드와 간편결제도 널리 쓰입니다." }
+    ],
+    "essentials": [
+      { "title": "전기 어댑터", "description": "마카오는 G 타입 콘센트(220V, 50Hz, 영국식 3핀)를 씁니다. 한국 플러그가 들어가지 않으니 G 타입 어댑터를 챙기세요." },
+      { "title": "교통", "description": "버스는 마카오 패스(교통카드)나 간편결제로 탑니다. 경전철(LRT)이 타이파와 코타이를 잇고, 호텔·카지노 무료 셔틀버스도 다니지만 노선과 운행 시간이 바뀌기도 하니 미리 확인하세요." },
+      { "title": "홍콩에서 이동", "description": "홍콩에서 페리로 약 1시간, 강주아오 대교 셔틀버스로 약 1시간 걸립니다. 국경을 넘는 것이라 여권이 필요합니다." },
+      { "title": "여행자 보험", "description": "의료비, 도난, 항공 지연을 보장하는 여행자 보험을 권합니다." },
+      { "title": "여행경보 확인", "description": "출발 전 외교부 해외안전여행 누리집(0404.go.kr)에서 최신 여행경보와 안전 정보를 확인하세요." },
+      { "title": "여행하기 좋은 시기", "description": "10월~12월이 선선하고 맑아 가장 좋습니다. 6월~9월은 덥고 습하며 태풍이 오는 시기라 기상 예보를 확인하세요." }
+    ],
+    "visa": [
+      { "title": "무비자 입국", "description": "한국인은 관광 목적으로 최대 90일간 비자 없이 입국할 수 있습니다. 여권은 체류 기간 이상 남아 있어야 하며, 홍콩·중국 본토는 따로 입국 심사를 받습니다. 입국 조건은 바뀔 수 있으니 출발 전 외교부 해외안전여행 누리집에서 확인하세요." }
+    ],
+    "visaEn": [
+      { "title": "Visa-Free Entry", "description": "Korean tourists can enter Macau visa-free for up to 90 days. Your passport must be valid for the length of your stay. Hong Kong and mainland China have separate immigration checks. Check the latest rules before departure." }
+    ],
+    "cities": [
+      { "name": "Macau", "nameKo": "마카오" },
+      { "name": "Taipa", "nameKo": "타이파" },
+      { "name": "Coloane", "nameKo": "콜로안" }
+    ],
+    "phraseSet": "chinese",
+    "profile": {
+      "capital": "Macau",
+      "capitalKo": "마카오",
+      "region": "Asia · Eastern Asia",
+      "regionKo": "아시아 · 동아시아",
+      "population": 690000,
+      "languages": ["Chinese", "Portuguese"],
+      "languagesKo": ["중국어(광둥어)", "포르투갈어"],
+      "drivingSide": "left"
+    },
+    "reviewedAt": "2026-11-25"
+  },
+  {
+    "slug": "saipan",
+    "countryCode": "mp",
+    "isoNumeric": null,
+    "center": { "lat": 15.19, "lng": 145.75 },
+    "name": "사이판",
+    "nameEn": "Saipan",
+    "keywords": ["사이판", "saipan", "북마리아나 제도", "northern mariana islands", "가라판", "garapan", "마나가하", "티니안"],
+    "flag": "🇲🇵",
+    "languageCode": "en-US",
+    "summary": "맑은 바다와 산호섬, 가족 리조트가 가까운 미국령 휴양지 사이판 여행 가이드.",
+    "summaryEn": "Guide for traveling to Saipan, a US island resort with clear lagoons and family-friendly resorts.",
+    "currency": { "code": "USD", "name": "미국 달러", "nameEn": "US Dollar", "symbol": "$" },
+    "manners": [
+      { "title": "팁 문화", "description": "미국식 팁 문화가 있습니다. 식당에서는 음식값의 10~15%를 팁으로 주는데, 계산서에 봉사료가 이미 붙어 있으면 따로 주지 않아도 됩니다." },
+      { "title": "전쟁 유적 예절", "description": "사이판은 태평양 전쟁의 격전지라 만세 절벽, 자살 절벽, 위령비 같은 추모 장소가 많습니다. 조용히 둘러보고 위령비 위에 올라가지 마세요." },
+      { "title": "바다 안전", "description": "산호초 바깥쪽과 그로토 같은 곳은 물살이 갑자기 세집니다. 안전요원이 있는 해변을 이용하고 경고 깃발을 확인하세요. 산호와 바다 생물은 만지지 마세요." },
+      { "title": "운전 예절", "description": "차는 오른쪽으로 다니고 제한속도가 낮습니다. 스쿨버스가 정지 신호를 켜면 양방향 차량 모두 멈춰야 합니다." }
+    ],
+    "souvenirs": [
+      { "title": "차모로·캐롤리니안 공예품", "description": "라테 스톤 장식, 조개·코코넛 공예품이 사이판다운 기념품입니다." },
+      { "title": "코코넛 제품", "description": "코코넛 오일, 비누, 과자처럼 섬에서 만든 코코넛 제품이 가벼운 선물로 좋습니다." },
+      { "title": "영양제·화장품", "description": "미국 브랜드 영양제와 화장품을 마트와 약국에서 살 수 있습니다. 면세 한도는 귀국 전에 확인하세요." },
+      { "title": "사이판 기념 소품", "description": "사이판 로고 티셔츠, 마그넷, 에코백은 부담 없는 선물입니다. 가라판 거리의 기념품 가게에 모여 있습니다." }
+    ],
+    "market": [
+      { "title": "ABC 스토어", "description": "가라판 호텔가에 있는 편의점형 상점으로 음료, 간식, 선크림, 기념품을 한 번에 살 수 있습니다." },
+      { "title": "대형 마트", "description": "현지 마트에서 물, 과일, 간식을 호텔 근처보다 저렴하게 살 수 있습니다. 렌터카가 있으면 들르기 좋습니다." },
+      { "title": "약국", "description": "진통제, 소화제, 멀미약 같은 일반의약품을 처방전 없이 살 수 있습니다. 평소 먹는 약은 한국에서 챙겨 가세요." },
+      { "title": "카드와 현금", "description": "호텔과 큰 식당은 카드를 받지만 작은 가게, 투어 팁, 마나가하섬 입도세 등에 쓸 달러 현금을 조금 준비하세요." }
+    ],
+    "essentials": [
+      { "title": "전기 어댑터", "description": "사이판은 미국과 같은 A·B 타입 콘센트(110V, 60Hz)를 씁니다. 11자 모양 플러그 어댑터가 필요하고, 220V 전용 기기는 변압기가 있어야 합니다." },
+      { "title": "렌터카", "description": "대중교통이 거의 없어 렌터카, 택시, 호텔 셔틀을 이용합니다. 렌터카를 빌릴 계획이면 국제운전면허증과 한국 운전면허증을 함께 챙기세요." },
+      { "title": "자외선 차단", "description": "햇볕이 매우 강합니다. 선크림, 모자, 선글라스, 래시가드를 준비하세요." },
+      { "title": "여행자 보험", "description": "미국령이라 병원비가 매우 비쌉니다. 의료비를 넉넉히 보장하는 여행자 보험을 꼭 들어 두세요." },
+      { "title": "여행경보 확인", "description": "출발 전 외교부 해외안전여행 누리집(0404.go.kr)에서 최신 여행경보와 안전 정보를 확인하세요." },
+      { "title": "여행하기 좋은 시기", "description": "건기인 12월~6월이 날씨가 가장 좋습니다. 7월~11월은 우기이자 태풍이 오는 시기라 일정에 여유를 두고 기상 예보를 확인하세요." }
+    ],
+    "visa": [
+      { "title": "비자 없이 45일", "description": "한국인은 괌·북마리아나 제도 비자면제 프로그램으로 관광 목적이면 비자 없이 최대 45일까지 머물 수 있습니다. 2024년 11월부터는 이 제도로 입국하려면 출발 전에 공식 사이트(g-cnmi-eta.cbp.dhs.gov)에서 전자여행허가(G-CNMI ETA)를 받아야 합니다. 수수료는 없고, 출발 일주일쯤 전에 신청해 두면 안전합니다. 유료 대행 사이트에 주의하세요. 유효한 미국 ESTA가 있으면 ESTA로 입국해도 됩니다(최대 90일). 여권은 체류 기간 이상 유효해야 하고 돌아가는 항공권이 있어야 합니다. 입국 조건은 바뀔 수 있으니 출발 전 항공사와 주한미국대사관 안내를 확인하세요." }
+    ],
+    "visaEn": [
+      { "title": "45 Days Without a Visa", "description": "Korean tourists can stay up to 45 days without a visa under the Guam-CNMI Visa Waiver Program. Since November 2024 you must get a free G-CNMI Electronic Travel Authorization (ETA) at g-cnmi-eta.cbp.dhs.gov before departure; apply about a week ahead. Travelers with a valid ESTA may enter with it instead (up to 90 days). Check the latest rules with your airline before departure." }
+    ],
+    "cities": [
+      { "name": "Garapan", "nameKo": "가라판" },
+      { "name": "Susupe", "nameKo": "수수페" },
+      { "name": "San Jose", "nameKo": "티니안" }
+    ],
+    "phraseSet": "english",
+    "profile": {
+      "capital": "Saipan",
+      "capitalKo": "사이판",
+      "region": "Oceania · Micronesia",
+      "regionKo": "오세아니아 · 미크로네시아",
+      "population": 47000,
+      "languages": ["English", "Chamorro", "Carolinian"],
+      "languagesKo": ["영어", "차모로어", "캐롤리니안어"],
+      "drivingSide": "right"
+    },
+    "reviewedAt": "2026-11-25"
+  },
+  {
+    "slug": "croatia",
+    "countryCode": "hr",
+    "isoNumeric": 191,
+    "center": { "lat": 45.81, "lng": 15.98 },
+    "name": "크로아티아",
+    "nameEn": "Croatia",
+    "keywords": ["크로아티아", "croatia", "hrvatska", "두브로브니크", "dubrovnik", "스플리트", "split", "자그레브", "zagreb", "플리트비체"],
+    "flag": "🇭🇷",
+    "languageCode": "hr-HR",
+    "summary": "아드리아해의 성벽 도시와 에메랄드빛 호수를 잇는 크로아티아 여행 가이드.",
+    "summaryEn": "Guide for traveling to Croatia, from walled towns on the Adriatic to emerald lakes.",
+    "currency": { "code": "EUR", "name": "유로", "nameEn": "Euro", "symbol": "€" },
+    "manners": [
+      { "title": "팁 문화", "description": "식당에서는 서비스가 만족스러우면 음식값의 10% 안팎을 팁으로 줍니다. 카페에서는 잔돈을 남기는 정도면 충분합니다." },
+      { "title": "옷차림", "description": "스플리트, 흐바르 같은 도시는 구시가에서 수영복만 입거나 웃옷을 벗고 다니면 벌금을 물릴 수 있습니다. 해변을 벗어나면 겉옷을 걸치세요. 성당에 들어갈 때는 어깨와 무릎을 가리세요." },
+      { "title": "인사", "description": "가게나 식당에 들어갈 때 '도바르 단(안녕하세요)', 나올 때 '흐발라(감사합니다)'라고 인사하면 좋아합니다." },
+      { "title": "국립공원 규칙", "description": "플리트비체 호수에서는 수영할 수 없고, 정해진 나무 길로만 다녀야 합니다. 드론도 허가 없이 날릴 수 없습니다." }
+    ],
+    "souvenirs": [
+      { "title": "올리브유·트러플", "description": "이스트라 지방의 올리브유와 트러플 제품은 품질이 좋아 선물로 인기입니다. 액체류는 위탁 수하물에 넣으세요." },
+      { "title": "라벤더 제품", "description": "흐바르섬의 라벤더로 만든 향주머니, 오일, 비누가 대표 기념품입니다." },
+      { "title": "넥타이(크라바타)", "description": "넥타이는 크로아티아 병사들이 매던 스카프에서 유래했습니다. 전문 매장에서 크로아티아 전통 무늬 넥타이를 살 수 있습니다." },
+      { "title": "리치타르 하트", "description": "빨갛게 칠한 하트 모양 과자 장식(리치타르)은 자그레브를 대표하는 전통 공예품입니다." }
+    ],
+    "market": [
+      { "title": "슈퍼마켓", "description": "콘줌(Konzum), 스파르(Spar), 리들(Lidl) 같은 슈퍼마켓에서 물, 과일, 와인, 과자를 저렴하게 살 수 있습니다." },
+      { "title": "드러그스토어", "description": "dm 같은 드러그스토어에서 유럽 화장품, 선크림, 생활용품을 살 수 있습니다." },
+      { "title": "약국", "description": "약국(Ljekarna)에서 기본 상비약을 살 수 있습니다. 녹색 십자 간판을 찾으세요." },
+      { "title": "재래시장", "description": "자그레브 돌라츠 시장, 스플리트 그린 마켓 같은 아침 시장에서 제철 과일과 치즈, 꿀을 살 수 있습니다." }
+    ],
+    "essentials": [
+      { "title": "전기 어댑터", "description": "크로아티아는 C·F 타입 콘센트(230V, 50Hz)를 써서 한국 플러그를 그대로 쓸 수 있습니다." },
+      { "title": "도시 간 이동", "description": "도시 사이는 주로 장거리 버스나 렌터카로 다닙니다. 여름에는 버스와 섬으로 가는 페리가 일찍 매진되니 미리 예매하세요." },
+      { "title": "편한 신발", "description": "구시가는 미끄러운 돌길과 계단이 많고, 두브로브니크 성벽 걷기는 그늘이 없습니다. 편한 신발과 물, 모자를 챙기세요." },
+      { "title": "여행자 보험", "description": "솅겐 지역 여행에는 의료비를 보장하는 여행자 보험을 권합니다." },
+      { "title": "여행경보 확인", "description": "출발 전 외교부 해외안전여행 누리집(0404.go.kr)에서 최신 여행경보와 안전 정보를 확인하세요." },
+      { "title": "여행하기 좋은 시기", "description": "5월~6월, 9월~10월이 덥지 않고 덜 붐벼 가장 좋습니다. 7~8월은 해수욕하기 좋지만 관광객이 많고 숙소가 비쌉니다. 겨울에는 해안 도시의 가게와 페리가 많이 쉽니다." }
+    ],
+    "visa": [
+      { "title": "무비자 입국 (솅겐 90일)", "description": "크로아티아는 2023년부터 솅겐 지역입니다. 한국인은 관광 목적으로 솅겐 지역 전체에서 180일 중 최대 90일까지 비자 없이 머물 수 있으며, 다른 솅겐 국가에서 머문 날도 함께 셉니다. 여권은 솅겐 지역을 떠나는 날로부터 3개월 이상 남아 있어야 하고 발급된 지 10년이 지나지 않아야 합니다. 입국 때 유럽 출입국 시스템(EES)에 지문과 얼굴 사진을 등록합니다. 사전 여행 허가(ETIAS)는 시행 전이므로 출발 전 공식 사이트(travel-europe.europa.eu)에서 시행 여부를 확인하세요." }
+    ],
+    "visaEn": [
+      { "title": "Visa-Free Entry (Schengen 90 Days)", "description": "Croatia joined the Schengen Area in 2023. Korean tourists can stay visa-free in the Schengen Area for up to 90 days within any 180-day period, counting days spent in other Schengen countries. Your passport must be valid for at least 3 months after leaving the Schengen Area and issued within the last 10 years. The Entry/Exit System (EES) records your fingerprints and face at the border. ETIAS has not launched yet; check travel-europe.europa.eu before you go." }
+    ],
+    "cities": [
+      { "name": "Zagreb", "nameKo": "자그레브" },
+      { "name": "Split", "nameKo": "스플리트" },
+      { "name": "Dubrovnik", "nameKo": "두브로브니크" },
+      { "name": "Zadar", "nameKo": "자다르" }
+    ],
+    "phraseSet": "croatian",
+    "profile": {
+      "capital": "Zagreb",
+      "capitalKo": "자그레브",
+      "region": "Europe · Southern Europe",
+      "regionKo": "유럽 · 남유럽",
+      "population": 3860000,
+      "languages": ["Croatian"],
+      "languagesKo": ["크로아티아어"],
+      "drivingSide": "right"
+    },
+    "reviewedAt": "2026-11-25"
+  },
+  {
+    "slug": "uzbekistan",
+    "countryCode": "uz",
+    "isoNumeric": 860,
+    "center": { "lat": 41.31, "lng": 69.28 },
+    "name": "우즈베키스탄",
+    "nameEn": "Uzbekistan",
+    "keywords": ["우즈베키스탄", "uzbekistan", "타슈켄트", "tashkent", "사마르칸트", "samarkand", "부하라", "bukhara", "히바", "khiva", "실크로드"],
+    "flag": "🇺🇿",
+    "languageCode": "uz-UZ",
+    "summary": "푸른 돔의 모스크와 실크로드 옛 도시를 기차로 잇는 우즈베키스탄 여행 가이드.",
+    "summaryEn": "Guide for traveling to Uzbekistan, linking blue-domed Silk Road cities by train.",
+    "currency": { "code": "UZS", "name": "우즈베키스탄 숨", "nameEn": "Uzbekistani Som", "symbol": "soʻm" },
+    "manners": [
+      { "title": "모스크·영묘 예절", "description": "모스크와 영묘에 들어갈 때는 어깨와 무릎을 가리고, 여성은 스카프를 챙기면 좋습니다. 기도 중인 사람 앞을 지나가거나 촬영하지 마세요." },
+      { "title": "인사와 손님 대접", "description": "오른손을 가슴에 얹고 가볍게 고개를 숙이는 인사를 많이 합니다. 차나 빵(논)을 권하면 조금이라도 받는 것이 예의이며, 빵은 뒤집어 놓거나 바닥에 두지 않습니다." },
+      { "title": "사진 촬영", "description": "현지인, 특히 여성을 찍을 때는 먼저 허락을 구하세요. 군사 시설, 국경, 정부 건물은 촬영하지 마세요." },
+      { "title": "흥정", "description": "바자르(시장)와 기념품 가게에서는 흥정이 자연스럽습니다. 웃으면서 가격을 물어보고, 정한 값은 지키세요." }
+    ],
+    "souvenirs": [
+      { "title": "수자니 자수", "description": "손으로 수놓은 큰 천(수자니)은 우즈베키스탄을 대표하는 공예품입니다. 벽걸이, 쿠션 커버, 가방으로도 나옵니다." },
+      { "title": "리시탄 도자기", "description": "푸른색 무늬의 접시와 찻잔은 실크로드 분위기를 담은 기념품입니다. 깨지지 않게 잘 싸 달라고 하세요." },
+      { "title": "말린 과일·견과", "description": "바자르에서 파는 말린 살구, 건포도, 아몬드, 피스타치오는 맛이 좋고 저렴합니다. 진공 포장을 부탁하면 가져오기 편합니다." },
+      { "title": "아틀라스 비단", "description": "물결무늬의 비단(아틀라스·아드라스) 원단과 스카프는 마르길란 지역의 전통 직물입니다." }
+    ],
+    "market": [
+      { "title": "바자르", "description": "타슈켄트 초르수 바자르, 사마르칸트 시욥 바자르에서 과일, 견과, 빵, 향신료를 살 수 있습니다. 소매치기에 주의하세요." },
+      { "title": "슈퍼마켓", "description": "코르진카(Korzinka), 마크로(Makro) 같은 슈퍼마켓 체인에서 물, 간식, 생활용품을 정가로 살 수 있습니다." },
+      { "title": "약국", "description": "약국(Dorixona)에서 기본 상비약을 살 수 있지만 설명이 현지어라 평소 먹는 약은 한국에서 챙겨 가세요. 일부 진통제·수면제 성분은 반입이 제한되니 처방약은 영문 처방전을 함께 가져가세요." },
+      { "title": "환전과 결제", "description": "미국 달러를 가져가 은행이나 공식 환전소에서 숨으로 바꾸는 것이 편합니다. 큰 호텔과 식당은 해외 카드를 받지만 시장과 택시는 현금을 씁니다. 길거리 환전은 불법이니 피하세요." }
+    ],
+    "essentials": [
+      { "title": "전기 어댑터", "description": "우즈베키스탄은 C·F 타입 콘센트(220V, 50Hz)를 써서 한국 플러그를 그대로 쓸 수 있습니다." },
+      { "title": "고속열차 예매", "description": "타슈켄트·사마르칸트·부하라는 고속열차(아프로시욥)로 이어집니다. 인기 시간대는 일찍 매진되니 철도청 공식 사이트(railway.uz)나 앱에서 여권 정보로 미리 예매하세요." },
+      { "title": "택시 앱", "description": "얀덱스 고(Yandex Go) 같은 택시 앱을 쓰면 요금 흥정 없이 이동할 수 있습니다. 현지 유심이나 eSIM을 준비하면 편합니다." },
+      { "title": "여행자 보험", "description": "의료비, 도난, 항공 지연을 보장하는 여행자 보험을 권합니다." },
+      { "title": "여행경보 확인", "description": "출발 전 외교부 해외안전여행 누리집(0404.go.kr)에서 최신 여행경보와 안전 정보를 확인하세요." },
+      { "title": "여행하기 좋은 시기", "description": "4월~5월, 9월~10월이 가장 좋습니다. 여름(6월~8월)은 낮 기온이 40도 가까이 올라 야외 관광은 아침과 저녁에 하는 것이 좋고, 겨울은 꽤 춥습니다." }
+    ],
+    "visa": [
+      { "title": "무비자 입국 (30일)", "description": "한국인은 관광 목적으로 최대 30일간 비자 없이 입국할 수 있습니다. 여권은 입국일로부터 3개월 이상 남아 있어야 안전합니다. 외국인은 머무는 곳마다 체류 등록을 해야 하는데, 호텔에 묵으면 호텔이 대신 해 줍니다. 민박이나 지인 집에 묵으면 직접 등록해야 하니 숙소에 확인하세요. 입국 조건은 바뀔 수 있으니 출발 전 주한우즈베키스탄대사관 안내를 확인하세요." }
+    ],
+    "visaEn": [
+      { "title": "Visa-Free Entry (30 Days)", "description": "Korean tourists can enter Uzbekistan visa-free for up to 30 days. A passport valid for at least 3 months from entry is recommended. Foreigners must register their stay; hotels do this automatically, but if you stay in a private home you need to register yourself. Check the latest rules before departure." }
+    ],
+    "cities": [
+      { "name": "Tashkent", "nameKo": "타슈켄트" },
+      { "name": "Samarkand", "nameKo": "사마르칸트" },
+      { "name": "Bukhara", "nameKo": "부하라" },
+      { "name": "Khiva", "nameKo": "히바" }
+    ],
+    "phraseSet": "uzbek",
+    "profile": {
+      "capital": "Tashkent",
+      "capitalKo": "타슈켄트",
+      "region": "Asia · Central Asia",
+      "regionKo": "아시아 · 중앙아시아",
+      "population": 37500000,
+      "languages": ["Uzbek", "Russian"],
+      "languagesKo": ["우즈베크어", "러시아어"],
+      "drivingSide": "right"
+    },
+    "reviewedAt": "2026-11-25"
   }
 ];
 

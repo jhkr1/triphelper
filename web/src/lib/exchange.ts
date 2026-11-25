@@ -23,7 +23,7 @@ const BASE_URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api";
 export const FALLBACK_USD: Record<string, number> = {
   USD: 1, EUR: 1.08, JPY: 0.0067, GBP: 1.27, CNY: 0.14, KRW: 0.00074, TRY: 0.026, MXN: 0.059, CAD: 0.73, CHF: 1.1,
   AUD: 0.66, TWD: 0.031, HKD: 0.13, SGD: 0.74, MYR: 0.22, IDR: 0.000061, PHP: 0.018, VND: 0.000039, THB: 0.027, HUF: 0.0028, RUB: 0.012, NZD: 0.59,
-  MNT: 0.00029, CZK: 0.043, AED: 0.27, LAK: 0.000046,
+  MNT: 0.00029, CZK: 0.043, AED: 0.27, LAK: 0.000046, MOP: 0.124, UZS: 0.00008,
 };
 
 const cache = new Map<string, Promise<unknown>>();

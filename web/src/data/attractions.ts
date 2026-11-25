@@ -3298,5 +3298,385 @@ export const attractions: Record<string, Attraction[]> = {
       "city": "팍세",
       "summary": "왓푸는 라오스 남부에 위치한 크메르족의 힌두교 사원 유적지이다."
     }
+  ],
+  "macau": [
+    {
+      "name": "성 바울 성당 유적",
+      "nameEn": "Ruins of Saint Paul's",
+      "wiki": "성 바울 성당 유적",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/%E5%A4%A7%E4%B8%89%E5%B7%B4%E7%89%8C%E5%9D%8A.jpg/500px-%E5%A4%A7%E4%B8%89%E5%B7%B4%E7%89%8C%E5%9D%8A.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 22.1975,
+        "lng": 113.54056
+      },
+      "city": "마카오",
+      "summary": "마카오에 위치했던 교회 터"
+    },
+    {
+      "name": "세나두 광장",
+      "nameEn": "Senado Square",
+      "wiki": "세나두 광장",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Centre_of_Makau.jpg/500px-Centre_of_Makau.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 22.19358,
+        "lng": 113.53967
+      },
+      "city": "마카오",
+      "summary": "마카오 시내 중심부에 위치한 역사적인 광장"
+    },
+    {
+      "name": "아마 사원",
+      "nameEn": "A-Ma Temple",
+      "wiki": "아마 사원",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/A_Ma_Temple_200907.jpg/500px-A_Ma_Temple_200907.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 22.18611,
+        "lng": 113.53114
+      },
+      "city": "마카오",
+      "summary": "아마 사원은 마카오에서 가장 오래된 중국식 절이다."
+    },
+    {
+      "name": "마카오 타워",
+      "nameEn": "Macau Tower",
+      "wiki": "마카오 타워",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Macau_Tower_CE_Centre.jpg/500px-Macau_Tower_CE_Centre.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 22.17972,
+        "lng": 113.53667
+      },
+      "city": "마카오",
+      "summary": "마카오 타워 컨벤션 & 엔터테인먼트 센터 또는 간단히 마카오 타워는 마카오에 위치한 타워이다."
+    },
+    {
+      "name": "기아 요새",
+      "nameEn": "Guia Fortress",
+      "wiki": "en:Guia Fortress",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Macau_-_Fortaleza_de_Guia_%28cropped%29.JPG/500px-Macau_-_Fortaleza_de_Guia_%28cropped%29.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 22.1965,
+        "lng": 113.55
+      },
+      "city": "마카오",
+      "summary": ""
+    },
+    {
+      "name": "몬테 요새",
+      "nameEn": "Fortaleza do Monte",
+      "wiki": "en:Fortaleza do Monte",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/FortalegoDoMonte.jpg/500px-FortalegoDoMonte.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 22.1969,
+        "lng": 113.5422
+      },
+      "city": "마카오",
+      "summary": ""
+    },
+    {
+      "name": "타이파 주택 박물관",
+      "nameEn": "Taipa Houses–Museum",
+      "wiki": "en:Taipa Houses–Museum",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Taipa_Houses_Museum_01.JPG/500px-Taipa_Houses_Museum_01.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 22.15388,
+        "lng": 113.55961
+      },
+      "city": "타이파",
+      "summary": ""
+    },
+    {
+      "name": "코타이 스트립",
+      "nameEn": "Cotai Strip",
+      "wiki": "코타이 스트립",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Cotai_Strip_Buildings_200907.jpg/500px-Cotai_Strip_Buildings_200907.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 22.14056,
+        "lng": 113.56306
+      },
+      "city": "콜로안",
+      "summary": ""
+    }
+  ],
+  "saipan": [
+    {
+      "name": "마나가하섬",
+      "nameEn": "Mañagaha",
+      "wiki": "마나가하섬",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/Managaha_SW_2014.JPG/500px-Managaha_SW_2014.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 15.2414,
+        "lng": 145.7127
+      },
+      "city": "가라판",
+      "summary": "마나가하섬은 북마리아나 제도의 무인도이다."
+    },
+    {
+      "name": "타포차우산",
+      "nameEn": "Mount Tapochau",
+      "wiki": "타포차우산",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Mount_Tapochau.JPG/500px-Mount_Tapochau.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 15.18889,
+        "lng": 145.74306
+      },
+      "city": "가라판",
+      "summary": "사이판의 최고봉"
+    },
+    {
+      "name": "반자이 절벽",
+      "nameEn": "Banzai Cliff",
+      "wiki": "반자이 절벽",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/BANZAI_CLIFF.jpg/500px-BANZAI_CLIFF.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 15.28639,
+        "lng": 145.81556
+      },
+      "city": "가라판",
+      "summary": "푼탄 사바네타 또는 반자이 클리프, 만세 절벽은 북마리아나 제도 사이판 최북단의 곶이다."
+    },
+    {
+      "name": "수어사이드 절벽",
+      "nameEn": "Suicide Cliff",
+      "wiki": "수어사이드 절벽",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/SUICIDE_CLIFF.jpg/500px-SUICIDE_CLIFF.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 15.27722,
+        "lng": 145.80972
+      },
+      "city": "가라판",
+      "summary": "수어사이드 절벽 또는 자살 절벽은 북마리아나 제도 사이판 북단에 위치한 마피 포인트 필드 북면의 절벽을 가리킨다."
+    },
+    {
+      "name": "아메리칸 기념 공원",
+      "nameEn": "American Memorial Park",
+      "wiki": "아메리칸 기념 공원",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/American_Memorial_Park2.JPG/500px-American_Memorial_Park2.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 15.21639,
+        "lng": 145.71444
+      },
+      "city": "가라판",
+      "summary": "아메리칸 기념 공원은 북마리아나 제도 사이판섬에 위치해 있는 기념 공원으로, 제2차 세계 대전의 마리아나 전역 기간 중 희…"
+    },
+    {
+      "name": "티니안섬",
+      "nameEn": "Tinian, Northern Mariana Islands",
+      "wiki": "티니언섬",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/78/Map_Saipan_Tinian_islands_closer.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "location": {
+        "lat": 15,
+        "lng": 145.63333
+      },
+      "city": "티니안",
+      "summary": "티니안섬 또는 티니언섬은 미국 자치령인 북마리아나 제도의 섬으로 괌 섬 북쪽 160 km에, 사이판에서 약 8km 떨어진 …"
+    },
+    {
+      "name": "라우라우 베이",
+      "nameEn": "Laolao Bay",
+      "wiki": "en:Laolao Bay",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Saipan_from_ISS_2_(cropped).png?width=480",
+      "location": {
+        "lat": 15.143,
+        "lng": 145.757
+      },
+      "city": "수수페",
+      "summary": ""
+    }
+  ],
+  "croatia": [
+    {
+      "name": "두브로브니크 성벽",
+      "nameEn": "Walls of Dubrovnik",
+      "wiki": "두브로브니크 성벽",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1b/Dubrovnik_s_24.jpg/500px-Dubrovnik_s_24.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 42.64,
+        "lng": 18.108
+      },
+      "city": "두브로브니크",
+      "summary": "두브로브니크 성벽은 크로아티아 두브로브니크를 둘러싼 일종의 방어용 석조 성벽이다."
+    },
+    {
+      "name": "플리트비체 국립공원",
+      "nameEn": "Plitvice Lakes National Park",
+      "wiki": "플리트비체 국립공원",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/View_in_Plitvice_Lakes_National_Park.jpg/500px-View_in_Plitvice_Lakes_National_Park.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 44.88056,
+        "lng": 15.61611
+      },
+      "city": "",
+      "summary": "플리트비체 국립공원은 크로아티아의 국립공원 중에서 가장 아름다운 곳으로 알려진 곳으로 수많은 폭포로 연결되는 16개의 호수…"
+    },
+    {
+      "name": "디오클레티아누스 궁전",
+      "nameEn": "Diocletian's Palace",
+      "wiki": "디오클레티아누스 궁전",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Croatia-01239_-_The_Peristil_%289551533404%29.jpg/500px-Croatia-01239_-_The_Peristil_%289551533404%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 43.50833,
+        "lng": 16.44
+      },
+      "city": "스플리트",
+      "summary": "크로아티아 스플리트에 위치한 궁전"
+    },
+    {
+      "name": "크르카 국립공원",
+      "nameEn": "Krka National Park",
+      "wiki": "en:Krka National Park",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Krkawatervallen.jpg/500px-Krkawatervallen.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 43.80194,
+        "lng": 15.97278
+      },
+      "city": "스플리트",
+      "summary": ""
+    },
+    {
+      "name": "성 마르카 교회",
+      "nameEn": "St. Mark's Church, Zagreb",
+      "wiki": "성 마르카 교회 (자그레브)",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Zagreb_Church_of_St._Mark_%2834411766366%29.jpg/500px-Zagreb_Church_of_St._Mark_%2834411766366%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 45.81639,
+        "lng": 15.97389
+      },
+      "city": "자그레브",
+      "summary": ""
+    },
+    {
+      "name": "자그레브 대성당",
+      "nameEn": "Zagreb Cathedral",
+      "wiki": "자그레브 대성당",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Zagreb_Cathedral_02.jpg/500px-Zagreb_Cathedral_02.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 45.81444,
+        "lng": 15.97972
+      },
+      "city": "자그레브",
+      "summary": "자그레브 대성당 또는 자그레브 주교좌 성당은 크로아티아 자그레브에 있는 가장 유명한 건물로 캅톨 언덕 위에 세워져 있는 가…"
+    },
+    {
+      "name": "바다 오르간",
+      "nameEn": "Sea organ",
+      "wiki": "바다 오르간",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Zadar-Sea-Organ.jpg/500px-Zadar-Sea-Organ.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 44.11722,
+        "lng": 15.22
+      },
+      "city": "자다르",
+      "summary": "바다 오르간은 크로아티아 자다르에 위치한 건축 음향 예술품이자 실험적인 악기이다."
+    },
+    {
+      "name": "흐바르",
+      "nameEn": "Hvar (town)",
+      "wiki": "흐바르",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/The_Spanish_Fortress_in_Hvar%2C_Croatia.jpg/500px-The_Spanish_Fortress_in_Hvar%2C_Croatia.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 43.17139,
+        "lng": 16.44333
+      },
+      "city": "스플리트",
+      "summary": "흐바르는 크로아티아 스플리트달마티아주의 흐바르섬에 위치한 도시로 면적은 75.5km2, 인구는 4,251명, 인구 밀도는 …"
+    }
+  ],
+  "uzbekistan": [
+    {
+      "name": "레기스탄",
+      "nameEn": "Registan",
+      "wiki": "레기스탄",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/RegistanSquare_Samarkand.jpg/500px-RegistanSquare_Samarkand.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 39.65472,
+        "lng": 66.97556
+      },
+      "city": "사마르칸트",
+      "summary": "레기스탄은 우즈베키스탄의 사마르칸트에 있는 광장이다."
+    },
+    {
+      "name": "구르 에미르",
+      "nameEn": "Gur-e-Amir",
+      "wiki": "en:Gur-e-Amir",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/ShrineofAmirTimur.jpg/500px-ShrineofAmirTimur.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 39.64833,
+        "lng": 66.96889
+      },
+      "city": "사마르칸트",
+      "summary": ""
+    },
+    {
+      "name": "샤히진다",
+      "nameEn": "Shah-i-Zinda",
+      "wiki": "en:Shah-i-Zinda",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Shah-i-Zinda%2C_Samarkand_%28Shohi-Zinda_majmuasi%2C_Samarqand%2C_%D0%A8%D0%B0%D1%85%D0%B8_%D0%97%D0%B8%D0%BD%D0%B4%D0%B0%29.jpg/500px-Shah-i-Zinda%2C_Samarkand_%28Shohi-Zinda_majmuasi%2C_Samarqand%2C_%D0%A8%D0%B0%D1%85%D0%B8_%D0%97%D0%B8%D0%BD%D0%B4%D0%B0%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 39.66306,
+        "lng": 66.98778
+      },
+      "city": "사마르칸트",
+      "summary": ""
+    },
+    {
+      "name": "비비하눔 모스크",
+      "nameEn": "Bibi-Khanym Mosque",
+      "wiki": "비비하눔 모스크",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/%D0%9C%D0%B5%D1%87%D0%B5%D1%82%D1%8C_%D0%91%D0%B8%D0%B1%D0%B8_%D0%A5%D0%B0%D0%BD%D1%83%D0%BC._%D0%A1%D0%B0%D0%BC%D0%B0%D1%80%D0%BA%D0%B0%D0%BD%D0%B4.jpg/500px-%D0%9C%D0%B5%D1%87%D0%B5%D1%82%D1%8C_%D0%91%D0%B8%D0%B1%D0%B8_%D0%A5%D0%B0%D0%BD%D1%83%D0%BC._%D0%A1%D0%B0%D0%BC%D0%B0%D1%80%D0%BA%D0%B0%D0%BD%D0%B4.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 39.66056,
+        "lng": 66.97917
+      },
+      "city": "사마르칸트",
+      "summary": "우즈베키스탄 사마르칸트에 위치한 모스크"
+    },
+    {
+      "name": "포이 칼론",
+      "nameEn": "Po-i-Kalyan",
+      "wiki": "en:Po-i-Kalyan",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/Poi_Kalon.jpg/500px-Poi_Kalon.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 39.77583,
+        "lng": 64.41417
+      },
+      "city": "부하라",
+      "summary": ""
+    },
+    {
+      "name": "부하라 아르크",
+      "nameEn": "Ark of Bukhara",
+      "wiki": "en:Ark of Bukhara",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Ark_of_Bukhara_2023.9.jpg/500px-Ark_of_Bukhara_2023.9.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 39.77778,
+        "lng": 64.41028
+      },
+      "city": "부하라",
+      "summary": ""
+    },
+    {
+      "name": "이찬 칼라",
+      "nameEn": "Itchan Kala",
+      "wiki": "이찬 칼라",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/Islam_Khodja_Madrasa_01.jpg/500px-Islam_Khodja_Madrasa_01.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 41.37833,
+        "lng": 60.36389
+      },
+      "city": "히바",
+      "summary": "이찬 칼라는 우즈베키스탄 히바 시 내에 있는 성 안의 마을 중 하나이다."
+    },
+    {
+      "name": "초르수 바자르",
+      "nameEn": "Chorsu Bazaar",
+      "wiki": "en:Chorsu Bazaar",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Chorsu_Market_general_view.jpg/500px-Chorsu_Market_general_view.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+      "location": {
+        "lat": 41.32667,
+        "lng": 69.235
+      },
+      "city": "타슈켄트",
+      "summary": ""
+    }
   ]
 };

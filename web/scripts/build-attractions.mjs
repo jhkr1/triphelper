@@ -47,6 +47,10 @@ const CURATED = {
   "czech-republic": ["Prague Castle", "Charles Bridge", "Old Town Square", "Prague astronomical clock", "St. Vitus Cathedral", "Český Krumlov Castle", "Karlštejn", "Sedlec Ossuary"],
   "united-arab-emirates": ["Burj Khalifa", "Sheikh Zayed Grand Mosque", "Palm Jumeirah", "Burj Al Arab", "Louvre Abu Dhabi", "Museum of the Future", "Al Fahidi Historical Neighbourhood", "Dubai Creek"],
   laos: ["Kuang Si Falls", "Wat Xieng Thong", "Mount Phousi", "Pha That Luang", "Patuxai", "Vang Vieng", "Plain of Jars", "Wat Phou"],
+  macau: ["Ruins of Saint Paul's", "Senado Square", "A-Ma Temple", "Macau Tower", "Guia Fortress", "Mount Fortress", "Taipa Houses–Museum", "Cotai Strip"],
+  saipan: ["Managaha", "Mount Tapochau", "Banzai Cliff", "Suicide Cliff", "American Memorial Park", "Tinian", "Laulau Bay"],
+  croatia: ["Walls of Dubrovnik", "Plitvice Lakes National Park", "Diocletian's Palace", "Krka National Park", "St. Mark's Church, Zagreb", "Zagreb Cathedral", "Sea Organ", "Hvar (town)"],
+  uzbekistan: ["Registan", "Gur-e-Amir", "Shah-i-Zinda", "Bibi-Khanym Mosque", "Po-i-Kalyan", "Ark of Bukhara", "Itchan Kala", "Chorsu Bazaar"],
   indonesia: ["Borobudur","Prambanan", "Tanah Lot", "Uluwatu Temple", "Ubud", "Mount Bromo", "Komodo National Park", "National Monument (Indonesia)"],
 };
 
@@ -89,6 +93,18 @@ const DISPLAY_NAMES = {
   "Museum of the Future": "미래 박물관",
   "Kuang Si Falls": "꽝시 폭포",
   "Patuxai": "빠뚜싸이",
+  "Guia Fortress": "기아 요새",
+  "Fortaleza do Monte": "몬테 요새",
+  "Mount Fortress": "몬테 요새",
+  "Taipa Houses–Museum": "타이파 주택 박물관",
+  "Krka National Park": "크르카 국립공원",
+  "Gur-e-Amir": "구르 에미르",
+  "Shah-i-Zinda": "샤히진다",
+  "Po-i-Kalyan": "포이 칼론",
+  "Ark of Bukhara": "부하라 아르크",
+  "Chorsu Bazaar": "초르수 바자르",
+  "Tinian": "티니안섬",
+  "Laulau Bay": "라우라우 베이",
 };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

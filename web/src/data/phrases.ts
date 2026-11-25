@@ -1027,6 +1027,26 @@ export const phraseSets = {
     { "source": "ຂໍເບິ່ງອັນນີ້ແດ່", "pronunciation": "커 븡 안니 대", "pronunciationEn": "kho beung an nee DAE", "meaning": "이것 좀 보여주세요.", "meaningEn": "Please show me this." },
     { "source": "ຂ້ອຍຈອງຫ້ອງໄວ້ແລ້ວ", "pronunciation": "커이 쩡 형 와이 래우", "pronunciationEn": "khoi jong hong wai LAEO", "meaning": "방을 예약했어요. (체크인할게요)", "meaningEn": "I have a room reservation." },
     { "source": "ເຊັກເອົ້າຈັກໂມງ?", "pronunciation": "첵아오 짝 몽?", "pronunciationEn": "check-out jak MONG?", "meaning": "체크아웃은 몇 시인가요?", "meaningEn": "What time is checkout?" }
+  ],
+  "croatian": [
+    { "source": "Dobar dan", "pronunciation": "도바르 단", "pronunciationEn": "DO-bar dahn", "meaning": "안녕하세요.", "meaningEn": "Hello." },
+    { "source": "Hvala", "pronunciation": "흐발라", "pronunciationEn": "HVAH-lah", "meaning": "감사합니다.", "meaningEn": "Thank you." },
+    { "source": "Oprostite", "pronunciation": "오프로스티테", "pronunciationEn": "o-PROS-ti-teh", "meaning": "죄송합니다.", "meaningEn": "Sorry." },
+    { "source": "Koliko košta?", "pronunciation": "콜리코 코슈타?", "pronunciationEn": "KO-li-ko KOSH-ta?", "meaning": "이거 얼마예요?", "meaningEn": "How much is this?" },
+    { "source": "Gdje je toalet?", "pronunciation": "그디에 예 토알레트?", "pronunciationEn": "gdyeh yeh to-a-LET?", "meaning": "화장실이 어디예요?", "meaningEn": "Where is the restroom?" },
+    { "source": "Možete li mi ovo pokazati?", "pronunciation": "모제테 리 미 오보 포카자티?", "pronunciationEn": "MO-zhe-teh lee mee O-vo po-KA-za-tee?", "meaning": "이것 좀 보여주세요.", "meaningEn": "Could you show me this?" },
+    { "source": "Imam rezervaciju", "pronunciation": "이맘 레제르바치유", "pronunciationEn": "EE-mahm re-zer-VA-tsi-yu", "meaning": "예약했어요. (체크인할게요)", "meaningEn": "I have a reservation." },
+    { "source": "U koliko sati je odjava?", "pronunciation": "우 콜리코 사티 예 오댜바?", "pronunciationEn": "oo KO-li-ko SA-tee yeh OD-ya-va?", "meaning": "체크아웃은 몇 시인가요?", "meaningEn": "What time is checkout?" }
+  ],
+  "uzbek": [
+    { "source": "Assalomu alaykum", "pronunciation": "앗살로무 알라이쿰", "pronunciationEn": "as-sa-LO-mu a-LAI-kum", "meaning": "안녕하세요.", "meaningEn": "Hello." },
+    { "source": "Rahmat", "pronunciation": "라흐맛", "pronunciationEn": "rah-MAT", "meaning": "감사합니다.", "meaningEn": "Thank you." },
+    { "source": "Kechirasiz", "pronunciation": "케치라시즈", "pronunciationEn": "ke-chi-ra-SIZ", "meaning": "죄송합니다.", "meaningEn": "Sorry." },
+    { "source": "Bu qancha turadi?", "pronunciation": "부 칸차 투라디?", "pronunciationEn": "boo kan-CHA tu-ra-DI?", "meaning": "이거 얼마예요?", "meaningEn": "How much is this?" },
+    { "source": "Hojatxona qayerda?", "pronunciation": "호자트호나 카예르다?", "pronunciationEn": "ho-jat-kho-NA ka-yer-DA?", "meaning": "화장실이 어디예요?", "meaningEn": "Where is the restroom?" },
+    { "source": "Buni ko'rsating", "pronunciation": "부니 쿠르사팅", "pronunciationEn": "bu-NI kur-SA-ting", "meaning": "이것 좀 보여주세요.", "meaningEn": "Please show me this." },
+    { "source": "Men bron qilganman", "pronunciation": "멘 브론 킬간만", "pronunciationEn": "men bron kil-GAN-man", "meaning": "예약했어요. (체크인할게요)", "meaningEn": "I have a reservation." },
+    { "source": "Chiqish soat nechada?", "pronunciation": "치키시 소앗 네차다?", "pronunciationEn": "chi-KISH so-AT ne-cha-DA?", "meaning": "체크아웃은 몇 시인가요?", "meaningEn": "What time is checkout?" }
   ]
 } satisfies Record<string, Phrase[]>;
 

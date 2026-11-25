@@ -7,7 +7,7 @@
   --shadow:0 10px 30px #1118271a; --shadow-sm:0 6px 20px #11182710;
   --ocean1:#e0edff; --ocean2:#cfe2ff; --ocean3:#b4d0fa;
   /* 땅: 지원하지 않는 나라는 흐리게(--land-off), 지원하는 나라는 밝게(--land), 고른 나라는 파랗게(--land-sel) */
-  --land-off:#dfe4ec; --land-off-stroke:#c7cfdb; --land:#ffffff; --land-stroke:#7fa3e6; --land-hover:#dbe8ff;
+  --land-off:#b3bcc9; --land-off-stroke:#9ea8b7; --land:#ffffff; --land-stroke:#7fa3e6; --land-hover:#dbe8ff;
   --land-sel:#2563eb; --land-sel-stroke:#1d4ed8; --rim:#93b8ef; --grat:#ffffff; --label-halo:#ffffff;
   --plane-wing:#ffffff; --plane-keel:#a9c6f7; --plane-fold:#2563eb; --plane-edge:#7fa6e6; --plane-shadow:#1d4ed833; --trail:#8fb0e8;
   --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;

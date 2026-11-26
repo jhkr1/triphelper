@@ -1,4 +1,5 @@
 import type { LatLng } from "@/types/destination";
+import { decodePlusCode, readPlusCode } from "@/lib/pluscode";
 
 /** 지도 라이브러리(MapLibre, D3)는 [경도, 위도] 순서를 쓴다. 변환은 이 함수로만 한다. */
 export type LngLatTuple = [lng: number, lat: number];
@@ -51,8 +52,23 @@ export function directionsUrl(
  * - 휴대폰 '공유'의 짧은 링크(maps.app.goo.gl)는 열어 봐야 좌표가 나오는데 서버 없이는 열 수 없어 "short"
  */
 export type ParsedLocation = { location: LatLng; name?: string };
+/** 짧은 플러스 코드: 기준점(지역 이름 또는 여행지)이 있어야 위치가 정해진다 (lib/map-link.ts) */
+export type PlusRef = { plus: string; locality?: string };
 
-export function parseLocation(text: string): ParsedLocation | "short" | null {
+/** 글 속의 플러스 코드 (뒤에 지역 이름이 붙을 수 있음: "HXCG+75W 서울특별시") */
+function findPlusCode(text: string): ParsedLocation | PlusRef | null {
+  const m = text.match(/(?<![0-9A-Za-z])([23456789CFGHJMPQRVWX]{2,8}\+[23456789CFGHJMPQRVWX]{2,7})(?![0-9A-Za-z])(.*)$/i);
+  const p = m && readPlusCode(m[1]);
+  if (!p) return null;
+  if (p.full) {
+    const location = decodePlusCode(p.code);
+    return location ? { location } : null;
+  }
+  const locality = m[2].replace(/\+/g, " ").replace(/^[\s,]+|[\s,]+$/g, "").slice(0, 60);
+  return { plus: p.code, ...(locality ? { locality } : {}) };
+}
+
+export function parseLocation(text: string): ParsedLocation | PlusRef | "short" | null {
   const s = text.trim();
   if (!s) return null;
   if (/^(https?:\/\/)?(maps\.app\.goo\.gl|goo\.gl\/maps|g\.co\/kgs)\//i.test(s)) return "short";
@@ -71,13 +87,18 @@ export function parseLocation(text: string): ParsedLocation | "short" | null {
   const pair = s.match(/^\(?\s*(-?\d{1,2}\.\d+)\s*[,\s]\s*(-?\d{1,3}\.\d+)\s*\)?$/);
   if (pair) return ok(Number(pair[1]), Number(pair[2]));
 
-  if (!/^https?:\/\//i.test(s)) return null;
+  if (!/^https?:\/\//i.test(s)) return findPlusCode(s);
   const num = "(-?\\d{1,3}\\.\\d+)";
   const found =
     s.match(new RegExp(`!3d${num}!4d${num}`)) ??
     s.match(new RegExp(`@${num},${num}`)) ??
     s.match(new RegExp(`[?&](?:q|query|ll|destination|center)=${num}(?:,|%2C)\\s*${num}`, "i"));
-  if (!found) return null;
+  if (!found) {
+    // 공유 링크를 열면 나오는 주소: /maps/search/HXCG%2B75W+서울특별시 또는 ?q=플러스코드
+    const where = s.match(/\/maps\/(?:search|place)\/([^/?#@]+)/)?.[1] ?? s.match(/[?&](?:q|query)=([^&#]+)/i)?.[1];
+    if (!where) return null;
+    try { return findPlusCode(decodeURIComponent(where)); } catch { return null; }
+  }
   const r = ok(Number(found[1]), Number(found[2]));
   if (!r) return null;
   const place = s.match(/\/maps\/place\/([^/@?]+)/);

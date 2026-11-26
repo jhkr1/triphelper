@@ -211,17 +211,25 @@ export const sameStay = (a?: Place, b?: Place) =>
  * night 번째 밤과 앞뒤로 이어서 묵는 같은 숙소의 밤에 모두 같은 메모를 넣는다.
  */
 export function setStayMemo(trip: Trip, night: number, memo: string): Trip {
+  const m = memo.trim();
+  return updateStayRun(trip, night, (s) => {
+    const { memo: _, ...rest } = s; // eslint-disable-line @typescript-eslint/no-unused-vars
+    return m ? { ...rest, memo: m } : rest;
+  });
+}
+
+/** 숙소 위치를 정한다 (이어서 묵는 같은 숙소의 밤에 모두) */
+export const setStayLocation = (trip: Trip, night: number, location: LatLng): Trip =>
+  updateStayRun(trip, night, (s) => ({ ...s, location }));
+
+/** night 번째 밤과 앞뒤로 이어지는 같은 숙소의 밤에 fn을 적용 */
+function updateStayRun(trip: Trip, night: number, fn: (s: Place) => Place): Trip {
   const stay = trip.days[night]?.stay;
   if (!stay) return trip;
   let from = night, to = night;
   while (from > 0 && sameStay(trip.days[from - 1].stay, stay)) from--;
   while (to + 1 < trip.days.length && sameStay(trip.days[to + 1].stay, stay)) to++;
-  const m = memo.trim();
-  const days = trip.days.map((d, i) => {
-    if (i < from || i > to || !d.stay) return d;
-    const { memo: _, ...rest } = d.stay; // eslint-disable-line @typescript-eslint/no-unused-vars
-    return { ...d, stay: m ? { ...rest, memo: m } : rest };
-  });
+  const days = trip.days.map((d, i) => (i < from || i > to || !d.stay ? d : { ...d, stay: fn(d.stay) }));
   return { ...trip, days };
 }
 

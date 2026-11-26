@@ -119,6 +119,21 @@
 .planner .stop__n i{background:var(--dc,var(--blue))}
 .planner .tag--warn{border-color:#fcd34d;background:#fffbeb;color:#92400e;cursor:pointer;font:inherit;font-size:.74rem}
 .planner .tag--warn:hover{border-color:#f59e0b}
+/* 위치 미지정: 구글 지도 좌표·링크 붙여 넣기 */
+.planner .tag--paste{border-color:var(--badge-bd);background:var(--badge-bg);color:var(--blue-d);cursor:pointer;font:inherit;font-size:.74rem;font-weight:600}
+.planner .tag--paste:hover{border-color:var(--blue)}
+.planner .loc-paste{flex-basis:100%;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;margin-top:4px;cursor:auto}
+.planner .loc-paste input{min-width:0;border:1px solid var(--blue);box-shadow:0 0 0 3px #2563eb33;background:var(--bg);color:var(--ink);border-radius:10px;padding:7px 10px;font:inherit;font-size:.85rem;outline:0}
+.planner .loc-paste input[aria-invalid="true"]{border-color:#dc2626;box-shadow:0 0 0 3px #dc262622}
+.planner .loc-paste .btn{padding:6px 12px;font-size:.8rem}
+.planner .loc-paste__hint{grid-column:1/-1;margin:0;font-size:.74rem;line-height:1.5;color:var(--mute)}
+.planner .loc-paste__hint--err{color:#b91c1c}
+.planner .stay__body .tags{margin-top:4px;width:100%}
+/* 장소 추가 칸: 좌표를 받은 뒤 이름 묻기 · 짧은 링크 안내 */
+.planner .add__note{margin:8px 2px 0;font-size:.8rem;line-height:1.55}
+.planner .add__note--ok{color:var(--blue-d);font-weight:600}
+.planner .add__note--warn{color:#b45309}
+.planner .add__cancel{margin-left:8px;border:0;background:none;padding:0;font:inherit;font-weight:600;color:var(--mute);text-decoration:underline;cursor:pointer}
 .planner .choices{margin-top:12px;border:1px solid var(--badge-bd);background:var(--badge-bg);border-radius:16px;padding:12px}
 .planner .choices p{margin:0 0 8px;font-size:.85rem;font-weight:700}
 .planner .choices button{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 12px;margin-top:6px}
@@ -459,7 +474,9 @@
 /* 보기만 하는 멤버: 일정을 고치는 버튼은 숨긴다 (일정 변경 자체도 막혀 있음) */
 .planner .is-viewer .add,.planner .is-viewer .stop .icon-btn,.planner .is-viewer .memo-btn,.planner .is-viewer .stay__add,
 .planner .is-viewer .stay__btn,.planner .is-viewer .stay .icon-btn,.planner .is-viewer .day--add,.planner .is-viewer .day-del,
-.planner .is-viewer .basket,.planner .is-viewer .sample-cta,.planner .is-viewer .bk__x{display:none}
+.planner .is-viewer .basket,.planner .is-viewer .sample-cta,.planner .is-viewer .bk__x,
+.planner .is-viewer .tag--paste,.planner .is-viewer .loc-paste{display:none}
+.planner .is-viewer .stay__body .tag--warn{pointer-events:none}
 .planner .is-viewer .stop__body,.planner .is-viewer .stop__memo,.planner .is-viewer .tp__btn{pointer-events:none}
 .planner .is-viewer .stop__body .near-btn,.planner .is-viewer .stop__body a{pointer-events:auto}
 .planner .collab{display:grid;gap:18px}

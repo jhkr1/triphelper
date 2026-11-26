@@ -9,11 +9,12 @@ import { SortableContext, arrayMove, horizontalListSortingStrategy, rectSortingS
 import { CSS } from "@dnd-kit/utilities";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { dayColor } from "@/components/trip/TripMap";
-import { dayLabel, dateParts, forecastGap, newId, sortByTime, addDays, addHours, nextSlot, insertAt, setStay, setStayMemo, sameStay } from "@/lib/trip-model";
+import { dayLabel, dateParts, forecastGap, newId, sortByTime, addDays, addHours, nextSlot, insertAt, setStay, setStayMemo, setStayLocation, sameStay } from "@/lib/trip-model";
 import { TimePicker } from "@/components/trip/TimePicker";
 import { fetchNearby, isConfident, searchPlace, type NearbyPlace, type PlaceCandidate } from "@/lib/places";
 import { isWikimediaImage, knownPhoto, placePhoto, type Photo } from "@/lib/photos";
-import { directionsUrl, distanceMeters, formatDistance, parseLocation, walkingMinutes, WALKABLE_METERS } from "@/lib/geo";
+import { directionsUrl, distanceMeters, formatDistance, walkingMinutes, WALKABLE_METERS } from "@/lib/geo";
+import { readErrorText, readLocation } from "@/lib/map-link";
 import { weatherIcon, type DailyForecast } from "@/lib/weather";
 import { canReorder, nearestOrder, type RouteOrder } from "@/lib/route-order";
 import type { Place, Trip } from "@/types/trip";
@@ -300,14 +301,71 @@ function MemoEditor({ place, onSave, onClose, placeholder = "예: 입장권 미�
   );
 }
 
+/**
+ * 위치를 못 찾은 장소·숙소: 지도에서 직접 찍거나, 구글 지도의 좌표·링크를 붙여 넣는다
+ * (지도 검색(OSM)에 없는 곳이 많아서)
+ */
+function MissingLocation({ name, center, onPickOnMap, onSet, toast }: {
+  name: string; center: LatLng; onPickOnMap: () => void; onSet: (location: LatLng) => void; toast: (msg: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const close = () => { setOpen(false); setValue(""); setError(""); };
+
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    if (busy || !value.trim()) return;
+    setBusy(true);
+    const r = await readLocation(value, center);
+    setBusy(false);
+    if (typeof r === "string") { setError(readErrorText[r]); return; }
+    if (!r) { setError("좌표나 구글 지도 링크를 읽지 못했어요. 예: 35.6938, 139.7679"); return; }
+    onSet(r.location);
+    close();
+    toast(distanceMeters(r.location, center) > 2_500_000
+      ? `${name} 위치를 넣었습니다 · 여행지에서 꽤 먼 곳이에요. 지도에서 확인해 주세요`
+      : `${name} 위치를 지도에 표시했습니다`);
+  }
+
+  return (
+    <>
+      <button type="button" className="tag tag--warn" onClick={onPickOnMap}><Icon name="pin" />위치 미지정 · 지도에서 지정</button>
+      {!open && <button type="button" className="tag tag--paste" onClick={() => setOpen(true)}>구글 지도 링크로 지정</button>}
+      {open && (
+        <form className="loc-paste" onSubmit={submit} {...noDrag}>
+          <input
+            autoFocus
+            type="text"
+            value={value}
+            onChange={(e) => { setValue(e.target.value); setError(""); }}
+            onKeyDown={(e) => { e.stopPropagation(); if (e.key === "Escape") close(); }}
+            placeholder="구글 지도 공유 링크 또는 좌표"
+            aria-label={`${name} 위치 (구글 지도 좌표 또는 링크)`}
+            aria-invalid={Boolean(error)}
+            autoComplete="off"
+          />
+          <button type="submit" className="btn btn--pri" disabled={busy}>{busy ? "읽는 중…" : "지정"}</button>
+          <button type="button" className="btn" onClick={close}>취소</button>
+          <p className={`loc-paste__hint${error ? " loc-paste__hint--err" : ""}`} role={error ? "alert" : undefined}>
+            {error || "구글 지도 앱의 '공유' 링크, PC 주소창 링크, 좌표(우클릭·길게 누르기로 복사) 모두 돼요"}
+          </p>
+        </form>
+      )}
+    </>
+  );
+}
+
 /* ───────── 숙소 ───────── */
 
 type StayChoices = { query: string; list: PlaceCandidate[] };
 
 /** 그날 밤 숙소 칸: 비었으면 검색, 있으면 이름·위치 지정·바꾸기·빼기 */
-function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, onRemove, onPickRequest, toast }: {
+function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, onLocate, onRemove, onPickRequest, toast }: {
   stay?: Place; dayNo: number; countryCode: string; center: Trip["center"]; nearCity: boolean;
-  onSet: (stay: Omit<Place, "id">) => void; onMemo: (memo: string) => void; onRemove: () => void; onPickRequest: (id: string) => void; toast: (msg: string) => void;
+  onSet: (stay: Omit<Place, "id">) => void; onMemo: (memo: string) => void; onLocate: (location: LatLng) => void;
+  onRemove: () => void; onPickRequest: (id: string) => void; toast: (msg: string) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [memoOpen, setMemoOpen] = useState(false);
@@ -318,9 +376,10 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, on
   const [named, setNamed] = useState("");
   /** 이름 없이 받은 좌표: 다음 입력을 숙소 이름으로 받는다 */
   const [coord, setCoord] = useState<LatLng | null>(null);
-  const [shortLink, setShortLink] = useState(false);
+  /** 공유 링크·플러스 코드를 읽지 못했을 때 안내 */
+  const [readError, setReadError] = useState("");
 
-  const close = () => { setOpen(false); setChoices(null); setQ(""); setNamed(""); setCoord(null); setShortLink(false); };
+  const close = () => { setOpen(false); setChoices(null); setQ(""); setNamed(""); setCoord(null); setReadError(""); };
 
   const pick = (c: PlaceCandidate | null, name: string) => {
     onSet({ time: "", name, category: "숙소", ...(c ? { location: c.location } : {}), ...(c?.wiki ? { wiki: c.wiki } : {}) });
@@ -341,16 +400,19 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, on
     const n = q.trim();
     if (!n) return;
     if (coord) { putAt(n, coord); return; } // 좌표를 받은 뒤 이름 입력
-    const parsed = parseLocation(n);
-    if (parsed === "short") { setShortLink(true); setChoices(null); return; }
+    if (busy) return;
+    setReadError("");
+    setBusy(true);
+    // 좌표·구글 지도 링크(휴대폰 공유 링크 포함)·플러스 코드인지 먼저
+    const parsed = await readLocation(n, center);
+    if (typeof parsed === "string") { setBusy(false); setReadError(readErrorText[parsed]); setChoices(null); return; }
     if (parsed) {
+      setBusy(false);
       const name = parsed.name ?? named;
       if (name) putAt(name, parsed.location);
-      else { setCoord(parsed.location); setQ(""); setChoices(null); setShortLink(false); }
+      else { setCoord(parsed.location); setQ(""); setChoices(null); }
       return;
     }
-    setShortLink(false);
-    setBusy(true);
     const results = await searchPlace(n, countryCode, center, "stay", nearCity);
     setBusy(false);
     if (isConfident(results)) {
@@ -365,10 +427,10 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, on
   /** 구글 지도에서 좌표 복사하는 방법 (검색에 없는 숙소) */
   const howTo = (
     <div className="stay__how">
-      <b>구글 지도에서 위치 복사하기</b>
+      <b>구글 지도에서 위치 가져오기</b>
       <ul>
-        <li><span>PC</span>지도에서 숙소 자리를 우클릭 → 맨 위 숫자(좌표)를 누르면 복사돼요. 주소창 링크를 복사해도 돼요.</li>
-        <li><span>휴대폰</span>숙소 자리를 길게 눌러 핀을 꽂으면 위쪽 검색창에 좌표가 나와요 → 복사</li>
+        <li><span>휴대폰</span>구글 지도 앱에서 숙소를 열고 [공유] → 링크 복사</li>
+        <li><span>PC</span>숙소를 누른 뒤 주소창 링크를 복사하거나, 숙소 자리를 우클릭 → 맨 위 숫자(좌표)를 눌러 복사</li>
       </ul>
       <p>복사한 것을 위 칸에 붙여 넣고 [찾기]를 누르세요.{named ? ` '${named}' 이름으로 넣어요.` : ""}</p>
     </div>
@@ -382,7 +444,9 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, on
           <small>{dayNo}일차 밤 숙소</small>
           <b>{stay.name}</b>
           {!stay.location && (
-            <button type="button" className="tag tag--warn" onClick={() => onPickRequest(stay.id)}><Icon name="pin" />위치 미지정 · 지도에서 지정</button>
+            <div className="tags">
+              <MissingLocation name={stay.name} center={center} onPickOnMap={() => onPickRequest(stay.id)} onSet={onLocate} toast={toast} />
+            </div>
           )}
           {memoOpen ? (
             <MemoEditor
@@ -426,9 +490,9 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, on
           autoFocus
           type="text"
           value={q}
-          onChange={(e) => { setQ(e.target.value); if (!coord) { setChoices(null); setShortLink(false); } }}
-          placeholder={coord ? "숙소 이름 (예: Aka Hotel)" : "숙소 이름, 또는 구글 지도 좌표·링크"}
-          aria-label={coord ? `${dayNo}일차 밤 숙소 이름 (좌표는 받았어요)` : `${dayNo}일차 밤 숙소 이름 또는 좌표`}
+          onChange={(e) => { setQ(e.target.value); if (!coord) { setChoices(null); setReadError(""); } }}
+          placeholder={coord ? "숙소 이름 (예: Aka Hotel)" : "숙소 이름, 또는 구글 지도 공유 링크"}
+          aria-label={coord ? `${dayNo}일차 밤 숙소 이름 (위치는 받았어요)` : `${dayNo}일차 밤 숙소 이름 또는 구글 지도 링크`}
           autoComplete="off"
         />
         <button className="btn btn--pri" type="submit" disabled={busy}>{busy ? "찾는 중…" : coord ? "넣기" : "찾기"}</button>
@@ -438,13 +502,10 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, on
         <p className="stay__hint stay__hint--ok">
           위치를 읽었어요 ({coord.lat.toFixed(5)}, {coord.lng.toFixed(5)}). 지도에 보일 숙소 이름을 적어 주세요.
         </p>
-      ) : shortLink ? (
-        <>
-          <p className="stay__hint stay__hint--warn">휴대폰 &lsquo;공유&rsquo;로 만든 짧은 링크는 열어 봐야 위치가 나와서 바로 읽을 수 없어요. 아래처럼 좌표를 복사해 주세요.</p>
-          {howTo}
-        </>
+      ) : readError ? (
+        <p className="stay__hint stay__hint--warn" role="alert">{readError}</p>
       ) : (
-        <p className="stay__hint">못 찾으면 영문 이름으로 검색하거나, 구글 지도의 좌표·장소 링크를 붙여 넣으세요.</p>
+        <p className="stay__hint">못 찾으면 영문 이름으로 검색하거나, 구글 지도 앱의 &lsquo;공유&rsquo; 링크를 붙여 넣으세요.</p>
       )}
       {choices && (
         <div className="choices">
@@ -504,11 +565,37 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
   const fromCandidate = (c: PlaceCandidate, t: string, n: string): Omit<Place, "id"> =>
     ({ time: t, name: n, category: c.category, location: c.location, ...(c.wiki ? { wiki: c.wiki } : {}) });
 
+  /** 이름 없이 붙여 넣은 좌표: 다음 입력을 장소 이름으로 받는다 */
+  const [pendingLoc, setPendingLoc] = useState<{ location: LatLng; time: string } | null>(null);
+  /** 공유 링크·플러스 코드를 읽지 못했을 때 안내 */
+  const [readError, setReadError] = useState("");
+
+  const addAt = (n: string, location: LatLng, t: string) => {
+    addPlace({ time: t, name: n, category: "", location });
+    setPendingLoc(null);
+    toast(distanceMeters(location, trip.center) > 2_500_000
+      ? `${n}을(를) 넣었습니다 · 여행지에서 꽤 먼 곳이에요. 지도에서 위치를 확인해 주세요`
+      : `지도에 표시했습니다 · ${n}`);
+  };
+
   async function onAdd(e: FormEvent) {
     e.preventDefault();
     const n = name.trim();
-    if (!n) return;
+    if (!n || busy) return;
+    setReadError("");
+    if (pendingLoc) { setName(""); addAt(n, pendingLoc.location, pendingLoc.time); return; }
     setBusy(true);
+    // 구글 지도 좌표·링크(휴대폰 공유 링크 포함)·플러스 코드를 붙여 넣은 경우 (지도 검색에 없는 곳)
+    const parsed = await readLocation(n, trip.center);
+    if (typeof parsed === "string") { setBusy(false); setReadError(readErrorText[parsed]); return; }
+    if (parsed) {
+      setBusy(false);
+      setName("");
+      setChoices(null);
+      if (parsed.name) addAt(parsed.name, parsed.location, time);
+      else setPendingLoc({ location: parsed.location, time });
+      return;
+    }
     const results = await searchPlace(n, countryCode, trip.center, "place", Boolean(trip.city));
     setBusy(false);
     setName("");
@@ -519,7 +606,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
       setChoices({ query: n, time, list: results });
     } else {
       addPlace({ time, name: n, category: "" });
-      toast("위치를 찾지 못했습니다. 지도에서 직접 지정할 수 있습니다.");
+      toast("위치를 찾지 못했습니다. 지도에서 지정하거나 구글 지도 링크로 지정할 수 있습니다.");
     }
   }
 
@@ -812,9 +899,13 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
                   <div className="tags">
                     {p.duration && <span className="tag">{p.duration} 머묾</span>}
                     {!p.location && (
-                      <button type="button" className="tag tag--warn" onClick={() => onPickRequest(p.id)}>
-                        <Icon name="pin" />위치 미지정 · 지도에서 지정
-                      </button>
+                      <MissingLocation
+                        name={p.name}
+                        center={trip.center}
+                        onPickOnMap={() => onPickRequest(p.id)}
+                        onSet={(loc) => updatePlaces((list) => list.map((x) => (x.id === p.id ? { ...x, location: loc } : x)))}
+                        toast={toast}
+                      />
                     )}
                   </div>
                   {memoOpen === p.id ? (
@@ -868,6 +959,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
             nearCity={Boolean(trip.city)}
             onSet={putStay}
             onMemo={(m) => updateTrip((t) => setStayMemo(t, day, m))}
+            onLocate={(loc) => updateTrip((t) => setStayLocation(t, day, loc))}
             onRemove={() => updateTrip((t) => ({ ...t, days: t.days.map((d, i) => (i === day ? { places: d.places } : d)) }))}
             onPickRequest={onPickRequest}
             toast={toast}
@@ -895,9 +987,26 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
 
       <form className="add" onSubmit={onAdd}>
         <TimePicker value={time} onChange={setTimeOverride} label="방문 시간" />
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="가고 싶은 장소를 입력하세요" aria-label="장소 이름" autoComplete="off" />
+        <input
+          key={pendingLoc ? "name" : "search"}
+          autoFocus={Boolean(pendingLoc)}
+          type="text"
+          value={name}
+          onChange={(e) => { setName(e.target.value); setReadError(""); }}
+          onKeyDown={(e) => { if (e.key === "Escape" && pendingLoc) { setPendingLoc(null); setName(""); } }}
+          placeholder={pendingLoc ? "장소 이름 (위치는 받았어요)" : "가고 싶은 장소 (이름 또는 구글 지도 링크)"}
+          aria-label={pendingLoc ? "장소 이름 (위치는 받았어요)" : "장소 이름 또는 구글 지도 좌표·링크"}
+          autoComplete="off"
+        />
         <button className="btn btn--pri" type="submit" disabled={busy}>{busy ? "위치 찾는 중…" : "+ 추가"}</button>
       </form>
+      {pendingLoc && (
+        <p className="add__note add__note--ok">
+          위치를 읽었어요 ({pendingLoc.location.lat.toFixed(5)}, {pendingLoc.location.lng.toFixed(5)}). 지도에 보일 장소 이름을 적어 주세요.
+          <button type="button" className="add__cancel" onClick={() => { setPendingLoc(null); setName(""); }}>취소</button>
+        </p>
+      )}
+      {readError && <p className="add__note add__note--warn" role="alert">{readError}</p>}
 
       {choices && (
         <div className="choices">

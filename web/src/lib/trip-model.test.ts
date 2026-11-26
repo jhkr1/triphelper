@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addDays, dayLabel, insertAt, nightsBetween, nextSlot, setStay, setStayMemo, timeBetween, tripName } from "@/lib/trip-model";
+import { addDays, dayLabel, insertAt, nightsBetween, nextSlot, setStay, setStayLocation, setStayMemo, timeBetween, tripName } from "@/lib/trip-model";
 import { place, trip } from "@/lib/test-fixtures";
 
 describe("날짜 계산", () => {
@@ -71,6 +71,11 @@ describe("setStayMemo (숙소 메모)", () => {
     t.days[2].stay = hotel(35.71);    // 약 1.8km: 이름만 같은 다른 지점
     const out = setStayMemo(t, 0, "체크인 16:00");
     expect(out.days.map((d) => d.stay?.memo ?? null)).toEqual(["체크인 16:00", "체크인 16:00", null, null]);
+  });
+  it("위치 미지정 숙소에 위치를 넣으면 이어서 묵는 밤에도 함께", () => {
+    const t = setStay(trip([[], [], [], []]), 0, { time: "", name: "Aka Hotel", category: "숙소" }).trip;
+    const out = setStayLocation(t, 1, { lat: 35.6938, lng: 139.7679 });
+    expect(out.days.map((d) => d.stay?.location?.lat ?? null)).toEqual([35.6938, 35.6938, 35.6938, null]);
   });
   it("비우면 메모 칸을 지운다", () => {
     const out = setStayMemo(setStayMemo(base(), 0, "짐 보관 가능"), 0, "  ");

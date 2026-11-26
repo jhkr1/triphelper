@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { parseLocation } from "@/lib/geo";
+import { parseLocation, type ParsedLocation } from "@/lib/geo";
 
-const near = (r: ReturnType<typeof parseLocation>, lat: number, lng: number) => {
-  if (!r || r === "short") throw new Error(`위치를 못 읽음: ${String(r)}`);
+const near = (r: ReturnType<typeof parseLocation>, lat: number, lng: number): ParsedLocation => {
+  if (!r || r === "short" || !("location" in r)) throw new Error(`위치를 못 읽음: ${JSON.stringify(r)}`);
   expect(r.location.lat).toBeCloseTo(lat, 4);
   expect(r.location.lng).toBeCloseTo(lng, 4);
   return r;
@@ -25,8 +25,8 @@ describe("parseLocation (붙여 넣은 좌표·지도 링크)", () => {
     expect(r.name).toBe("Aka Hotel");
   });
   it("이름에 주소가 붙은 링크는 쉼표 앞만 이름으로", () => {
-    const r = parseLocation("https://www.google.com/maps/place/Hotel+Gracery,+1-19-1+Kabukicho/@35.69,139.70,17z");
-    expect(r && r !== "short" ? r.name : null).toBe("Hotel Gracery");
+    const r = near(parseLocation("https://www.google.com/maps/place/Hotel+Gracery,+1-19-1+Kabukicho/@35.69,139.70,17z"), 35.69, 139.7);
+    expect(r.name).toBe("Hotel Gracery");
   });
   it("그 밖의 지도 링크 (@ · q= · query= · 애플 지도 ll=)", () => {
     near(parseLocation("https://www.google.com/maps/@35.6938,139.7679,17z"), 35.6938, 139.7679);

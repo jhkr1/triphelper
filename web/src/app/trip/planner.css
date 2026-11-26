@@ -337,6 +337,15 @@
 .planner .stay__form input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2563eb33}
 .planner .stay__hint{margin:6px 2px 0;font-size:.76rem;color:var(--mute)}
 .planner .stay--search .choices{margin-top:8px}
+.planner .stay__hint--ok{color:var(--stay-ink);font-weight:600}
+.planner .stay__hint--warn{color:#b45309}
+/* 검색에 없는 숙소: 구글 지도 좌표 복사 안내 */
+.planner .stay__how{margin-top:8px;padding:10px 12px;border-radius:12px;border:1px dashed var(--stay-dash);background:var(--stay-bg);font-size:.8rem;line-height:1.6;color:var(--text2);text-align:left}
+.planner .stay__how b{display:block;font-size:.82rem;color:var(--stay-ink);margin-bottom:4px}
+.planner .stay__how ul{margin:0;padding:0;list-style:none;display:grid;gap:4px}
+.planner .stay__how li{display:flex;gap:8px}
+.planner .stay__how li span{flex:none;min-width:44px;font-weight:700;color:var(--stay-ink)}
+.planner .stay__how p{margin:6px 0 0;color:var(--text3)}
 @media (max-width:560px){
   .planner .stay{grid-template-columns:36px minmax(0,1fr) auto auto}
   .planner .stay--from,.planner .stay--empty,.planner .stay--search{grid-template-columns:36px minmax(0,1fr)}

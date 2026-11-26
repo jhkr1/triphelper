@@ -13,10 +13,11 @@ import { dayLabel, dateParts, forecastGap, newId, sortByTime, addDays, addHours,
 import { TimePicker } from "@/components/trip/TimePicker";
 import { fetchNearby, isConfident, searchPlace, type NearbyPlace, type PlaceCandidate } from "@/lib/places";
 import { isWikimediaImage, knownPhoto, placePhoto, type Photo } from "@/lib/photos";
-import { directionsUrl, distanceMeters, formatDistance, walkingMinutes, WALKABLE_METERS } from "@/lib/geo";
+import { directionsUrl, distanceMeters, formatDistance, parseLocation, walkingMinutes, WALKABLE_METERS } from "@/lib/geo";
 import { weatherIcon, type DailyForecast } from "@/lib/weather";
 import { canReorder, nearestOrder, type RouteOrder } from "@/lib/route-order";
 import type { Place, Trip } from "@/types/trip";
+import type { LatLng } from "@/types/destination";
 
 interface Props {
   trip: Trip;
@@ -313,28 +314,65 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, on
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState(false);
   const [choices, setChoices] = useState<StayChoices | null>(null);
+  /** 마지막으로 찾아본 숙소 이름: 못 찾은 뒤 좌표를 붙여 넣으면 이 이름으로 넣는다 */
+  const [named, setNamed] = useState("");
+  /** 이름 없이 받은 좌표: 다음 입력을 숙소 이름으로 받는다 */
+  const [coord, setCoord] = useState<LatLng | null>(null);
+  const [shortLink, setShortLink] = useState(false);
+
+  const close = () => { setOpen(false); setChoices(null); setQ(""); setNamed(""); setCoord(null); setShortLink(false); };
 
   const pick = (c: PlaceCandidate | null, name: string) => {
     onSet({ time: "", name, category: "숙소", ...(c ? { location: c.location } : {}), ...(c?.wiki ? { wiki: c.wiki } : {}) });
-    setOpen(false); setChoices(null); setQ("");
+    close();
+  };
+
+  /** 붙여 넣은 좌표로 넣기 (여행지에서 아주 멀면 위도·경도 순서가 바뀌었을 수 있어 알려 준다) */
+  const putAt = (name: string, location: LatLng) => {
+    onSet({ time: "", name, category: "숙소", location });
+    close();
+    toast(distanceMeters(location, center) > 2_500_000
+      ? `숙소를 넣었습니다 · 여행지에서 꽤 먼 곳이에요. 지도에서 위치를 확인해 주세요`
+      : `숙소를 지도에 표시했습니다 · ${name}`);
   };
 
   async function onSearch(e: FormEvent) {
     e.preventDefault();
     const n = q.trim();
     if (!n) return;
+    if (coord) { putAt(n, coord); return; } // 좌표를 받은 뒤 이름 입력
+    const parsed = parseLocation(n);
+    if (parsed === "short") { setShortLink(true); setChoices(null); return; }
+    if (parsed) {
+      const name = parsed.name ?? named;
+      if (name) putAt(name, parsed.location);
+      else { setCoord(parsed.location); setQ(""); setChoices(null); setShortLink(false); }
+      return;
+    }
+    setShortLink(false);
     setBusy(true);
     const results = await searchPlace(n, countryCode, center, "stay", nearCity);
     setBusy(false);
     if (isConfident(results)) {
       pick(results[0], n);
       toast(`숙소를 지도에 표시했습니다 · ${results[0].name}`);
-    } else if (results.length) {
-      setChoices({ query: n, list: results });
     } else {
-      setChoices({ query: n, list: [] });
+      setNamed(n);
+      setChoices({ query: n, list: results });
     }
   }
+
+  /** 구글 지도에서 좌표 복사하는 방법 (검색에 없는 숙소) */
+  const howTo = (
+    <div className="stay__how">
+      <b>구글 지도에서 위치 복사하기</b>
+      <ul>
+        <li><span>PC</span>지도에서 숙소 자리를 우클릭 → 맨 위 숫자(좌표)를 누르면 복사돼요. 주소창 링크를 복사해도 돼요.</li>
+        <li><span>휴대폰</span>숙소 자리를 길게 눌러 핀을 꽂으면 위쪽 검색창에 좌표가 나와요 → 복사</li>
+      </ul>
+      <p>복사한 것을 위 칸에 붙여 넣고 [찾기]를 누르세요.{named ? ` '${named}' 이름으로 넣어요.` : ""}</p>
+    </div>
+  );
 
   if (stay && !open) {
     return (
@@ -363,7 +401,8 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, on
             </button>
           )}
         </div>
-        <button type="button" className="stay__btn" onClick={() => { setQ(""); setOpen(true); }}>바꾸기</button>
+        {/* 바꾸기에서 좌표만 붙여 넣으면 지금 이름을 그대로 쓴다 (위치 미지정 숙소에 위치 넣기) */}
+        <button type="button" className="stay__btn" onClick={() => { setQ(""); setNamed(stay.name); setOpen(true); }}>바꾸기</button>
         <button className="icon-btn" type="button" aria-label={`${dayNo}일차 숙소 빼기`} onClick={onRemove}><Icon name="x" /></button>
       </li>
     );
@@ -383,18 +422,30 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, on
     <li className="stay stay--search">
       <form className="stay__form" onSubmit={onSearch}>
         <input
+          key={coord ? "name" : "search"}
           autoFocus
           type="text"
           value={q}
-          onChange={(e) => { setQ(e.target.value); setChoices(null); }}
-          placeholder="숙소 이름 (예: 도요코인 신주쿠, Hilton Tokyo)"
-          aria-label={`${dayNo}일차 밤 숙소 이름`}
+          onChange={(e) => { setQ(e.target.value); if (!coord) { setChoices(null); setShortLink(false); } }}
+          placeholder={coord ? "숙소 이름 (예: Aka Hotel)" : "숙소 이름, 또는 구글 지도 좌표·링크"}
+          aria-label={coord ? `${dayNo}일차 밤 숙소 이름 (좌표는 받았어요)` : `${dayNo}일차 밤 숙소 이름 또는 좌표`}
           autoComplete="off"
         />
-        <button className="btn btn--pri" type="submit" disabled={busy}>{busy ? "찾는 중…" : "찾기"}</button>
-        <button className="btn" type="button" onClick={() => { setOpen(false); setChoices(null); }}>닫기</button>
+        <button className="btn btn--pri" type="submit" disabled={busy}>{busy ? "찾는 중…" : coord ? "넣기" : "찾기"}</button>
+        <button className="btn" type="button" onClick={close}>닫기</button>
       </form>
-      <p className="stay__hint">못 찾으면 영문 이름(예약 확인서의 호텔 이름)으로 검색해 보세요.</p>
+      {coord ? (
+        <p className="stay__hint stay__hint--ok">
+          위치를 읽었어요 ({coord.lat.toFixed(5)}, {coord.lng.toFixed(5)}). 지도에 보일 숙소 이름을 적어 주세요.
+        </p>
+      ) : shortLink ? (
+        <>
+          <p className="stay__hint stay__hint--warn">휴대폰 &lsquo;공유&rsquo;로 만든 짧은 링크는 열어 봐야 위치가 나와서 바로 읽을 수 없어요. 아래처럼 좌표를 복사해 주세요.</p>
+          {howTo}
+        </>
+      ) : (
+        <p className="stay__hint">못 찾으면 영문 이름으로 검색하거나, 구글 지도의 좌표·장소 링크를 붙여 넣으세요.</p>
+      )}
       {choices && (
         <div className="choices">
           <p>{choices.list.length ? `"${choices.query}" 숙소 후보입니다. 맞는 곳을 고르세요.` : `"${choices.query}"을(를) 찾지 못했습니다.`}</p>
@@ -406,6 +457,7 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, on
           <button type="button" className="none" onClick={() => { pick(null, choices.query); toast("숙소를 넣었습니다. 지도에서 위치를 지정할 수 있습니다."); }}>
             위치 없이 넣기 (나중에 지도에서 지정)
           </button>
+          {howTo}
         </div>
       )}
     </li>

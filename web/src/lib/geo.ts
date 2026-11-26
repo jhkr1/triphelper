@@ -43,6 +43,53 @@ export function directionsUrl(
   return `https://www.google.com/maps/dir/?api=1&origin=${aLat},${aLng}&destination=${bLat},${bLng}&travelmode=${mode === "walk" ? "walking" : "transit"}`;
 }
 
+/**
+ * 붙여 넣은 좌표·지도 링크에서 위치를 읽는다 (지도 검색에 없는 숙소용).
+ * - 좌표: "35.6938, 139.7679" · "35°41'37.8"N 139°46'04.7"E"
+ * - 구글 지도 주소: 장소 핀(!3d…!4d…) > 화면 가운데(@위도,경도) > ?q= · ?query= · ?ll= (애플 지도)
+ *   /maps/place/이름/ 이 있으면 이름도 함께
+ * - 휴대폰 '공유'의 짧은 링크(maps.app.goo.gl)는 열어 봐야 좌표가 나오는데 서버 없이는 열 수 없어 "short"
+ */
+export type ParsedLocation = { location: LatLng; name?: string };
+
+export function parseLocation(text: string): ParsedLocation | "short" | null {
+  const s = text.trim();
+  if (!s) return null;
+  if (/^(https?:\/\/)?(maps\.app\.goo\.gl|goo\.gl\/maps|g\.co\/kgs)\//i.test(s)) return "short";
+  const ok = (lat: number, lng: number): ParsedLocation | null =>
+    Number.isFinite(lat) && Number.isFinite(lng) && Math.abs(lat) <= 90 && Math.abs(lng) <= 180 && !(lat === 0 && lng === 0)
+      ? { location: { lat, lng } } : null;
+
+  // 도·분·초
+  const dms = s.match(/(\d{1,2})°\s*(\d{1,2})['′]\s*([\d.]+)["″]?\s*([NS])[\s,]*(\d{1,3})°\s*(\d{1,2})['′]\s*([\d.]+)["″]?\s*([EW])/i);
+  if (dms) {
+    const deg = (d: string, m: string, sec: string, h: string) =>
+      (Number(d) + Number(m) / 60 + Number(sec) / 3600) * (/[SW]/i.test(h) ? -1 : 1);
+    return ok(deg(dms[1], dms[2], dms[3], dms[4]), deg(dms[5], dms[6], dms[7], dms[8]));
+  }
+  // 소수 좌표만 (위도, 경도)
+  const pair = s.match(/^\(?\s*(-?\d{1,2}\.\d+)\s*[,\s]\s*(-?\d{1,3}\.\d+)\s*\)?$/);
+  if (pair) return ok(Number(pair[1]), Number(pair[2]));
+
+  if (!/^https?:\/\//i.test(s)) return null;
+  const num = "(-?\\d{1,3}\\.\\d+)";
+  const found =
+    s.match(new RegExp(`!3d${num}!4d${num}`)) ??
+    s.match(new RegExp(`@${num},${num}`)) ??
+    s.match(new RegExp(`[?&](?:q|query|ll|destination|center)=${num}(?:,|%2C)\\s*${num}`, "i"));
+  if (!found) return null;
+  const r = ok(Number(found[1]), Number(found[2]));
+  if (!r) return null;
+  const place = s.match(/\/maps\/place\/([^/@?]+)/);
+  if (place) {
+    try {
+      const name = decodeURIComponent(place[1].replace(/\+/g, " ")).split(",")[0].trim();
+      if (name && !/^-?\d/.test(name)) r.name = name.slice(0, 80);
+    } catch { /* 이름은 없어도 된다 */ }
+  }
+  return r;
+}
+
 /** 국기 이미지 (Windows에서는 국기 이모지가 글자로 보여서 이미지 사용) */
 export const flagUrl = (countryCode: string, height: 20 | 40 | 80 = 40) =>
   `https://flagcdn.com/h${height}/${countryCode}.png`;

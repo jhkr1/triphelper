@@ -63,6 +63,15 @@ describe("setStayMemo (숙소 메모)", () => {
     const out = setStayMemo(base(), 1, "  체크인 15:00 · 체크아웃 11:00 ");
     expect(out.days.map((d) => d.stay?.memo ?? null)).toEqual(["체크인 15:00 · 체크아웃 11:00", "체크인 15:00 · 체크아웃 11:00", null, null]);
   });
+  it("같은 호텔을 밤마다 따로 넣어 좌표가 몇 m 달라도 같은 숙소로 본다 (멀면 다른 곳)", () => {
+    const t = trip([[], [], [], []]);
+    const hotel = (lat: number) => ({ ...place("h"), name: "Aka Hotel", category: "숙소" as const, location: { lat, lng: 139.768 } });
+    t.days[0].stay = hotel(35.69385);
+    t.days[1].stay = hotel(35.69392); // 약 8m
+    t.days[2].stay = hotel(35.71);    // 약 1.8km: 이름만 같은 다른 지점
+    const out = setStayMemo(t, 0, "체크인 16:00");
+    expect(out.days.map((d) => d.stay?.memo ?? null)).toEqual(["체크인 16:00", "체크인 16:00", null, null]);
+  });
   it("비우면 메모 칸을 지운다", () => {
     const out = setStayMemo(setStayMemo(base(), 0, "짐 보관 가능"), 0, "  ");
     expect(out.days.every((d) => !d.stay || !("memo" in d.stay))).toBe(true);

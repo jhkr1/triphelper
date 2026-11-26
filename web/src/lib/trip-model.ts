@@ -1,5 +1,6 @@
 import type { Attraction, Destination, LatLng } from "@/types/destination";
 import type { Checklist, Place, PlaceCategory, Trip, TripDay } from "@/types/trip";
+import { distanceMeters } from "@/lib/geo";
 
 /** 플래너에 필요한 나라 정보 (서버에서 골라 클라이언트로 넘김) */
 export interface PlannerCountry {
@@ -198,9 +199,12 @@ export function setStay(trip: Trip, night: number, stay: Omit<Place, "id">): { t
   return { trip: { ...trip, days }, filled: to - night };
 }
 
-/** 같은 숙소인지 (이름과 위치가 같으면) */
+/**
+ * 같은 숙소인지: 이름이 같고, 위치가 둘 다 있으면 300m 안.
+ * (같은 호텔도 밤마다 따로 검색하거나 지도에서 다시 지정하면 좌표가 몇 m씩 다르다)
+ */
 export const sameStay = (a?: Place, b?: Place) =>
-  Boolean(a && b && a.name === b.name && a.location?.lat === b.location?.lat && a.location?.lng === b.location?.lng);
+  Boolean(a && b && a.name.trim() === b.name.trim() && (!a.location || !b.location || distanceMeters(a.location, b.location) <= 300));
 
 /**
  * 숙소 메모를 고친다. 체크인·체크아웃·짐 보관처럼 숙소 하나에 대한 내용이라,

@@ -1,0 +1,42 @@
+# Supabase 무료 요금제는 한동안 요청이 없으면 프로젝트를 일시 정지한다 (로그인·게시판이 멈춤).
+# 사흘마다 DB의 아주 작은 함수 ping()을 불러 깨어 있게 한다 (supabase/migrations/20261126000000_keepalive_ping.sql).
+# - 배포(pages.yml)와 같은 저장소 Variables를 쓴다: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+# - 실패하면(이미 정지됐거나 주소·키가 바뀜) 작업이 빨간불이 되고 GitHub가 메일로 알려 준다
+#   → Supabase 대시보드에서 프로젝트를 다시 켠다(Restore)
+# - 주의: 저장소에 60일 동안 활동(push 등)이 없으면 GitHub가 예약 작업을 꺼 버린다.
+#   Actions 탭에서 다시 켜거나, 아래 workflow_dispatch로 손으로 한 번 돌리면 된다.
+name: Keep Supabase awake
+
+on:
+  schedule:
+    - cron: "17 3 */3 * *" # 사흘마다 03:17 UTC (한국 12:17)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Call ping()
+        env:
+          SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_KEY" ]; then
+            echo "::error::저장소 Variables에 NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY 가 없어요"
+            exit 1
+          fi
+          # 일시 정지에서 막 깨어나는 중이면 잠깐 실패할 수 있어 세 번까지 다시 시도
+          for i in 1 2 3; do
+            code=$(curl -s -o body.txt -w "%{http_code}" --max-time 30 -X POST \
+              -H "apikey: $SUPABASE_KEY" -H "Content-Type: application/json" -d '{}' \
+              "$SUPABASE_URL/rest/v1/rpc/ping") || code=000
+            if [ "$code" = "200" ]; then echo "ok ($(cat body.txt))"; exit 0; fi
+            echo "시도 $i: HTTP $code $(head -c 200 body.txt 2>/dev/null)"
+            sleep 20
+          done
+          echo "::error::Supabase가 응답하지 않아요. 대시보드에서 프로젝트가 일시 정지(Paused)됐는지 확인하세요."
+          exit 1

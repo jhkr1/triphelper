@@ -321,6 +321,11 @@
 .planner .stay__btn{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:5px 12px;font-size:.78rem;font-weight:600;color:var(--text3)}
 .planner .stay__btn:hover{border-color:var(--blue);color:var(--blue)}
 .planner .stay .icon-btn{margin-top:0}
+/* 숙소 메모: 체크인·체크아웃·짐 보관 */
+.planner .stay__body .stay__memo{margin-top:6px}
+.planner .stay__body .stay__memo-btn{margin-top:6px}
+.planner .stay__body .memo-edit{width:100%}
+.planner .stay__note{flex-basis:100%;margin:2px 0 0;font-size:.82rem;line-height:1.55;color:var(--text3);white-space:pre-wrap;word-break:break-word}
 .planner .stay--from{grid-template-columns:48px minmax(0,1fr)}
 .planner .stay--from .stay__body{padding:6px 12px;flex-direction:row;align-items:baseline;gap:8px;flex-wrap:wrap}
 .planner .stay--empty,.planner .stay--search{grid-template-columns:48px minmax(0,1fr)}
@@ -339,7 +344,7 @@
   .planner .stay__form{grid-template-columns:1fr 1fr}
   .planner .stay__form input{grid-column:1/-1}
 }
-.planner .mk--stay{border-radius:8px;background:#7c3aed;display:grid;place-items:center}
+.planner .mk--stay{border-radius:8px;background:var(--stay);display:grid;place-items:center}
 .planner .mk--stay svg{width:16px;height:16px}
 .planner .daybar .wx--cta{border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;flex-wrap:wrap;text-align:left}
 .planner .daybar .wx--cta .wx__go{color:var(--blue);font-weight:700}

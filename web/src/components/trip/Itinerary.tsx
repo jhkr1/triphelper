@@ -9,7 +9,7 @@ import { SortableContext, arrayMove, horizontalListSortingStrategy, rectSortingS
 import { CSS } from "@dnd-kit/utilities";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { dayColor } from "@/components/trip/TripMap";
-import { dayLabel, dateParts, forecastGap, newId, sortByTime, addDays, addHours, nextSlot, insertAt, setStay } from "@/lib/trip-model";
+import { dayLabel, dateParts, forecastGap, newId, sortByTime, addDays, addHours, nextSlot, insertAt, setStay, setStayMemo, sameStay } from "@/lib/trip-model";
 import { TimePicker } from "@/components/trip/TimePicker";
 import { fetchNearby, isConfident, searchPlace, type NearbyPlace, type PlaceCandidate } from "@/lib/places";
 import { isWikimediaImage, knownPhoto, placePhoto, type Photo } from "@/lib/photos";
@@ -269,7 +269,9 @@ function FoldScroll({ folded, listRef, anchor }: { folded: boolean; listRef: Ref
 const noDrag = { onMouseDown: (e: React.SyntheticEvent) => e.stopPropagation(), onTouchStart: (e: React.SyntheticEvent) => e.stopPropagation() };
 
 /** 장소 메모: 메모를 누르면 바로 고치고, 칸 밖을 누르거나 저장하면 저장 (Esc: 취소, Ctrl+Enter: 저장) */
-function MemoEditor({ place, onSave, onClose }: { place: Place; onSave: (memo: string) => void; onClose: () => void }) {
+function MemoEditor({ place, onSave, onClose, placeholder = "예: 입장권 미리 예매 · 2층 카페 추천 · 월요일 휴무" }: {
+  place: Place; onSave: (memo: string) => void; onClose: () => void; placeholder?: string;
+}) {
   const [draft, setDraft] = useState(place.memo ?? "");
   const save = () => { onSave(draft.trim()); onClose(); };
   return (
@@ -280,7 +282,7 @@ function MemoEditor({ place, onSave, onClose }: { place: Place; onSave: (memo: s
         maxLength={500}
         value={draft}
         onChange={(e) => setDraft(e.target.value)}
-        placeholder="예: 입장권 미리 예매 · 2층 카페 추천 · 월요일 휴무"
+        placeholder={placeholder}
         aria-label={`${place.name} 메모`}
         onKeyDown={(e) => {
           e.stopPropagation();
@@ -302,11 +304,12 @@ function MemoEditor({ place, onSave, onClose }: { place: Place; onSave: (memo: s
 type StayChoices = { query: string; list: PlaceCandidate[] };
 
 /** 그날 밤 숙소 칸: 비었으면 검색, 있으면 이름·위치 지정·바꾸기·빼기 */
-function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onRemove, onPickRequest, toast }: {
+function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, onRemove, onPickRequest, toast }: {
   stay?: Place; dayNo: number; countryCode: string; center: Trip["center"]; nearCity: boolean;
-  onSet: (stay: Omit<Place, "id">) => void; onRemove: () => void; onPickRequest: (id: string) => void; toast: (msg: string) => void;
+  onSet: (stay: Omit<Place, "id">) => void; onMemo: (memo: string) => void; onRemove: () => void; onPickRequest: (id: string) => void; toast: (msg: string) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const [memoOpen, setMemoOpen] = useState(false);
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState(false);
   const [choices, setChoices] = useState<StayChoices | null>(null);
@@ -342,6 +345,22 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onRemove, 
           <b>{stay.name}</b>
           {!stay.location && (
             <button type="button" className="tag tag--warn" onClick={() => onPickRequest(stay.id)}><Icon name="pin" />위치 미지정 · 지도에서 지정</button>
+          )}
+          {memoOpen ? (
+            <MemoEditor
+              place={stay}
+              onSave={onMemo}
+              onClose={() => setMemoOpen(false)}
+              placeholder={"예: 체크인 15:00 · 체크아웃 11:00\n체크인 전후 짐 보관 가능 · 조식 7~10시"}
+            />
+          ) : stay.memo ? (
+            <button type="button" className="stop__memo stay__memo" onClick={() => setMemoOpen(true)} aria-label={`${stay.name} 메모 고치기: ${stay.memo}`}>
+              {stay.memo}
+            </button>
+          ) : (
+            <button type="button" className="memo-btn stay__memo-btn" onClick={() => setMemoOpen(true)}>
+              <Icon name="note" />메모
+            </button>
           )}
         </div>
         <button type="button" className="stay__btn" onClick={() => { setQ(""); setOpen(true); }}>바꾸기</button>
@@ -704,7 +723,11 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
         {prevStay && (
           <li className="stay stay--from">
             <span className="stay__ic" aria-hidden="true"><Icon name="bed" /></span>
-            <div className="stay__body"><small>숙소에서 출발</small><b>{prevStay.name}</b></div>
+            <div className="stay__body">
+              <small>숙소에서 출발</small><b>{prevStay.name}</b>
+              {/* 체크아웃하는 날 아침: 체크아웃 시간·짐 보관을 바로 보게 */}
+              {prevStay.memo && !sameStay(prevStay, stay) && <p className="stay__note">{prevStay.memo}</p>}
+            </div>
           </li>
         )}
         {prevStay && view.day[0] && <Leg from={prevStay} to={view.day[0]} countryCode={countryCode} hidden={Boolean(drag)} />}
@@ -792,6 +815,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
             center={trip.center}
             nearCity={Boolean(trip.city)}
             onSet={putStay}
+            onMemo={(m) => updateTrip((t) => setStayMemo(t, day, m))}
             onRemove={() => updateTrip((t) => ({ ...t, days: t.days.map((d, i) => (i === day ? { places: d.places } : d)) }))}
             onPickRequest={onPickRequest}
             toast={toast}

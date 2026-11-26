@@ -138,6 +138,10 @@ export function describeChanges(base: Data, local: Data, limit = 5): string[] {
     const before = base.days[i]?.stay;
     if (d.stay && d.stay.name !== before?.name) lines.push(`${i + 1}일차 밤 숙소를 ${ro(d.stay.name)} 정했어요`);
     else if (!d.stay && before) lines.push(`${i + 1}일차 밤 숙소를 뺐어요`);
+    // 이어서 묵는 밤들은 메모가 함께 바뀌므로 첫 밤에서 한 번만
+    else if (d.stay && (d.stay.memo ?? "") !== (before?.memo ?? "") && local.days[i - 1]?.stay?.name !== d.stay.name) {
+      lines.push(`${d.stay.name} 숙소 메모를 고쳤어요`);
+    }
   });
   if (local.days.length !== base.days.length) lines.push(`여행 기간을 ${local.days.length}일로 바꿨어요`);
   else if (local.start !== base.start && !local.datesUnset) lines.push("여행 날짜를 바꿨어요");

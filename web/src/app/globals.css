@@ -11,8 +11,8 @@
   --land-sel:#2563eb; --land-sel-stroke:#1d4ed8; --rim:#93b8ef; --grat:#ffffff; --label-halo:#ffffff;
   --plane-wing:#ffffff; --plane-keel:#a9c6f7; --plane-fold:#2563eb; --plane-edge:#7fa6e6; --plane-shadow:#1d4ed833; --trail:#8fb0e8;
   --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
-  /* 숙소(밤): 보라. 진한 색(--stay)은 아이콘·지도 표시, 옅은 색은 숙소 칸 바탕 */
-  --stay:#7c3aed; --stay-ink:#6d28d9; --stay-bg:#f5f3ff; --stay-bd:#ddd6fe; --stay-dash:#c4b5fd;
+  /* 숙소(밤): 밤하늘 남색 (날짜 색과 겹치지 않게). 진한 색(--stay)은 아이콘·지도 표시, 옅은 색은 숙소 칸 바탕 */
+  --stay:#1e3a8a; --stay-ink:#1e3a8a; --stay-bg:#eef2ff; --stay-bd:#c7d2fe; --stay-dash:#a5b4fc;
   /* 흰 글씨를 올리는 강조 바탕 (다크 모드의 --blue는 글자용으로 밝아서 흰 글씨가 묻힌다) */
   --accent-solid:#2563eb;
   color-scheme:light;
@@ -31,8 +31,8 @@
   --land-off:#22252b; --land-off-stroke:#343841; --land:#5d6b86; --land-stroke:#93a9d4; --land-hover:#7488ad;
   --land-sel:#6aa6ff; --land-sel-stroke:#cfe0ff; --rim:#4b78c9; --grat:#8fb4ff; --label-halo:#121314;
   --plane-wing:#eef4ff; --plane-keel:#6f9cf0; --plane-fold:#1d4ed8; --plane-edge:#c7d9ff; --plane-shadow:#0009; --trail:#4b78c9;
-  /* 어두운 바탕에서는 진한 보라가 묻혀 한 단계 밝은 보라, 숙소 칸 바탕은 카드색에 보라를 살짝 */
-  --stay:#a78bfa; --stay-ink:#c4b5fd; --stay-bg:#211e2b; --stay-bd:#3d3653; --stay-dash:#5e5288;
+  /* 어두운 바탕에서는 진한 남색이 묻혀 밝은 남색, 숙소 칸 바탕은 카드색에 남색을 살짝 */
+  --stay:#93b4ff; --stay-ink:#c7d6ff; --stay-bg:#1a1f2e; --stay-bd:#2f3a5c; --stay-dash:#4a5b8f;
   --accent-solid:#2563eb;
   color-scheme:dark;
   accent-color:#3b82f6;

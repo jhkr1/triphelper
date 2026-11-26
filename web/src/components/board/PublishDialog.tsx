@@ -33,7 +33,7 @@ export function PublishDialog({ trip, countryName, onClose }: Props) {
   });
   const boxRef = useRef<HTMLDivElement>(null);
   const hasStay = trip.days.some((d) => d.stay);
-  const hasMemo = trip.days.some((d) => d.places.some((p) => p.memo?.trim()));
+  const hasMemo = trip.days.some((d) => d.places.some((p) => p.memo?.trim()) || d.stay?.memo?.trim());
 
   // 열 때: 기다리던 저장을 마치고, 이 일정에서 올린 글이 있는지 확인
   useEffect(() => {
@@ -146,7 +146,7 @@ export function PublishDialog({ trip, countryName, onClose }: Props) {
               <legend>남에게 보여 줄 정보</legend>
               <label>
                 <input type="checkbox" checked={o.memo} onChange={(e) => set("memo", e.target.checked)} disabled={!hasMemo} />
-                장소 메모도 공개 <small>{hasMemo ? "예약번호·연락처가 적혀 있지 않은지 확인하세요" : "적은 메모가 없어요"}</small>
+                메모도 공개 <small>{hasMemo ? "예약번호·연락처가 적혀 있지 않은지 확인하세요 (숙소 메모는 숙소를 공개할 때만)" : "적은 메모가 없어요"}</small>
               </label>
               <label>
                 <input type="checkbox" checked={o.stay} onChange={(e) => set("stay", e.target.checked)} disabled={!hasStay} />

@@ -198,6 +198,29 @@ export function setStay(trip: Trip, night: number, stay: Omit<Place, "id">): { t
   return { trip: { ...trip, days }, filled: to - night };
 }
 
+/** 같은 숙소인지 (이름과 위치가 같으면) */
+export const sameStay = (a?: Place, b?: Place) =>
+  Boolean(a && b && a.name === b.name && a.location?.lat === b.location?.lat && a.location?.lng === b.location?.lng);
+
+/**
+ * 숙소 메모를 고친다. 체크인·체크아웃·짐 보관처럼 숙소 하나에 대한 내용이라,
+ * night 번째 밤과 앞뒤로 이어서 묵는 같은 숙소의 밤에 모두 같은 메모를 넣는다.
+ */
+export function setStayMemo(trip: Trip, night: number, memo: string): Trip {
+  const stay = trip.days[night]?.stay;
+  if (!stay) return trip;
+  let from = night, to = night;
+  while (from > 0 && sameStay(trip.days[from - 1].stay, stay)) from--;
+  while (to + 1 < trip.days.length && sameStay(trip.days[to + 1].stay, stay)) to++;
+  const m = memo.trim();
+  const days = trip.days.map((d, i) => {
+    if (i < from || i > to || !d.stay) return d;
+    const { memo: _, ...rest } = d.stay; // eslint-disable-line @typescript-eslint/no-unused-vars
+    return { ...d, stay: m ? { ...rest, memo: m } : rest };
+  });
+  return { ...trip, days };
+}
+
 /** 관광지를 여행지 바구니에 담는다 (이미 일정이나 여행지 바구니에 있으면 그대로) */
 export function addToBasket(trip: Trip, a: Attraction): Trip {
   const all = [...(trip.basket ?? []), ...trip.days.flatMap((d) => d.places)];

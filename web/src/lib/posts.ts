@@ -125,7 +125,7 @@ export function buildPost(t: Trip, o: PublishOptions) {
     ...(o.dates === "exact" && !t.datesUnset ? { start: t.start, end: t.end } : {}),
     days: t.days.map((d, i) => ({
       places: d.places.map((p) => toPostPlace(p, o.memo)),
-      ...(o.stay && d.stay && i <= lastNight ? { stay: toPostPlace(d.stay, false) } : {}),
+      ...(o.stay && d.stay && i <= lastNight ? { stay: toPostPlace(d.stay, o.memo) } : {}),
     })),
   };
   // 목록 카드의 동선 그림: 날짜별 좌표 (소수 3자리 ≈ 100m, 날짜마다 최대 30곳)

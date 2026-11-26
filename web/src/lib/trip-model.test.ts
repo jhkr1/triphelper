@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addDays, dayLabel, insertAt, nightsBetween, nextSlot, setStay, timeBetween, tripName } from "@/lib/trip-model";
+import { addDays, dayLabel, insertAt, nightsBetween, nextSlot, setStay, setStayMemo, timeBetween, tripName } from "@/lib/trip-model";
 import { place, trip } from "@/lib/test-fixtures";
 
 describe("날짜 계산", () => {
@@ -49,6 +49,27 @@ describe("setStay (숙소)", () => {
     t.days[2].stay = { ...place("h2"), name: "다른 호텔", category: "숙소" };
     const { trip: out } = setStay(t, 0, { time: "", name: "호텔", category: "숙소" });
     expect(out.days.map((d) => d.stay?.name ?? null)).toEqual(["호텔", "호텔", "다른 호텔", null]);
+  });
+});
+
+describe("setStayMemo (숙소 메모)", () => {
+  // 0·1일차 밤 호텔, 2일차 밤 다른 호텔, 3일차(마지막 날)는 밤 없음
+  const base = () => {
+    const t = setStay(trip([[], [], [], []]), 0, { time: "", name: "호텔", category: "숙소" }).trip;
+    t.days[2].stay = { ...place("h2"), name: "다른 호텔", category: "숙소" };
+    return t;
+  };
+  it("이어서 묵는 같은 숙소의 밤에 모두 넣고, 다른 숙소는 그대로", () => {
+    const out = setStayMemo(base(), 1, "  체크인 15:00 · 체크아웃 11:00 ");
+    expect(out.days.map((d) => d.stay?.memo ?? null)).toEqual(["체크인 15:00 · 체크아웃 11:00", "체크인 15:00 · 체크아웃 11:00", null, null]);
+  });
+  it("비우면 메모 칸을 지운다", () => {
+    const out = setStayMemo(setStayMemo(base(), 0, "짐 보관 가능"), 0, "  ");
+    expect(out.days.every((d) => !d.stay || !("memo" in d.stay))).toBe(true);
+  });
+  it("숙소가 없는 밤이면 그대로", () => {
+    const t = trip([[], []]);
+    expect(setStayMemo(t, 0, "메모")).toBe(t);
   });
 });
 

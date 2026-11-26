@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { dayColor } from "@/components/trip/TripMap";
 import { Leg, PlacePhoto } from "@/components/trip/Itinerary";
-import { dayLabel } from "@/lib/trip-model";
+import { dayLabel, sameStay } from "@/lib/trip-model";
 import type { Place, TripDay } from "@/types/trip";
 
 /* 읽기 전용 날짜별 동선 (게시글 보기 · 보기 전용 링크) */
@@ -26,11 +26,14 @@ function Stop({ p, n, color }: { p: Place; n: number; color: string }) {
   );
 }
 
-function StayItem({ stay, label }: { stay: Place; label: string }) {
+function StayItem({ stay, label, memo = true }: { stay: Place; label: string; memo?: boolean }) {
   return (
     <li className="stay stay--from">
       <span className="stay__ic" aria-hidden="true"><Icon name="bed" /></span>
-      <div className="stay__body"><small>{label}</small><b>{stay.name}</b></div>
+      <div className="stay__body">
+        <small>{label}</small><b>{stay.name}</b>
+        {memo && stay.memo && <p className="stay__note">{stay.memo}</p>}
+      </div>
     </li>
   );
 }
@@ -49,7 +52,8 @@ export function RouteDays({ days, start, countryCode }: { days: TripDay[]; start
               <p className="board__msg">이날은 비워 두었어요.</p>
             ) : (
               <ol className="tl" style={{ "--dc": dayColor(i) } as React.CSSProperties}>
-                {prevStay && <StayItem stay={prevStay} label="숙소에서 출발" />}
+                {/* 같은 숙소에 이어 묵는 날 아침에는 메모를 다시 보여 주지 않는다 (체크아웃하는 날만) */}
+                {prevStay && <StayItem stay={prevStay} label="숙소에서 출발" memo={!sameStay(prevStay, stay)} />}
                 {prevStay && d.places[0] && <Leg from={prevStay} to={d.places[0]} countryCode={countryCode} />}
                 {d.places.map((p, j) => (
                   <Fragment key={p.id}>

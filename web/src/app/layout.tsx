@@ -2,10 +2,13 @@ import type { Metadata, Viewport } from "next";
 import { AppProviders } from "@/components/providers/AppProviders";
 import { HelpButton } from "@/components/help/HelpButton";
 import { OG_IMAGE, og, SITE_URL } from "@/lib/site";
+import { getAllDestinations } from "@/lib/destinations";
 import "./globals.css";
+/** 나라 수는 데이터에서 센다 (나라를 추가해도 설명 문구가 저절로 맞게) */
+const COUNTRIES = getAllDestinations().length;
 const DESCRIPTION =
-  "TripHelper - 29개국 여행 정보와 지도 위 일정 플래너. 필수 매너, 기념품, 현지 마트 추천템, 비자 정보, 필수 회화부터 날짜별 동선 짜기와 공유까지 한 곳에서.";
-const OG_DESCRIPTION = "29개국 여행 정보 · 지도 위 날짜별 일정 플래너 · 나라별 여행 동선 게시판";
+  `TripHelper - ${COUNTRIES}개국 여행 정보와 지도 위 일정 플래너. 필수 매너, 기념품, 현지 마트 추천템, 비자 정보, 필수 회화부터 날짜별 동선 짜기와 공유까지 한 곳에서.`;
+const OG_DESCRIPTION = `${COUNTRIES}개국 여행 정보 · 지도 위 날짜별 일정 플래너 · 나라별 여행 동선 게시판`;
 
 export const metadata: Metadata = {
   // 끝의 /까지 넣어야 /triphelper 같은 접두사가 상대 주소에 붙는다

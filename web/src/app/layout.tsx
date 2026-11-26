@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { AppProviders } from "@/components/providers/AppProviders";
+import { HelpButton } from "@/components/help/HelpButton";
 import { OG_IMAGE, og, SITE_URL } from "@/lib/site";
 import "./globals.css";
 const DESCRIPTION =
@@ -78,7 +79,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             다시 쓸 때는 next/script 대신 일반 async 스크립트로 넣는다: data-nscript 속성을 거부함 */}
       </head>
       <body>
-        <AppProviders>{children}</AppProviders>
+        <AppProviders>
+          {children}
+          <HelpButton />
+        </AppProviders>
         <script type="application/ld+json" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>

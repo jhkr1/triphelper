@@ -18,6 +18,8 @@ import { readErrorText, readLocation } from "@/lib/map-link";
 import { weatherIcon, type DailyForecast } from "@/lib/weather";
 import { canReorder, nearestOrder, type RouteOrder } from "@/lib/route-order";
 import type { Place, Trip } from "@/types/trip";
+import type { ChangeOpts } from "@/lib/trip-undo";
+import { eul } from "@/lib/trip-merge";
 import type { LatLng } from "@/types/destination";
 
 interface Props {
@@ -29,9 +31,9 @@ interface Props {
   onAddDay: () => void;
   onRemoveDay: (i: number) => void;
   /** 선택한 날의 장소 목록 바꾸기 */
-  updatePlaces: (fn: (places: Place[]) => Place[]) => void;
+  updatePlaces: (fn: (places: Place[]) => Place[], opts?: ChangeOpts) => void;
   /** 일정 전체 바꾸기 (여행지 바구니·다른 날로 옮길 때) */
-  updateTrip: (fn: (trip: Trip) => Trip) => void;
+  updateTrip: (fn: (trip: Trip) => Trip, opts?: ChangeOpts) => void;
   onPickRequest: (placeId: string) => void;
   /** 여행 설정(날짜) 열기 */
   onOpenSetup: () => void;
@@ -653,9 +655,9 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
   function moveDay(from: number, to: number) {
     if (from === to) return;
     const order = arrayMove(trip.days.map((_, i) => i), from, to);
-    updateTrip((t) => ({ ...t, days: t.days.map((d, i) => ({ ...d, places: t.days[order[i]].places })) }));
+    updateTrip((t) => ({ ...t, days: t.days.map((d, i) => ({ ...d, places: t.days[order[i]].places })) }),
+      { undo: `${from + 1}일차 일정을 ${to + 1}일차로 옮겼어요` });
     onDayChange(order.indexOf(day)); // 보고 있던 날의 일정을 따라간다
-    toast(`${from + 1}일차 일정을 ${to + 1}일차로 옮겼습니다`);
   }
 
   function onDragStart(e: DragStartEvent) {
@@ -741,9 +743,9 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
   function applyTidy() {
     if (!tidy || !tidyNow) return;
     const { sig, result } = tidy;
-    updatePlaces((list) => (placesSig(list) === sig ? result.places : list));
+    updatePlaces((list) => (placesSig(list) === sig ? result.places : list),
+      { undo: `가까운 순으로 정리했어요 · 총 이동 ${formatDistance(result.after)}` });
     setTidy(null);
-    toast(`가까운 순으로 정리했습니다 · 총 이동 ${formatDistance(result.after)}`);
   }
 
   /** 여행지 바구니 항목을 이 날 마지막에 넣기 (끌기 어려울 때) */
@@ -848,7 +850,8 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
                   place={p}
                   dayNo={day + 1}
                   onPlace={() => placeFromBasket(p)}
-                  onRemove={() => updateTrip((t) => ({ ...t, basket: (t.basket ?? []).filter((x) => x.id !== p.id) }))}
+                  onRemove={() => updateTrip((t) => ({ ...t, basket: (t.basket ?? []).filter((x) => x.id !== p.id) }),
+                    { undo: `${eul(p.name)} 여행지 바구니에서 뺐어요` })}
                 />
               ))}
             </ul>
@@ -935,7 +938,7 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
                   </div>
                 </div>
               </div>
-              <button className="icon-btn" type="button" aria-label={`${p.name} 삭제`} onClick={() => updatePlaces((list) => list.filter((x) => x.id !== p.id))}>
+              <button className="icon-btn" type="button" aria-label={`${p.name} 삭제`} onClick={() => updatePlaces((list) => list.filter((x) => x.id !== p.id), { undo: `${eul(p.name)} 뺐어요` })}>
                 <Icon name="x" />
               </button>
               {open && (
@@ -960,7 +963,8 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
             onSet={putStay}
             onMemo={(m) => updateTrip((t) => setStayMemo(t, day, m))}
             onLocate={(loc) => updateTrip((t) => setStayLocation(t, day, loc))}
-            onRemove={() => updateTrip((t) => ({ ...t, days: t.days.map((d, i) => (i === day ? { places: d.places } : d)) }))}
+            onRemove={() => updateTrip((t) => ({ ...t, days: t.days.map((d, i) => (i === day ? { places: d.places } : d)) }),
+              { undo: `${day + 1}일차 밤 숙소를 뺐어요` })}
             onPickRequest={onPickRequest}
             toast={toast}
           />

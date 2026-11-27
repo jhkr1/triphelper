@@ -94,7 +94,7 @@ function jong(word: string): number {
   const c = word.trim().slice(-1).charCodeAt(0);
   return c >= 0xac00 && c <= 0xd7a3 ? (c - 0xac00) % 28 : 0;
 }
-const eul = (w: string) => `${w}${jong(w) ? "을" : "를"}`;
+export const eul = (w: string) => `${w}${jong(w) ? "을" : "를"}`;
 const ro = (w: string) => { const j = jong(w); return `${w}${j && j !== 8 ? "으로" : "로"}`; }; // 8 = ㄹ 받침
 
 /**

@@ -22,6 +22,7 @@ import {
 import { fetchExchange, formatRate } from "@/lib/exchange";
 import { fetchDailyForecast, type DailyForecast } from "@/lib/weather";
 import { flagUrl } from "@/lib/geo";
+import { createUndoHistory, type ChangeOpts } from "@/lib/trip-undo";
 import { BASE_PATH } from "@/lib/site";
 import type { LatLng } from "@/types/destination";
 import type { Place, Trip } from "@/types/trip";
@@ -233,19 +234,61 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
     ? (() => { const f = byDate[addDays(trip.start, rainyIndex)]; return { index: rainyIndex, start: trip.start, text: `강수 ${Math.round(f.rainChance)}% · 최저 ${Math.round(f.tempMin)}°` }; })()
     : null;
 
-  /* 일정 바꾸기 */
-  const update = (fn: (t: Trip) => Trip) => {
+  /* 일정 바꾸기: 바꿀 때마다 되돌리기 기록을 남긴다 (opts.undo가 있으면 알림에 [되돌리기]) */
+  const [history] = useState(createUndoHistory);
+  const update = (fn: (t: Trip) => Trip, opts: ChangeOpts = {}) => {
     if (viewer) { toast("보기만 할 수 있는 일정이에요"); return; }
-    tripStore.update(fn);
+    const step: { id: number | null } = { id: null };
+    tripStore.update((t) => {
+      const next = fn(t);
+      step.id = history.record(t, next, opts.group);
+      return next;
+    });
+    const id = step.id;
+    if (opts.undo && id !== null) {
+      toast(opts.undo, { label: "되돌리기", run: () => tripStore.update((t) => history.revert(id, t) ?? t) });
+    }
   };
-  const updatePlaces = (fn: (places: Place[]) => Place[]) =>
-    update((t) => ({ ...t, days: t.days.map((d, i) => (i === safeDay ? { ...d, places: fn(d.places) } : d)) }));
+  const updatePlaces = (fn: (places: Place[]) => Place[], opts?: ChangeOpts) =>
+    update((t) => ({ ...t, days: t.days.map((d, i) => (i === safeDay ? { ...d, places: fn(d.places) } : d)) }), opts);
+  /** 다른 일정으로 바꿀 때: 앞 일정의 되돌리기 기록은 버린다 */
+  const replaceTrip = (t: Trip) => { history.clear(); tripStore.set(t); };
+  // 저장 연결이 다른 일정으로 바뀌면(다른 기기에서 고른 일정 등) 기록을 버린다. 처음 저장되어 id가 생길 때는 그대로
+  const lastCloud = useRef(cloudId);
+  useEffect(() => {
+    if (lastCloud.current && cloudId !== lastCloud.current) history.clear();
+    lastCloud.current = cloudId;
+  }, [cloudId, history]);
+
+  // Ctrl+Z 되돌리기 · Ctrl+Shift+Z (Ctrl+Y) 다시 하기. 글자를 고치는 칸 안에서는 브라우저의 글자 되돌리기를 그대로 둔다
+  const keyRef = useRef<(e: KeyboardEvent) => void>(() => {});
+  const onUndoKey = (e: KeyboardEvent) => {
+    if (viewer || tab !== "plan" || !(e.ctrlKey || e.metaKey) || e.altKey) return;
+    const k = e.key.toLowerCase();
+    const redo = (k === "z" && e.shiftKey) || (k === "y" && !e.shiftKey);
+    if (!redo && !(k === "z" && !e.shiftKey)) return;
+    const el = e.target as HTMLElement | null;
+    if (el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))) return;
+    e.preventDefault();
+    const now = tripStore.getSnapshot();
+    if (!now || now === LOADING) return;
+    const next = redo ? history.redo(now) : history.undo(now);
+    if (!next) { toast(redo ? "다시 할 것이 없어요" : "되돌릴 것이 없어요"); return; }
+    tripStore.set(next);
+    toast(redo ? "다시 했어요" : "되돌렸어요");
+  };
+  useEffect(() => { keyRef.current = onUndoKey; });
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => keyRef.current(e);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   function applySetup(r: SetupResult) {
     const n = nightsBetween(r.start, r.end);
     const placeChanged = r.country.slug !== trip.country || r.city !== trip.city;
     if (placeChanged) {
-      tripStore.set(withDatesUnset(createTrip(r.country, r.city, r.center, r.start, r.end), r.datesUnset));
+      replaceTrip(withDatesUnset(createTrip(r.country, r.city, r.center, r.start, r.end), r.datesUnset));
       setMapDay("all");
     } else {
       update((t) => {
@@ -276,18 +319,17 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
 
   function removeDay(i: number) {
     if (trip.days.length < 2) return toast("여행은 최소 하루가 필요합니다");
+    // 묻지 않고 지운 뒤 알림의 [되돌리기]·Ctrl+Z로 되살릴 수 있게 한다
     const n = trip.days[i].places.length;
     const label = `${i + 1}일차`;
-    if (!confirm(`${label}를 삭제할까요?\n${n ? `담은 장소 ${n}곳도 함께 삭제되고, ` : ""}이후 일정은 하루씩 앞당겨집니다.`)) return;
     update((t) => {
       const days = t.days.filter((_, j) => j !== i);
       const { stay: _, ...last } = days[days.length - 1]; // eslint-disable-line @typescript-eslint/no-unused-vars
       return { ...t, end: addDays(t.end, -1), days: [...days.slice(0, -1), last] };
-    });
+    }, { undo: `${label}를 삭제했어요${n ? ` (장소 ${n}곳)` : ""}` });
     const next = Math.min(i, trip.days.length - 2);
     setDay(next);
     if (mapDay !== "all") setMapDay(next);
-    toast(`${label}를 삭제했습니다`);
   }
 
   function onPicked(p: LatLng) {
@@ -364,7 +406,7 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
   const sampleCta = japan ? (
     <div className="sample-cta">
       <span>어떻게 쓰는지 보고 싶다면 예시 일정(도쿄 3박 4일)을 불러와 보세요.</span>
-      <button className="btn" type="button" onClick={() => { tripStore.set(sampleTrip(japan)); setDay(0); setMapDay("all"); }}>
+      <button className="btn" type="button" onClick={() => { replaceTrip(sampleTrip(japan)); setDay(0); setMapDay("all"); }}>
         예시 일정 보기
       </button>
     </div>
@@ -372,19 +414,9 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
 
   /** 빈 일정에 추천 동선 채우기 (되돌리기는 채우기 전 일정으로) */
   function startFromPost(p: Post) {
-    const before = trip;
-    update((t) => fillTripFromPost(t, p));
+    update((t) => fillTripFromPost(t, p), { undo: `추천 동선 ${p.placeCount}곳을 넣었어요` });
     setDay(0);
     setMapDay("all");
-    toast(`추천 동선 ${p.placeCount}곳을 넣었어요`, {
-      label: "되돌리기",
-      // 저장 연결(cloud)은 지금 것을 두고 내용만 되돌린다 (그사이 저장된 시각이 바뀌었을 수 있다)
-      run: () => {
-        update((t) => ({ ...t, city: before.city, center: before.center, end: before.end, days: before.days }));
-        setDay(0);
-        setMapDay("all");
-      },
-    });
   }
 
   return (
@@ -395,8 +427,8 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
           <MyTrips
             trip={trip}
             countries={countries}
-            onOpened={(t) => { tripStore.set(t); setDay(0); setMapDay("all"); setSetupOpen(false); toast(`${tripName(t, countryOf(t.country)?.name ?? "")}을(를) 열었어요`); }}
-            onNew={() => { tripStore.set(defaultTrip(country)); setDay(0); setMapDay("all"); setSetupOpen(true); }}
+            onOpened={(t) => { replaceTrip(t); setDay(0); setMapDay("all"); setSetupOpen(false); toast(`${tripName(t, countryOf(t.country)?.name ?? "")}을(를) 열었어요`); }}
+            onNew={() => { replaceTrip(defaultTrip(country)); setDay(0); setMapDay("all"); setSetupOpen(true); }}
             toast={toast}
           />
           <h1>
@@ -459,7 +491,7 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
           trip={trip}
           meId={auth.me.id}
           onClose={closeCollab}
-          onLeft={() => { setCollabOpen(false); tripStore.set(defaultTrip(country)); setDay(0); toast("일정에서 나왔어요"); }}
+          onLeft={() => { setCollabOpen(false); replaceTrip(defaultTrip(country)); setDay(0); toast("일정에서 나왔어요"); }}
           toast={toast}
           viewCode={viewCode}
           onViewCode={(code) => setViewLink({ tripId: trip.cloud!.id, code })}

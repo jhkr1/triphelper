@@ -21,12 +21,69 @@ export async function getVersion(id: number): Promise<TripVersion> {
   return { id: data.id, createdAt: data.created_at, data: content };
 }
 
-/** 이 일정의 가장 최근 기록 (= 마지막으로 저장된 모습) */
-export async function latestVersionId(tripId: string): Promise<number | null> {
-  const { data, error } = await (await db()).from("trip_versions").select("id").eq("trip_id", tripId)
-    .order("id", { ascending: false }).limit(1).maybeSingle();
+export interface VersionRow extends TripVersion { userId: string | null }
+
+/** 이 일정의 최근 기록 (최신 것부터, DB에 남는 10묶음) */
+export async function listVersions(tripId: string): Promise<VersionRow[]> {
+  const { data, error } = await (await db()).from("trip_versions").select("id, created_at, user_id, data").eq("trip_id", tripId)
+    .order("id", { ascending: false }).limit(10);
   if (error) throw error;
-  return data?.id ?? null;
+  return (data as { id: number; created_at: string; user_id: string | null; data: Trip }[]).map((r) => {
+    const { checklist: _, ...content } = r.data; // eslint-disable-line @typescript-eslint/no-unused-vars
+    return { id: r.id, createdAt: r.created_at, userId: r.user_id, data: content };
+  });
+}
+
+/** 일정에서 뺀 장소: 마지막으로 있던 자리와, 누가 언제 뺐는지 */
+export interface RemovedPlace {
+  place: Place;
+  /** 있던 날 (-1 = 여행지 바구니) */
+  day: number;
+  /** 그날 안의 순서 */
+  index: number;
+  /** 뺀 저장의 시각 · 사람. 아직 저장 전이면 없음 (방금 뺌) */
+  at?: string;
+  by?: string | null;
+}
+
+/**
+ * 기록(versions, 최신 것부터)에는 있는데 지금 일정(now)에는 없는 장소들 (최근에 뺀 것부터).
+ * 장소마다 그 장소가 있던 가장 최근 기록의 자리를 쓰고, 그보다 하나 새로운 기록을 "뺀 때"로 본다.
+ */
+export function removedPlaces(versions: { createdAt: string; userId: string | null; data: TripContent }[], now: TripContent): RemovedPlace[] {
+  const current = new Set(where(now).keys());
+  const out: RemovedPlace[] = [];
+  const seen = new Set<string>();
+  versions.forEach((v, i) => {
+    const newer = versions[i - 1];
+    const addAll = (places: Place[], day: number) => places.forEach((place, index) => {
+      if (current.has(place.id) || seen.has(place.id)) return;
+      seen.add(place.id);
+      out.push({ place, day, index, ...(newer ? { at: newer.createdAt, by: newer.userId } : {}) });
+    });
+    v.data.days.forEach((d, day) => addAll(d.places, day));
+    addAll(v.data.basket ?? [], -1);
+  });
+  return out;
+}
+
+/** 뺀 장소를 원래 날의 원래 자리에 다시 넣는다. 그날이 없어졌으면 여행지 바구니로. 이미 있으면 그대로 */
+export function putBack<T extends TripContent>(trip: T, r: RemovedPlace): T {
+  if (where(trip).has(r.place.id)) return trip;
+  if (r.day < 0 || r.day >= trip.days.length) {
+    const basket = [...(trip.basket ?? [])];
+    basket.splice(r.day < 0 ? Math.min(r.index, basket.length) : basket.length, 0, r.place);
+    return { ...trip, basket };
+  }
+  return {
+    ...trip,
+    days: trip.days.map((d, i) => {
+      if (i !== r.day) return d;
+      const places = [...d.places];
+      places.splice(Math.min(r.index, places.length), 0, r.place);
+      return { ...d, places };
+    }),
+  };
 }
 
 /** 예전 일정(then)과 지금(now)의 장소 차이 */

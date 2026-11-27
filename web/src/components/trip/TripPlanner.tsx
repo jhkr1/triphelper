@@ -23,7 +23,8 @@ import { fetchExchange, formatRate } from "@/lib/exchange";
 import { fetchDailyForecast, type DailyForecast } from "@/lib/weather";
 import { flagUrl } from "@/lib/geo";
 import { applyChange, contentOf, createUndoHistory, type ChangeOpts } from "@/lib/trip-undo";
-import { getVersion, versionDiff, whenLabel, type TripVersion, type VersionDiff } from "@/lib/trip-versions";
+import { getVersion, putBack, versionDiff, whenLabel, type TripVersion, type VersionDiff } from "@/lib/trip-versions";
+import { eul } from "@/lib/trip-merge";
 import { BASE_PATH } from "@/lib/site";
 import type { LatLng } from "@/types/destination";
 import type { Place, Trip } from "@/types/trip";
@@ -652,6 +653,12 @@ function PlannerBody({ trip: saved, countries, countryOf, notice }: { trip: Trip
                 meId={auth.status === "in" ? auth.me.id : undefined}
                 peeking={peek?.version.id}
                 onPeek={openPeek}
+                now={contentOf(saved)}
+                canEdit={role !== "viewer"}
+                onPutBack={(r) => {
+                  if (peek) setPeek(null); // 예전 일정을 보던 중이면 지금 일정으로 돌아와서 넣는다
+                  commit((t) => putBack(t, r), { undo: `${eul(r.place.name)} 다시 넣었어요` });
+                }}
               />
             )}
           </aside>

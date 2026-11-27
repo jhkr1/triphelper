@@ -560,3 +560,14 @@
 @media (max-width:560px){.planner .peekbar__in{flex-wrap:wrap;justify-content:flex-end}.planner .peekbar b{flex-basis:100%}}
 /* 최근 활동에서 지금 보고 있는 묶음 */
 .planner .act--on{background:var(--badge-bg);border-radius:12px;padding:8px;margin:-8px}
+/* 최근 활동: 활동 / 뺀 장소 탭 */
+.planner .activity__hd{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.planner .activity__hd h3{margin:0}
+.planner .activity__tabs{display:flex;gap:2px;background:var(--soft);border-radius:99px;padding:3px}
+.planner .activity__tabs button{border:0;background:transparent;border-radius:99px;padding:6px 12px;font:700 .8rem var(--sans);color:var(--mute);cursor:pointer;min-height:32px}
+.planner .activity__tabs button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px #11182722}
+.planner .gone{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.planner .gone li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:12px}
+.planner .gone b{display:block;font-size:.88rem;overflow-wrap:anywhere}
+.planner .gone small{display:block;font-size:.74rem;color:var(--mute);margin-top:2px}
+.planner .gone .btn{padding:7px 12px;font-size:.8rem}

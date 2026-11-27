@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { versionDiff, whenLabel } from "@/lib/trip-versions";
+import { putBack, removedPlaces, versionDiff, whenLabel } from "@/lib/trip-versions";
 import { place, trip } from "@/lib/test-fixtures";
 
 describe("versionDiff (예전 일정과 지금 비교)", () => {
@@ -14,6 +14,36 @@ describe("versionDiff (예전 일정과 지금 비교)", () => {
     const gone = versionDiff(then, trip([[place("b")], [place("a")]]));
     expect([...gone.back]).toEqual(["c"]);
     expect(gone.moved.get("a")).toBe("2일차");
+  });
+});
+
+describe("removedPlaces · putBack (뺀 장소)", () => {
+  // 기록은 최신 것부터: v3(지금과 같음) ← v2(a 뺌) ← v1(b가 2일차에 있었음)
+  const v1 = { createdAt: "t1", userId: "u1", data: trip([[place("a", "09:00"), place("x", "10:00")], [place("b", "12:00")]]) };
+  const v2 = { createdAt: "t2", userId: "u2", data: trip([[place("x", "10:00")], [place("b", "12:00")]]) };
+  const v3 = { createdAt: "t3", userId: "u1", data: trip([[place("x", "10:00")], []]) };
+  const now = trip([[place("x", "10:00")], []]);
+
+  it("최근에 뺀 것부터, 있던 자리와 뺀 사람 · 시각", () => {
+    const r = removedPlaces([v3, v2, v1], now);
+    expect(r.map((x) => [x.place.id, x.day, x.index, x.at, x.by])).toEqual([
+      ["b", 1, 0, "t3", "u1"],
+      ["a", 0, 0, "t2", "u2"],
+    ]);
+  });
+
+  it("아직 저장 전에 뺀 장소는 시각이 없다 (방금)", () => {
+    const r = removedPlaces([v3, v2, v1], trip([[], []]));
+    expect(r[0]).toMatchObject({ place: { id: "x" }, day: 0 });
+    expect(r[0].at).toBeUndefined();
+  });
+
+  it("원래 날의 원래 자리로, 그날이 없으면 여행지 바구니로", () => {
+    const [b, a] = removedPlaces([v3, v2, v1], now);
+    expect(putBack(now, a).days[0].places.map((p) => p.id)).toEqual(["a", "x"]);
+    const oneDay = trip([[place("x")]]);
+    expect(putBack(oneDay, b).basket?.map((p) => p.id)).toEqual(["b"]);
+    expect(putBack(putBack(now, a), a).days[0].places).toHaveLength(2); // 두 번 넣지 않는다
   });
 });
 

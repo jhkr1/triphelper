@@ -32,6 +32,18 @@
 <summary>내 여행 플래너 (지도 동선 · 장소 간 이동 · 가까운 순으로 정리)</summary>
 <img src="./docs/screenshots/trip.png" alt="내 여행 플래너 스크린샷" width="800">
 </details>
+<details>
+<summary>내 여행 목록 (이어서 짜기 · D-day · 다가오는 여행)</summary>
+<img src="./docs/screenshots/trips.jpg" alt="내 여행 목록 스크린샷" width="800">
+</details>
+<details>
+<summary>일정 기록 (최근 활동의 [이때 보기] → 그 시점으로 되돌리기)</summary>
+<img src="./docs/screenshots/history.jpg" alt="일정 기록 스크린샷" width="800">
+</details>
+<details>
+<summary>뺀 장소 다시 넣기 (최근 활동의 '뺀 장소' 탭)</summary>
+<img src="./docs/screenshots/removed.jpg" alt="뺀 장소 탭 스크린샷" width="800">
+</details>
 
 <br/>
 

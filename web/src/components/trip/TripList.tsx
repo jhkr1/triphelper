@@ -207,7 +207,9 @@ function TripCard({ trip: t, name, countryCode, today, busy, onDuplicate, onRemo
         <span className="trip__meta">{rangeLabel(t)}</span>
         <span className="trip__foot">
           {dday && <span className="dday">{dday}</span>}
-          {!owner && <span className="tl-with">{ROLE_LABEL[t.role]}</span>}
+          {/* 남의 일정이면 내 권한, 내 일정을 함께 짜는 중이면 몇 명과 함께인지 */}
+          {!owner ? <span className="tl-with">{ROLE_LABEL[t.role]}</span>
+            : t.people.length > 0 && <span className="tl-with">{t.people.length}명과 함께</span>}
           <span>장소 {placeCount(t)}곳 · {t.posted ? "게시판에 올림" : `${timeAgo(t.updatedAt)} 고침`}</span>
         </span>
       </Link>

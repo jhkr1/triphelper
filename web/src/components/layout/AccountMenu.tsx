@@ -102,7 +102,7 @@ export function AccountMenu() {
 
           {/* 주 메뉴 (휴대폰에서만 보임: 넓은 화면은 상단 바에 있음) */}
           <nav className="acct__nav" aria-label="주 메뉴">
-            <Link href="/trip/" aria-current={pathname.startsWith("/trip") ? "page" : undefined} onClick={() => setOpen(false)}>
+            <Link href="/trips/" aria-current={pathname.startsWith("/trip") ? "page" : undefined} onClick={() => setOpen(false)}>
               {t("nav.trip")}
             </Link>
             <Link href="/board/" aria-current={pathname.startsWith("/board") ? "page" : undefined} onClick={() => setOpen(false)}>

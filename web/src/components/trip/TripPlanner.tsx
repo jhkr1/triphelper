@@ -11,7 +11,9 @@ import { flushSave, loadTrip, noteActivity, startTripSync } from "@/lib/trip-syn
 import { acceptInvite } from "@/lib/trip-collab";
 import { CollabDialog } from "@/components/trip/CollabDialog";
 import { ActivityPanel } from "@/components/trip/ActivityPanel";
-import { MyTrips, SyncBadge } from "@/components/trip/MyTrips";
+import { SyncBadge } from "@/components/trip/MyTrips";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { PublishDialog } from "@/components/board/PublishDialog";
 import { SharedTripView } from "@/components/trip/SharedTripView";
 import { authSettled, authStore } from "@/lib/supabase";
@@ -62,6 +64,12 @@ function PlannerMain({ countries }: { countries: PlannerCountry[] }) {
   const opened = useRef(false);
   const ready = useRef(false); // 처음 열기 처리가 끝났는지
   const [notice, setNotice] = useState("");
+  // 내 여행 목록에서 고른 일정(?id=) · 새 여행(?new=1): 다 열기 전에는 이전 일정을 잠깐이라도 보여 주지 않는다
+  // 주소는 useSearchParams로 읽는다: 다른 화면에서 넘어온 직후에는 window.location이 아직 이전 주소일 수 있다
+  const searchParams = useSearchParams();
+  const firstQuery = useRef(searchParams.toString());
+  const [opening, setOpening] = useState(() => searchParams.has("id") || searchParams.has("new"));
+  const [startSetup, setStartSetup] = useState(false);
   useEffect(() => { startTripSync(); }, []); // 로그인했으면 DB에 자동 저장
   // 로그아웃 등으로 이 기기의 일정이 지워지면 기본 일정으로 다시 시작
   useEffect(() => {
@@ -93,6 +101,39 @@ function PlannerMain({ countries }: { countries: PlannerCountry[] }) {
         ready.current = true;
         return;
       }
+      const query = new URLSearchParams(firstQuery.current);
+      const wantedId = query.get("id");
+      if (query.has("new") && auth.status === "in") {
+        // 새 여행: 지금 일정을 저장해 두고 빈 일정으로. 나라 · 날짜를 먼저 정하게 여행 설정을 연다
+        await flushSave();
+        if (cancelled) return;
+        const now = tripStore.getSnapshot();
+        const base = now && now !== LOADING ? countryOf(now.country) : undefined;
+        tripStore.set(defaultTrip(base ?? countryOf(DEFAULT_COUNTRY) ?? countries[0]));
+        history.replaceState(null, "", window.location.pathname);
+        setStartSetup(true);
+        setOpening(false);
+        ready.current = true;
+        return;
+      }
+      if (wantedId && auth.status === "in") {
+        const now = tripStore.getSnapshot();
+        if (!(now && now !== LOADING && now.cloud?.id === wantedId)) {
+          try {
+            await flushSave();
+            const t = await loadTrip(wantedId, auth.me.id, countries);
+            if (cancelled) return;
+            tripStore.set(t);
+          } catch {
+            if (cancelled) return;
+            setNotice("그 일정을 열지 못했어요. 지워졌거나 함께 짜기에서 나왔을 수 있어요.");
+          }
+        }
+        setOpening(false);
+        ready.current = true;
+        return;
+      }
+      setOpening(false);
       const shared = await readSharedTrip(window.location.hash, countryOf);
       if (cancelled) return;
       const wanted = new URLSearchParams(window.location.search).get("country");
@@ -116,10 +157,10 @@ function PlannerMain({ countries }: { countries: PlannerCountry[] }) {
     return () => { cancelled = true; opened.current = false; };
   }, [countries, countryOf]);
 
-  if (snapshot === LOADING || snapshot === null) {
+  if (snapshot === LOADING || snapshot === null || opening) {
     return <div className="wrap"><p style={{ color: "var(--mute)" }}>일정을 불러오는 중…</p></div>;
   }
-  return <PlannerBody trip={snapshot} countries={countries} countryOf={countryOf} notice={notice} />;
+  return <PlannerBody trip={snapshot} countries={countries} countryOf={countryOf} notice={notice} startSetup={startSetup} />;
 }
 
 /**
@@ -203,7 +244,11 @@ function RestoreDialog({ when, diff, onConfirm, onClose }: { when: string; diff:
 /** [이때 보기]로 보고 있는 예전 일정 */
 interface Peek { tripId: string; version: TripVersion }
 
-function PlannerBody({ trip: saved, countries, countryOf, notice }: { trip: Trip; countries: PlannerCountry[]; countryOf: (s: string) => PlannerCountry | undefined; notice: string }) {
+function PlannerBody({ trip: saved, countries, countryOf, notice, startSetup = false }: {
+  trip: Trip; countries: PlannerCountry[]; countryOf: (s: string) => PlannerCountry | undefined; notice: string;
+  /** 새 여행으로 열었을 때: 여행 설정(나라 · 날짜)을 열어 둔다 */
+  startSetup?: boolean;
+}) {
   // 예전 일정을 보는 동안 화면에는 그 일정을 보기 전용으로 그린다 (저장된 지금 일정은 그대로). 다른 일정으로 바뀌면 닫힌다
   const [peekState, setPeek] = useState<Peek | null>(null);
   const peek = peekState && peekState.tripId === saved.cloud?.id ? peekState : null;
@@ -215,7 +260,7 @@ function PlannerBody({ trip: saved, countries, countryOf, notice }: { trip: Trip
   const [tab, setTab] = useState<"plan" | "check">("plan");
   const [day, setDay] = useState(0);
   const [mapDay, setMapDay] = useState<"all" | number>("all");
-  const [setupOpen, setSetupOpen] = useState(false);
+  const [setupOpen, setSetupOpen] = useState(startSetup);
   const auth = useSyncExternalStore(authStore.subscribe, authStore.getSnapshot, authStore.getServerSnapshot);
   const [publishOpen, setPublishOpen] = useState(false);
   const [collabOpen, setCollabOpen] = useState(false);
@@ -341,6 +386,14 @@ function PlannerBody({ trip: saved, countries, countryOf, notice }: { trip: Trip
     if (lastCloud.current && cloudId !== lastCloud.current) history.clear();
     lastCloud.current = cloudId;
   }, [cloudId, history]);
+  // 주소에 지금 일정을 적어 둔다 (/trip/?id=…): 새로 고침 · 즐겨찾기 · 뒤로 가기에도 같은 일정이 열리게
+  // 아직 저장 전인 새 일정이면 예전 일정의 id를 지운다
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    if (!cloudId && !q.has("id")) return;
+    const want = cloudId ? `${window.location.pathname}?id=${encodeURIComponent(cloudId)}` : window.location.pathname;
+    if (window.location.pathname + window.location.search !== want) window.history.replaceState(window.history.state, "", want);
+  }, [cloudId]);
 
   // Ctrl+Z 되돌리기 · Ctrl+Shift+Z (Ctrl+Y) 다시 하기. 글자를 고치는 칸 안에서는 브라우저의 글자 되돌리기를 그대로 둔다
   const keyRef = useRef<(e: KeyboardEvent) => void>(() => {});
@@ -519,13 +572,9 @@ function PlannerBody({ trip: saved, countries, countryOf, notice }: { trip: Trip
       <div className="hd">
         <div className="hd__main">
           {/* 어떤 여행을 보는지 고르기: 제목 바로 위 */}
-          <MyTrips
-            trip={trip}
-            countries={countries}
-            onOpened={(t) => { replaceTrip(t); setDay(0); setMapDay("all"); setSetupOpen(false); toast(`${tripName(t, countryOf(t.country)?.name ?? "")}을(를) 열었어요`); }}
-            onNew={() => { replaceTrip(defaultTrip(country)); setDay(0); setMapDay("all"); setSetupOpen(true); }}
-            toast={toast}
-          />
+          {auth.status === "in" && (
+            <div className="mytrips"><Link className="trip-switch" href="/trips/?all">내 여행 목록</Link></div>
+          )}
           <h1>
             {/* eslint-disable-next-line @next/next/no-img-element -- 작은 외부 국기 이미지 */}
             <img className="fl" style={{ height: ".7em" }} src={flagUrl(country.countryCode)} alt="" />

@@ -35,7 +35,7 @@ export function TopBar({ solid = false }: { solid?: boolean }) {
       </Link>
       <div className="top__actions">
         <nav className="top__nav" aria-label="주 메뉴">
-          <Link href="/trip/" aria-current={pathname.startsWith("/trip") ? "page" : undefined}>{t("nav.trip")}</Link>
+          <Link href="/trips/" aria-current={pathname.startsWith("/trip") ? "page" : undefined}>{t("nav.trip")}</Link>
           <Link href="/board/" aria-current={pathname.startsWith("/board") ? "page" : undefined}>{t("nav.board")}</Link>
         </nav>
         <AccountMenu />

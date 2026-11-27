@@ -30,6 +30,18 @@ export interface TripMeta {
   role: TripRole;
   /** 남의 일정이면 주인 닉네임 */
   ownerName?: string;
+  /** 여행 날짜 (YYYY-MM-DD). datesUnset이면 기간만 뜻한다 */
+  start: string;
+  end: string;
+  datesUnset: boolean;
+  /** 날짜별 장소 수 */
+  dayCounts: number[];
+  /** 정한 숙소 수 (여러 밤 묵는 같은 숙소는 하나) */
+  stays: number;
+  /** 나 말고 이 일정을 함께 짜는 사람들 (주인 포함) */
+  people: string[];
+  /** 게시판에 올린 적이 있는지 */
+  posted: boolean;
 }
 
 export type SyncStatus =
@@ -55,22 +67,40 @@ const hasContent = (t: Trip) =>
 
 /* ───────── DB ───────── */
 
-type TripRow = { id: string; title: string; country: string; city: string; nights: number; updated_at: string; user_id: string; profiles: { nickname: string } | null };
+type TripRow = {
+  id: string; title: string; country: string; city: string; nights: number; updated_at: string; user_id: string;
+  profiles: { nickname: string } | null; data: Partial<Data> | null;
+};
+type MemberRow = { trip_id: string; user_id: string; role: TripRole; profiles: { nickname: string } | null };
 
-/** 내 일정 + 함께 짜는 일정 */
+/** 내 일정 + 함께 짜는 일정 (최근에 고친 것부터). 목록 화면에 보일 요약(날짜 · 장소 수 · 함께 짜는 사람)까지 */
 export async function listMyTrips(me: string): Promise<TripMeta[]> {
   const sb = await db();
-  const [trips, mine] = await Promise.all([
-    sb.from("trips").select("id, title, country, city, nights, updated_at, user_id, profiles!trips_user_id_fkey(nickname)").order("updated_at", { ascending: false }),
-    sb.from("trip_members").select("trip_id, role").eq("user_id", me),
+  const [trips, members, posts] = await Promise.all([
+    sb.from("trips").select("id, title, country, city, nights, updated_at, user_id, data, profiles!trips_user_id_fkey(nickname)").order("updated_at", { ascending: false }),
+    // 내가 볼 수 있는 일정들의 멤버 전부 (같은 일정 사람끼리만 보인다)
+    sb.from("trip_members").select("trip_id, user_id, role, profiles(nickname)"),
+    sb.from("posts").select("trip_id").eq("user_id", me).not("trip_id", "is", null),
   ]);
   if (trips.error) throw trips.error;
-  const roles = new Map((mine.data ?? []).map((m) => [m.trip_id as string, m.role as TripRole]));
+  const memberRows = (members.data ?? []) as unknown as MemberRow[];
+  const posted = new Set(((posts.data ?? []) as { trip_id: string }[]).map((p) => p.trip_id));
   return ((trips.data ?? []) as unknown as TripRow[]).map((r) => {
-    const role: TripRole = r.user_id === me ? "owner" : roles.get(r.id) ?? "viewer";
+    const mine = memberRows.find((m) => m.trip_id === r.id && m.user_id === me);
+    const role: TripRole = r.user_id === me ? "owner" : mine?.role ?? "viewer";
+    const days = Array.isArray(r.data?.days) ? r.data.days : [];
+    const people = [
+      ...(r.user_id !== me && r.profiles?.nickname ? [r.profiles.nickname] : []),
+      ...memberRows.filter((m) => m.trip_id === r.id && m.user_id !== me).map((m) => m.profiles?.nickname ?? "여행자"),
+    ];
     return {
       id: r.id, title: r.title, country: r.country, city: r.city, nights: r.nights, updatedAt: r.updated_at, role,
       ...(role !== "owner" && r.profiles?.nickname ? { ownerName: r.profiles.nickname } : {}),
+      start: r.data?.start ?? "", end: r.data?.end ?? "", datesUnset: Boolean(r.data?.datesUnset),
+      dayCounts: days.map((d) => (Array.isArray(d?.places) ? d.places.length : 0)),
+      stays: new Set(days.map((d) => d?.stay?.name).filter(Boolean)).size,
+      people,
+      posted: posted.has(r.id),
     };
   });
 }

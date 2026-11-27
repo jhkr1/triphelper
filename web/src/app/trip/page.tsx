@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Footer, TopBar } from "@/components/layout/TopBar";
 import { TripPlanner } from "@/components/trip/TripPlanner";
 import { LoginGate } from "@/components/layout/LoginGate";
@@ -32,7 +33,8 @@ export default function TripPage() {
       <TopBar solid />
       <main className="planner">
         <LoginGate title="로그인하고 내 여행을 짜 보세요" desc="일정은 계정에 저장돼서 어느 기기에서든 이어서 짤 수 있어요." allowSharedLink>
-          <TripPlanner countries={plannerCountries()} />
+          {/* 주소(?id= · ?all 등)를 useSearchParams로 읽어서 정적 빌드에는 Suspense가 필요하다 */}
+          <Suspense fallback={null}><TripPlanner countries={plannerCountries()} /></Suspense>
         </LoginGate>
       </main>
       <Footer />

@@ -20,6 +20,7 @@ import { canReorder, nearestOrder, type RouteOrder } from "@/lib/route-order";
 import type { Place, Trip } from "@/types/trip";
 import type { ChangeOpts } from "@/lib/trip-undo";
 import { eul } from "@/lib/trip-merge";
+import type { VersionDiff } from "@/lib/trip-versions";
 import type { LatLng } from "@/types/destination";
 
 interface Props {
@@ -38,6 +39,8 @@ interface Props {
   /** 여행 설정(날짜) 열기 */
   onOpenSetup: () => void;
   toast: (msg: string) => void;
+  /** 예전 일정을 볼 때: 지금과 다른 장소 표시 */
+  marks?: VersionDiff;
 }
 
 /* ───────── 사진 ───────── */
@@ -529,7 +532,7 @@ function StayRow({ stay, dayNo, countryCode, center, nearCity, onSet, onMemo, on
 
 /* ───────── 일정표 ───────── */
 
-export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAddDay, onRemoveDay, updatePlaces, updateTrip, onPickRequest, onOpenSetup, toast }: Props) {
+export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAddDay, onRemoveDay, updatePlaces, updateTrip, onPickRequest, onOpenSetup, toast, marks }: Props) {
   const places = trip.days[day]?.places ?? [];
   const basket = trip.basket ?? [];
   const w = forecast[addDays(trip.start, day)];
@@ -898,6 +901,8 @@ export function Itinerary({ trip, countryCode, day, onDayChange, forecast, onAdd
                   <div className="stop__name">
                     <span>{p.name}</span>
                     {p.category && <span className="tag">{p.category}</span>}
+                    {marks?.back.has(p.id) && <span className="tag tag--back">지금은 빠짐</span>}
+                    {marks?.moved.has(p.id) && <span className="tag tag--moved">지금은 {marks.moved.get(p.id)}</span>}
                   </div>
                   <div className="tags">
                     {p.duration && <span className="tag">{p.duration} 머묾</span>}

@@ -535,3 +535,28 @@
 /* 버튼이 있는 알림 (되돌리기) */
 .planner .toast--act.on{pointer-events:auto;display:flex;align-items:center;gap:14px;padding:8px 8px 8px 18px}
 .planner .toast--act button{border:0;border-radius:99px;background:var(--bg);color:var(--ink);font:700 .85rem var(--sans);padding:8px 14px;cursor:pointer}
+
+/* 최근 활동: 한 번의 저장 묶음 (사람 · 문장들 · 시각 · [이때 보기]) */
+.planner .act__lines{margin:0;padding:0;list-style:none;display:grid;gap:2px}
+.planner .act__lines li{display:block;font-size:.84rem;line-height:1.5;color:var(--text2);word-break:keep-all;overflow-wrap:anywhere}
+.planner .act__lines b{color:var(--ink)}
+.planner .act__foot{display:flex;align-items:center;gap:8px;margin-top:2px}
+.planner .act__foot time{display:inline;font-size:.74rem;color:var(--mute)}
+.planner .act__see{border:0;background:none;color:var(--blue);font:600 .76rem var(--sans);padding:4px 0;cursor:pointer}
+.planner .act__see:hover{text-decoration:underline}
+.planner .act__now{font-size:.72rem;font-weight:700;color:var(--blue);background:var(--badge-bg);border:1px solid var(--badge-bd);border-radius:99px;padding:1px 7px}
+
+/* 예전 일정 보기: 바뀐 장소 표시 · 되돌리기 확인 창 */
+.planner .tag--back{background:#fff7ed;border-color:#fdba74;color:#9a3412;font-weight:700}
+.planner .tag--moved{background:var(--badge-bg);border-color:var(--badge-bd);color:var(--blue-d);font-weight:700}
+.planner .restore{display:grid;gap:12px;width:min(460px,100%)}
+.planner .restore .pub__hd{margin-bottom:0}
+.planner .restore__what{margin:0;font-size:.92rem;line-height:1.6;color:var(--text2);word-break:keep-all}
+@media print{.planner .peekbar{display:none}}
+/* 예전 일정 보기: 헤더 아래 얇은 흰 띠 (스크롤해도 따라온다) */
+.planner .peekbar{position:sticky;top:var(--header-h);z-index:4;background:var(--card);border-bottom:1px solid var(--line);--tonal:color-mix(in srgb,var(--line) 60%,transparent)} /* --tonal: 회색 보조 버튼(btn--quiet) 바탕, 제목 옆 버튼들과 같은 색 */
+.planner .peekbar__in{max-width:1120px;margin:0 auto;padding:10px clamp(16px,4vw,32px);display:flex;align-items:center;gap:12px}
+.planner .peekbar b{flex:1;min-width:0;font-size:1rem;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.planner .peekbar__in{flex-wrap:wrap;justify-content:flex-end}.planner .peekbar b{flex-basis:100%}}
+/* 최근 활동에서 지금 보고 있는 묶음 */
+.planner .act--on{background:var(--badge-bg);border-radius:12px;padding:8px;margin:-8px}

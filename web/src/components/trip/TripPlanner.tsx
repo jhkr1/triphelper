@@ -6,8 +6,8 @@ import { TripMap } from "@/components/trip/TripMap";
 import { Itinerary } from "@/components/trip/Itinerary";
 import { ChecklistPanel } from "@/components/trip/ChecklistPanel";
 import { TripSetup, type SetupResult } from "@/components/trip/TripSetup";
-import { LOADING, tripStore } from "@/lib/trip-store";
-import { flushSave, loadTrip, startTripSync } from "@/lib/trip-sync";
+import { LOADING, normalizeTrip, tripStore } from "@/lib/trip-store";
+import { flushSave, loadTrip, noteActivity, startTripSync } from "@/lib/trip-sync";
 import { acceptInvite } from "@/lib/trip-collab";
 import { CollabDialog } from "@/components/trip/CollabDialog";
 import { ActivityPanel } from "@/components/trip/ActivityPanel";
@@ -22,7 +22,8 @@ import {
 import { fetchExchange, formatRate } from "@/lib/exchange";
 import { fetchDailyForecast, type DailyForecast } from "@/lib/weather";
 import { flagUrl } from "@/lib/geo";
-import { createUndoHistory, type ChangeOpts } from "@/lib/trip-undo";
+import { applyChange, contentOf, createUndoHistory, type ChangeOpts } from "@/lib/trip-undo";
+import { getVersion, versionDiff, whenLabel, type TripVersion, type VersionDiff } from "@/lib/trip-versions";
 import { BASE_PATH } from "@/lib/site";
 import type { LatLng } from "@/types/destination";
 import type { Place, Trip } from "@/types/trip";
@@ -159,7 +160,56 @@ function TripTitle({ name, auto, canEdit, onRename }: { name: string; auto: stri
   );
 }
 
-function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; countries: PlannerCountry[]; countryOf: (s: string) => PlannerCountry | undefined; notice: string }) {
+/** 예전 일정으로 되돌리기 전에 무엇이 바뀌는지 알려 주는 확인 창 */
+function RestoreDialog({ when, diff, onConfirm, onClose }: { when: string; diff: VersionDiff; onConfirm: () => void; onClose: () => void }) {
+  const okRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const back = document.activeElement as HTMLElement | null;
+    okRef.current?.focus();
+    return () => back?.focus();
+  }, []);
+  const parts = [
+    diff.back.size ? `장소 ${diff.back.size}곳이 다시 생기고` : "",
+    diff.later.length ? `그 뒤에 넣은 ${diff.later.length}곳(${diff.later.slice(0, 2).map((p) => p.name).join(", ")}${diff.later.length > 2 ? " 등" : ""})은 빠져요` : "",
+    diff.moved.size ? `${diff.moved.size}곳은 그때 자리로 돌아가요` : "",
+  ].filter(Boolean);
+  return (
+    <div className="pub" role="presentation" onPointerDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div
+        className="pub__box restore"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="restore-title"
+        onKeyDown={(e) => {
+          if (e.key === "Escape") { e.stopPropagation(); onClose(); }
+          if (e.key === "Tab") { e.preventDefault(); (document.activeElement === okRef.current ? e.currentTarget.querySelector<HTMLElement>("button") : okRef.current)?.focus(); }
+        }}
+      >
+        <div className="pub__hd">
+          <h2 id="restore-title">{when} 일정으로 되돌릴까요?</h2>
+        </div>
+        <p className="restore__what">{parts.length ? `${parts.join(", ")}.` : "날짜·숙소·메모 등이 그때로 돌아가요."}</p>
+        <p className="pub__msg">지금 일정도 기록에 남으니 언제든 다시 돌아올 수 있어요. 준비물 체크는 그대로예요.</p>
+        <div className="pub__act">
+          <button className="btn" type="button" onClick={onClose}>취소</button>
+          <button className="btn btn--pri" type="button" ref={okRef} onClick={onConfirm}>되돌리기</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** [이때 보기]로 보고 있는 예전 일정 */
+interface Peek { tripId: string; version: TripVersion }
+
+function PlannerBody({ trip: saved, countries, countryOf, notice }: { trip: Trip; countries: PlannerCountry[]; countryOf: (s: string) => PlannerCountry | undefined; notice: string }) {
+  // 예전 일정을 보는 동안 화면에는 그 일정을 보기 전용으로 그린다 (저장된 지금 일정은 그대로). 다른 일정으로 바뀌면 닫힌다
+  const [peekState, setPeek] = useState<Peek | null>(null);
+  const peek = peekState && peekState.tripId === saved.cloud?.id ? peekState : null;
+  const trip: Trip = peek
+    ? normalizeTrip({ ...peek.version.data, checklist: saved.checklist, ...(saved.cloud ? { cloud: saved.cloud } : {}) })
+    : saved;
+  const diff = peek ? versionDiff(peek.version.data, contentOf(saved)) : null;
   const country = countryOf(trip.country) ?? countries[0];
   const [tab, setTab] = useState<"plan" | "check">("plan");
   const [day, setDay] = useState(0);
@@ -171,7 +221,7 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
   const closeCollab = useCallback(() => setCollabOpen(false), []);
   // 함께 짜는 일정에서 나의 권한: 보기만이면 일정은 고칠 수 없다 (준비물은 내 것이라 고칠 수 있음)
   const role = trip.cloud?.role ?? "owner";
-  const viewer = role === "viewer";
+  const viewer = role === "viewer" || peek !== null;
   const closePublish = useCallback(() => setPublishOpen(false), []);
   const [pickTarget, setPickTarget] = useState<{ day: number; id: string } | null>(null);
   const [toastMsg, setToastMsg] = useState<{ text: string; n: number; action?: ToastAction } | null>(null);
@@ -201,7 +251,7 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
     setToastMsg((t) => ({ text, n: (t?.n ?? 0) + 1, ...(action ? { action } : {}) }));
     window.clearTimeout(toastTimer.current);
     toastTimer.current = window.setTimeout(() => setToastMsg(null), action ? 8000 : 2000);
-  }, []);
+  }, [setToastMsg]); // setToastMsg는 바뀌지 않지만 React Compiler가 의존성으로 보므로 적어 둔다
   useEffect(() => () => window.clearTimeout(toastTimer.current), []);
 
   /* 실시간 환율 (현지 통화 → 원) */
@@ -237,7 +287,11 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
   /* 일정 바꾸기: 바꿀 때마다 되돌리기 기록을 남긴다 (opts.undo가 있으면 알림에 [되돌리기]) */
   const [history] = useState(createUndoHistory);
   const update = (fn: (t: Trip) => Trip, opts: ChangeOpts = {}) => {
+    if (peek) { toast("예전 일정을 보는 중이에요. [지금 일정으로]를 누르면 고칠 수 있어요"); return; }
     if (viewer) { toast("보기만 할 수 있는 일정이에요"); return; }
+    commit(fn, opts);
+  };
+  const commit = (fn: (t: Trip) => Trip, opts: ChangeOpts = {}) => {
     const step: { id: number | null } = { id: null };
     tripStore.update((t) => {
       const next = fn(t);
@@ -252,7 +306,34 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
   const updatePlaces = (fn: (places: Place[]) => Place[], opts?: ChangeOpts) =>
     update((t) => ({ ...t, days: t.days.map((d, i) => (i === safeDay ? { ...d, places: fn(d.places) } : d)) }), opts);
   /** 다른 일정으로 바꿀 때: 앞 일정의 되돌리기 기록은 버린다 */
-  const replaceTrip = (t: Trip) => { history.clear(); tripStore.set(t); };
+  const replaceTrip = (t: Trip) => { history.clear(); setPeek(null); tripStore.set(t); };
+
+  /* 최근 활동의 [이때 보기] → 예전 일정 보기 → 되돌리기 */
+  const [restoreOpen, setRestoreOpen] = useState(false);
+  async function openPeek(versionId: number) {
+    if (!saved.cloud) return;
+    const tripId = saved.cloud.id;
+    try {
+      const version = await getVersion(versionId);
+      setPeek({ tripId, version });
+      setTab("plan");
+      setDay(0);
+      setMapDay("all");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      toast("그때의 일정을 불러오지 못했어요");
+    }
+  }
+  function restorePeek() {
+    if (!peek) return;
+    const label = `${whenLabel(peek.version.createdAt)} 일정으로 되돌렸어요`;
+    const data = peek.version.data;
+    setRestoreOpen(false);
+    setPeek(null);
+    noteActivity(label);
+    // 지금 일정 → 그때 일정. 되돌린 것도 한 번의 변경이라 [되돌리기]·Ctrl+Z로 다시 돌아올 수 있다
+    commit((t) => applyChange(t, contentOf(t), data), { undo: label });
+  }
   // 저장 연결이 다른 일정으로 바뀌면(다른 기기에서 고른 일정 등) 기록을 버린다. 처음 저장되어 id가 생길 때는 그대로
   const lastCloud = useRef(cloudId);
   useEffect(() => {
@@ -420,6 +501,19 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
   }
 
   return (
+    <>
+    {/* 예전 일정 보기: 헤더 아래 얇은 흰 띠 (스크롤해도 따라온다). 바뀐 장소는 일정표 안에 표시 */}
+    {peek && (
+      <div className="peekbar" role="region" aria-label="예전 일정 보기">
+        <div className="peekbar__in">
+          <b>{whenLabel(peek.version.createdAt)}의 일정</b>
+          <button className="btn btn--quiet" type="button" onClick={() => setPeek(null)}>지금 일정으로</button>
+          {role !== "viewer" && (
+            <button className="btn btn--pri" type="button" onClick={() => setRestoreOpen(true)}>이 시점으로 되돌리기</button>
+          )}
+        </div>
+      </div>
+    )}
     <div className={viewer ? "wrap is-viewer" : "wrap"}>
       <div className="hd">
         <div className="hd__main">
@@ -455,10 +549,10 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
           </p>
           <SyncBadge />
           {notice && <p className="collab-notice" role="status">{notice}</p>}
-          {viewer && <p className="viewer-note">보기만 할 수 있는 일정이에요. 준비물은 내 것만 따로 챙길 수 있어요.</p>}
+          {role === "viewer" && <p className="viewer-note">보기만 할 수 있는 일정이에요. 준비물은 내 것만 따로 챙길 수 있어요.</p>}
         </div>
-        {/* 다른 사람에게 보여 주기: 링크 공유만 진하게 */}
-        <div className="hd__share" role="group" aria-label="공유">
+        {/* 다른 사람에게 보여 주기: 링크 공유만 진하게 (예전 일정을 보는 동안에는 숨긴다) */}
+        <div className="hd__share" role="group" aria-label="공유" hidden={peek !== null}>
           {auth.status === "in" && (
             <button
               className="btn btn--quiet"
@@ -505,7 +599,11 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
         <StarterRoute trip={trip} countryName={country.name} onApply={startFromPost} fallback={sampleCta} />
       )}
 
-      <div className="seg" role="tablist" aria-label="내 여행">
+      {restoreOpen && peek && (
+        <RestoreDialog when={whenLabel(peek.version.createdAt)} diff={diff!} onConfirm={restorePeek} onClose={() => setRestoreOpen(false)} />
+      )}
+
+      <div className="seg" role="tablist" aria-label="내 여행" hidden={peek !== null}>
         <button role="tab" aria-selected={tab === "plan"} onClick={() => setTab("plan")}>일정표</button>
         <button role="tab" aria-selected={tab === "check"} onClick={() => setTab("check")}>체크리스트</button>
       </div>
@@ -536,6 +634,7 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
             }}
             onOpenSetup={openSetup}
             toast={toast}
+            marks={diff ?? undefined}
           />
           <aside className="side">
             <div className="card">
@@ -547,7 +646,14 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
                 <div><span>등록한 장소</span><b>{totalPlaces}곳</b></div>
               </div>
             </div>
-            {trip.cloud?.shared && <ActivityPanel tripId={trip.cloud.id} />}
+            {trip.cloud && (
+              <ActivityPanel
+                tripId={trip.cloud.id}
+                meId={auth.status === "in" ? auth.me.id : undefined}
+                peeking={peek?.version.id}
+                onPeek={openPeek}
+              />
+            )}
           </aside>
         </section>
       ) : (
@@ -566,5 +672,6 @@ function PlannerBody({ trip, countries, countryOf, notice }: { trip: Trip; count
         )}
       </div>
     </div>
+    </>
   );
 }

@@ -31,6 +31,8 @@ export interface Activity {
   createdAt: string;
   nickname: string;
   avatar?: string;
+  /** 이 활동을 남긴 저장의 일정 기록 (trip_versions). 예전 기록이 지워졌으면 없음 */
+  versionId?: number;
 }
 
 const message = (e: unknown) => {
@@ -95,12 +97,15 @@ export async function acceptInvite(code: string): Promise<string> {
 
 export const inviteUrl = (origin: string, code: string) => `${origin}${withBase("/trip/")}?invite=${encodeURIComponent(code)}`;
 
-export async function listActivity(tripId: string, limit = 30): Promise<Activity[]> {
-  const { data, error } = await (await db()).from("trip_activity").select("id, user_id, text, created_at, profiles(nickname, avatar_url)")
-    .eq("trip_id", tripId).order("created_at", { ascending: false }).limit(limit);
+export async function listActivity(tripId: string, limit = 60): Promise<Activity[]> {
+  const { data, error } = await (await db()).from("trip_activity").select("id, user_id, text, created_at, version_id, profiles(nickname, avatar_url)")
+    .eq("trip_id", tripId).order("created_at", { ascending: false }).order("id", { ascending: true }).limit(limit);
   if (error) throw error;
-  return (data as unknown as { id: number; user_id: string; text: string; created_at: string; profiles: Profile }[])
-    .map((r) => ({ id: r.id, userId: r.user_id, text: r.text, createdAt: r.created_at, ...person(r.profiles) }));
+  return (data as unknown as { id: number; user_id: string; text: string; created_at: string; version_id: number | null; profiles: Profile }[])
+    .map((r) => ({
+      id: r.id, userId: r.user_id, text: r.text, createdAt: r.created_at, ...person(r.profiles),
+      ...(r.version_id ? { versionId: r.version_id } : {}),
+    }));
 }
 
 /** 새 활동이 생기면 알림 (돌려준 함수를 부르면 그만 받음) */

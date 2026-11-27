@@ -228,7 +228,12 @@ async function saveNow() {
       if (data) {
         const saved: Trip = { ...local, cloud: { ...local.cloud!, savedAt: data.updated_at } };
         finish(t, saved);
-        if (saved.cloud!.shared && before) logActivity(sb, id, describeChanges(before, payload(t)));
+        // 혼자 짜는 일정도 남긴다 (최근 활동의 [이때 보기] · 되돌리기)
+        if (before) {
+          const note = activityNote;
+          activityNote = null;
+          logActivity(sb, id, [...(note ? [note] : []), ...describeChanges(before, payload(t), note ? 4 : 5)]);
+        }
         return;
       }
       const remote = await sb.from("trips").select("data, updated_at").eq("id", id).maybeSingle();
@@ -264,6 +269,10 @@ function finish(original: Trip, saved: Trip) {
   const after = currentTrip();
   if (after && dirty(after)) schedule();
 }
+
+/** 다음 저장의 활동 기록 맨 앞에 붙일 문장 (예: "어제 21:10 일정으로 되돌렸어요") */
+let activityNote: string | null = null;
+export function noteActivity(text: string) { activityNote = text.slice(0, 120); }
 
 async function logActivity(sb: SupabaseClient, tripId: string, lines: string[]) {
   if (!lines.length) return;

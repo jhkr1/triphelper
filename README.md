@@ -30,7 +30,7 @@
 </details>
 <details>
 <summary>내 여행 플래너 (지도 동선 · 장소 간 이동 · 가까운 순으로 정리)</summary>
-<img src="./docs/screenshots/trip.png" alt="내 여행 플래너 스크린샷" width="800">
+<img src="./docs/screenshots/trip.jpg" alt="내 여행 플래너 스크린샷" width="800">
 </details>
 <details>
 <summary>내 여행 목록 (이어서 짜기 · D-day · 다가오는 여행)</summary>
